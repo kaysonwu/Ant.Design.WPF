@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ant.Design.WPF", "Ant.Design.WPF", "{559D525B-9509-4A90-AA19-3F8BFE6261AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant.Design.WPF.NET40", "Ant.Design.WPF\Ant.Design.WPF\Ant.Design.WPF.NET40.csproj", "{F5090472-1728-4771-BFD0-C5953EBF4CE1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ant.Design.WPF.Shared", "Ant.Design.WPF\Ant.Design.WPF.Shared\Ant.Design.WPF.Shared.shproj", "{308A03BC-F30E-4A3D-8DCC-FAAAD5D85358}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant.Design.WPF.NET45", "Ant.Design.WPF\Ant.Design.WPF\Ant.Design.WPF.NET45.csproj", "{DC452A4C-9C83-43AC-95DB-6077C3812027}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ant.Design.WPF.Samples", "Ant.Design.WPF.Samples", "{18D3C065-3E57-48C9-8D3D-848D8BD9B8D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ant.Design.WPF.Demo", "Ant.Design.WPF.Demo", "{D7B9581B-7DD1-45B5-AC63-A1D14704107E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ant.Design.WPF.Demo.Shared", "Ant.Design.WPF.Samples\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo.Shared\Ant.Design.WPF.Demo.Shared.shproj", "{B04F18B7-A1BF-4E55-8EB6-F23C959381C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant.Design.WPF.Demo.NET40", "Ant.Design.WPF.Samples\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo.NET40.csproj", "{1B6EC929-5F88-49C8-AA49-66FE8670676F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ant.Design.WPF.Demo.NET45", "Ant.Design.WPF.Samples\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo.NET45.csproj", "{A9AD2AAC-2211-410D-83C6-CBAA50648CFA}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Ant.Design.WPF\Ant.Design.WPF.Shared\Ant.Design.WPF.Shared.projitems*{308a03bc-f30e-4a3d-8dcc-faaad5d85358}*SharedItemsImports = 13
+		Ant.Design.WPF.Samples\Ant.Design.WPF.Demo\Ant.Design.WPF.Demo.Shared\Ant.Design.WPF.Demo.Shared.projitems*{b04f18b7-a1bf-4e55-8eb6-f23c959381c4}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5090472-1728-4771-BFD0-C5953EBF4CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5090472-1728-4771-BFD0-C5953EBF4CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5090472-1728-4771-BFD0-C5953EBF4CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5090472-1728-4771-BFD0-C5953EBF4CE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC452A4C-9C83-43AC-95DB-6077C3812027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC452A4C-9C83-43AC-95DB-6077C3812027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC452A4C-9C83-43AC-95DB-6077C3812027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC452A4C-9C83-43AC-95DB-6077C3812027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6EC929-5F88-49C8-AA49-66FE8670676F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6EC929-5F88-49C8-AA49-66FE8670676F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6EC929-5F88-49C8-AA49-66FE8670676F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6EC929-5F88-49C8-AA49-66FE8670676F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9AD2AAC-2211-410D-83C6-CBAA50648CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9AD2AAC-2211-410D-83C6-CBAA50648CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9AD2AAC-2211-410D-83C6-CBAA50648CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9AD2AAC-2211-410D-83C6-CBAA50648CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5090472-1728-4771-BFD0-C5953EBF4CE1} = {559D525B-9509-4A90-AA19-3F8BFE6261AA}
+		{308A03BC-F30E-4A3D-8DCC-FAAAD5D85358} = {559D525B-9509-4A90-AA19-3F8BFE6261AA}
+		{DC452A4C-9C83-43AC-95DB-6077C3812027} = {559D525B-9509-4A90-AA19-3F8BFE6261AA}
+		{D7B9581B-7DD1-45B5-AC63-A1D14704107E} = {18D3C065-3E57-48C9-8D3D-848D8BD9B8D1}
+		{B04F18B7-A1BF-4E55-8EB6-F23C959381C4} = {D7B9581B-7DD1-45B5-AC63-A1D14704107E}
+		{1B6EC929-5F88-49C8-AA49-66FE8670676F} = {D7B9581B-7DD1-45B5-AC63-A1D14704107E}
+		{A9AD2AAC-2211-410D-83C6-CBAA50648CFA} = {D7B9581B-7DD1-45B5-AC63-A1D14704107E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F2BEB78-D04C-4D20-8E1E-45C75C57546F}
+	EndGlobalSection
+EndGlobal
