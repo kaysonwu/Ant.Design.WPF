@@ -1,0 +1,6 @@
+﻿namespace AntdDemo
+{
+    interface IShell
+    {
+    }
+}
