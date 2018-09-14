@@ -6,8 +6,30 @@
     <SharedGUID>308a03bc-f30e-4a3d-8dcc-faaad5d85358</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Ant.Design.WPF.Shared</Import_RootNamespace>
+    <Import_RootNamespace>Antd</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BorderlessWindowBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PropertyChangeNotifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviorCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\IThumb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Thumb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ControlHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Win32\NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,123 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:Antd.Controls"
+                    xmlns:Converters="clr-namespace:Antd.Converters">
+
+    <Style x:Key="Ant.WindowButton" TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="12 0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource WindowButtonForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Controls:ContentControl x:Name="PART_ContentPresenter"
+                                                 RecognizesAccessKey="True"
+                                                 Padding="{TemplateBinding Padding}" 
+                                                 Content="{TemplateBinding Content}"
+                                                 ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                 ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                 ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource WindowButtonFocusedBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource WindowButtonPressedBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource ButtonDisableForeground}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Ant.WindowCloseButton" BasedOn="{StaticResource Ant.WindowButton}" TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ButtonDangerFocusedBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ButtonDangerPressedBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type Controls:WindowButtons}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="MinimizeStyle" Value="{StaticResource Ant.WindowButton}" />
+        <Setter Property="MaximizeStyle" Value="{StaticResource Ant.WindowButton}" />
+        <Setter Property="CloseStyle" Value="{StaticResource Ant.WindowCloseButton}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="PART_Min"
+                                Focusable="False"
+                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                Visibility="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}, Mode=OneWay, 
+                                                Converter={x:Static Converters:ResizeModeToVisibilityConverter.Instance}, ConverterParameter=MIN}">
+                            <Path SnapsToDevicePixels="True"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  RenderOptions.EdgeMode="Aliased"
+                                  Data="M0,1 L12,1 12,2 0,2z"
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </Button>
+                        <Button x:Name="PART_Max"
+                                Focusable="False"
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                Visibility="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}, Mode=OneWay, 
+                                                Converter={x:Static Converters:ResizeModeToVisibilityConverter.Instance}, ConverterParameter=MAX}">
+                            <Path x:Name="PART_MaxPath" 
+                                  UseLayoutRounding="True"
+                                  SnapsToDevicePixels="True"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  RenderOptions.EdgeMode="Aliased"
+                                  Data="M0,0 L12,0 12,11 0,11z M1,1 L11,1 11,10.5 1,10.5z"
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </Button>
+                        <Button x:Name="PART_Close"
+                                Focusable="False"
+                                UseLayoutRounding="True"
+                                ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                            <Grid>
+                                <Line X1="0" X2="11"
+                                      Y1="0" Y2="11"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      SnapsToDevicePixels="True"
+                                      Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                                <Line X1="0" X2="11"
+                                      Y1="11" Y2="0"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      SnapsToDevicePixels="True"
+                                      Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}, Path=WindowState}" Value="Maximized">
+                            <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            <Setter TargetName="PART_MaxPath" Property="Data" Value="M2,2 L2,0 12,0 12,10 10.5,10 10.5,9 11,9 11,1 2.5,1 2.5,2z M0,2 L10.5,2 10.5,11 0,11z M1,2.5 L10,2.5 10,10.5 1,10.5z" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
+ 

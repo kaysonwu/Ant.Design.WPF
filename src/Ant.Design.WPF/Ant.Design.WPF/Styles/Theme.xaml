@@ -1,0 +1,117 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:Options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="Options">
+
+    <!-- 
+        ┏━━━━━━┓
+        ┃   Colors   ┃  
+        ┗━━━━━━┛
+    --> 
+    <Color x:Key="PrimaryColor">#1890FF</Color>
+    <Color x:Key="info-color">#1890FF</Color>
+    <Color x:Key="success-color">#52C41A</Color>
+    <Color x:Key="processing-color">#1890FF</Color>
+    <Color x:Key="error-color">#F5222D</Color>
+    <Color x:Key="highlight-color">#F5222D</Color>
+    <Color x:Key="warning-color">#FAAD14</Color>
+    <Color x:Key="normal-color">#d9d9d9</Color>
+
+    <Color x:Key="TextColor">#A5000000</Color>
+    <Color x:Key="BorderColorBase">#D9D9D9</Color>
+
+    <Color x:Key="BackgroundColorLight">#F4F4F4</Color>
+    <Color x:Key="BackgroundColorBase">#F5F5F5</Color>
+
+    <!-- Disabled states -->
+    <Color x:Key="DisabledColor">#3F000000</Color>
+    <Color x:Key="DisabledBackground">#F5F5F5</Color>
+    <Color x:Key="DisabledColorDark">#59FFFFFF</Color>
+           
+    <!-- 
+        ┏━━━━━━━━━━━━━━━━┓
+        ┃   Base Scaffolding Variables   ┃  
+        ┗━━━━━━━━━━━━━━━━┛
+    -->
+
+    <!-- Background color for `<Window>` -->
+    <SolidColorBrush x:Key="BodyBackground" Color="#fff" Options:Freeze="True" />
+    <!-- Base background color for most components -->
+    <SolidColorBrush x:Key="ComponentBackground" Color="#fff" Options:Freeze="True" />
+    <System:Double x:Key="FontSizeBase">14</System:Double>
+    <System:Double x:Key="FontSizeLarge">16</System:Double>
+    <System:Double x:Key="FontSizeSmall">12</System:Double>
+    <System:Double x:Key="LineHeightBase">1.5</System:Double>
+    <System:Double x:Key="BorderRadiusBase">4</System:Double>
+    <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
+    
+    <!-- Vertical Paddings -->
+    <!-- containers -->
+    <System:Double x:Key="PaddingLarge">24</System:Double>
+    <!-- small containers and buttons -->
+    <System:Double x:Key="PaddingMedium">16</System:Double>
+    <!-- form controls and items -->
+    <System:Double x:Key="PaddingSmall">12</System:Double>
+    <!-- small items -->
+    <System:Double x:Key="PaddingExtraSmall">8</System:Double>
+    
+    <!-- LINK -->
+    <SolidColorBrush x:Key="LinkBrush" Color="#1890FF" Options:Freeze="True" />
+    <SolidColorBrush x:Key="LinkHoverBrush" Color="#40A9FF" Options:Freeze="True" />
+    <SolidColorBrush x:Key="LinkActiveBrush" Color="#096DD9" Options:Freeze="True" />
+
+    <!-- Disabled states -->
+    <SolidColorBrush x:Key="DisabledBrush" Color="#3F000000" Options:Freeze="True" />
+
+    <!--
+        1、定制主题
+        2、换肤 - 色彩
+    
+    
+    解决方案：
+    
+    nomarl： 前景色、背景色、边框色
+    
+    hover: 前景色、背景色、边框色 ： 背景和边框色相同
+    
+    focus：前景色、背景色、边框色：前景和边框色相同
+    
+    active: 前景色、背景色、边框色： 背景和边框色相同
+    
+    
+    -->
+    <!-- Window -->
+    <SolidColorBrush x:Key="WindowTilteBarBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowButtonForeground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowButtonFocusedBrush" Color="#26000000" Options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowButtonPressedBrush" Color="#4C000000" Options:Freeze="True" />
+    
+    <!-- Buttons -->
+    <Thickness x:Key="ButtonPaddingBase">15 0</Thickness>
+    <Thickness x:Key="ButtonPaddingLarge">15</Thickness>
+    <Thickness x:Key="ButtonPaddingSmall">0 7</Thickness>
+
+    <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonPrimaryFocusedBrush" Color="#40A9FF" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonPrimaryPressedBrush" Color="#096DD9" Options:Freeze="True" />
+    
+    <SolidColorBrush x:Key="ButtonDefaultForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDefaultBackground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDefaultBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDefaultFocusedBrush" Color="#40A9FF" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDefaultPressedBrush" Color="#096DD9" Options:Freeze="True" />
+    
+    <SolidColorBrush x:Key="ButtonDangerForeground" Color="#F5222D" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDangerBackground" Color="{StaticResource BackgroundColorBase}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDangerBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDangerFocusedBrush" Color="#FF4D4f" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDangerPressedBrush" Color="#CF1322" Options:Freeze="True" />
+
+    <SolidColorBrush x:Key="ButtonDisableForeground" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDisableBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDisableBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+
+</ResourceDictionary>
