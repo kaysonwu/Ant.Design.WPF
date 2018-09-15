@@ -5,9 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Antd.Win32;
-#if NET40
-using SystemCommands = ControlzEx.Windows.Shell.SystemCommands;
-#endif
+using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
 
 namespace Antd.Controls
 {

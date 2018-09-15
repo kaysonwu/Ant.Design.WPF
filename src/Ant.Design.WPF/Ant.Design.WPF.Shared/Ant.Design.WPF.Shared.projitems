@@ -29,6 +29,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ControlHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DpiHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ErrorCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\MessageWindow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\MONITORINFO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Verify.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemParameters2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\NativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
   </ItemGroup>

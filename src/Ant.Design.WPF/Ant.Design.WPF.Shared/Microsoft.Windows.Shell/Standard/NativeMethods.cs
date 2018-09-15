@@ -1,3 +1,4 @@
+﻿#pragma warning disable 1591, 618
 namespace Standard
 {
     using System;
@@ -8,16 +9,13 @@ namespace Standard
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security;
-    using System.Security.Permissions;
     using System.Text;
     using Microsoft.Win32.SafeHandles;
 
     // Some COM interfaces and Win32 structures are already declared in the framework.
     // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-    using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
     using IStream = System.Runtime.InteropServices.ComTypes.IStream;
- 
+
     #region Native Values
 
     internal static class Win32Value
@@ -37,13 +35,38 @@ namespace Standard
     [Flags]
     internal enum HCF
     {
-        HIGHCONTRASTON  = 0x00000001,
-        AVAILABLE       = 0x00000002,
-        HOTKEYACTIVE    = 0x00000004,
-        CONFIRMHOTKEY   = 0x00000008,
-        HOTKEYSOUND     = 0x00000010,
-        INDICATOR       = 0x00000020,
+        HIGHCONTRASTON = 0x00000001,
+        AVAILABLE = 0x00000002,
+        HOTKEYACTIVE = 0x00000004,
+        CONFIRMHOTKEY = 0x00000008,
+        HOTKEYSOUND = 0x00000010,
+        INDICATOR = 0x00000020,
         HOTKEYAVAILABLE = 0x00000040,
+    }
+
+    internal enum DROPEFFECT
+    {
+        NONE = 0,
+        COPY = 1,
+        MOVE = 2,
+        LINK = 4,
+        SCROLL = unchecked((int)0x80000000),
+    }
+
+    /// <summary>
+    /// DROPIMAGE_*
+    /// </summary>
+    internal enum DROPIMAGETYPE
+    {
+        INVALID = -1,
+        NONE = 0,
+        COPY = DROPEFFECT.COPY,
+        MOVE = DROPEFFECT.MOVE,
+        LINK = DROPEFFECT.LINK,
+        LABEL = 6,
+        WARNING = 7,
+        // Windows 7 and later
+        NOIMAGE = 8,
     }
 
     /// <summary>
@@ -213,24 +236,24 @@ namespace Standard
         /// <summary>Use the system default, which is to display all error dialog boxes.</summary>
         Default = 0x0,
         /// <summary>
-        /// The system does not display the critical-error-handler message box.
+        /// The system does not display the critical-error-handler message box. 
         /// Instead, the system sends the error to the calling process.
         /// </summary>
         FailCriticalErrors = 0x1,
         /// <summary>
-        /// 64-bit Windows:  The system automatically fixes memory alignment faults and makes them
+        /// 64-bit Windows:  The system automatically fixes memory alignment faults and makes them 
         /// invisible to the application. It does this for the calling process and any descendant processes.
         /// After this value is set for a process, subsequent attempts to clear the value are ignored.
         /// </summary>
         NoGpFaultErrorBox = 0x2,
         /// <summary>
-        /// The system does not display the general-protection-fault message box.
-        /// This flag should only be set by debugging applications that handle general
+        /// The system does not display the general-protection-fault message box. 
+        /// This flag should only be set by debugging applications that handle general 
         /// protection (GP) faults themselves with an exception handler.
         /// </summary>
         NoAlignmentFaultExcept = 0x4,
         /// <summary>
-        /// The system does not display a message box when it fails to find a file.
+        /// The system does not display a message box when it fails to find a file. 
         /// Instead, the error is returned to the calling process.
         /// </summary>
         NoOpenFileErrorBox = 0x8000
@@ -248,7 +271,6 @@ namespace Standard
         CAPTION = 2,
         SYSMENU = 3,
         GROWBOX = 4,
-        SIZE = GROWBOX,
         MENU = 5,
         HSCROLL = 6,
         VSCROLL = 7,
@@ -263,10 +285,6 @@ namespace Standard
         BOTTOMLEFT = 16,
         BOTTOMRIGHT = 17,
         BORDER = 18,
-        REDUCE = MINBUTTON,
-        ZOOM = MAXBUTTON,
-        SIZEFIRST = LEFT,
-        SIZELAST = BOTTOMRIGHT,
         OBJECT = 19,
         CLOSE = 20,
         HELP = 21
@@ -390,122 +408,122 @@ namespace Standard
     /// </summary>
     internal enum SPI
     {
-        GETBEEP               = 0x0001,
-        SETBEEP               = 0x0002,
-        GETMOUSE              = 0x0003,
-        SETMOUSE              = 0x0004,
-        GETBORDER             = 0x0005,
-        SETBORDER             = 0x0006,
-        GETKEYBOARDSPEED      = 0x000A,
-        SETKEYBOARDSPEED      = 0x000B,
-        LANGDRIVER            = 0x000C,
+        GETBEEP = 0x0001,
+        SETBEEP = 0x0002,
+        GETMOUSE = 0x0003,
+        SETMOUSE = 0x0004,
+        GETBORDER = 0x0005,
+        SETBORDER = 0x0006,
+        GETKEYBOARDSPEED = 0x000A,
+        SETKEYBOARDSPEED = 0x000B,
+        LANGDRIVER = 0x000C,
         ICONHORIZONTALSPACING = 0x000D,
-        GETSCREENSAVETIMEOUT  = 0x000E,
-        SETSCREENSAVETIMEOUT  = 0x000F,
-        GETSCREENSAVEACTIVE   = 0x0010,
-        SETSCREENSAVEACTIVE   = 0x0011,
-        GETGRIDGRANULARITY    = 0x0012,
-        SETGRIDGRANULARITY    = 0x0013,
-        SETDESKWALLPAPER      = 0x0014,
-        SETDESKPATTERN        = 0x0015,
-        GETKEYBOARDDELAY      = 0x0016,
-        SETKEYBOARDDELAY      = 0x0017,
-        ICONVERTICALSPACING   = 0x0018,
-        GETICONTITLEWRAP      = 0x0019,
-        SETICONTITLEWRAP      = 0x001A,
-        GETMENUDROPALIGNMENT  = 0x001B,
-        SETMENUDROPALIGNMENT  = 0x001C,
-        SETDOUBLECLKWIDTH     = 0x001D,
-        SETDOUBLECLKHEIGHT    = 0x001E,
-        GETICONTITLELOGFONT   = 0x001F,
-        SETDOUBLECLICKTIME    = 0x0020,
-        SETMOUSEBUTTONSWAP    = 0x0021,
-        SETICONTITLELOGFONT   = 0x0022,
-        GETFASTTASKSWITCH     = 0x0023,
-        SETFASTTASKSWITCH     = 0x0024,
+        GETSCREENSAVETIMEOUT = 0x000E,
+        SETSCREENSAVETIMEOUT = 0x000F,
+        GETSCREENSAVEACTIVE = 0x0010,
+        SETSCREENSAVEACTIVE = 0x0011,
+        GETGRIDGRANULARITY = 0x0012,
+        SETGRIDGRANULARITY = 0x0013,
+        SETDESKWALLPAPER = 0x0014,
+        SETDESKPATTERN = 0x0015,
+        GETKEYBOARDDELAY = 0x0016,
+        SETKEYBOARDDELAY = 0x0017,
+        ICONVERTICALSPACING = 0x0018,
+        GETICONTITLEWRAP = 0x0019,
+        SETICONTITLEWRAP = 0x001A,
+        GETMENUDROPALIGNMENT = 0x001B,
+        SETMENUDROPALIGNMENT = 0x001C,
+        SETDOUBLECLKWIDTH = 0x001D,
+        SETDOUBLECLKHEIGHT = 0x001E,
+        GETICONTITLELOGFONT = 0x001F,
+        SETDOUBLECLICKTIME = 0x0020,
+        SETMOUSEBUTTONSWAP = 0x0021,
+        SETICONTITLELOGFONT = 0x0022,
+        GETFASTTASKSWITCH = 0x0023,
+        SETFASTTASKSWITCH = 0x0024,
 
-        SETDRAGFULLWINDOWS    = 0x0025,
-        GETDRAGFULLWINDOWS    = 0x0026,
-        GETNONCLIENTMETRICS   = 0x0029,
-        SETNONCLIENTMETRICS   = 0x002A,
-        GETMINIMIZEDMETRICS   = 0x002B,
-        SETMINIMIZEDMETRICS   = 0x002C,
-        GETICONMETRICS        = 0x002D,
-        SETICONMETRICS        = 0x002E,
-        SETWORKAREA           = 0x002F,
-        GETWORKAREA           = 0x0030,
-        SETPENWINDOWS         = 0x0031,
-        GETHIGHCONTRAST       = 0x0042,
-        SETHIGHCONTRAST       = 0x0043,
-        GETKEYBOARDPREF       = 0x0044,
-        SETKEYBOARDPREF       = 0x0045,
-        GETSCREENREADER       = 0x0046,
-        SETSCREENREADER       = 0x0047,
-        GETANIMATION          = 0x0048,
-        SETANIMATION          = 0x0049,
-        GETFONTSMOOTHING      = 0x004A,
-        SETFONTSMOOTHING      = 0x004B,
-        SETDRAGWIDTH          = 0x004C,
-        SETDRAGHEIGHT         = 0x004D,
-        SETHANDHELD           = 0x004E,
-        GETLOWPOWERTIMEOUT    = 0x004F,
-        GETPOWEROFFTIMEOUT    = 0x0050,
-        SETLOWPOWERTIMEOUT    = 0x0051,
-        SETPOWEROFFTIMEOUT    = 0x0052,
-        GETLOWPOWERACTIVE     = 0x0053,
-        GETPOWEROFFACTIVE     = 0x0054,
-        SETLOWPOWERACTIVE     = 0x0055,
-        SETPOWEROFFACTIVE     = 0x0056,
-        SETCURSORS            = 0x0057,
-        SETICONS              = 0x0058,
-        GETDEFAULTINPUTLANG   = 0x0059,
-        SETDEFAULTINPUTLANG   = 0x005A,
-        SETLANGTOGGLE         = 0x005B,
-        GETWINDOWSEXTENSION   = 0x005C,
-        SETMOUSETRAILS        = 0x005D,
-        GETMOUSETRAILS        = 0x005E,
+        SETDRAGFULLWINDOWS = 0x0025,
+        GETDRAGFULLWINDOWS = 0x0026,
+        GETNONCLIENTMETRICS = 0x0029,
+        SETNONCLIENTMETRICS = 0x002A,
+        GETMINIMIZEDMETRICS = 0x002B,
+        SETMINIMIZEDMETRICS = 0x002C,
+        GETICONMETRICS = 0x002D,
+        SETICONMETRICS = 0x002E,
+        SETWORKAREA = 0x002F,
+        GETWORKAREA = 0x0030,
+        SETPENWINDOWS = 0x0031,
+        GETHIGHCONTRAST = 0x0042,
+        SETHIGHCONTRAST = 0x0043,
+        GETKEYBOARDPREF = 0x0044,
+        SETKEYBOARDPREF = 0x0045,
+        GETSCREENREADER = 0x0046,
+        SETSCREENREADER = 0x0047,
+        GETANIMATION = 0x0048,
+        SETANIMATION = 0x0049,
+        GETFONTSMOOTHING = 0x004A,
+        SETFONTSMOOTHING = 0x004B,
+        SETDRAGWIDTH = 0x004C,
+        SETDRAGHEIGHT = 0x004D,
+        SETHANDHELD = 0x004E,
+        GETLOWPOWERTIMEOUT = 0x004F,
+        GETPOWEROFFTIMEOUT = 0x0050,
+        SETLOWPOWERTIMEOUT = 0x0051,
+        SETPOWEROFFTIMEOUT = 0x0052,
+        GETLOWPOWERACTIVE = 0x0053,
+        GETPOWEROFFACTIVE = 0x0054,
+        SETLOWPOWERACTIVE = 0x0055,
+        SETPOWEROFFACTIVE = 0x0056,
+        SETCURSORS = 0x0057,
+        SETICONS = 0x0058,
+        GETDEFAULTINPUTLANG = 0x0059,
+        SETDEFAULTINPUTLANG = 0x005A,
+        SETLANGTOGGLE = 0x005B,
+        GETWINDOWSEXTENSION = 0x005C,
+        SETMOUSETRAILS = 0x005D,
+        GETMOUSETRAILS = 0x005E,
         SETSCREENSAVERRUNNING = 0x0061,
-        SCREENSAVERRUNNING    = SETSCREENSAVERRUNNING,
-        GETFILTERKEYS        = 0x0032,
-        SETFILTERKEYS        = 0x0033,
-        GETTOGGLEKEYS        = 0x0034,
-        SETTOGGLEKEYS        = 0x0035,
-        GETMOUSEKEYS         = 0x0036,
-        SETMOUSEKEYS         = 0x0037,
-        GETSHOWSOUNDS        = 0x0038,
-        SETSHOWSOUNDS        = 0x0039,
-        GETSTICKYKEYS        = 0x003A,
-        SETSTICKYKEYS        = 0x003B,
-        GETACCESSTIMEOUT     = 0x003C,
-        SETACCESSTIMEOUT     = 0x003D,
+        SCREENSAVERRUNNING = SETSCREENSAVERRUNNING,
+        GETFILTERKEYS = 0x0032,
+        SETFILTERKEYS = 0x0033,
+        GETTOGGLEKEYS = 0x0034,
+        SETTOGGLEKEYS = 0x0035,
+        GETMOUSEKEYS = 0x0036,
+        SETMOUSEKEYS = 0x0037,
+        GETSHOWSOUNDS = 0x0038,
+        SETSHOWSOUNDS = 0x0039,
+        GETSTICKYKEYS = 0x003A,
+        SETSTICKYKEYS = 0x003B,
+        GETACCESSTIMEOUT = 0x003C,
+        SETACCESSTIMEOUT = 0x003D,
 
-        GETSERIALKEYS        = 0x003E,
-        SETSERIALKEYS        = 0x003F,
-        GETSOUNDSENTRY       = 0x0040,
-        SETSOUNDSENTRY       = 0x0041,
-        GETSNAPTODEFBUTTON   = 0x005F,
-        SETSNAPTODEFBUTTON   = 0x0060,
-        GETMOUSEHOVERWIDTH   = 0x0062,
-        SETMOUSEHOVERWIDTH   = 0x0063,
-        GETMOUSEHOVERHEIGHT  = 0x0064,
-        SETMOUSEHOVERHEIGHT  = 0x0065,
-        GETMOUSEHOVERTIME    = 0x0066,
-        SETMOUSEHOVERTIME    = 0x0067,
-        GETWHEELSCROLLLINES  = 0x0068,
-        SETWHEELSCROLLLINES  = 0x0069,
-        GETMENUSHOWDELAY     = 0x006A,
-        SETMENUSHOWDELAY     = 0x006B,
+        GETSERIALKEYS = 0x003E,
+        SETSERIALKEYS = 0x003F,
+        GETSOUNDSENTRY = 0x0040,
+        SETSOUNDSENTRY = 0x0041,
+        GETSNAPTODEFBUTTON = 0x005F,
+        SETSNAPTODEFBUTTON = 0x0060,
+        GETMOUSEHOVERWIDTH = 0x0062,
+        SETMOUSEHOVERWIDTH = 0x0063,
+        GETMOUSEHOVERHEIGHT = 0x0064,
+        SETMOUSEHOVERHEIGHT = 0x0065,
+        GETMOUSEHOVERTIME = 0x0066,
+        SETMOUSEHOVERTIME = 0x0067,
+        GETWHEELSCROLLLINES = 0x0068,
+        SETWHEELSCROLLLINES = 0x0069,
+        GETMENUSHOWDELAY = 0x006A,
+        SETMENUSHOWDELAY = 0x006B,
 
         GETWHEELSCROLLCHARS = 0x006C,
         SETWHEELSCROLLCHARS = 0x006D,
 
-        GETSHOWIMEUI        = 0x006E,
-        SETSHOWIMEUI        = 0x006F,
+        GETSHOWIMEUI = 0x006E,
+        SETSHOWIMEUI = 0x006F,
 
-        GETMOUSESPEED       = 0x0070,
-        SETMOUSESPEED       = 0x0071,
+        GETMOUSESPEED = 0x0070,
+        SETMOUSESPEED = 0x0071,
         GETSCREENSAVERRUNNING = 0x0072,
-        GETDESKWALLPAPER    = 0x0073,
+        GETDESKWALLPAPER = 0x0073,
 
         GETAUDIODESCRIPTION = 0x0074,
         SETAUDIODESCRIPTION = 0x0075,
@@ -513,115 +531,115 @@ namespace Standard
         GETSCREENSAVESECURE = 0x0076,
         SETSCREENSAVESECURE = 0x0077,
 
-        GETHUNGAPPTIMEOUT         = 0x0078,
-        SETHUNGAPPTIMEOUT         = 0x0079,
-        GETWAITTOKILLTIMEOUT      = 0x007A,
-        SETWAITTOKILLTIMEOUT      = 0x007B,
+        GETHUNGAPPTIMEOUT = 0x0078,
+        SETHUNGAPPTIMEOUT = 0x0079,
+        GETWAITTOKILLTIMEOUT = 0x007A,
+        SETWAITTOKILLTIMEOUT = 0x007B,
         GETWAITTOKILLSERVICETIMEOUT = 0x007C,
         SETWAITTOKILLSERVICETIMEOUT = 0x007D,
-        GETMOUSEDOCKTHRESHOLD     = 0x007E,
-        SETMOUSEDOCKTHRESHOLD     = 0x007F,
-        GETPENDOCKTHRESHOLD       = 0x0080,
-        SETPENDOCKTHRESHOLD       = 0x0081,
-        GETWINARRANGING           = 0x0082,
-        SETWINARRANGING           = 0x0083,
-        GETMOUSEDRAGOUTTHRESHOLD  = 0x0084,
-        SETMOUSEDRAGOUTTHRESHOLD  = 0x0085,
-        GETPENDRAGOUTTHRESHOLD    = 0x0086,
-        SETPENDRAGOUTTHRESHOLD    = 0x0087,
+        GETMOUSEDOCKTHRESHOLD = 0x007E,
+        SETMOUSEDOCKTHRESHOLD = 0x007F,
+        GETPENDOCKTHRESHOLD = 0x0080,
+        SETPENDOCKTHRESHOLD = 0x0081,
+        GETWINARRANGING = 0x0082,
+        SETWINARRANGING = 0x0083,
+        GETMOUSEDRAGOUTTHRESHOLD = 0x0084,
+        SETMOUSEDRAGOUTTHRESHOLD = 0x0085,
+        GETPENDRAGOUTTHRESHOLD = 0x0086,
+        SETPENDRAGOUTTHRESHOLD = 0x0087,
         GETMOUSESIDEMOVETHRESHOLD = 0x0088,
         SETMOUSESIDEMOVETHRESHOLD = 0x0089,
-        GETPENSIDEMOVETHRESHOLD   = 0x008A,
-        SETPENSIDEMOVETHRESHOLD   = 0x008B,
-        GETDRAGFROMMAXIMIZE       = 0x008C,
-        SETDRAGFROMMAXIMIZE       = 0x008D,
-        GETSNAPSIZING             = 0x008E,
-        SETSNAPSIZING             = 0x008F,
-        GETDOCKMOVING             = 0x0090,
-        SETDOCKMOVING             = 0x0091,
+        GETPENSIDEMOVETHRESHOLD = 0x008A,
+        SETPENSIDEMOVETHRESHOLD = 0x008B,
+        GETDRAGFROMMAXIMIZE = 0x008C,
+        SETDRAGFROMMAXIMIZE = 0x008D,
+        GETSNAPSIZING = 0x008E,
+        SETSNAPSIZING = 0x008F,
+        GETDOCKMOVING = 0x0090,
+        SETDOCKMOVING = 0x0091,
 
-        GETACTIVEWINDOWTRACKING       = 0x1000,
-        SETACTIVEWINDOWTRACKING       = 0x1001,
-        GETMENUANIMATION              = 0x1002,
-        SETMENUANIMATION              = 0x1003,
-        GETCOMBOBOXANIMATION          = 0x1004,
-        SETCOMBOBOXANIMATION          = 0x1005,
-        GETLISTBOXSMOOTHSCROLLING     = 0x1006,
-        SETLISTBOXSMOOTHSCROLLING     = 0x1007,
-        GETGRADIENTCAPTIONS           = 0x1008,
-        SETGRADIENTCAPTIONS           = 0x1009,
-        GETKEYBOARDCUES               = 0x100A,
-        SETKEYBOARDCUES               = 0x100B,
-        GETMENUUNDERLINES             = GETKEYBOARDCUES,
-        SETMENUUNDERLINES             = SETKEYBOARDCUES,
-        GETACTIVEWNDTRKZORDER         = 0x100C,
-        SETACTIVEWNDTRKZORDER         = 0x100D,
-        GETHOTTRACKING                = 0x100E,
-        SETHOTTRACKING                = 0x100F,
-        GETMENUFADE                   = 0x1012,
-        SETMENUFADE                   = 0x1013,
-        GETSELECTIONFADE              = 0x1014,
-        SETSELECTIONFADE              = 0x1015,
-        GETTOOLTIPANIMATION           = 0x1016,
-        SETTOOLTIPANIMATION           = 0x1017,
-        GETTOOLTIPFADE                = 0x1018,
-        SETTOOLTIPFADE                = 0x1019,
-        GETCURSORSHADOW               = 0x101A,
-        SETCURSORSHADOW               = 0x101B,
-        GETMOUSESONAR                 = 0x101C,
-        SETMOUSESONAR                 = 0x101D,
-        GETMOUSECLICKLOCK             = 0x101E,
-        SETMOUSECLICKLOCK             = 0x101F,
-        GETMOUSEVANISH                = 0x1020,
-        SETMOUSEVANISH                = 0x1021,
-        GETFLATMENU                   = 0x1022,
-        SETFLATMENU                   = 0x1023,
-        GETDROPSHADOW                 = 0x1024,
-        SETDROPSHADOW                 = 0x1025,
-        GETBLOCKSENDINPUTRESETS       = 0x1026,
-        SETBLOCKSENDINPUTRESETS       = 0x1027,
+        GETACTIVEWINDOWTRACKING = 0x1000,
+        SETACTIVEWINDOWTRACKING = 0x1001,
+        GETMENUANIMATION = 0x1002,
+        SETMENUANIMATION = 0x1003,
+        GETCOMBOBOXANIMATION = 0x1004,
+        SETCOMBOBOXANIMATION = 0x1005,
+        GETLISTBOXSMOOTHSCROLLING = 0x1006,
+        SETLISTBOXSMOOTHSCROLLING = 0x1007,
+        GETGRADIENTCAPTIONS = 0x1008,
+        SETGRADIENTCAPTIONS = 0x1009,
+        GETKEYBOARDCUES = 0x100A,
+        SETKEYBOARDCUES = 0x100B,
+        GETMENUUNDERLINES = GETKEYBOARDCUES,
+        SETMENUUNDERLINES = SETKEYBOARDCUES,
+        GETACTIVEWNDTRKZORDER = 0x100C,
+        SETACTIVEWNDTRKZORDER = 0x100D,
+        GETHOTTRACKING = 0x100E,
+        SETHOTTRACKING = 0x100F,
+        GETMENUFADE = 0x1012,
+        SETMENUFADE = 0x1013,
+        GETSELECTIONFADE = 0x1014,
+        SETSELECTIONFADE = 0x1015,
+        GETTOOLTIPANIMATION = 0x1016,
+        SETTOOLTIPANIMATION = 0x1017,
+        GETTOOLTIPFADE = 0x1018,
+        SETTOOLTIPFADE = 0x1019,
+        GETCURSORSHADOW = 0x101A,
+        SETCURSORSHADOW = 0x101B,
+        GETMOUSESONAR = 0x101C,
+        SETMOUSESONAR = 0x101D,
+        GETMOUSECLICKLOCK = 0x101E,
+        SETMOUSECLICKLOCK = 0x101F,
+        GETMOUSEVANISH = 0x1020,
+        SETMOUSEVANISH = 0x1021,
+        GETFLATMENU = 0x1022,
+        SETFLATMENU = 0x1023,
+        GETDROPSHADOW = 0x1024,
+        SETDROPSHADOW = 0x1025,
+        GETBLOCKSENDINPUTRESETS = 0x1026,
+        SETBLOCKSENDINPUTRESETS = 0x1027,
 
-        GETUIEFFECTS                  = 0x103E,
-        SETUIEFFECTS                  = 0x103F,
+        GETUIEFFECTS = 0x103E,
+        SETUIEFFECTS = 0x103F,
 
-        GETDISABLEOVERLAPPEDCONTENT   = 0x1040,
-        SETDISABLEOVERLAPPEDCONTENT   = 0x1041,
-        GETCLIENTAREAANIMATION        = 0x1042,
-        SETCLIENTAREAANIMATION        = 0x1043,
-        GETCLEARTYPE                  = 0x1048,
-        SETCLEARTYPE                  = 0x1049,
-        GETSPEECHRECOGNITION          = 0x104A,
-        SETSPEECHRECOGNITION          = 0x104B,
+        GETDISABLEOVERLAPPEDCONTENT = 0x1040,
+        SETDISABLEOVERLAPPEDCONTENT = 0x1041,
+        GETCLIENTAREAANIMATION = 0x1042,
+        SETCLIENTAREAANIMATION = 0x1043,
+        GETCLEARTYPE = 0x1048,
+        SETCLEARTYPE = 0x1049,
+        GETSPEECHRECOGNITION = 0x104A,
+        SETSPEECHRECOGNITION = 0x104B,
 
-        GETFOREGROUNDLOCKTIMEOUT      = 0x2000,
-        SETFOREGROUNDLOCKTIMEOUT      = 0x2001,
-        GETACTIVEWNDTRKTIMEOUT        = 0x2002,
-        SETACTIVEWNDTRKTIMEOUT        = 0x2003,
-        GETFOREGROUNDFLASHCOUNT       = 0x2004,
-        SETFOREGROUNDFLASHCOUNT       = 0x2005,
-        GETCARETWIDTH                 = 0x2006,
-        SETCARETWIDTH                 = 0x2007,
+        GETFOREGROUNDLOCKTIMEOUT = 0x2000,
+        SETFOREGROUNDLOCKTIMEOUT = 0x2001,
+        GETACTIVEWNDTRKTIMEOUT = 0x2002,
+        SETACTIVEWNDTRKTIMEOUT = 0x2003,
+        GETFOREGROUNDFLASHCOUNT = 0x2004,
+        SETFOREGROUNDFLASHCOUNT = 0x2005,
+        GETCARETWIDTH = 0x2006,
+        SETCARETWIDTH = 0x2007,
 
-        GETMOUSECLICKLOCKTIME         = 0x2008,
-        SETMOUSECLICKLOCKTIME         = 0x2009,
-        GETFONTSMOOTHINGTYPE          = 0x200A,
-        SETFONTSMOOTHINGTYPE          = 0x200B,
+        GETMOUSECLICKLOCKTIME = 0x2008,
+        SETMOUSECLICKLOCKTIME = 0x2009,
+        GETFONTSMOOTHINGTYPE = 0x200A,
+        SETFONTSMOOTHINGTYPE = 0x200B,
 
-        GETFONTSMOOTHINGCONTRAST         = 0x200C,
-        SETFONTSMOOTHINGCONTRAST         = 0x200D,
+        GETFONTSMOOTHINGCONTRAST = 0x200C,
+        SETFONTSMOOTHINGCONTRAST = 0x200D,
 
-        GETFOCUSBORDERWIDTH           = 0x200E,
-        SETFOCUSBORDERWIDTH           = 0x200F,
-        GETFOCUSBORDERHEIGHT          = 0x2010,
-        SETFOCUSBORDERHEIGHT          = 0x2011,
+        GETFOCUSBORDERWIDTH = 0x200E,
+        SETFOCUSBORDERWIDTH = 0x200F,
+        GETFOCUSBORDERHEIGHT = 0x2010,
+        SETFOCUSBORDERHEIGHT = 0x2011,
 
-        GETFONTSMOOTHINGORIENTATION         = 0x2012,
-        SETFONTSMOOTHINGORIENTATION         = 0x2013,
+        GETFONTSMOOTHINGORIENTATION = 0x2012,
+        SETFONTSMOOTHINGORIENTATION = 0x2013,
 
-        GETMINIMUMHITRADIUS           = 0x2014,
-        SETMINIMUMHITRADIUS           = 0x2015,
-        GETMESSAGEDURATION            = 0x2016,
-        SETMESSAGEDURATION            = 0x2017,
+        GETMINIMUMHITRADIUS = 0x2014,
+        SETMINIMUMHITRADIUS = 0x2015,
+        GETMESSAGEDURATION = 0x2016,
+        SETMESSAGEDURATION = 0x2017,
     }
 
     /// <summary>
@@ -632,45 +650,44 @@ namespace Standard
     {
         None = 0,
         UPDATEINIFILE = 0x01,
-        SENDCHANGE = 0x02,
-        SENDWININICHANGE = SENDCHANGE,
+        SENDWININICHANGE = 0x02,
     }
 
     [Flags]
     internal enum STATE_SYSTEM
     {
-        UNAVAILABLE      = 0x00000001, // Disabled
-        SELECTED         = 0x00000002,
-        FOCUSED          = 0x00000004,
-        PRESSED          = 0x00000008,
-        CHECKED          = 0x00000010,
-        MIXED            = 0x00000020,  // 3-state checkbox or toolbar button
-        INDETERMINATE    = MIXED,
-        READONLY         = 0x00000040,
-        HOTTRACKED       = 0x00000080,
-        DEFAULT          = 0x00000100,
-        EXPANDED         = 0x00000200,
-        COLLAPSED        = 0x00000400,
-        BUSY             = 0x00000800,
-        FLOATING         = 0x00001000,  // Children "owned" not "contained" by parent
-        MARQUEED         = 0x00002000,
-        ANIMATED         = 0x00004000,
-        INVISIBLE        = 0x00008000,
-        OFFSCREEN        = 0x00010000,
-        SIZEABLE         = 0x00020000,
-        MOVEABLE         = 0x00040000,
-        SELFVOICING      = 0x00080000,
-        FOCUSABLE        = 0x00100000,
-        SELECTABLE       = 0x00200000,
-        LINKED           = 0x00400000,
-        TRAVERSED        = 0x00800000,
-        MULTISELECTABLE  = 0x01000000,  // Supports multiple selection
-        EXTSELECTABLE    = 0x02000000,  // Supports extended selection
-        ALERT_LOW        = 0x04000000,  // This information is of low priority
-        ALERT_MEDIUM     = 0x08000000,  // This information is of medium priority
-        ALERT_HIGH       = 0x10000000,  // This information is of high priority
-        PROTECTED        = 0x20000000,  // access to this is restricted
-        VALID            = 0x3FFFFFFF,
+        UNAVAILABLE = 0x00000001, // Disabled
+        SELECTED = 0x00000002,
+        FOCUSED = 0x00000004,
+        PRESSED = 0x00000008,
+        CHECKED = 0x00000010,
+        MIXED = 0x00000020,  // 3-state checkbox or toolbar button
+        INDETERMINATE = MIXED,
+        READONLY = 0x00000040,
+        HOTTRACKED = 0x00000080,
+        DEFAULT = 0x00000100,
+        EXPANDED = 0x00000200,
+        COLLAPSED = 0x00000400,
+        BUSY = 0x00000800,
+        FLOATING = 0x00001000,  // Children "owned" not "contained" by parent
+        MARQUEED = 0x00002000,
+        ANIMATED = 0x00004000,
+        INVISIBLE = 0x00008000,
+        OFFSCREEN = 0x00010000,
+        SIZEABLE = 0x00020000,
+        MOVEABLE = 0x00040000,
+        SELFVOICING = 0x00080000,
+        FOCUSABLE = 0x00100000,
+        SELECTABLE = 0x00200000,
+        LINKED = 0x00400000,
+        TRAVERSED = 0x00800000,
+        MULTISELECTABLE = 0x01000000,  // Supports multiple selection
+        EXTSELECTABLE = 0x02000000,  // Supports extended selection
+        ALERT_LOW = 0x04000000,  // This information is of low priority
+        ALERT_MEDIUM = 0x08000000,  // This information is of medium priority
+        ALERT_HIGH = 0x10000000,  // This information is of high priority
+        PROTECTED = 0x20000000,  // access to this is restricted
+        VALID = 0x3FFFFFFF,
     }
 
     internal enum StockObject : int
@@ -819,6 +836,17 @@ namespace Standard
         COMMAND = 0x0111,
         SYSCOMMAND = 0x0112,
 
+        // These two messages aren't defined in winuser.h, but they are sent to windows
+        // with captions. They appear to paint the window caption and frame.
+        // Unfortunately if you override the standard non-client rendering as we do
+        // with CustomFrameWindow, sometimes Windows (not deterministically
+        // reproducibly but definitely frequently) will send these messages to the
+        // window and paint the standard caption/title over the top of the custom one.
+        // So we need to handle these messages in CustomFrameWindow to prevent this
+        // from happening.
+        NCUAHDRAWCAPTION = 0xAE,
+        NCUAHDRAWFRAME = 0xAF,
+
         MOUSEMOVE = 0x0200,
         LBUTTONDOWN = 0x0201,
         LBUTTONUP = 0x0202,
@@ -893,6 +921,7 @@ namespace Standard
         DWMWINDOWMAXIMIZEDCHANGE = 0x0321,
 
         GETTITLEBARINFOEX = 0x033F,
+
         #region Windows 7
         DWMSENDICONICTHUMBNAIL = 0x0323,
         DWMSENDICONICLIVEPREVIEWBITMAP = 0x0326,
@@ -900,7 +929,7 @@ namespace Standard
 
         USER = 0x0400,
 
-        // This is the hard-coded message value used by Microsoft for Shell_NotifyIcon.
+        // This is the hard-coded message value used by WinForms for Shell_NotifyIcon.
         // It's relatively safe to reuse.
         TRAYMOUSEMESSAGE = 0x800, //WM_USER + 1024
         APP = 0x8000,
@@ -1020,7 +1049,7 @@ namespace Standard
     /// <summary>
     /// DWMFLIP3DWINDOWPOLICY.  DWMFLIP3D_*
     /// </summary>
-    internal enum DWMFLIP3D
+    internal enum DWMFLIP3D 
     {
         DEFAULT,
         EXCLUDEBELOW,
@@ -1102,6 +1131,8 @@ namespace Standard
         NOSIZE = 0x0001,
         NOZORDER = 0x0004,
         SHOWWINDOW = 0x0040,
+
+        TOPMOST = NOACTIVATE | NOOWNERZORDER | NOSIZE | NOMOVE | NOREDRAW | NOSENDCHANGING
     }
 
     /// <summary>
@@ -1129,6 +1160,7 @@ namespace Standard
     {
         SIZE = 0xF000,
         MOVE = 0xF010,
+        MOUSEMOVE = 0xF012,
         MINIMIZE = 0xF020,
         MAXIMIZE = 0xF030,
         NEXTWINDOW = 0xF040,
@@ -1242,7 +1274,7 @@ namespace Standard
         APPIDINFO = 0x00000004, // indicates the data type is a pointer to a SHARDAPPIDINFO structure
         APPIDINFOIDLIST = 0x00000005, // indicates the data type is a pointer to a SHARDAPPIDINFOIDLIST structure
         LINK = 0x00000006, // indicates the data type is a pointer to an IShellLink instance
-        APPIDINFOLINK = 0x00000007, // indicates the data type is a pointer to a SHARDAPPIDINFOLINK structure
+        APPIDINFOLINK = 0x00000007, // indicates the data type is a pointer to a SHARDAPPIDINFOLINK structure 
     }
 
     [Flags]
@@ -1328,93 +1360,78 @@ namespace Standard
         REDRAW = HREDRAW | VREDRAW,
     }
 
+    internal enum ABEdge
+    {
+        ABE_LEFT = 0,
+        ABE_TOP = 1,
+        ABE_RIGHT = 2,
+        ABE_BOTTOM = 3
+    }
+
+    internal enum ABMsg
+    {
+        ABM_NEW = 0,
+        ABM_REMOVE = 1,
+        ABM_QUERYPOS = 2,
+        ABM_SETPOS = 3,
+        ABM_GETSTATE = 4,
+        ABM_GETTASKBARPOS = 5,
+        ABM_ACTIVATE = 6,
+        ABM_GETAUTOHIDEBAR = 7,
+        ABM_SETAUTOHIDEBAR = 8,
+        ABM_WINDOWPOSCHANGED = 9,
+        ABM_SETSTATE = 10
+    }
+
     #endregion
 
     #region SafeHandles
 
     internal sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        /// <SecurityNote>
-        ///   Critical : Calls critical ctor
-        /// </SecurityNote>
         [SecurityCritical]
-        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
         private SafeFindHandle() : base(true) { }
 
-        /// <SecurityNote>
-        ///   Critical : Base method is critical
-        /// </SecurityNote>
-        [SecurityCritical]
+
         protected override bool ReleaseHandle()
         {
             return NativeMethods.FindClose(handle);
         }
     }
 
-    /// <SecurityNote>
-    ///   Critical : Base type is critcal
-    /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeDC : SafeHandleZeroOrMinusOneIsInvalid
     {
         private static class NativeMethods
         {
-            /// <SecurityNote>
-            ///   Critical : P-Invoke
-            /// </SecurityNote>
-            [SecurityCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [DllImport("user32.dll")]
             public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
-            /// <SecurityNote>
-            ///   Critical : P-Invoke
-            /// </SecurityNote>
-            [SecurityCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [DllImport("user32.dll")]
             public static extern SafeDC GetDC(IntPtr hwnd);
 
             // Weird legacy function, documentation is unclear about how to use it...
-            /// <SecurityNote>
-            ///   Critical : P-Invoke
-            /// </SecurityNote>
-            [SecurityCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
             public static extern SafeDC CreateDC([MarshalAs(UnmanagedType.LPWStr)] string lpszDriver, [MarshalAs(UnmanagedType.LPWStr)] string lpszDevice, IntPtr lpszOutput, IntPtr lpInitData);
 
-            /// <SecurityNote>
-            ///   Critical : P-Invoke
-            /// </SecurityNote>
-            [SecurityCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [DllImport("gdi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
             public static extern SafeDC CreateCompatibleDC(IntPtr hdc);
 
-            /// <SecurityNote>
-            ///   Critical : P-Invoke
-            /// </SecurityNote>
-            [SecurityCritical]
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
             [DllImport("gdi32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool DeleteDC(IntPtr hdc);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Native hWnd handle
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr? _hwnd;
         private bool _created;
 
-        /// <SecurityNote>
-        ///   Critical : Sets critical field
-        /// </SecurityNote>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IntPtr Hwnd
         {
-            [SecurityCritical]
             set
             {
                 Assert.NullableIsNull(_hwnd);
@@ -1422,16 +1439,8 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critcal ctor
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeDC() : base(true) { }
 
-        /// <SecurityNote>
-        ///   Critical : Base member is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
@@ -1448,10 +1457,6 @@ namespace Standard
             return NativeMethods.ReleaseDC(_hwnd.Value, handle) == 1;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes"), SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeDC CreateDC(string deviceName)
         {
@@ -1478,10 +1483,6 @@ namespace Standard
             return dc;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes"), SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeDC CreateCompatibleDC(SafeDC hdc)
         {
@@ -1516,10 +1517,7 @@ namespace Standard
             return dc;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeDC GetDC(IntPtr hwnd)
         {
             SafeDC dc = null;
@@ -1544,19 +1542,15 @@ namespace Standard
             return dc;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeDC GetDesktop()
         {
             return GetDC(IntPtr.Zero);
         }
 
-        /// <SecurityNote>
-        ///   Critical : Sets critical fields
-        /// </SecurityNote>
-        [SecurityCritical]
+        // In method 'SafeDC.WrapDC(IntPtr)', object '<>g__initLocal0' is not disposed along all exception paths.
+        // Call System.IDisposable.Dispose on object '<>g__initLocal0' before all references to it are out of scope.
+        // Sure...
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeDC WrapDC(IntPtr hdc)
@@ -1571,22 +1565,10 @@ namespace Standard
         }
     }
 
-    /// <SecurityNote>
-    ///   Critical : Base type is critcal
-    /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeHBITMAP : SafeHandleZeroOrMinusOneIsInvalid
     {
-        /// <SecurityNote>
-        ///   Critical : Calls critical ctor
-        /// </SecurityNote>
-        [SecurityCritical]
         private SafeHBITMAP() : base(true) { }
 
-        /// <SecurityNote>
-        ///   Critical : Base member is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
@@ -1594,22 +1576,13 @@ namespace Standard
         }
     }
 
-    /// <SecurityNote>
-    ///   Critical : Base type is critcal
-    /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeGdiplusStartupToken : SafeHandleZeroOrMinusOneIsInvalid
     {
-        /// <SecurityNote>
-        ///   Critical : Calls critical ctor
-        /// </SecurityNote>
-        [SecurityCritical]
-        private SafeGdiplusStartupToken() : base(true) { }
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        private SafeGdiplusStartupToken(IntPtr ptr) : base(true) {
+            handle = ptr;
+        }
 
-        /// <SecurityNote>
-        ///   Critical : Base member is critical
-        /// </SecurityNote>
-        [SecurityCritical]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
@@ -1617,42 +1590,27 @@ namespace Standard
             return s == Status.Ok;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Call critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
         public static SafeGdiplusStartupToken Startup()
         {
-            SafeGdiplusStartupToken safeHandle = new SafeGdiplusStartupToken();
             IntPtr unsafeHandle;
             StartupOutput output;
             Status s = NativeMethods.GdiplusStartup(out unsafeHandle, new StartupInput(), out output);
             if (s == Status.Ok)
             {
-                safeHandle.handle = unsafeHandle;
+                SafeGdiplusStartupToken safeHandle = new SafeGdiplusStartupToken(unsafeHandle);
                 return safeHandle;
             }
-            safeHandle.Dispose();
             throw new Exception("Unable to initialize GDI+");
         }
     }
 
-    /// <SecurityNote>
-    ///   Critical : Base type is critical
-    /// </SecurityNote>
-    [SecurityCritical]
     internal sealed class SafeConnectionPointCookie : SafeHandleZeroOrMinusOneIsInvalid
     {
         private IConnectionPoint _cp;
         // handle holds the cookie value.
 
-        /// <SecurityNote>
-        ///   Critical : Call critical base ctor
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "IConnectionPoint")]
         public SafeConnectionPointCookie(IConnectionPointContainer target, object sink, Guid eventId)
@@ -1684,20 +1642,12 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical ReleaseHandle
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public void Disconnect()
         {
             ReleaseHandle();
         }
 
-        /// <SecurityNote>
-        ///   Critical : Base method is critical and calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
@@ -1764,9 +1714,9 @@ namespace Standard
         public byte rgbReserved;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 2)]
-    internal struct BITMAPINFOHEADER
-    {
+    [StructLayout(LayoutKind.Sequential, Pack=2)]
+    internal struct BITMAPINFOHEADER 
+    { 
         public int biSize;
         public int biWidth;
         public int biHeight;
@@ -1782,8 +1732,8 @@ namespace Standard
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct BITMAPINFO
-    {
-        public BITMAPINFOHEADER bmiHeader;
+    { 
+        public BITMAPINFOHEADER bmiHeader; 
         public RGBQUAD bmiColors;
     }
 
@@ -1795,7 +1745,7 @@ namespace Standard
         public MSGFLTINFO ExtStatus;
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
     internal struct CREATESTRUCT
     {
         public IntPtr lpCreateParams;
@@ -1901,49 +1851,34 @@ namespace Standard
     {
         private static class NativeMethods
         {
-            /// <SecurityNote>
-            /// Critical: Suppresses unmanaged code security.
-            /// </SecurityNote>
-            [SecurityCritical, SuppressUnmanagedCodeSecurity]
             [DllImport("ole32.dll")]
-            internal static extern int PropVariantClear(PROPVARIANT pvar);
+            internal static extern HRESULT PropVariantClear(PROPVARIANT pvar);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         [FieldOffset(0)]
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         private ushort vt;
-        [FieldOffset(8)]
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        [FieldOffset(8)]
         private IntPtr pointerVal;
-        [FieldOffset(8)]
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        [FieldOffset(8)]
         private byte byteVal;
-        [FieldOffset(8)]
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        [FieldOffset(8)]
         private long longVal;
-        [FieldOffset(8)]
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        [FieldOffset(8)]
         private short boolVal;
 
-        /// <SecurityNote>
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public VarEnum VarType
         {
-            [SecurityCritical]
             get { return (VarEnum)vt; }
         }
 
-        // Right now only using this for strings.  If for some reason we get something else return null.
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
+        // Right now only using this for strings.
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public string GetValue()
         {
@@ -1955,11 +1890,6 @@ namespace Standard
             return null;
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void SetValue(bool f)
         {
             Clear();
@@ -1967,11 +1897,6 @@ namespace Standard
             boolVal = (short)(f ? -1 : 0);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public void SetValue(string val)
         {
@@ -1980,44 +1905,25 @@ namespace Standard
             pointerVal = Marshal.StringToCoTaskMemUni(val);
         }
 
-        /// <SecurityNote>
-        /// Critical - Calls critical PropVariantClear
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Clear()
         {
-            NativeMethods.PropVariantClear(this);
+            HRESULT hr = NativeMethods.PropVariantClear(this);
+            Assert.IsTrue(hr.Succeeded);
         }
 
         #region IDisposable Pattern
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         ~PROPVARIANT()
         {
             Dispose(false);
         }
 
-        /// <SecurityNote>
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "disposing")]
         private void Dispose(bool disposing)
         {
@@ -2052,7 +1958,7 @@ namespace Standard
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     internal class SHARDAPPIDINFOLINK
     {
-        IntPtr psl;     // An IShellLink instance that when launched opens a recently used item in the specified
+        IntPtr psl;     // An IShellLink instance that when launched opens a recently used item in the specified 
         // application. This link is not added to the recent docs folder, but will be added to the
         // specified application's destination list.
         [MarshalAs(UnmanagedType.LPWStr)]
@@ -2060,7 +1966,7 @@ namespace Standard
     }
 
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal struct LOGFONT
     {
         public int lfHeight;
@@ -2111,7 +2017,6 @@ namespace Standard
         // Vista only
         public int iPaddedBorderWidth;
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static NONCLIENTMETRICS VistaMetricsStruct
         {
             get
@@ -2122,7 +2027,6 @@ namespace Standard
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static NONCLIENTMETRICS XPMetricsStruct
         {
             get
@@ -2173,20 +2077,55 @@ namespace Standard
         public int cyBottomHeight;
     };
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal class MONITORINFO
-    {
-        public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-        public RECT rcMonitor;
-        public RECT rcWork;
-        public int dwFlags;
-    }
-
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct POINT
     {
-        public int x;
-        public int y;
+        private int _x;
+        private int _y;
+
+        public POINT(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
+
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is POINT)
+            {
+                var point = (POINT)obj;
+
+                return point._x == _x && point._y == _y;
+            }
+            return base.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return _x.GetHashCode() ^ _y.GetHashCode();
+        }
+
+        public static bool operator ==(POINT a, POINT b)
+        {
+            return a._x == b._x && a._y == b._y;
+        }
+
+        public static bool operator !=(POINT a, POINT b)
+        {
+            return !(a == b);
+        }
     }
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
@@ -2204,6 +2143,24 @@ namespace Standard
         private int _top;
         private int _right;
         private int _bottom;
+
+        public static readonly RECT Empty = new RECT();
+
+        public RECT(int left, int top, int right, int bottom)
+        {
+            this._left = left;
+            this._top = top;
+            this._right = right;
+            this._bottom = bottom;
+        }
+
+        public RECT(RECT rcSrc)
+        {
+            _left = rcSrc.Left;
+            _top = rcSrc.Top;
+            _right = rcSrc.Right;
+            _bottom = rcSrc.Bottom;
+        }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public void Offset(int dx, int dy)
@@ -2257,7 +2214,7 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public POINT Position
         {
-            get { return new POINT { x = _left, y = _top }; }
+            get { return new POINT { X = _left, Y = _top }; }
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -2266,6 +2223,7 @@ namespace Standard
             get { return new SIZE { cx = Width, cy = Height }; }
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static RECT Union(RECT rect1, RECT rect2)
         {
             return new RECT
@@ -2293,9 +2251,35 @@ namespace Standard
             }
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                // BUGBUG : On Bidi OS (hebrew arabic) left > right
+                return Left >= Right || Top >= Bottom;
+            }
+        }
+
+        public override string ToString()
+        {
+            if (this == Empty)
+                return "RECT {Empty}";
+            return "RECT { left : " + Left + " / top : " + Top + " / right : " + Right + " / bottom : " + Bottom + " }";
+        }
+
         public override int GetHashCode()
         {
             return (_left << 16 | Utility.LOWORD(_right)) ^ (_top << 16 | Utility.LOWORD(_bottom));
+        }
+
+        public static bool operator ==(RECT rect1, RECT rect2)
+        {
+            return (rect1.Left == rect2.Left && rect1.Top == rect2.Top && rect1.Right == rect2.Right && rect1.Bottom == rect2.Bottom);
+        }
+
+        public static bool operator !=(RECT rect1, RECT rect2)
+        {
+            return !(rect1 == rect2);
         }
     }
 
@@ -2409,15 +2393,16 @@ namespace Standard
         public string cAlternateFileName;
     }
 
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal class WINDOWPLACEMENT
     {
         public int length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
         public int flags;
         public SW showCmd;
-        public POINT ptMinPosition;
-        public POINT ptMaxPosition;
-        public RECT rcNormalPosition;
+        public POINT minPosition;
+        public POINT maxPosition;
+        public RECT normalPosition;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -2429,10 +2414,16 @@ namespace Standard
         public int y;
         public int cx;
         public int cy;
-        public int flags;
+        public SWP flags;
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"x: {this.x}; y: {this.y}; cx: {this.cx}; cy: {this.cy}; flags: {this.flags}";
+        }
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
     internal struct WNDCLASSEX
     {
         public int cbSize;
@@ -2476,7 +2467,7 @@ namespace Standard
         public uint uiDenominator;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct DWM_TIMING_INFO
     {
         public int cbSize;
@@ -2521,13 +2512,24 @@ namespace Standard
         public ulong cBuffersEmpty;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct APPBARDATA
+    {
+        /// <summary>
+        /// initialize this field using: Marshal.SizeOf(typeof(APPBARDATA));
+        /// </summary>
+        public int cbSize;
+        public IntPtr hWnd;
+        public int uCallbackMessage;
+        public int uEdge;
+        public RECT rc;
+        public bool lParam;
+    }
+
     #endregion
 
     /// <summary>Delegate declaration that matches native WndProc signatures.</summary>
     internal delegate IntPtr WndProc(IntPtr hwnd, WM uMsg, IntPtr wParam, IntPtr lParam);
-
-    /// <summary>Delegate declaration that matches native WndProc signatures.</summary>
-    internal delegate IntPtr WndProcHook(IntPtr hwnd, WM uMsg, IntPtr wParam, IntPtr lParam, ref bool handled);
 
     /// <summary>Delegate declaration that matches managed WndProc signatures.</summary>
     internal delegate IntPtr MessageHandler(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled);
@@ -2535,19 +2537,12 @@ namespace Standard
     // Some native methods are shimmed through public versions that handle converting failures into thrown exceptions.
     internal static class NativeMethods
     {
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _AdjustWindowRectEx(ref RECT lpRect, WS dwStyle, [MarshalAs(UnmanagedType.Bool)] bool bMenu, WS_EX dwExStyle);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static RECT AdjustWindowRectEx(RECT lpRect, WS dwStyle, bool bMenu, WS_EX dwExStyle)
         {
             // Native version modifies the parameter in place.
@@ -2559,19 +2554,11 @@ namespace Standard
             return lpRect;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilter", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _ChangeWindowMessageFilter(WM message, MSGFLT dwFlag);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2579,10 +2566,6 @@ namespace Standard
 
         // Note that processes at or below SECURITY_MANDATORY_LOW_RID are not allowed to change the message filter.
         // If those processes call this function, it will fail and generate the extended error code, ERROR_ACCESS_DENIED.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static HRESULT ChangeWindowMessageFilterEx(IntPtr hwnd, WM message, MSGFLT action, out MSGFLTINFO filterInfo)
         {
@@ -2622,26 +2605,22 @@ namespace Standard
             return HRESULT.S_OK;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", CharSet = CharSet.None, SetLastError = true, EntryPoint = "ClientToScreen")]
+        public static extern bool ClientToScreen(IntPtr hWnd, ref POINT point);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", CharSet = CharSet.None, SetLastError = true, EntryPoint = "ScreenToClient")]
+        public static extern bool ScreenToClient(IntPtr hWnd, ref POINT point);
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
         public static extern CombineRgnResult CombineRgn(IntPtr hrgnDest, IntPtr hrgnSrc1, IntPtr hrgnSrc2, RGN fnCombineMode);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", EntryPoint = "CommandLineToArgvW", CharSet = CharSet.Unicode)]
         private static extern IntPtr _CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string cmdLine, out int numArgs);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static string[] CommandLineToArgvW(string cmdLine)
         {
@@ -2674,26 +2653,14 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "CreateDIBSection", SetLastError = true)]
         private static extern SafeHBITMAP _CreateDIBSection(SafeDC hdc, [In] ref BITMAPINFO bitmapInfo, int iUsage, [Out] out IntPtr ppvBits, IntPtr hSection, int dwOffset);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "CreateDIBSection", SetLastError = true)]
         private static extern SafeHBITMAP _CreateDIBSectionIntPtr(IntPtr hdc, [In] ref BITMAPINFO bitmapInfo, int iUsage, [Out] out IntPtr ppvBits, IntPtr hSection, int dwOffset);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static SafeHBITMAP CreateDIBSection(SafeDC hdc, ref BITMAPINFO bitmapInfo, out IntPtr ppvBits, IntPtr hSection, int dwOffset)
         {
@@ -2716,18 +2683,10 @@ namespace Standard
             return hBitmap;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "CreateRoundRectRgn", SetLastError = true)]
         private static extern IntPtr _CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse)
         {
@@ -2739,18 +2698,10 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "CreateRectRgn", SetLastError = true)]
         private static extern IntPtr _CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect)
         {
@@ -2762,18 +2713,10 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "CreateRectRgnIndirect", SetLastError = true)]
         private static extern IntPtr _CreateRectRgnIndirect([In] ref RECT lprc);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr CreateRectRgnIndirect(RECT lprc)
         {
@@ -2785,18 +2728,10 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
         public static extern IntPtr CreateSolidBrush(int crColor);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
         private static extern IntPtr _CreateWindowEx(
@@ -2813,10 +2748,6 @@ namespace Standard
             IntPtr hInstance,
             IntPtr lpParam);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr CreateWindowEx(
             WS_EX dwExStyle,
@@ -2841,79 +2772,44 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", CharSet = CharSet.Unicode, EntryPoint = "DefWindowProcW")]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject(IntPtr hObject);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr handle);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyWindow(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _DwmIsCompositionEnabled();
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)
         {
             // Make this call safe to make on downlevel OSes...
@@ -2935,10 +2831,6 @@ namespace Standard
             return false;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool DwmIsCompositionEnabled()
         {
@@ -2950,39 +2842,23 @@ namespace Standard
             return _DwmIsCompositionEnabled();
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DwmDefWindowProc(IntPtr hwnd, WM msg, IntPtr wParam, IntPtr lParam, out IntPtr plResult);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
         private static extern void _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)
         {
             Assert.IsTrue(Utility.IsOSVistaOrNewer);
             var dwPolicy = (int)flip3dPolicy;
-            _DwmSetWindowAttribute(hwnd, DWMWA.FLIP3D_POLICY, ref dwPolicy, sizeof(int));
+            _DwmSetWindowAttribute(hwnd, DWMWA.FLIP3D_POLICY, ref dwPolicy, sizeof(int)); 
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DwmSetWindowAttributeDisallowPeek(IntPtr hwnd, bool disallowPeek)
         {
@@ -2991,18 +2867,10 @@ namespace Standard
             _DwmSetWindowAttribute(hwnd, DWMWA.DISALLOW_PEEK, ref dwDisallow, sizeof(int));
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "EnableMenuItem")]
         private static extern int _EnableMenuItem(IntPtr hMenu, SC uIDEnableItem, MF uEnable);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static MF EnableMenuItem(IntPtr hMenu, SC uIDEnableItem, MF uEnable)
         {
@@ -3011,19 +2879,11 @@ namespace Standard
             return (MF)iRet;
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "RemoveMenu", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void RemoveMenu(IntPtr hMenu, SC uPosition, MF uFlags)
         {
@@ -3033,19 +2893,11 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "DrawMenuBar", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _DrawMenuBar(IntPtr hWnd);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void DrawMenuBar(IntPtr hWnd)
         {
@@ -3055,48 +2907,28 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
-        [SuppressMessage("Mricrosoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll")]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindClose(IntPtr handle);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         // Not shimming this SetLastError=true function because callers want to evaluate the reason for failure.
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern SafeFindHandle FindFirstFileW(string lpFileName, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WIN32_FIND_DATAW lpFindFileData);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         // Not shimming this SetLastError=true function because callers want to evaluate the reason for failure.
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindNextFileW(SafeFindHandle hndFindFile, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WIN32_FIND_DATAW lpFindFileData);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "GetClientRect", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetClientRect(IntPtr hwnd, [Out] out RECT lpRect);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static RECT GetClientRect(IntPtr hwnd)
         {
@@ -3108,11 +2940,8 @@ namespace Standard
             return rc;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
-        [DllImport("uxtheme.dll", EntryPoint="GetCurrentThemeName", CharSet = CharSet.Unicode)]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("uxtheme.dll", EntryPoint = "GetCurrentThemeName", CharSet = CharSet.Unicode)]
         private static extern HRESULT _GetCurrentThemeName(
             StringBuilder pszThemeFileName,
             int dwMaxNameChars,
@@ -3121,13 +2950,10 @@ namespace Standard
             StringBuilder pszSizeBuff,
             int cchMaxSizeChars);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void GetCurrentThemeName(out string themeFileName, out string color, out string size)
         {
-            // Not expecting strings longer than MAX_PATH.  We will return the error
+            // Not expecting strings longer than MAX_PATH.  We will return the error 
             var fileNameBuilder = new StringBuilder((int)Win32Value.MAX_PATH);
             var colorBuilder = new StringBuilder((int)Win32Value.MAX_PATH);
             var sizeBuilder = new StringBuilder((int)Win32Value.MAX_PATH);
@@ -3143,34 +2969,19 @@ namespace Standard
             size = sizeBuilder.ToString();
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("uxtheme.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsThemeActive();
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(SafeDC hdc, DeviceCap nIndex);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", EntryPoint = "GetModuleFileName", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern int _GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static string GetModuleFileName(IntPtr hModule)
         {
@@ -3196,17 +3007,11 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", EntryPoint = "GetModuleHandleW", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern IntPtr _GetModuleHandle([MarshalAs(UnmanagedType.LPWStr)] string lpModuleName);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr GetModuleHandle(string lpModuleName)
         {
             IntPtr retPtr = _GetModuleHandle(lpModuleName);
@@ -3217,19 +3022,11 @@ namespace Standard
             return retPtr;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "GetMonitorInfo", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetMonitorInfo(IntPtr hMonitor, [In, Out] MONITORINFO lpmi);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static MONITORINFO GetMonitorInfo(IntPtr hMonitor)
         {
@@ -3241,17 +3038,47 @@ namespace Standard
             return mi;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "GetMonitorInfoW", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _GetMonitorInfoW([In] IntPtr hMonitor, [Out] MONITORINFO lpmi);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static MONITORINFO GetMonitorInfoW(IntPtr hMonitor)
+        {
+            var mi = new MONITORINFO();
+            if (!_GetMonitorInfoW(hMonitor, mi))
+            {
+                throw new Win32Exception();
+            }
+            return mi;
+        }
+
+        public static IntPtr GetTaskBarHandleForMonitor(IntPtr monitor)
+        {
+            // maybe we can use ReBarWindow32 isntead Shell_TrayWnd
+            var hwnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
+            var monitorWithTaskbarOnIt = NativeMethods.MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+
+            if (!Equals(monitor, monitorWithTaskbarOnIt))
+            {
+                hwnd = NativeMethods.FindWindow("Shell_SecondaryTrayWnd", null);
+                monitorWithTaskbarOnIt = NativeMethods.MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+
+                if (!Equals(monitor, monitorWithTaskbarOnIt))
+                {
+                    return IntPtr.Zero;
+                }
+            }
+
+            return hwnd;
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "GetStockObject", SetLastError = true)]
         private static extern IntPtr _GetStockObject(StockObject fnObject);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr GetStockObject(StockObject fnObject)
         {
             IntPtr retPtr = _GetStockObject(fnObject);
@@ -3262,27 +3089,15 @@ namespace Standard
             return retPtr;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, [MarshalAs(UnmanagedType.Bool)] bool bRevert);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(SM nIndex);
 
         // This is aliased as a macro in 32bit Windows.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr GetWindowLongPtr(IntPtr hwnd, GWL nIndex)
         {
@@ -3302,15 +3117,19 @@ namespace Standard
             return ret;
         }
 
-        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("user32.dll", EntryPoint = "GetWindowLong", SetLastError = true)]
-        private static extern IntPtr GetWindowLongPtr32(IntPtr hWnd, GWL nIndex);
+        [DllImport("user32.dll", EntryPoint="SetProp", CharSet=CharSet.Unicode, SetLastError=true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _SetProp(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)] string lpString, IntPtr hData);
 
-        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr", SetLastError = true)]
-        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, GWL nIndex);
+        public static void SetProp(IntPtr hwnd, string lpString, IntPtr hData)
+        {
+            if (!_SetProp(hwnd, lpString, hData))
+            {
+                HRESULT.ThrowLastError();
+            }
+        }
 
         /// <summary>
         /// Sets attributes to control how visual styles are applied to a specified window.
@@ -3331,27 +3150,25 @@ namespace Standard
         /// <param name="cbAttribute">
         /// Specifies the size, in bytes, of the data pointed to by pvAttribute.
         /// </param>
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("uxtheme.dll", PreserveSig = false)]
         public static extern void SetWindowThemeAttribute([In] IntPtr hwnd, [In] WINDOWTHEMEATTRIBUTETYPE eAttribute, [In] ref WTA_OPTIONS pvAttribute, [In] uint cbAttribute);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong", SetLastError = true)]
+        private static extern IntPtr GetWindowLongPtr32(IntPtr hWnd, GWL nIndex);
+
+        [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr", SetLastError = true)]
+        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, GWL nIndex);
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetWindowPlacement(IntPtr hwnd, WINDOWPLACEMENT lpwndpl);
+        private static extern bool GetWindowPlacement(IntPtr hwnd, [In, Out] WINDOWPLACEMENT lpwndpl);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static WINDOWPLACEMENT GetWindowPlacement(IntPtr hwnd)
         {
@@ -3363,19 +3180,27 @@ namespace Standard
             throw new Win32Exception();
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        /// <summary>
+        /// Sets the show state and the restored, minimized, and maximized positions of the specified window.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window.</param>
+        /// <param name="lpwndpl">A pointer to a WINDOWPLACEMENT structure that specifies the new show state and window positions.</param>
+        /// <remarks>
+        /// Before calling SetWindowPlacement, set the length member of the WINDOWPLACEMENT structure to sizeof(WINDOWPLACEMENT).
+        /// SetWindowPlacement fails if the length member is not set correctly.
+        /// </remarks>
+        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPlacement(IntPtr hWnd, [In] WINDOWPLACEMENT lpwndpl);
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "GetWindowRect", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static RECT GetWindowRect(IntPtr hwnd)
         {
             RECT rc;
@@ -3386,100 +3211,69 @@ namespace Standard
             return rc;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdipCreateBitmapFromStream(IStream stream, out IntPtr bitmap);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdipCreateHBITMAPFromBitmap(IntPtr bitmap, out IntPtr hbmReturn, Int32 background);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdipCreateHICONFromBitmap(IntPtr bitmap, out IntPtr hbmReturn);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdipDisposeImage(IntPtr image);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdipImageForceValidation(IntPtr image);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdiplusStartup(out IntPtr token, StartupInput input, out StartupOutput output);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdiplus.dll")]
         public static extern Status GdiplusShutdown(IntPtr token);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsZoomed(IntPtr hwnd);
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", EntryPoint = "LocalFree", SetLastError = true)]
         private static extern IntPtr _LocalFree(IntPtr hMem);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
-        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorOptions dwFlags);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKey(uint uCode, MapType uMapType);
+
+        // ReSharper disable InconsistentNaming
+        public enum MapType : uint
+        {
+            MAPVK_VK_TO_VSC = 0x0,
+            MAPVK_VSC_TO_VK = 0x1,
+            MAPVK_VK_TO_CHAR = 0x2,
+            MAPVK_VSC_TO_VK_EX = 0x3,
+        }
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "PostMessage", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam)
         {
@@ -3489,10 +3283,6 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "RegisterClassExW")]
         private static extern short _RegisterClassEx([In] ref WNDCLASSEX lpwcx);
@@ -3500,10 +3290,6 @@ namespace Standard
         // Note that this will throw HRESULT_FROM_WIN32(ERROR_CLASS_ALREADY_EXISTS) on duplicate registration.
         // If needed, consider adding a Try* version of this function that returns the error code since that
         // may be ignorable.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static short RegisterClassEx(ref WNDCLASSEX lpwcx)
         {
@@ -3516,18 +3302,10 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "RegisterWindowMessage", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern uint _RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static WM RegisterWindowMessage(string lpString)
         {
@@ -3539,18 +3317,10 @@ namespace Standard
             return (WM)iRet;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetActiveWindow", SetLastError = true)]
         private static extern IntPtr _SetActiveWindow(IntPtr hWnd);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr SetActiveWindow(IntPtr hwnd)
         {
@@ -3565,10 +3335,6 @@ namespace Standard
         }
 
         // This is aliased as a macro in 32bit Windows.
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr SetClassLongPtr(IntPtr hwnd, GCLP nIndex, IntPtr dwNewLong)
         {
@@ -3579,45 +3345,25 @@ namespace Standard
             return new IntPtr(SetClassLongPtr32(hwnd, nIndex, dwNewLong.ToInt32()));
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetClassLong", SetLastError = true)]
         private static extern int SetClassLongPtr32(IntPtr hWnd, GCLP nIndex, int dwNewLong);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr", SetLastError = true)]
         private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, GCLP nIndex, IntPtr dwNewLong);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern ErrorModes SetErrorMode(ErrorModes newMode);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "SetProcessWorkingSetSize")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _SetProcessWorkingSetSize(IntPtr hProcess, IntPtr dwMinimiumWorkingSetSize, IntPtr dwMaximumWorkingSetSize);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SetProcessWorkingSetSize(IntPtr hProcess, int dwMinimumWorkingSetSize, int dwMaximumWorkingSetSize)
         {
@@ -3628,10 +3374,6 @@ namespace Standard
         }
 
         // This is aliased as a macro in 32bit Windows.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr SetWindowLongPtr(IntPtr hwnd, GWL nIndex, IntPtr dwNewLong)
         {
@@ -3652,18 +3394,10 @@ namespace Standard
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", SetLastError = true)]
         private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, GWL nIndex, IntPtr dwNewLong);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetWindowRgn", SetLastError = true)]
         private static extern int _SetWindowRgn(IntPtr hWnd, IntPtr hRgn, [MarshalAs(UnmanagedType.Bool)] bool bRedraw);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SetWindowRgn(IntPtr hWnd, IntPtr hRgn, bool bRedraw)
         {
@@ -3674,80 +3408,46 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SetWindowPos", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SWP uFlags);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SWP uFlags)
+        public static void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SWP uFlags)
         {
             if (!_SetWindowPos(hWnd, hWndInsertAfter, x, y, cx, cy, uFlags))
             {
-                // If this fails it's never worth taking down the process.  Let the caller deal with the error if they want.
-                return false;
+                throw new Win32Exception();
             }
-
-            return true;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", SetLastError = false)]
         public static extern Win32Error SHFileOperation(ref SHFILEOPSTRUCT lpFileOp);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ShowWindow(IntPtr hwnd, SW nCmdShow);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _SystemParametersInfo_String(SPI uiAction, int uiParam, [MarshalAs(UnmanagedType.LPWStr)] string pvParam, SPIF fWinIni);
 
         /// <summary>Overload of SystemParametersInfo for getting and setting NONCLIENTMETRICS.</summary>
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true, CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _SystemParametersInfo_NONCLIENTMETRICS(SPI uiAction, int uiParam, [In, Out] ref NONCLIENTMETRICS pvParam, SPIF fWinIni);
 
         /// <summary>Overload of SystemParametersInfo for getting and setting HIGHCONTRAST.</summary>
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true, CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _SystemParametersInfo_HIGHCONTRAST(SPI uiAction, int uiParam, [In, Out] ref HIGHCONTRAST pvParam, SPIF fWinIni);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SystemParametersInfo(SPI uiAction, int uiParam, string pvParam, SPIF fWinIni)
         {
@@ -3757,10 +3457,6 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static NONCLIENTMETRICS SystemParameterInfo_GetNONCLIENTMETRICS()
         {
@@ -3776,11 +3472,8 @@ namespace Standard
             return metrics;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static HIGHCONTRAST SystemParameterInfo_GetHIGHCONTRAST()
         {
             var hc = new HIGHCONTRAST { cbSize = Marshal.SizeOf(typeof(HIGHCONTRAST)) };
@@ -3795,26 +3488,14 @@ namespace Standard
 
         // This function is strange in that it returns a BOOL if TPM_RETURNCMD isn't specified, but otherwise the command Id.
         // Currently it's only used with TPM_RETURNCMD, so making the signature match that.
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         public static extern uint TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "SelectObject", SetLastError = true)]
         private static extern IntPtr _SelectObject(SafeDC hdc, IntPtr hgdiobj);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr SelectObject(SafeDC hdc, IntPtr hgdiobj)
         {
@@ -3826,18 +3507,10 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "SelectObject", SetLastError = true)]
         private static extern IntPtr _SelectObjectSafeHBITMAP(SafeDC hdc, SafeHBITMAP hgdiobj);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static IntPtr SelectObject(SafeDC hdc, SafeHBITMAP hgdiobj)
         {
@@ -3849,44 +3522,27 @@ namespace Standard
             return ret;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int SendInput(int nInputs, ref INPUT pInputs, int cbSize);
 
         // Depending on the message, callers may want to call GetLastError based on the return value.
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "UnregisterClass", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _UnregisterClassAtom(IntPtr lpClassName, IntPtr hInstance);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "UnregisterClass", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _UnregisterClassName(string lpClassName, IntPtr hInstance);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void UnregisterClass(short atom, IntPtr hinstance)
         {
@@ -3896,10 +3552,7 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void UnregisterClass(string lpClassName, IntPtr hInstance)
         {
             if (!_UnregisterClassName(lpClassName, hInstance))
@@ -3908,28 +3561,20 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "UpdateLayeredWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _UpdateLayeredWindow(
-            IntPtr hwnd,
-            SafeDC hdcDst,
-            [In] ref POINT pptDst,
-            [In] ref SIZE psize,
-            SafeDC hdcSrc,
+            IntPtr hwnd, 
+            SafeDC hdcDst, 
+            [In] ref POINT pptDst, 
+            [In] ref SIZE psize, 
+            SafeDC hdcSrc, 
             [In] ref POINT pptSrc,
             int crKey,
             ref BLENDFUNCTION pblend,
             ULW dwFlags);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "UpdateLayeredWindow")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -3944,10 +3589,6 @@ namespace Standard
             ref BLENDFUNCTION pblend,
             ULW dwFlags);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void UpdateLayeredWindow(
             IntPtr hwnd,
@@ -3966,10 +3607,6 @@ namespace Standard
             }
         }
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void UpdateLayeredWindow(
             IntPtr hwnd,
@@ -3983,57 +3620,46 @@ namespace Standard
             }
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern uint SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
+
         #region Win7 declarations
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", EntryPoint = "SHAddToRecentDocs")]
         private static extern void _SHAddToRecentDocs_String(SHARD uFlags, [MarshalAs(UnmanagedType.LPWStr)] string pv);
 
         // This overload is required.  There's a cast in the Shell code that causes the wrong vtbl to be used
         // if we let the marshaller convert the parameter to an IUnknown.
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", EntryPoint = "SHAddToRecentDocs")]
         private static extern void _SHAddToRecentDocs_ShellLink(SHARD uFlags, IShellLinkW pv);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SHAddToRecentDocs(string path)
         {
             _SHAddToRecentDocs_String(SHARD.PATHW, path);
         }
 
         // Win7 only.
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void SHAddToRecentDocs(IShellLinkW shellLink)
         {
             _SHAddToRecentDocs_ShellLink(SHARD.LINK, shellLink);
         }
 
-
         //#define DWM_SIT_DISPLAYFRAME    0x00000001  // Display a window frame around the provided bitmap
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
-        [DllImport("dwmapi.dll", EntryPoint="DwmGetCompositionTimingInfo")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo")]
         private static extern HRESULT _DwmGetCompositionTimingInfo(IntPtr hwnd, ref DWM_TIMING_INFO pTimingInfo);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical method
-        /// </SecurityNote>
-        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static DWM_TIMING_INFO? DwmGetCompositionTimingInfo(IntPtr hwnd)
         {
             if (!Utility.IsOSVistaOrNewer)
@@ -4054,50 +3680,26 @@ namespace Standard
             return dti;
         }
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmInvalidateIconicBitmaps(IntPtr hwnd);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmSetIconicThumbnail(IntPtr hwnd, IntPtr hbmp, DWM_SIT dwSITFlags);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmSetIconicLivePreviewBitmap(IntPtr hwnd, IntPtr hbmp, RefPOINT pptClient, DWM_SIT dwSITFlags);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", PreserveSig = false)]
         public static extern void SHGetItemFromDataObject(IDataObject pdtobj, DOGIF dwFlags, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", PreserveSig = false)]
         public static extern HRESULT SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IBindCtx pbc, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
 
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -4107,10 +3709,6 @@ namespace Standard
         /// Sets the User Model AppID for the current process, enabling Windows to retrieve this ID
         /// </summary>
         /// <param name="AppID"></param>
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll", PreserveSig = false)]
         public static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
@@ -4119,10 +3717,6 @@ namespace Standard
         /// Retrieves the User Model AppID that has been explicitly set for the current process via SetCurrentProcessExplicitAppUserModelID
         /// </summary>
         /// <param name="AppID"></param>
-        /// <SecurityNote>
-        ///   Critical : P-Invokes
-        /// </SecurityNote>
-        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("shell32.dll")]
         public static extern HRESULT GetCurrentProcessExplicitAppUserModelID([Out, MarshalAs(UnmanagedType.LPWStr)] out string AppID);

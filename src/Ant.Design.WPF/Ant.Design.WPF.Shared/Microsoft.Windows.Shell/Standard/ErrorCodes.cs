@@ -1,3 +1,4 @@
+#pragma warning disable 1591, 618
 namespace Standard
 {
     using System;
@@ -6,7 +7,6 @@ namespace Standard
     using System.Globalization;
     using System.Reflection;
     using System.Runtime.InteropServices;
-    using System.Security;
 
     /// <summary>
     /// Wrapper for common Win32 status codes.
@@ -74,6 +74,9 @@ namespace Standard
         /// <summary>The operation was canceled by the user.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         public static readonly Win32Error ERROR_CANCELLED = new Win32Error(1223);
+        /// <summary>Cannot find window class.</summary>
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
+        public static readonly Win32Error ERROR_CANNOT_FIND_WND_CLASS = new Win32Error(1407);
         /// <summary>The window class was already registered.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         public static readonly Win32Error ERROR_CLASS_ALREADY_EXISTS = new Win32Error(1410);
@@ -106,7 +109,6 @@ namespace Standard
 
         // Method version of the cast operation
         /// <summary>Performs HRESULT_FROM_WIN32 conversion.</summary>
-        /// <param name="error">The Win32 error being converted to an HRESULT.</param>
         /// <returns>The equivilent HRESULT value.</returns>
         public HRESULT ToHRESULT()
         {
@@ -115,11 +117,6 @@ namespace Standard
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
         /// <returns>A Win32Error instance with the result of the native GetLastError</returns>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static Win32Error GetLastError()
         {
             return new Win32Error(Marshal.GetLastWin32Error());
@@ -228,6 +225,7 @@ namespace Standard
         /// <summary>STG_E_INVALIDFUNCTION</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         public static readonly HRESULT STG_E_INVALIDFUNCTION = new HRESULT(0x80030001);
+
         /// <summary>REGDB_E_CLASSNOTREG</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         public static readonly HRESULT REGDB_E_CLASSNOTREG = new HRESULT(0x80040154);
@@ -277,6 +275,22 @@ namespace Standard
         public HRESULT(uint i)
         {
             _value = i;
+        }
+
+        public HRESULT(int i)
+        {
+            _value = unchecked((uint)i);
+        }
+
+        /// <summary>
+        /// Convert an HRESULT to an int.  Used for COM interface declarations out of our control.
+        /// </summary>
+        public static explicit operator int(HRESULT hr)
+        {
+            unchecked
+            {
+                return (int)hr._value;
+            }
         }
 
         public static HRESULT Make(bool severe, Facility facility, int code)
@@ -347,9 +361,9 @@ namespace Standard
             // To properly add an HRESULT's name to the ToString table, just add the HRESULT
             // like all the others above.
             //
-            // 
-
-
+            // CONSIDER: This data is static.  It could be cached 
+            // after first usage for fast lookup since the keys are unique.
+            //
             foreach (FieldInfo publicStaticField in typeof(HRESULT).GetFields(BindingFlags.Static | BindingFlags.Public))
             {
                 if (publicStaticField.FieldType == typeof(HRESULT))
@@ -476,7 +490,7 @@ namespace Standard
                     switch (Facility)
                     {
                         case Facility.Win32:
-                            e = CreateWin32Exception(Code, message);
+                            e = new Win32Exception(Code, message);
                             break;
                         default:
                             e = new COMException(message, (int)_value);
@@ -499,22 +513,11 @@ namespace Standard
         /// <summary>
         /// Convert the result of Win32 GetLastError() into a raised exception.
         /// </summary>
-        [SecurityCritical]
         public static void ThrowLastError()
         {
             ((HRESULT)Win32Error.GetLastError()).ThrowIfFailed();
             // Only expecting to call this when we're expecting a failed GetLastError()
             Assert.Fail();
-        }
-        
-        /// <SecurityNote>
-        ///  Critical : Calls ctor on Win32Exception which LinkDemands on the type
-        ///  Safe     : Calls safe overload of Win32Exception ctor that explicitly set the error code and message
-        /// </SecurityNote>
-        [SecuritySafeCritical]
-        private static Exception CreateWin32Exception(int code, string message)
-        {
-            return new Win32Exception(code, message);
         }
     }
 }

@@ -1,4 +1,8 @@
 ﻿#pragma warning disable 1591, 618
+/**************************************************************************\
+    Copyright Microsoft Corporation. All Rights Reserved.
+\**************************************************************************/
+
 namespace Microsoft.Windows.Shell
 {
     using System;
@@ -625,7 +629,7 @@ namespace Microsoft.Windows.Shell
 #pragma warning restore 6523
 
                                 _dpiX = NativeMethods.GetDeviceCaps(dc, DeviceCap.LOGPIXELSX);
-                                _cacheValid[(int) CacheSlot.DpiX] = true;
+                                _cacheValid[(int)CacheSlot.DpiX] = true;
                             }
                         }
                     }

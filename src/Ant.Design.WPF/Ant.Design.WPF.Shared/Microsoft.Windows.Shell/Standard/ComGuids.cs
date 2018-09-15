@@ -1,5 +1,7 @@
 ﻿namespace Standard
 {
+    using System.Diagnostics.CodeAnalysis;
+
     internal static partial class IID
     {
         /// <summary>IID_IEnumIDList</summary>
@@ -59,6 +61,7 @@
 
     internal static partial class CLSID
     {
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static T CoCreateInstance<T>(string clsid)
         {
             return (T)System.Activator.CreateInstance(System.Type.GetTypeFromCLSID(new System.Guid(clsid)));

@@ -1,3 +1,4 @@
+#pragma warning disable 1591, 618
 // Conditional to use more aggressive fail-fast behaviors when debugging.
 #define DEV_DEBUG
 
@@ -19,9 +20,9 @@ namespace Standard
         private static void _Break()
         {
 #if DEV_DEBUG
-            Debugger.Break();
+                Debugger.Break();
 #else
-            Debug.Assert(false);
+                Debug.Assert(false);
 #endif
         }
 
@@ -188,7 +189,7 @@ namespace Standard
         {
             if (!value.Equals(default(T)))
             {
-                Assert.Fail();
+                Fail();
             }
         }
 
@@ -197,7 +198,7 @@ namespace Standard
         {
             if (value.Equals(default(T)))
             {
-                Assert.Fail();
+                Fail();
             }
         }
 
@@ -352,15 +353,6 @@ namespace Standard
         public static void NullableIsNull<T>(T? value) where T : struct
         {
             if (null != value)
-            {
-                _Break();
-            }
-        }
-
-        [Conditional("DEBUG")]
-        public static void IsNotOnMainThread()
-        {
-            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
             {
                 _Break();
             }

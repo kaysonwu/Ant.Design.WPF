@@ -21,12 +21,12 @@ namespace Microsoft.Windows.Shell
             MaximizeWindowCommand = new RoutedCommand("MaximizeWindow", typeof(SystemCommands));
             MinimizeWindowCommand = new RoutedCommand("MinimizeWindow", typeof(SystemCommands));
             RestoreWindowCommand = new RoutedCommand("RestoreWindow", typeof(SystemCommands));
-            ShowSystemMenuCommand = new RoutedCommand("ShowSystemMenu", typeof(SystemCommands));                 
+            ShowSystemMenuCommand = new RoutedCommand("ShowSystemMenu", typeof(SystemCommands));
         }
 
         private static void _PostSystemCommand(Window window, SC command)
         {
-            var hwnd = new WindowInteropHelper(window).Handle;
+            IntPtr hwnd = new WindowInteropHelper(window).Handle;
             if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
             {
                 return;
@@ -59,19 +59,6 @@ namespace Microsoft.Windows.Shell
             _PostSystemCommand(window, SC.RESTORE);
         }
 
-        /// <summary>
-        /// Shows the system menu at the current mouse position.
-        /// </summary>
-        /// <param name="window">The window for which the system menu should be shown.</param>
-        /// <param name="e">The mouse event args.</param>
-        public static void ShowSystemMenu(Window window, MouseButtonEventArgs e)
-        {
-            var mousePosition = e.GetPosition(window);
-            var physicalScreenLocation = window.PointToScreen(mousePosition);
-
-            ShowSystemMenu(window, physicalScreenLocation);
-        }
-
         /// <summary>Display the system menu at a specified location.</summary>
         /// <param name="window">The MetroWindow</param>
         /// <param name="screenLocation">The location to display the system menu, in logical screen coordinates.</param>
@@ -89,16 +76,15 @@ namespace Microsoft.Windows.Shell
             const uint TPM_LEFTBUTTON = 0x0;
 
             Verify.IsNotNull(window, "window");
-            var hwnd = new WindowInteropHelper(window).Handle;
-
+            IntPtr hwnd = new WindowInteropHelper(window).Handle;
             if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
             {
                 return;
             }
 
-            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
+            IntPtr hmenu = NativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, TPM_LEFTBUTTON | TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
+            uint cmd = NativeMethods.TrackPopupMenuEx(hmenu, TPM_LEFTBUTTON | TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
             {
                 NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);

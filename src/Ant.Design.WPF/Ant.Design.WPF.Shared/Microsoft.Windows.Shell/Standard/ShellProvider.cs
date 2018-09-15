@@ -1,12 +1,10 @@
+﻿#pragma warning disable 1591, 618
 namespace Standard
 {
     using System;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
     using System.Text;
-    using MS.Internal.Interop;
-
     using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
     #region Enums and Static Property Classes
@@ -446,19 +444,8 @@ namespace Standard
     {
         uint GetCount();
         PKEY GetAt(uint iProp);
-        
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
-        [SecurityCritical]
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
-        
-        /// <SecurityNote>
-        ///   Critical : Accepts critical PROPVARIANT argument
-        /// <SecurityNote>
-        [SecurityCritical]
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
-        
         void Commit();
     }
 
@@ -651,10 +638,6 @@ namespace Standard
         // Ensures any cached information in this item is up to date, or returns __HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) if the item does not exist.
         void Update(IBindCtx pbc);
 
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// <SecurityNote>
-        [SecurityCritical]
         PROPVARIANT GetProperty(IntPtr key);
 
         Guid GetCLSID(IntPtr key);
@@ -809,7 +792,6 @@ namespace Standard
         /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks. 
         /// Items may appear in both the frequent and recent lists.  
         /// </summary>
-        /// <param name="?"></param>
         /// <returns></returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetList([In] APPDOCLISTTYPE listtype, [In] uint cItemsDesired, [In] ref Guid riid);
