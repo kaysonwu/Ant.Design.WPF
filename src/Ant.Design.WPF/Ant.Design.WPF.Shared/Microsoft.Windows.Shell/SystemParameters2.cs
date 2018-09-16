@@ -1,8 +1,7 @@
-﻿#pragma warning disable 1591, 618
-/**************************************************************************\
+﻿/**************************************************************************\
     Copyright Microsoft Corporation. All Rights Reserved.
 \**************************************************************************/
-
+#pragma warning disable 1591, 618
 namespace Microsoft.Windows.Shell
 {
     using System;

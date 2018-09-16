@@ -188,11 +188,11 @@ namespace Antd.Controls
         {
             if (user32 == null)
             {
-                user32 = NativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+                user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
             }
 
             var sb = new StringBuilder(256);
-            NativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
+            UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
             return sb.ToString().Replace("&", "");
         }
 #pragma warning restore 618

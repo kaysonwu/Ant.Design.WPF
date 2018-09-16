@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Text;
 namespace Antd.Win32
 {
     [SuppressUnmanagedCodeSecurity]
-    public static class NativeMethods
+    public static class UnsafeNativeMethods
     {
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();

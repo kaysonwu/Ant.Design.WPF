@@ -11,7 +11,7 @@ namespace Antd.Win32
 
         protected override bool ReleaseHandle()
         {
-            return NativeMethods.FreeLibrary(this.handle);
+            return UnsafeNativeMethods.FreeLibrary(this.handle);
         }
     }
 }

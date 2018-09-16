@@ -1,9 +1,9 @@
-#pragma warning disable 1591, 618
 // This file contains general utilities to aid in development.
 // Classes here generally shouldn't be exposed publicly since
 // they're not particular to any library functionality.
 // Because the classes here are internal, it's likely this file
 // might be included in multiple assemblies.
+#pragma warning disable 1591, 618
 namespace Standard
 {
     using System;

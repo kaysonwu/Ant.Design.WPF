@@ -5,16 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
-using ControlzEx.Standard;
+using Antd.Behaviors;
+using Antd.Win32;
+using Standard;
 using WindowBase = System.Windows.Window;
 using ThumbBase = System.Windows.Controls.Primitives.Thumb;
-using Antd.Behaviors;
-using ControlzEx.Native;
-#if NET40
-using SystemCommands = ControlzEx.Windows.Shell.SystemCommands;
-#endif
+using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
 
 namespace Antd.Controls
 {
@@ -340,7 +337,6 @@ namespace Antd.Controls
         {
             var collection = new StylizedBehaviorCollection
             {
-                new BorderlessWindowBehavior(),
                // new WindowsSettingBehaviour(),
              //   new GlowWindowBehavior(),
             };
@@ -617,7 +613,6 @@ namespace Antd.Controls
 
 #pragma warning disable 618
             // for the touch usage
-            // TODO 恢复
             UnsafeNativeMethods.ReleaseCapture();
 #pragma warning restore 618
 
@@ -645,7 +640,6 @@ namespace Antd.Controls
             // window.DragMove();
             // instead this 2 lines
 #pragma warning disable 618
-            // TODO 恢复
             NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
             NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
 #pragma warning restore 618

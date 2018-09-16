@@ -9,8 +9,6 @@
     <Import_RootNamespace>Antd</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\BorderlessWindowBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PropertyChangeNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviorCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
@@ -31,16 +29,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DpiHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ErrorCodes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\MessageWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\MONITORINFO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\NativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Utilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Verify.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemParameters2.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Win32\NativeMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChrome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChromeWorker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Win32\UnsafeNativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
   </ItemGroup>
 </Project>

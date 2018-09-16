@@ -2077,6 +2077,22 @@ namespace Standard
         public int cyBottomHeight;
     };
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    internal class MONITORINFO
+    {
+        public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+        public RECT rcMonitor = new RECT();
+        public RECT rcWork = new RECT();
+        public int dwFlags = 0;
+    }
+
+    public enum MonitorOptions : uint
+    {
+        MONITOR_DEFAULTTONULL = 0x00000000,
+        MONITOR_DEFAULTTOPRIMARY = 0x00000001,
+        MONITOR_DEFAULTTONEAREST = 0x00000002
+    }
+
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct POINT
@@ -2400,9 +2416,9 @@ namespace Standard
         public int length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
         public int flags;
         public SW showCmd;
-        public POINT minPosition;
-        public POINT maxPosition;
-        public RECT normalPosition;
+        public POINT ptMinPosition;
+        public POINT ptMaxPosition;
+        public RECT rcNormalPosition;
     }
 
     [StructLayout(LayoutKind.Sequential)]
