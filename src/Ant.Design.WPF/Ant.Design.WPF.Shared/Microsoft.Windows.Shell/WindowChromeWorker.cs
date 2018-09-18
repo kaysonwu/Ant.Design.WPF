@@ -74,7 +74,7 @@ namespace Microsoft.Windows.Shell
         [SecuritySafeCritical]
         [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
         public WindowChromeWorker()
-        {
+        { 
             _messageTable = new List<HANDLE_MESSAGE>
             {
                 new HANDLE_MESSAGE(WM.NCUAHDRAWCAPTION,      _HandleNCUAHDrawCaption),
@@ -344,6 +344,13 @@ namespace Microsoft.Windows.Shell
             // Force this the first time.
             _UpdateSystemMenu(_window.WindowState);
             _UpdateFrameState(true);
+
+            if (_hwndSource.IsDisposed)
+            {
+                // If the window got closed very early
+                _UnsetWindow(this._window, EventArgs.Empty);
+                return;
+            }
 
             NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
         }
@@ -691,11 +698,9 @@ namespace Microsoft.Windows.Shell
                 handled = true;
                 return lRet;
             }
-            else
-            {
-                handled = false;
-                return IntPtr.Zero;
-            }
+
+            handled = false;
+            return IntPtr.Zero;
         }
 
         /// <SecurityNote>
@@ -712,53 +717,6 @@ namespace Microsoft.Windows.Shell
             IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, WM.NCACTIVATE, wParam, new IntPtr(-1));
             handled = true;
             return lRet;
-        }
-
-        /// <summary>
-        /// This method handles the window size if the taskbar is set to auto-hide.
-        /// </summary>
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
-        private static RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, RECT area )
-        {
-            var hwnd = NativeMethods.GetTaskBarHandleForMonitor(monitorContainingApplication);
-
-            if (hwnd == IntPtr.Zero)
-            {
-                return area;
-            }
-
-            var abd = new APPBARDATA();
-            abd.cbSize = Marshal.SizeOf(abd);
-            abd.hWnd = hwnd;
-            NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
-            bool autoHide = Convert.ToBoolean(NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
-
-            if (!autoHide)
-            {
-                return area;
-            }
-
-            switch (abd.uEdge)
-            {
-                case (int)ABEdge.ABE_LEFT:
-                    area.Left += 2;
-                    break;
-                case (int)ABEdge.ABE_RIGHT:
-                    area.Right -= 2;
-                    break;
-                case (int)ABEdge.ABE_TOP:
-                    area.Top += 2;
-                    break;
-                case (int)ABEdge.ABE_BOTTOM:
-                    area.Bottom -= 2;
-                    break;
-                default:
-                    return area;
-            }
-            return area;
         }
 
         // Black Border Workaround
@@ -779,29 +737,6 @@ namespace Microsoft.Windows.Shell
             // lParam is an [in, out] that can be either a RECT* (wParam == FALSE) or an NCCALCSIZE_PARAMS*.
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
-
-            if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE && _MinimizeAnimation)
-            {
-                var monitor = NativeMethods.MonitorFromWindow(_hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-                var monitorInfo = NativeMethods.GetMonitorInfo(monitor);
-                var monitorRect = this._chromeInfo.IgnoreTaskbar ? monitorInfo.rcMonitor : monitorInfo.rcWork;
-
-                var rc = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
-                rc.Left = monitorRect.Left;
-                rc.Top = monitorRect.Top;
-                rc.Right = monitorRect.Right;
-                rc.Bottom = monitorRect.Bottom;
-
-                // monitor and work area will be equal if taskbar is hidden
-                if (monitorInfo.rcMonitor.Height == monitorInfo.rcWork.Height
-                    && monitorInfo.rcMonitor.Width == monitorInfo.rcWork.Width)
-                {
-                    rc = AdjustWorkingAreaForAutoHide(monitor, rc);
-                }
-
-                Marshal.StructureToPtr(rc, lParam, true);
-
-            }
 
             if (_chromeInfo.NonClientFrameEdges != NonClientFrameEdges.None)
             {
@@ -1031,12 +966,6 @@ namespace Microsoft.Windows.Shell
                     _SetRoundingRegion(wp);
                 }
                 _previousWP = wp;
-
-//                if (wp.Equals(_previousWP) && wp.flags.Equals(_previousWP.flags))
-//                {
-//                    handled = true;
-//                    return IntPtr.Zero;
-//                }
             }
 
             // Still want to pass this to DefWndProc
@@ -1058,7 +987,7 @@ namespace Microsoft.Windows.Shell
              * This fix is not really a full fix. Moving the Window back gives us the wrong size, because
              * MonitorFromWindow gives us the wrong (old) monitor! This is fixed in _HandleMoveForRealSize.
              */
-            var ignoreTaskBar = _chromeInfo.IgnoreTaskbar;// || _chromeInfo.UseNoneWindowStyle;
+            var ignoreTaskBar = _chromeInfo.IgnoreTaskbar;
             if (ignoreTaskBar && NativeMethods.IsZoomed(_hwnd))
             {
                 MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
@@ -1145,26 +1074,6 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        private IntPtr _HandleExitSizeMove(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
-        {
-            // This is only intercepted to deal with bugs in Window in .Net 3.5 and below.
-            Assert.IsTrue(Utility.IsPresentationFrameworkVersionLessThan4);
-
-            _isUserResizing = false;
-
-            // On Win7 the user can change the Window's state by dragging the window to the top of the monitor.
-            // If they did that, then we need to try to update the restore bounds or else WPF will put the window at the maximized location (e.g. (-8,-8)).
-            if (_window.WindowState == WindowState.Maximized)
-            {
-                Assert.IsTrue(Utility.IsOSWindows7OrNewer);
-                _window.Top = _windowPosAtStartOfUserMove.Y;
-                _window.Left = _windowPosAtStartOfUserMove.X;
-            }
-
-            handled = false;
-            return IntPtr.Zero;
-        }
-
         /// <SecurityNote>
         ///   Critical : Calls critical methods
         /// </SecurityNote>
@@ -1244,6 +1153,26 @@ namespace Microsoft.Windows.Shell
                     //_UpdateFrameState(true);
                     NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
                 }
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleExitSizeMove(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            // This is only intercepted to deal with bugs in Window in .Net 3.5 and below.
+            Assert.IsTrue(Utility.IsPresentationFrameworkVersionLessThan4);
+
+            _isUserResizing = false;
+
+            // On Win7 the user can change the Window's state by dragging the window to the top of the monitor.
+            // If they did that, then we need to try to update the restore bounds or else WPF will put the window at the maximized location (e.g. (-8,-8)).
+            if (_window.WindowState == WindowState.Maximized)
+            {
+                Assert.IsTrue(Utility.IsOSWindows7OrNewer);
+                _window.Top = _windowPosAtStartOfUserMove.Y;
+                _window.Left = _windowPosAtStartOfUserMove.X;
             }
 
             handled = false;
@@ -1410,6 +1339,12 @@ namespace Microsoft.Windows.Shell
                 {
                     _ClearRoundingRegion();
                     _ExtendGlassFrame();
+                }
+
+                if (_hwndSource.IsDisposed)
+                {
+                    // If the window got closed very early
+                    return;
                 }
 
                 if (_MinimizeAnimation)
@@ -1685,19 +1620,16 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
+            if (_hwndSource.IsDisposed)
+            {
+                // If the window got closed very early
+                return;
+            }
+
             // Ensure standard HWND background painting when DWM isn't enabled.
             if (!NativeMethods.DwmIsCompositionEnabled())
             {
-                // Apply the transparent background to the HWND for disabled DwmIsComposition too
-                // but only if the window has the flag AllowsTransparency turned on
-                if (_window.AllowsTransparency)
-                {
-                    _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-                }
-                else
-                {
-                    _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
-                }
+                _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
             }
             else
             {
@@ -1707,11 +1639,7 @@ namespace Microsoft.Windows.Shell
                 // The Window's Background needs to be changed independent of this.
 
                 // Apply the transparent background to the HWND
-                // but only if the window has the flag AllowsTransparency turned on
-                if (_window.AllowsTransparency)
-                {
-                    _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-                }
+                _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 
                 // Thickness is going to be DIPs, need to convert to system coordinates.
                 Thickness deviceGlassThickness = DpiHelper.LogicalThicknessToDevice(_chromeInfo.GlassFrameThickness, dpi.DpiScaleX, dpi.DpiScaleY);
@@ -1719,7 +1647,7 @@ namespace Microsoft.Windows.Shell
                 if (_chromeInfo.NonClientFrameEdges != NonClientFrameEdges.None)
                 {
 #if NET45 || NET462
-                    Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness);
+                    Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness, dpi.DpiScaleX, dpi.DpiScaleY);
 #else
                     Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness, dpi.DpiScaleX, dpi.DpiScaleY);
 #endif

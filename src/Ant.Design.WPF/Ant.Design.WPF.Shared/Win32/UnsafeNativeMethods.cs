@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Standard;
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -8,6 +9,13 @@ namespace Antd.Win32
     [SuppressUnmanagedCodeSecurity]
     public static class UnsafeNativeMethods
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32")]
+        internal static extern IntPtr MonitorFromWindow([In] IntPtr handle, [In] MonitorOptions flags);
+
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 

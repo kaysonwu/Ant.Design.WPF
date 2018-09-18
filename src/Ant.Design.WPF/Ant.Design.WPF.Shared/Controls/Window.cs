@@ -58,6 +58,18 @@ namespace Antd.Controls
 
         #region Properties
 
+        public static readonly DependencyProperty IgnoreTaskbarProperty =
+            DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(Window), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets/sets whether the window will ignore (and overlap) the taskbar when maximized.
+        /// </summary>
+        public bool IgnoreTaskbar
+        {
+            get { return (bool)GetValue(IgnoreTaskbarProperty); }
+            set { SetValue(IgnoreTaskbarProperty, value); }
+        }
+
         public static readonly DependencyProperty ShowSystemMenuProperty =
             DependencyProperty.Register("ShowSystemMenu", typeof(bool), typeof(Window), new PropertyMetadata(false));
 
@@ -337,6 +349,7 @@ namespace Antd.Controls
         {
             var collection = new StylizedBehaviorCollection
             {
+              //  new WindowChromeBehavior(),
                // new WindowsSettingBehaviour(),
              //   new GlowWindowBehavior(),
             };

@@ -8,7 +8,6 @@
     xmlns:local="using:AntdDemo.Views"
     mc:Ignorable="d"
     Width="930"
-    AllowsTransparency="True"
     Height="600">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,8 +21,10 @@
         <StackPanel Background="#f5f5f5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Button x:Name="Change" Content="Change" Width="65" Height="35" />
         </StackPanel>
-  
 
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button Content="Change" Height="35" />
+        </StackPanel>    
         
     </Grid>
     

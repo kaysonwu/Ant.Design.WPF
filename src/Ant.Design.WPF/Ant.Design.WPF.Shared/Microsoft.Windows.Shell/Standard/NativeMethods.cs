@@ -2086,7 +2086,7 @@ namespace Standard
         public int dwFlags = 0;
     }
 
-    public enum MonitorOptions : uint
+    internal enum MonitorOptions : uint
     {
         MONITOR_DEFAULTTONULL = 0x00000000,
         MONITOR_DEFAULTTOPRIMARY = 0x00000001,
