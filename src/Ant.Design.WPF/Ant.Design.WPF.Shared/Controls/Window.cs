@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Antd.Behaviors;
 using Antd.Win32;
 using Standard;
 using WindowBase = System.Windows.Window;
@@ -340,21 +339,6 @@ namespace Antd.Controls
         public Window()
         {
             DataContextChanged += OnDataContextChanged;
-
-            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
-            this.InitializeStylizedBehaviors();
-        }
-
-        private void InitializeStylizedBehaviors()
-        {
-            var collection = new StylizedBehaviorCollection
-            {
-              //  new WindowChromeBehavior(),
-               // new WindowsSettingBehaviour(),
-             //   new GlowWindowBehavior(),
-            };
-
-            StylizedBehaviors.SetBehaviors(this, collection);
         }
 
         #endregion

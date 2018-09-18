@@ -183,7 +183,7 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Window}">
-        <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+        <Setter Property="WindowStyle" Value="None" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource Ant.WindowTemplate}" />
         <Setter Property="Background" Value="{DynamicResource BodyBackground}" />
