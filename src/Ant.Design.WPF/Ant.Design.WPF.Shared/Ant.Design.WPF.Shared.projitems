@@ -26,7 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Effects\BoxShadowEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />

@@ -1,4 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/RadioButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- default style for ant design -->
+    <Style BasedOn="{StaticResource Ant.Radio}" TargetType="RadioButton" />
     
 </ResourceDictionary>

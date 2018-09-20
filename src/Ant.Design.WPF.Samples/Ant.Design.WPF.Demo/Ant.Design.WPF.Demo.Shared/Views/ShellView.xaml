@@ -26,6 +26,11 @@
             <Antd:Button Type="Primary" Content="Primary(disabled)"  Margin="4 8" IsEnabled="False" />
             <Antd:Button Content="Default(disabled)" Margin="4 8" IsEnabled="False" />
             <Antd:Button Type="Danger" Content="Danger"  Margin="4 8" IsEnabled="False"  />
+
+            <GroupBox Header="Radio">
+                
+                <RadioButton Content="Radio" />
+            </GroupBox>
         </StackPanel>
 
 
