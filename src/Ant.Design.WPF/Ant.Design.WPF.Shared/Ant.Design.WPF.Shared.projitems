@@ -9,6 +9,7 @@
     <Import_RootNamespace>Antd</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IThumb.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Effects\BoxShadowEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />

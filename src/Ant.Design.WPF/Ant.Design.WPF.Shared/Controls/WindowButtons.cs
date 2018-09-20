@@ -2,17 +2,18 @@
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using Antd.Win32;
+using ButtonBase = System.Windows.Controls.Button;
+using ContentControlBase = System.Windows.Controls.ContentControl;
 using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
 
 namespace Antd.Controls
 {
-    [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_Max", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
-    public class WindowButtons : ContentControl, INotifyPropertyChanged
+    [TemplatePart(Name = "PART_Min", Type = typeof(ButtonBase))]
+    [TemplatePart(Name = "PART_Max", Type = typeof(ButtonBase))]
+    [TemplatePart(Name = "PART_Close", Type = typeof(ButtonBase))]
+    public class WindowButtons : ContentControlBase, INotifyPropertyChanged
     {
         #region Events
 
@@ -31,11 +32,11 @@ namespace Antd.Controls
 
         #region Fields
 
-        private Button min;
+        private ButtonBase min;
 
-        private Button max;
+        private ButtonBase max;
 
-        private Button close;
+        private ButtonBase close;
 
 #pragma warning disable 618
         private SafeLibraryHandle user32;
@@ -205,21 +206,21 @@ namespace Antd.Controls
         {
             base.OnApplyTemplate();
   
-            close = Template.FindName("PART_Close", this) as Button;
+            close = Template.FindName("PART_Close", this) as ButtonBase;
 
             if (close != null)
             {
                 close.Click += OnClose;
             }
 
-            max = Template.FindName("PART_Max", this) as Button;
+            max = Template.FindName("PART_Max", this) as ButtonBase;
 
             if (max != null)
             {
                 max.Click += OnMaximize;
             }
 
-            min = Template.FindName("PART_Min", this) as Button;
+            min = Template.FindName("PART_Min", this) as ButtonBase;
 
             if (min != null)
             {

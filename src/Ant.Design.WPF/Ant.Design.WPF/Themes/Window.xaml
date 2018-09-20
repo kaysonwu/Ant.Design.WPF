@@ -130,7 +130,6 @@
                                       Panel.ZIndex="1"
                                       Focusable="False"
                                       VerticalAlignment="Top"
-                                      Shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                       Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Content="{Binding WindowButtons, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
@@ -212,8 +211,7 @@
                 <Shell:WindowChrome CornerRadius="0" 
                                     CaptionHeight="0" 
                                     UseAeroCaptionButtons="False" 
-                                    GlassFrameThickness="0 0 0 0.1" 
-                                    IgnoreTaskbar="{Binding IgnoreTaskbar, RelativeSource={RelativeSource AncestorType=Controls:Window}, Mode=OneWay}" />
+                                    GlassFrameThickness="0 0 0 0.1" />
             </Setter.Value>
         </Setter>
     </Style>

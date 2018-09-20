@@ -11,6 +11,8 @@ using Standard;
 using WindowBase = System.Windows.Window;
 using ThumbBase = System.Windows.Controls.Primitives.Thumb;
 using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
+using Microsoft.Windows.Shell;
+using System.Windows.Data;
 
 namespace Antd.Controls
 {
@@ -398,6 +400,17 @@ namespace Antd.Controls
             LeftWindowCommands.ParentWindow = this;
             RightWindowCommands.ParentWindow = this;
             WindowButtons.ParentWindow = this;
+
+            var windowChrome = GetValue(WindowChrome.WindowChromeProperty) as WindowChrome;
+
+            if (windowChrome != null)
+            {
+                BindingOperations.SetBinding(
+                    windowChrome,
+                    WindowChrome.IgnoreTaskbarProperty,
+                    new Binding { Path = new PropertyPath(IgnoreTaskbarProperty), Source = this, Mode = BindingMode.OneWay }
+                );
+            }
 
             ToggleNoneWindowStyle(UseNoneWindowStyle);
         }
