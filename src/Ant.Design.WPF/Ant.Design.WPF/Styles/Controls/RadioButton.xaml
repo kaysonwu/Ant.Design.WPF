@@ -1,9 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Helpers="clr-namespace:Antd.Helpers">
 
     <Style x:Key="Ant.Radio" TargetType="{x:Type RadioButton}">
+        <Setter Property="Padding" Value="8 0" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushBase}" />
+        <Setter Property="Background" Value="{DynamicResource RadioButtonBackground}" />
+        <Setter Property="Helpers:ControlHelper.MouseOverBorderBrush" Value="{DynamicResource RadioDotBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
@@ -13,20 +19,86 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Ellipse Fill="{TemplateBinding Background}"
+                        <Ellipse x:Name="Inner" 
+                                 Width="{DynamicResource RadioSize}"
+                                 Height="{DynamicResource RadioSize}"
+                                 Fill="{TemplateBinding Background}"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{TemplateBinding BorderThickness}" />
-                        <Ellipse Fill="Red" />
+
+                        <Ellipse x:Name="Dot"
+                                 Opacity="0"
+                                 RenderTransformOrigin="0.5,0.5"
+                                 Width="{DynamicResource RadioDotSize}"
+                                 Height="{DynamicResource RadioDotSize}"
+                                 Fill="{DynamicResource RadioDotBrush}">
+                            <Ellipse.RenderTransform>
+                                <ScaleTransform x:Name="DotScale" ScaleX="0" ScaleY="0" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
 
                         <ContentPresenter Grid.Column="1"
                                           RecognizesAccessKey="True"
+                                          Margin="{TemplateBinding Padding}"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="DotScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1"
+                                                         Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="DotScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1"
+                                                         Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation To="1"
+                                                         Duration="0:0:0.3" 
+                                                         Storyboard.TargetName="Dot"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <ColorAnimation To="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Helpers:ControlHelper.MouseOverBorderBrush)}"
+                                                        Duration="0:0:0.3" 
+                                                        Storyboard.TargetName="Inner"
+                                                        Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut" />
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Inner" Property="Stroke" Value="{DynamicResource RadioDotBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Inner" Property="Stroke" Value="{DynamicResource RadioDotBrush}" />
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

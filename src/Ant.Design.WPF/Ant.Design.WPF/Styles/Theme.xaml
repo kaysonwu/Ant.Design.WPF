@@ -63,7 +63,8 @@
 
     <!-- Border -->
     <Thickness x:Key="BorderThicknessBase">1</Thickness>
-
+    <SolidColorBrush x:Key="BorderBrushBase" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+   
     <!-- Disabled states -->
     <SolidColorBrush x:Key="DisabledBrush" Color="#3F000000" Options:Freeze="True" />
 
@@ -121,5 +122,14 @@
     <SolidColorBrush x:Key="ButtonDisableForeground" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+    
+    <!-- Radio -->
+    <System:Double x:Key="RadioSize">16</System:Double>
+    <System:Double x:Key="RadioDotSize">8</System:Double>
+    <SolidColorBrush x:Key="RadioDotBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+
+    <!-- Radio Button -->
+    <SolidColorBrush x:Key="RadioButtonBackground" Color="White"  Options:Freeze="True" />
+
 
 </ResourceDictionary>

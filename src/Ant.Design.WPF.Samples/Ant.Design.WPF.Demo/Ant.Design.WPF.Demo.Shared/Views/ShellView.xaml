@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Antd="clr-namespace:Antd.Controls;assembly=Antd"
     xmlns:local="using:AntdDemo.Views"
-    xmlns:Effects="clr-namespace:Antd.Effects;assembly=Antd"
     mc:Ignorable="d"
     Width="930"
     Height="600">
@@ -27,10 +26,9 @@
             <Antd:Button Content="Default(disabled)" Margin="4 8" IsEnabled="False" />
             <Antd:Button Type="Danger" Content="Danger"  Margin="4 8" IsEnabled="False"  />
 
-            <GroupBox Header="Radio">
-                
-                <RadioButton Content="Radio" />
-            </GroupBox>
+
+            <RadioButton GroupName="A" Content="Radio" />
+            <RadioButton GroupName="A" Content="Radio" />
         </StackPanel>
 
 

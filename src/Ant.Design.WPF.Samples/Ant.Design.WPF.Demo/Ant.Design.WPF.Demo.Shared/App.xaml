@@ -9,6 +9,7 @@
                     <local:Bootstrapper x:Key="Bootstrapper" />
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
