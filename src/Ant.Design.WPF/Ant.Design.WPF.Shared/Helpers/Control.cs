@@ -8,12 +8,12 @@ namespace Antd.Helpers
     /// <summary>
     /// A helper class that provides various controls.
     /// </summary>
-    public static class ControlHelper
+    public static class Control
     {
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
             "CornerRadius", 
             typeof(CornerRadius), 
-            typeof(ControlHelper), 
+            typeof(Control), 
             new FrameworkPropertyMetadata(
                 new CornerRadius(), 
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender
@@ -39,7 +39,7 @@ namespace Antd.Helpers
         public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached(
             "MouseOverBorderBrush", 
             typeof(Brush), 
-            typeof(ControlHelper), 
+            typeof(Control), 
             new FrameworkPropertyMetadata(
                 Brushes.Transparent, 
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -66,5 +66,32 @@ namespace Antd.Helpers
             obj.SetValue(MouseOverBorderBrushProperty, value);
         }
 
+        public static readonly DependencyProperty ContentCharacterCasingProperty = DependencyProperty.RegisterAttached(
+            "ContentCharacterCasing", 
+            typeof(CharacterCasing), 
+            typeof(Control), 
+            new FrameworkPropertyMetadata(
+                CharacterCasing.Normal, 
+                FrameworkPropertyMetadataOptions.AffectsMeasure
+            ),
+            new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
+
+        /// <summary>
+        /// Gets the character casing of the control
+        /// </summary>
+        [Category(DesignerConstants.LibraryName)]
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+        public static CharacterCasing GetContentCharacterCasing(DependencyObject obj)
+        {
+            return (CharacterCasing)obj.GetValue(ContentCharacterCasingProperty);
+        }
+
+        /// <summary>
+        /// Sets the character casing of the control
+        /// </summary>
+        public static void SetContentCharacterCasing(DependencyObject obj, CharacterCasing value)
+        {
+            obj.SetValue(ContentCharacterCasingProperty, value);
+        }
     }
 }

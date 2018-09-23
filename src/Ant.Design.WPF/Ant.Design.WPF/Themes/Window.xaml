@@ -25,7 +25,7 @@
                 LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
                 RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"                
                 Margin="{Binding WindowNonClientFrameThickness, Source={x:Static Shell:SystemParameters2.Current}}"
-                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Helpers:ControlHelper.CornerRadius), Mode=OneWay}">
+                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Helpers:Control.CornerRadius), Mode=OneWay}">
             
             <AdornerDecorator>
                 <Grid x:Name="LayoutRoot" UseLayoutRounding="False">

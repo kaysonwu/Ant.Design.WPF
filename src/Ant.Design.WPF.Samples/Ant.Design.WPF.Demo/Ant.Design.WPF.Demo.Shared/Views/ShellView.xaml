@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Antd="clr-namespace:Antd.Controls;assembly=Antd"
+    xmlns:Helpers="clr-namespace:Antd.Helpers;assembly=Antd"
     xmlns:local="using:AntdDemo.Views"
     mc:Ignorable="d"
     Width="930"
@@ -27,7 +28,7 @@
             <Antd:Button Type="Danger" Content="Danger"  Margin="4 8" IsEnabled="False"  />
 
 
-            <RadioButton GroupName="A" Content="Radio" />
+            <RadioButton GroupName="A" Content="Radio" IsEnabled="False" IsChecked="True" />
             <RadioButton GroupName="A" Content="Radio" />
         </StackPanel>
 

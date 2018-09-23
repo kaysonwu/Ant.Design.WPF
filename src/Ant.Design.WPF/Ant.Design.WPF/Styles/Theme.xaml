@@ -28,7 +28,7 @@
     <Color x:Key="DisabledColor">#3F000000</Color>
     <Color x:Key="DisabledBackground">#F5F5F5</Color>
     <Color x:Key="DisabledColorDark">#59FFFFFF</Color>
-           
+
     <!-- 
         ┏━━━━━━━━━━━━━━━━┓
         ┃   Base Scaffolding Variables   ┃  
@@ -45,6 +45,9 @@
     <System:Double x:Key="LineHeightBase">1.5</System:Double>
     <System:Double x:Key="BorderRadiusBase">4</System:Double>
     <System:Double x:Key="BorderRadiusSmall">2</System:Double>
+
+    <FontFamily x:Key="FontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" Options:Freeze="True" />
     
     <!-- Vertical Paddings -->
     <!-- containers -->
@@ -61,6 +64,9 @@
     <SolidColorBrush x:Key="LinkHoverBrush" Color="#40A9FF" Options:Freeze="True" />
     <SolidColorBrush x:Key="LinkActiveBrush" Color="#096DD9" Options:Freeze="True" />
 
+    <!-- Animation -->
+    <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
+
     <!-- Border -->
     <Thickness x:Key="BorderThicknessBase">1</Thickness>
     <SolidColorBrush x:Key="BorderBrushBase" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
@@ -68,23 +74,6 @@
     <!-- Disabled states -->
     <SolidColorBrush x:Key="DisabledBrush" Color="#3F000000" Options:Freeze="True" />
 
-    <!--
-        1、定制主题
-        2、换肤 - 色彩
-    
-    
-    解决方案：
-    
-    nomarl： 前景色、背景色、边框色
-    
-    hover: 前景色、背景色、边框色 ： 背景和边框色相同
-    
-    focus：前景色、背景色、边框色：前景和边框色相同
-    
-    active: 前景色、背景色、边框色： 背景和边框色相同
-    
-    
-    -->
     <!-- Window -->
     <SolidColorBrush x:Key="WindowTilteBarBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="WindowButtonForeground" Color="White" Options:Freeze="True" />
@@ -130,6 +119,8 @@
 
     <!-- Radio Button -->
     <SolidColorBrush x:Key="RadioButtonBackground" Color="White"  Options:Freeze="True" />
-
+    
+    <!-- Input -->
+    <SolidColorBrush x:Key="InputDisabledBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
 
 </ResourceDictionary>
