@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Animation -->
+    <CubicEase x:Key="EaseInOut" EasingMode="EaseInOut" />
+    <BackEase x:Key="EaseInBack" EasingMode="EaseIn" />
+    <BackEase x:Key="EaseOutBack" EasingMode="EaseOut" />
+    <CircleEase x:Key="EaseOutCirc" EasingMode="EaseOut" />
+    <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
+
+    <Style x:Key="Ant.Control" TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+</ResourceDictionary>

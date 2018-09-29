@@ -9,7 +9,6 @@
     <Import_RootNamespace>Antd</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Animations\AnimationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animations\ColorAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />

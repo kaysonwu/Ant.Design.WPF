@@ -77,13 +77,21 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Styles\Controls.xaml">
+    <Page Include="Styles\Internal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\Controls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Styles\Controls\CheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Styles\Controls\RadioButton.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Styles\Theme.xaml">
       <SubType>Designer</SubType>

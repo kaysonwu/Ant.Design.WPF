@@ -3,9 +3,11 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/RadioButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/CheckBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- default style for ant design -->
-    <Style BasedOn="{StaticResource Ant.Radio}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource Ant.RadioButton}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource Ant.CheckBox}" TargetType="CheckBox" />
     
 </ResourceDictionary>

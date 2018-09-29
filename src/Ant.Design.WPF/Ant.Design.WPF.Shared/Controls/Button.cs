@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using ButtonBase = System.Windows.Controls.Button;
 
 namespace Antd.Controls
@@ -10,7 +15,7 @@ namespace Antd.Controls
     {
         #region Properties
 
-        public static readonly DependencyProperty TypeProperty =
+        public static readonly DependencyProperty TypeProperty = 
             DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null));
 
         /// <summary>
@@ -22,7 +27,7 @@ namespace Antd.Controls
             set { SetValue(TypeProperty, value); }
         }
         
-        public static readonly DependencyProperty HrefProperty =
+        public static readonly DependencyProperty HrefProperty = 
             DependencyProperty.Register("Href", typeof(string), typeof(Button), new PropertyMetadata(null));
 
         /// <summary>
@@ -34,7 +39,7 @@ namespace Antd.Controls
             set { SetValue(HrefProperty, value); }
         }
 
-        public static readonly DependencyProperty GhostProperty =
+        public static readonly DependencyProperty GhostProperty = 
             DependencyProperty.Register("Ghost", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
         /// <summary>
@@ -44,6 +49,18 @@ namespace Antd.Controls
         {
             get { return (bool)GetValue(GhostProperty); }
             set { SetValue(GhostProperty, value); }
+        }
+
+        public static readonly DependencyProperty CircularProperty =
+            DependencyProperty.Register("Circular", typeof(bool), typeof(Button), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets/sets the shape of the button to be circular.
+        /// </summary>
+        public bool Circular
+        {
+            get { return (bool)GetValue(CircularProperty); }
+            set { SetValue(CircularProperty, value); }
         }
 
         #endregion
@@ -59,16 +76,11 @@ namespace Antd.Controls
 
         #region Overrides
 
-        protected override void OnClick()
+        public override void OnApplyTemplate()
         {
-            if (Href != null)
-            {// TODO 使用默认浏览器打开地址
-                return;
-            }
+            base.OnApplyTemplate();
 
-            base.OnClick();
         }
-
         #endregion
     }
 

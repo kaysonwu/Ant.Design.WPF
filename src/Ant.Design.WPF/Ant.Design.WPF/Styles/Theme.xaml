@@ -44,9 +44,9 @@
     <System:Double x:Key="FontSizeSmall">12</System:Double>
     <System:Double x:Key="LineHeightBase">1.5</System:Double>
     <System:Double x:Key="BorderRadiusBase">4</System:Double>
-    <System:Double x:Key="BorderRadiusSmall">2</System:Double>
+    <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
 
-    <FontFamily x:Key="FontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <!--<FontFamily x:Key="FontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>-->
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" Options:Freeze="True" />
     
     <!-- Vertical Paddings -->
@@ -64,8 +64,6 @@
     <SolidColorBrush x:Key="LinkHoverBrush" Color="#40A9FF" Options:Freeze="True" />
     <SolidColorBrush x:Key="LinkActiveBrush" Color="#096DD9" Options:Freeze="True" />
 
-    <!-- Animation -->
-    <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
 
     <!-- Border -->
     <Thickness x:Key="BorderThicknessBase">1</Thickness>
@@ -112,6 +110,11 @@
     <SolidColorBrush x:Key="ButtonDisableBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
     
+    <!-- CheckBox -->
+    <System:Double x:Key="CheckBoxSize">16</System:Double>
+    <System:Double x:Key="CheckBoxIndeterminateSize">8</System:Double>
+    <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+
     <!-- Radio -->
     <System:Double x:Key="RadioSize">16</System:Double>
     <System:Double x:Key="RadioDotSize">8</System:Double>

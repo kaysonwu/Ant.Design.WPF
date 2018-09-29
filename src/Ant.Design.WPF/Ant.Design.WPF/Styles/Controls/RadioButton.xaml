@@ -4,14 +4,16 @@
                     xmlns:Controls="clr-namespace:Antd.Controls"
                     xmlns:Animations="clr-namespace:Antd.Animations">
 
-    <Style x:Key="Ant.Radio" TargetType="{x:Type RadioButton}">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Ant.RadioButton" BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type RadioButton}">
         <Setter Property="Padding" Value="4 0 8 0" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="Background" Value="{DynamicResource RadioButtonBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushBase}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -21,17 +23,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-
-                        <Ellipse x:Name="Inner"
-                                 Width="{DynamicResource RadioSize}"
-                                 Height="{DynamicResource RadioSize}"
-                                 Fill="{TemplateBinding Background}"
-                                 Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{TemplateBinding BorderThickness}" />
-
+                        <!-- Effect -->
                         <Ellipse x:Name="Effect"
                                  Opacity="0"
-                                 Fill="Transparent" 
                                  RenderTransformOrigin="0.5,0.5"
                                  Width="{DynamicResource RadioSize}"
                                  Height="{DynamicResource RadioSize}"
@@ -41,7 +35,13 @@
                                 <ScaleTransform x:Name="EffectScale" ScaleX="1" ScaleY="1" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
-
+                        <!-- Circle -->
+                        <Ellipse x:Name="Inner"
+                                 Width="{DynamicResource RadioSize}"
+                                 Height="{DynamicResource RadioSize}"
+                                 Fill="{TemplateBinding Background}"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Ellipse x:Name="Dot"
                                  Opacity="0"
                                  RenderTransformOrigin="0.5,0.5"
@@ -52,7 +52,7 @@
                                 <ScaleTransform x:Name="DotScale" ScaleX="0" ScaleY="0" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
-
+                        <!-- Content -->
                         <Controls:ContentControl Grid.Column="1"
                                                  RecognizesAccessKey="True"
                                                  Padding="{TemplateBinding Padding}"
@@ -64,75 +64,70 @@
                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                                  ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
                                                                                   RelativeSource={RelativeSource TemplatedParent}}" />
-                        
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.3" />
+                                </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <Animations:ColorAnimation Duration="0:0:0.3"
-                                                                   Storyboard.TargetName="Inner"
-                                                                   To="{DynamicResource RadioDotBrush}"           
-                                                                   EasingFunction="{DynamicResource EaseInOutCirc}"
-                                                                   Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" />
+                                        <Animations:ColorAnimation Storyboard.TargetName="Inner"
+                                                                   Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                                   ToEx="{DynamicResource RadioDotBrush}" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <Animations:ColorAnimation Duration="0:0:0.3"
-                                                                   Storyboard.TargetName="Inner"
-                                                                   To="{DynamicResource DisabledBackground}"           
-                                                                   EasingFunction="{DynamicResource EaseInOutCirc}"
-                                                                   Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" />
-                                        <Animations:ColorAnimation Duration="0:0:0.3"
-                                                                   Storyboard.TargetName="Inner"
-                                                                   To="{DynamicResource BorderBrushBase}"           
-                                                                   EasingFunction="{DynamicResource EaseInOutCirc}"
-                                                                   Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" />
-                                        <ColorAnimation To="#CCCCCC"   
-                                                        Duration="0:0:0.3"
-                                                        Storyboard.TargetName="Dot"
-                                                        EasingFunction="{DynamicResource EaseInOutCirc}"
-                                                        Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" />
+                                        <Animations:ColorAnimation Storyboard.TargetName="Inner"
+                                                                   Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                                   ToEx="{DynamicResource InputDisabledBackground}" />
+                                        <Animations:ColorAnimation Storyboard.TargetName="Inner"
+                                                                   Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                                   ToEx="{DynamicResource BorderBrushBase}" />
+                                        <ColorAnimation Storyboard.TargetName="Dot"
+                                                        Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+                                                        EasingFunction="{StaticResource EaseInOutCirc}"
+                                                        To="#CCCCCC" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation To="1"
-                                                         Duration="0:0:0.18"
-                                                         Storyboard.TargetName="DotScale"
+                                        <DoubleAnimation Storyboard.TargetName="DotScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
-                                        <DoubleAnimation To="1"
-                                                         Duration="0:0:0.18"
-                                                         Storyboard.TargetName="DotScale"
+                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
+                                                         Duration="0:0:0.3" 
+                                                         To="1" />
+                                        <DoubleAnimation Storyboard.TargetName="DotScale"
                                                          Storyboard.TargetProperty="ScaleY"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
-                                        <DoubleAnimation To="1"
-                                                         Duration="0:0:0.18" 
-                                                         Storyboard.TargetName="Dot"
+                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
+                                                         Duration="0:0:0.3" 
+                                                         To="1" />
+                                        <DoubleAnimation Storyboard.TargetName="Dot"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
+                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
+                                                         Duration="0:0:0.3" 
+                                                         To="1" />
                                         
                                         <!-- Effect -->
-                                        <DoubleAnimation To="1.6"
-                                                         Duration="0:0:0.3"
-                                                         Storyboard.TargetName="EffectScale"
+                                        <DoubleAnimation Storyboard.TargetName="EffectScale"
                                                          Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
-                                        <DoubleAnimation To="1.6"
-                                                         Duration="0:0:0.3"
-                                                         Storyboard.TargetName="EffectScale"
+                                                         EasingFunction="{StaticResource EaseInOut}" 
+                                                         Duration="0:0:0.36"
+                                                         To="1.6" />
+                                        <DoubleAnimation Storyboard.TargetName="EffectScale"
                                                          Storyboard.TargetProperty="ScaleY"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
-                                        <DoubleAnimation From="0.5"
-                                                         To="0"
-                                                         Duration="0:0:0.3" 
-                                                         Storyboard.TargetName="Effect"
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         Duration="0:0:0.36"
+                                                         To="1.6" />
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         EasingFunction="{DynamicResource EaseInOutCirc}" />
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         Duration="0:0:0.36" 
+                                                         From="0.5"
+                                                         To="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
