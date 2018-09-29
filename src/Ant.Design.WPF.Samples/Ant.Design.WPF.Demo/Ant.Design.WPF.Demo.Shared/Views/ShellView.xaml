@@ -33,6 +33,7 @@
             <Antd:Button Content="Default" />
             <Antd:Button Type="Dashed" Content="Dashed" />
             <Antd:Button Type="Danger" Content="Danger" />
+            <Antd:Button x:Name="ClickMe" Type="Primary" Content="Click me!" Loading="{Binding Loading}" />
             <Antd:Button Type="Primary" Content="Primary Disabled" IsEnabled="False" />
 
             <Border BorderThickness="1" Height="32" CornerRadius="5">

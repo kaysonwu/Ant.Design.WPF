@@ -15,30 +15,6 @@ namespace Antd.Controls
     {
         #region Properties
 
-        public static readonly DependencyProperty TypeProperty = 
-            DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets button type
-        /// </summary>
-        public ButtonType? Type
-        {
-            get { return (ButtonType?)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-        
-        public static readonly DependencyProperty HrefProperty = 
-            DependencyProperty.Register("Href", typeof(string), typeof(Button), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets click the button to jump to the url
-        /// </summary>
-        public string Href
-        {
-            get { return (string)GetValue(HrefProperty); }
-            set { SetValue(HrefProperty, value); }
-        }
-
         public static readonly DependencyProperty GhostProperty = 
             DependencyProperty.Register("Ghost", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
@@ -51,16 +27,64 @@ namespace Antd.Controls
             set { SetValue(GhostProperty, value); }
         }
 
+        public static readonly DependencyProperty HrefProperty =
+            DependencyProperty.Register("Href", typeof(string), typeof(Button), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets click the button to jump to the url
+        /// </summary>
+        public string Href
+        {
+            get { return (string)GetValue(HrefProperty); }
+            set { SetValue(HrefProperty, value); }
+        }
+
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.Register("Icon", typeof(string), typeof(Button), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets the icon type of the button
+        /// </summary>
+        public string Icon
+        {
+            get { return (string)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
+        public static readonly DependencyProperty LoadingProperty =
+            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets/sets the loading state of the button
+        /// </summary>
+        public bool Loading
+        {
+            get { return (bool)GetValue(LoadingProperty); }
+            set { SetValue(LoadingProperty, value); }
+        }
+
         public static readonly DependencyProperty CircularProperty =
             DependencyProperty.Register("Circular", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets the shape of the button to be circular.
+        /// Gets/sets the shape of the button to be circular. Used to replace the shape attribute in ant design
         /// </summary>
         public bool Circular
         {
             get { return (bool)GetValue(CircularProperty); }
             set { SetValue(CircularProperty, value); }
+        }
+
+        public static readonly DependencyProperty TypeProperty = 
+            DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets button type
+        /// </summary>
+        public ButtonType? Type
+        {
+            get { return (ButtonType?)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
         }
 
         #endregion

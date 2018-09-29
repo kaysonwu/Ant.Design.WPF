@@ -23,6 +23,23 @@ namespace AntdDemo.ViewModels
             }
         }
 
+        private bool loading = false;
+
+        public bool Loading
+        {
+            get => loading;
+            set
+            {
+                loading = value;
+                NotifyOfPropertyChange();
+            }
+        }
+
+        public void ClickMe()
+        {
+            Loading = true;
+        }
+
         public void Change()
         {
 

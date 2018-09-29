@@ -86,6 +86,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
@@ -103,7 +104,6 @@
                     </VisualStateGroup.Transitions>
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="MouseOver" Storyboard="{StaticResource Ant.ButtonFocusedStoryboard}" />
-                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                     <VisualState x:Name="Pressed">
                         <Storyboard>
                             <Animations:ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
@@ -115,6 +115,7 @@
                                                        Duration="0" />
                         </Storyboard>
                     </VisualState>
+                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                 </VisualStateGroup>
                 <VisualStateGroup x:Name="FocusStates">
                     <VisualStateGroup.Transitions>
@@ -158,6 +159,7 @@
                     <!-- Content --> 
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
@@ -175,7 +177,6 @@
                     </VisualStateGroup.Transitions>
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="MouseOver" Storyboard="{StaticResource Ant.PrimaryButtonFocusedStoryboard}" />
-                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                     <VisualState x:Name="Pressed">
                         <Storyboard>
                             <Animations:ColorAnimation Storyboard.TargetName="Border"
@@ -188,6 +189,7 @@
                                                        Duration="0" />
                         </Storyboard>
                     </VisualState>
+                     <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                 </VisualStateGroup>
                 <VisualStateGroup x:Name="FocusStates">
                     <VisualStateGroup.Transitions>
@@ -231,6 +233,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
@@ -247,7 +250,6 @@
                         <VisualTransition GeneratedDuration="0:0:0.3" GeneratedEasingFunction="{StaticResource EaseInOut}" />
                     </VisualStateGroup.Transitions>
                     <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                     <VisualState x:Name="MouseOver">
                         <Storyboard>
                             <Animations:ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" 
@@ -275,6 +277,7 @@
                                                        Duration="0" />
                         </Storyboard>
                     </VisualState>
+                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                 </VisualStateGroup>
                 <VisualStateGroup x:Name="FocusStates">
                     <VisualStateGroup.Transitions>
@@ -334,6 +337,9 @@
             </Trigger>
             <Trigger Property="Ghost" Value="True">
                 <Setter Property="Background" Value="Transparent" />
+            </Trigger>
+            <Trigger Property="Loading" Value="True">
+                <Setter Property="Icon" Value="loading" />
             </Trigger>
         </Style.Triggers>
     </Style>
