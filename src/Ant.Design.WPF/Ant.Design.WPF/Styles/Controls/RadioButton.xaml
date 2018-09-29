@@ -49,7 +49,7 @@
                                  Height="{DynamicResource RadioDotSize}"
                                  Fill="{DynamicResource RadioDotBrush}">
                             <Ellipse.RenderTransform>
-                                <ScaleTransform x:Name="DotScale" ScaleX="0" ScaleY="0" />
+                                <ScaleTransform x:Name="DotTransform" ScaleX="0" ScaleY="0" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
                         <!-- Content -->
@@ -95,23 +95,28 @@
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.3" 
-                                                         To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleY"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.3" 
-                                                         To="1" />
                                         <DoubleAnimation Storyboard.TargetName="Dot"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.3" 
+                                                         Duration="0:0:0.2" 
                                                          To="1" />
-                                        
+                                        <DoubleAnimation Storyboard.TargetName="DotTransform"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
+                                                         Duration="0:0:0.2" 
+                                                         To="1" />
+                                        <DoubleAnimation Storyboard.TargetName="DotTransform"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
+                                                         Duration="0:0:0.2" 
+                                                         To="1" />
                                         <!-- Effect -->
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         Duration="0:0:0.36" 
+                                                         From="0.5"
+                                                         To="0" />
                                         <DoubleAnimation Storyboard.TargetName="EffectScale"
                                                          Storyboard.TargetProperty="ScaleX"
                                                          EasingFunction="{StaticResource EaseInOut}" 
@@ -122,12 +127,6 @@
                                                          EasingFunction="{StaticResource EaseInOut}"
                                                          Duration="0:0:0.36"
                                                          To="1.6" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         EasingFunction="{StaticResource EaseInOut}"
-                                                         Duration="0:0:0.36" 
-                                                         From="0.5"
-                                                         To="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
