@@ -108,7 +108,10 @@
             <CheckBox Content="Disabled" IsEnabled="False" IsChecked="True" />
             <CheckBox Content="Disabled" IsEnabled="False" IsChecked="{x:Null}" />
         </StackPanel>
-        
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Antd:Icon Type="loading" FontSize="36" />
+        </StackPanel>
     </Grid>
     
 </Antd:Window>

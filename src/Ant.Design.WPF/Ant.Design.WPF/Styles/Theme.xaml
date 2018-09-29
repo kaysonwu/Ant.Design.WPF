@@ -58,12 +58,11 @@
     <System:Double x:Key="PaddingSmall">12</System:Double>
     <!-- small items -->
     <System:Double x:Key="PaddingExtraSmall">8</System:Double>
-    
+
     <!-- LINK -->
     <SolidColorBrush x:Key="LinkBrush" Color="#1890FF" Options:Freeze="True" />
     <SolidColorBrush x:Key="LinkHoverBrush" Color="#40A9FF" Options:Freeze="True" />
     <SolidColorBrush x:Key="LinkActiveBrush" Color="#096DD9" Options:Freeze="True" />
-
 
     <!-- Border -->
     <Thickness x:Key="BorderThicknessBase">1</Thickness>

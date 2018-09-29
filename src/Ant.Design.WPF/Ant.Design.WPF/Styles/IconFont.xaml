@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Icon Font -->
+    <FontFamily x:Key="IconFontFamily">pack://application:,,,/Antd;component/Resources/#anticon anticon</FontFamily>
+    <System:String x:Key="IconFontPrefix">anticon</System:String>
+
+    <!-- Icon -->
+    <System:String x:Key="anticon-loading">&#xe6b6;</System:String>
+    
+</ResourceDictionary>
