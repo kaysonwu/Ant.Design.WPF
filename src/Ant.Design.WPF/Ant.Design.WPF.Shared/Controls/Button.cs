@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using ButtonBase = System.Windows.Controls.Button;
 
 namespace Antd.Controls
@@ -52,7 +45,7 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty LoadingProperty =
-            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false));
+            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false, OnLoadingChanged));
 
         /// <summary>
         /// Gets/sets the loading state of the button
@@ -61,6 +54,11 @@ namespace Antd.Controls
         {
             get { return (bool)GetValue(LoadingProperty); }
             set { SetValue(LoadingProperty, value); }
+        }
+
+        private static void OnLoadingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            VisualStateManager.GoToState(d as Button, (bool)e.NewValue ? "Loaded" : "Unloaded", true);
         }
 
         public static readonly DependencyProperty CircularProperty =
@@ -105,6 +103,25 @@ namespace Antd.Controls
             base.OnApplyTemplate();
 
         }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            if (Loading) return;
+            base.OnMouseLeftButtonDown(e);
+        }
+
+        protected override void OnMouseEnter(MouseEventArgs e)
+        {
+            if (Loading) return;
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnClick()
+        {
+            if (Loading) return;
+            base.OnClick();
+        }
+
         #endregion
     }
 

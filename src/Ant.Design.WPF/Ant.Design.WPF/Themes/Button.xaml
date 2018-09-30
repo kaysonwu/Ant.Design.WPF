@@ -60,6 +60,13 @@
                                    Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
                                    ToEx="{DynamicResource ButtonPrimaryFocusedBrush}" />
     </Storyboard>
+
+    <Storyboard x:Key="Ant.ButtonLoadedStoryboard">
+        <DoubleAnimation Storyboard.TargetName="Border"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         Duration="0"
+                         To="0.65" />
+    </Storyboard>
     
     <ControlTemplate x:Key="Ant.ButtonTemplate" TargetType="{x:Type Controls:Button}">
         <Grid UseLayoutRounding="True">
@@ -126,6 +133,10 @@
                     <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.ButtonFocusedStoryboard}" />
                     <VisualState x:Name="Unfocused" />
                 </VisualStateGroup>
+                <VisualStateGroup x:Name="LoadStates">
+                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                    <VisualState x:Name="Unloaded" />
+                </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
@@ -138,42 +149,42 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <ControlTemplate x:Key="Ant.PrimaryButtonTemplate" TargetType="{x:Type Controls:Button}">
         <Grid UseLayoutRounding="True">
-            <!-- Effect --> 
+            <!-- Effect -->
             <Border x:Name="Effect"
-                    Opacity="0"
-                    BorderThickness="6"
-                    BorderBrush="{DynamicResource ButtonPrimaryBackground}"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+                        Opacity="0"
+                        BorderThickness="6"
+                        BorderBrush="{DynamicResource ButtonPrimaryBackground}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
             <!-- Border -->
             <Border x:Name="Border"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
-            <!-- Content --> 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+            <!-- Content -->
             <Grid Margin="{TemplateBinding Padding}"
-                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                 <Grid.ColumnDefinitions>
                     <!-- Icon -->
                     <ColumnDefinition Width="Auto" />
-                    <!-- Content --> 
+                    <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
-                                         Grid.Column="1"
-                                         RecognizesAccessKey="True"
-                                         Content="{TemplateBinding Content}"
-                                         ContentTemplate="{TemplateBinding ContentTemplate}"
-                                         ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                         ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                         ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
+                                             Grid.Column="1"
+                                             RecognizesAccessKey="True"
+                                             Content="{TemplateBinding Content}"
+                                             ContentTemplate="{TemplateBinding ContentTemplate}"
+                                             ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                             ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                             ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
                                                                         RelativeSource={RelativeSource TemplatedParent}}" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
@@ -187,16 +198,16 @@
                     <VisualState x:Name="Pressed">
                         <Storyboard>
                             <Animations:ColorAnimation Storyboard.TargetName="Border"
-                                                       Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                       ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
-                                                       Duration="0" />
+                                                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                            ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
+                                                            Duration="0" />
                             <Animations:ColorAnimation Storyboard.TargetName="Border"
-                                                       Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
-                                                       ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
-                                                       Duration="0" />
+                                                            Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
+                                                            ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
+                                                            Duration="0" />
                         </Storyboard>
                     </VisualState>
-                     <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
+                    <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
                 </VisualStateGroup>
                 <VisualStateGroup x:Name="FocusStates">
                     <VisualStateGroup.Transitions>
@@ -204,6 +215,10 @@
                     </VisualStateGroup.Transitions>
                     <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.PrimaryButtonFocusedStoryboard}" />
                     <VisualState x:Name="Unfocused" />
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="LoadStates">
+                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                    <VisualState x:Name="Unloaded" />
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
@@ -308,6 +323,10 @@
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Unfocused" />
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="LoadStates">
+                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                    <VisualState x:Name="Unloaded" />
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
