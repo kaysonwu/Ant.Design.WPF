@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:Antd.Controls"
                     xmlns:Helpers="clr-namespace:Antd.Helpers"
-                    xmlns:Animations="clr-namespace:Antd.Animations">
+                    xmlns:Animations="clr-namespace:Antd.Animations"
+                    xmlns:Converters="clr-namespace:Antd.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
@@ -87,7 +88,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
-                <Controls:ContentControl Grid.Column="1"
+                <Controls:ContentControl x:Name="Content"
+                                         Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
                                          ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -127,6 +129,10 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+                                        Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
+                <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
+            </DataTrigger>
             <EventTrigger RoutedEvent="ButtonBase.Click">
                 <BeginStoryboard Storyboard="{StaticResource Ant.ButtonEffectStoryboard}" />
             </EventTrigger>
@@ -160,7 +166,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
-                <Controls:ContentControl Grid.Column="1"
+                <Controls:ContentControl x:Name="Content"
+                                         Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
                                          ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -201,6 +208,10 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+                                        Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
+                <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
+            </DataTrigger>
             <EventTrigger RoutedEvent="ButtonBase.Click">
                 <BeginStoryboard Storyboard="{StaticResource Ant.ButtonEffectStoryboard}" />
             </EventTrigger>
@@ -234,7 +245,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
-                <Controls:ContentControl Grid.Column="1"
+                <Controls:ContentControl x:Name="Content"
+                                         Grid.Column="1"
                                          RecognizesAccessKey="True"
                                          Content="{TemplateBinding Content}"
                                          ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -300,6 +312,10 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+                                        Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
+                <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
+            </DataTrigger>
             <EventTrigger RoutedEvent="ButtonBase.Click">
                 <BeginStoryboard Storyboard="{StaticResource Ant.ButtonEffectStoryboard}" />
             </EventTrigger>

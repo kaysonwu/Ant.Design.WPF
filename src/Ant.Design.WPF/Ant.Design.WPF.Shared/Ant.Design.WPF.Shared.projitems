@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Control.cs" />
