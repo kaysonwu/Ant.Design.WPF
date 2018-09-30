@@ -94,7 +94,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
                                          Grid.Column="1"
                                          RecognizesAccessKey="True"
@@ -140,6 +140,9 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
+            </Trigger>
             <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
@@ -154,29 +157,29 @@
         <Grid UseLayoutRounding="True">
             <!-- Effect -->
             <Border x:Name="Effect"
-                        Opacity="0"
-                        BorderThickness="6"
-                        BorderBrush="{DynamicResource ButtonPrimaryBackground}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+                    Opacity="0"
+                    BorderThickness="6"
+                    BorderBrush="{DynamicResource ButtonPrimaryBackground}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
             <!-- Border -->
             <Border x:Name="Border"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
             <!-- Content -->
             <Grid Margin="{TemplateBinding Padding}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                 <Grid.ColumnDefinitions>
                     <!-- Icon -->
                     <ColumnDefinition Width="Auto" />
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
                                              Grid.Column="1"
                                              RecognizesAccessKey="True"
@@ -223,6 +226,9 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
+            </Trigger>
             <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
@@ -259,7 +265,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
                                          Grid.Column="1"
                                          RecognizesAccessKey="True"
@@ -331,6 +337,9 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
+            </Trigger>
             <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
@@ -347,7 +356,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="Height" Value="{DynamicResource ButtonHeightBase}" />
         <Setter Property="Padding" Value="{DynamicResource ButtonPaddingBase}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
         <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
@@ -375,6 +383,11 @@
             </Trigger>
             <Trigger Property="Loading" Value="True">
                 <Setter Property="Icon" Value="loading" />
+            </Trigger>
+            <Trigger Property="Circular" Value="True">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Helpers:Control.CornerRadius" Value="16" />
             </Trigger>
         </Style.Triggers>
     </Style>

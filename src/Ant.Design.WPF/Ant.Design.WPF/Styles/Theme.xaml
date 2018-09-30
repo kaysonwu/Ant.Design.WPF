@@ -80,7 +80,7 @@
     <!-- Buttons -->
     <CornerRadius x:Key="ButtonBorderRadiusBase">4</CornerRadius>
 
-    <Thickness x:Key="ButtonPaddingBase">15 0</Thickness>
+    <Thickness x:Key="ButtonPaddingBase">15 7</Thickness>
     <Thickness x:Key="ButtonPaddingLarge">15</Thickness>
     <Thickness x:Key="ButtonPaddingSmall">0 7</Thickness>
 

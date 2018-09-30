@@ -7,6 +7,9 @@
     <System:String x:Key="IconFontPrefix">anticon</System:String>
 
     <!-- Icon -->
-    <System:String x:Key="anticon-loading">&#xe6b6;</System:String>
-    
+    <!--&#xe6b6;-->
+    <System:String x:Key="anticon-loading">&#xe64d;</System:String>
+
+    <!-- Test Usign -->
+    <System:String x:Key="anticon-search">&#xe670;</System:String>
 </ResourceDictionary>

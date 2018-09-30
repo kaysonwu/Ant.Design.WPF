@@ -13,7 +13,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Bootstrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CodeBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToCodeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToMarkDownConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IShell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +25,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="$(MSBuildThisFileDirectory)Themes\CodeBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
