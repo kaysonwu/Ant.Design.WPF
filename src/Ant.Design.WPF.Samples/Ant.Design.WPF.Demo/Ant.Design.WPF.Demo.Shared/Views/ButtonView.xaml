@@ -10,7 +10,7 @@
              d:DesignHeight="300"
              d:DesignWidth="400">
     <ScrollViewer>
-        <Grid Margin="24 0">
+        <Grid Margin="16 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -21,37 +21,74 @@
 
                 <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
                 <TextBlock Style="{StaticResource Ant.P}" Text="A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Controls:CodeBox">
+                        <Setter Property="Margin" Value="0 0 0 16" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Controls:CodeBox Grid.Column="0" Title="Type">
-                    <Controls:CodeBox.Description>
-                        There are `primary` button, `default` button, `dashed` button and `danger` button in antd.
-                    </Controls:CodeBox.Description>
-                    <Controls:CodeBox.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="Antd:Button">
-                                    <Setter Property="Margin" Value="0 0 8 0" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <Antd:Button Type="Primary" Content="Primary" />
-                            <Antd:Button Content="Default" />
-                            <Antd:Button Type="Dashed" Content="Dashed" />
-                            <Antd:Button Type="Danger" Content="Danger" />
-                        </StackPanel>
-                    </Controls:CodeBox.Content>
-                    <Controls:CodeBox.Code>
-                        xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Type">
+                        <Controls:CodeBox.Description>
+                            There are `primary` button, `default` button, `dashed` button and `danger` button in antd.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Antd:Button">
+                                        <Setter Property="Margin" Value="0 0 8 0" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Antd:Button Type="Primary" Content="Primary" />
+                                <Antd:Button Content="Default" />
+                                <Antd:Button Type="Dashed" Content="Dashed" />
+                                <Antd:Button Type="Danger" Content="Danger" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                         &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
                         &lt;Antd:Button Content="Default" /&gt;\n
                         &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
                         &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
-                    </Controls:CodeBox.Code>
-                </Controls:CodeBox>
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Icon">
+                        <Controls:CodeBox.Description>
+                            `Button` components can contain an `Icon`. This is done by setting the `icon` property or placing an `Icon` component within the `Button`
+                            If you want specific control over the positioning and placement of the Icon, then that should be done by placing the `Icon` component within the `Button` rather than using the `icon` property.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Antd:Button">
+                                        <Setter Property="Margin" Value="0 0 8 0" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
+                                <Antd:Button Type="Primary" Icon="search" Content="Search" />
+                                <Antd:Button Icon="search" Circular="True" />
+                                <Antd:Button Icon="search" Content="Search" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                            &lt;Antd:Button Content="Default" /&gt;\n
+                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
             </Grid>
         </Grid>
     </ScrollViewer>
