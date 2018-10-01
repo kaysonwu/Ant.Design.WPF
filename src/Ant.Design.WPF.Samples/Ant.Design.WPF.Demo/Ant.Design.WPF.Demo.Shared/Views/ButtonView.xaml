@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
              xmlns:Controls="clr-namespace:AntdDemo.Controls"
-             xmlns:local="using:AntdDemo.Views"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400">
