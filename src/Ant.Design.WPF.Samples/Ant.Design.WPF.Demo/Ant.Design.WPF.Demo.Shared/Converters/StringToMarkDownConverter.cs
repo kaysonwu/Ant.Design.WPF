@@ -35,6 +35,8 @@ namespace AntdDemo.Converters
                 int index      = 0;
 
                 var inlines    = textBlock.Inlines;
+                str            = str.Replace(@"\n", Environment.NewLine);
+
                 var foreground = new SolidColorBrush(Color.FromRgb(31, 46, 59));
                 var background = new SolidColorBrush(Color.FromRgb(242, 244, 245));
 

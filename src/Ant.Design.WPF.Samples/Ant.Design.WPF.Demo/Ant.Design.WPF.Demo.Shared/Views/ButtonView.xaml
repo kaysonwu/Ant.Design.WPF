@@ -26,6 +26,9 @@
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.Resources>
+                    <Style TargetType="Antd:Button">
+                        <Setter Property="Margin" Value="0 0 8 12" />
+                    </Style>
                     <Style TargetType="Controls:CodeBox">
                         <Setter Property="Margin" Value="0 0 0 16" />
                     </Style>
@@ -34,51 +37,18 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel Margin="8 0">
+                <WrapPanel Margin="8 0">
                     <Controls:CodeBox Title="Type">
                         <Controls:CodeBox.Description>
                             There are `primary` button, `default` button, `dashed` button and `danger` button in antd.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Antd:Button">
-                                        <Setter Property="Margin" Value="0 0 8 0" />
-                                    </Style>
-                                </StackPanel.Resources>
+                            <WrapPanel Orientation="Horizontal">
                                 <Antd:Button Type="Primary" Content="Primary" />
                                 <Antd:Button Content="Default" />
                                 <Antd:Button Type="Dashed" Content="Dashed" />
                                 <Antd:Button Type="Danger" Content="Danger" />
-                            </StackPanel>
-                        </Controls:CodeBox.Content>
-                        <Controls:CodeBox.Code>
-                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                        &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                        &lt;Antd:Button Content="Default" /&gt;\n
-                        &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                        &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
-                        </Controls:CodeBox.Code>
-                    </Controls:CodeBox>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Margin="8 0">
-                    <Controls:CodeBox Title="Icon">
-                        <Controls:CodeBox.Description>
-                            `Button` components can contain an `Icon`. This is done by setting the `icon` property or placing an `Icon` component within the `Button`
-                            If you want specific control over the positioning and placement of the Icon, then that should be done by placing the `Icon` component within the `Button` rather than using the `icon` property.
-                        </Controls:CodeBox.Description>
-                        <Controls:CodeBox.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Antd:Button">
-                                        <Setter Property="Margin" Value="0 0 8 0" />
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
-                                <Antd:Button Type="Primary" Icon="search" Content="Search" />
-                                <Antd:Button Icon="search" Circular="True" />
-                                <Antd:Button Icon="search" Content="Search" />
-                            </StackPanel>
+                            </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
@@ -88,7 +58,81 @@
                             &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
-                </StackPanel>
+                    <Controls:CodeBox Title="Size">
+                        <Controls:CodeBox.Description>
+                            Ant Design supports a default button size as well as a large and small size.\n
+                            If a large or small button is desired, set the size property to either large or small respectively. Omit the size property for a button with the default size.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel Orientation="Horizontal">
+                                <Antd:Button Type="Primary" Content="Primary" />
+                                <Antd:Button Content="Default" />
+                                <Antd:Button Type="Dashed" Content="Dashed" />
+                                <Antd:Button Type="Danger" Content="Danger" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                            &lt;Antd:Button Content="Default" /&gt;\n
+                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </WrapPanel>
+                <WrapPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Icon">
+                        <Controls:CodeBox.Description>
+                            `Button` components can contain an `Icon`. This is done by setting the `icon` property or placing an `Icon` component within the `Button`\n
+                            If you want specific control over the positioning and placement of the Icon, then that should be done by placing the `Icon` component within the `Button` rather than using the `icon` property.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel Orientation="Horizontal">
+                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
+                                <Antd:Button Type="Primary" Icon="search" Content="Search" />
+                                <Antd:Button Icon="search" Circular="True" />
+                                <Antd:Button Icon="search" Content="Search" />
+                                <Antd:Button Type="Dashed" Icon="search" Circular="True" />
+                                <Antd:Button Type="Dashed" Icon="search" Content="Search" />
+                                <Antd:Button Type="Danger" Icon="search" Circular="True" />
+                                <Antd:Button Type="Danger" Icon="search" Content="Search" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
+                            &lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
+                            &lt;Antd:Button Icon="search" Circular="True" /&gt;\n
+                            &lt;Antd:Button Icon="search" Content="Search" /&gt;\n
+                            &lt;Antd:Button Type="Dashed" Icon="search" Circular="True" /&gt;\n
+                            &lt;Antd:Button Type="Dashed" Icon="search" Content="Search" /&gt;\n
+                            &lt;Antd:Button Type="Danger" Icon="search" Circular="True" /&gt;\n
+                            &lt;Antd:Button Type="Danger" Icon="search" Content="Search" /&gt;\n
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Disabled">
+                        <Controls:CodeBox.Description>
+                            To mark a button as disabled, set the `IsEnabled` property to `False`
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel Orientation="Horizontal">
+                                <Antd:Button Type="Primary" Content="Primary" />
+                                <Antd:Button Type="Primary" Content="Primary(disabled)" IsEnabled="False" />
+                                <Antd:Button Content="Default" />
+                                <Antd:Button Content="Default(disabled)" IsEnabled="False" />
+                                <Antd:Button Type="Dashed" Content="Dashed" />
+                                <Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                            &lt;Antd:Button Content="Default" /&gt;\n
+                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </WrapPanel>
             </Grid>
         </Grid>
     </ScrollViewer>

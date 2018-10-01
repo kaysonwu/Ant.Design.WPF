@@ -27,14 +27,21 @@ namespace AntdDemo.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var str       = value as string;
-            var textBlock = new TextBlock() { TextWrapping = TextWrapping.Wrap };
-
+            var textBox   = new RichTextBox() {
+                IsReadOnly = true,
+                FontSize = 12,
+                Foreground = Brushes.Red,
+                BorderThickness = new Thickness(0),
+            };
+  
             if (!string.IsNullOrEmpty(str))
             {
                 string pattern = "=\".*?\"|[</>]";
                 int index      = 0;
 
-                var inlines    = textBlock.Inlines;
+                var document   = new FlowDocument();
+                var paragraph  = new Paragraph();
+                var inlines    = paragraph.Inlines;
                 str            = str.Replace(@"\n", Environment.NewLine);
 
                 foreach (Match match in Regex.Matches(str, pattern))
@@ -45,9 +52,11 @@ namespace AntdDemo.Converters
                 }
 
                 inlines.Add(str.Substring(index));
+                document.Blocks.Add(paragraph);
+                textBox.Document = document;
             } 
 
-            return textBlock;
+            return textBox;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
