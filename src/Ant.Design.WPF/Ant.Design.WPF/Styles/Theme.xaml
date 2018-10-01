@@ -78,16 +78,10 @@
     <SolidColorBrush x:Key="WindowButtonPressedBrush" Color="#4C000000" Options:Freeze="True" />
     
     <!-- Buttons -->
+    <FontWeight x:Key="ButtonFontWeight">Normal</FontWeight>
     <CornerRadius x:Key="ButtonBorderRadiusBase">4</CornerRadius>
+    <CornerRadius x:Key="ButtonBorderRadiusSmall">4</CornerRadius>
 
-    <Thickness x:Key="ButtonPaddingBase">15 7</Thickness>
-    <Thickness x:Key="ButtonPaddingLarge">15</Thickness>
-    <Thickness x:Key="ButtonPaddingSmall">0 7</Thickness>
-
-    <System:Double x:Key="ButtonHeightBase">32</System:Double>
-    <System:Double x:Key="ButtonHeightLarge">40</System:Double>
-    <System:Double x:Key="ButtonHeightSmall">24</System:Double>
-    
     <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="White" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonPrimaryFocusedBrush" Color="#40A9FF" Options:Freeze="True" />
@@ -108,7 +102,18 @@
     <SolidColorBrush x:Key="ButtonDisableForeground" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+
+    <System:Double x:Key="ButtonFontSizeLarge">16</System:Double>
+    <System:Double x:Key="ButtonFontSizeSmall">12</System:Double>
     
+    <Thickness x:Key="ButtonPaddingBase">15 0</Thickness>
+    <Thickness x:Key="ButtonPaddingLarge">15 0</Thickness>
+    <Thickness x:Key="ButtonPaddingSmall">7 0</Thickness>
+
+    <System:Double x:Key="ButtonHeightBase">32</System:Double>
+    <System:Double x:Key="ButtonHeightLarge">40</System:Double>
+    <System:Double x:Key="ButtonHeightSmall">24</System:Double>
+
     <!-- CheckBox -->
     <System:Double x:Key="CheckBoxSize">16</System:Double>
     <System:Double x:Key="CheckBoxIndeterminateSize">8</System:Double>

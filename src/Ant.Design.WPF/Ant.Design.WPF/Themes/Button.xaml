@@ -61,10 +61,17 @@
                                    ToEx="{DynamicResource ButtonPrimaryFocusedBrush}" />
     </Storyboard>
 
+    <Storyboard x:Key="Ant.DashedButtonFocusedStoryboard">
+        <Animations:ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
+                                   ToEx="{DynamicResource ButtonDefaultFocusedBrush}" />
+        <Animations:ColorAnimation Storyboard.TargetName="Border"
+                                   Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                   ToEx="{DynamicResource ButtonDefaultFocusedBrush}" />
+    </Storyboard>
+
     <Storyboard x:Key="Ant.ButtonLoadedStoryboard">
-        <DoubleAnimation Storyboard.TargetName="Border"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         Duration="0"
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                         Duration="0:0:0.2"
                          To="0.65" />
     </Storyboard>
     
@@ -94,7 +101,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Focusable="False" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
                                          Grid.Column="1"
                                          RecognizesAccessKey="True"
@@ -133,17 +140,19 @@
                     <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.ButtonFocusedStoryboard}" />
                     <VisualState x:Name="Unfocused" />
                 </VisualStateGroup>
-                <VisualStateGroup x:Name="LoadStates">
-                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
-                    <VisualState x:Name="Unloaded" />
-                </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Content" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
             </Trigger>
-            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+            <Trigger Property="Loading" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                </Trigger.EnterActions>
+                <Setter TargetName="Icon" Property="Type" Value="loading" />
+            </Trigger>
+            <DataTrigger Binding="{Binding Type, ElementName=Icon, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
             </DataTrigger>
@@ -179,16 +188,16 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Focusable="False" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
-                                             Grid.Column="1"
-                                             RecognizesAccessKey="True"
-                                             Content="{TemplateBinding Content}"
-                                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                                             ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                             ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                             ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
-                                                                        RelativeSource={RelativeSource TemplatedParent}}" />
+                                         Grid.Column="1"
+                                         RecognizesAccessKey="True"
+                                         Content="{TemplateBinding Content}"
+                                         ContentTemplate="{TemplateBinding ContentTemplate}"
+                                         ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                         ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                         ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
+                                                                    RelativeSource={RelativeSource TemplatedParent}}" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
@@ -219,9 +228,107 @@
                     <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.PrimaryButtonFocusedStoryboard}" />
                     <VisualState x:Name="Unfocused" />
                 </VisualStateGroup>
-                <VisualStateGroup x:Name="LoadStates">
-                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
-                    <VisualState x:Name="Unloaded" />
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
+            </Trigger>
+            <Trigger Property="Loading" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                </Trigger.EnterActions>
+                <Setter TargetName="Icon" Property="Type" Value="loading" />
+            </Trigger>
+            <DataTrigger Binding="{Binding Type, ElementName=Icon, 
+                                        Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
+                <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
+            </DataTrigger>
+            <EventTrigger RoutedEvent="ButtonBase.Click">
+                <BeginStoryboard Storyboard="{StaticResource Ant.ButtonEffectStoryboard}" />
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="Ant.DashedButtonTemplate" TargetType="{x:Type Controls:Button}">
+        <Grid UseLayoutRounding="True">
+            <!-- Effect -->
+            <Border x:Name="Effect"
+                    Opacity="0"
+                    BorderThickness="6"
+                    BorderBrush="{DynamicResource ButtonPrimaryBackground}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+            <!-- Border -->
+            <Rectangle x:Name="Border"
+                       StrokeDashArray="2.5"
+                       Fill="{TemplateBinding Background}"
+                       Stroke="{TemplateBinding BorderBrush}"
+                       StrokeThickness="{TemplateBinding BorderThickness}"
+                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                       RadiusX="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent},
+                                    Converter={x:Static Converters:CornerRadiusToSizeConverter.Instance}}"
+                       RadiusY="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent},
+                                    Converter={x:Static Converters:CornerRadiusToSizeConverter.Instance}}" />
+            <!-- Content -->
+            <Grid Margin="{TemplateBinding Padding}"
+                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                <Grid.ColumnDefinitions>
+                    <!-- Icon -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Focusable="False" Type="{TemplateBinding Icon}" />
+                <Controls:ContentControl x:Name="Content"
+                                         Grid.Column="1"
+                                         RecognizesAccessKey="True"
+                                         Content="{TemplateBinding Content}"
+                                         ContentTemplate="{TemplateBinding ContentTemplate}"
+                                         ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                         ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                         ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
+                                                                        RelativeSource={RelativeSource TemplatedParent}}" />
+            </Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualStateGroup.Transitions>
+                        <VisualTransition GeneratedDuration="0" To="Pressed"  />
+                        <VisualTransition GeneratedDuration="0:0:0.3" GeneratedEasingFunction="{StaticResource EaseInOut}" />
+                    </VisualStateGroup.Transitions>
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver" Storyboard="{StaticResource Ant.DashedButtonFocusedStoryboard}" />
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <Animations:ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" 
+                                                       ToEx="{DynamicResource ButtonDefaultPressedBrush}"
+                                                       Duration="0" />
+                            <Animations:ColorAnimation Storyboard.TargetName="Border"
+                                                       Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                                                       ToEx="{DynamicResource ButtonDefaultPressedBrush}"
+                                                       Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <Animations:ColorAnimation Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" 
+                                                       ToEx="{DynamicResource ButtonDisableForeground}" />
+                            <Animations:ColorAnimation Storyboard.TargetName="Border"
+                                                       Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" 
+                                                       ToEx="{DynamicResource ButtonDisableBackground}" />
+                            <Animations:ColorAnimation Storyboard.TargetName="Border"
+                                                       Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)" 
+                                                       ToEx="{DynamicResource ButtonDisableBorder}" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualStateGroup.Transitions>
+                        <VisualTransition GeneratedDuration="0:0:0.3" GeneratedEasingFunction="{StaticResource EaseInOut}" />
+                    </VisualStateGroup.Transitions>
+                    <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.DashedButtonFocusedStoryboard}" />
+                    <VisualState x:Name="Unfocused" />
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
@@ -229,7 +336,13 @@
             <Trigger Property="Content" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
             </Trigger>
-            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+            <Trigger Property="Loading" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                </Trigger.EnterActions>
+                <Setter TargetName="Icon" Property="Type" Value="loading" />
+            </Trigger>
+            <DataTrigger Binding="{Binding Type, ElementName=Icon, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
             </DataTrigger>
@@ -265,7 +378,7 @@
                     <!-- Content -->
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Controls:Icon x:Name="Icon" Grid.Column="0" Type="{TemplateBinding Icon}" />
+                <Controls:Icon x:Name="Icon" Grid.Column="0" Focusable="False" Type="{TemplateBinding Icon}" />
                 <Controls:ContentControl x:Name="Content"
                                          Grid.Column="1"
                                          RecognizesAccessKey="True"
@@ -330,17 +443,19 @@
                     </VisualState>
                     <VisualState x:Name="Unfocused" />
                 </VisualStateGroup>
-                <VisualStateGroup x:Name="LoadStates">
-                    <VisualState x:Name="Loaded" Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
-                    <VisualState x:Name="Unloaded" />
-                </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Content" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
             </Trigger>
-            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Self}, 
+            <Trigger Property="Loading" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Ant.ButtonLoadedStoryboard}" />
+                </Trigger.EnterActions>
+                <Setter TargetName="Icon" Property="Type" Value="loading" />
+            </Trigger>
+            <DataTrigger Binding="{Binding Type, ElementName=Icon, 
                                         Converter={x:Static Converters:StringToBooleanConverter.Instance}}" Value="False">
                 <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
             </DataTrigger>
@@ -355,8 +470,10 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="Height" Value="{DynamicResource ButtonHeightBase}" />
         <Setter Property="Padding" Value="{DynamicResource ButtonPaddingBase}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="FontWeight" Value="{DynamicResource ButtonFontWeight}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
         <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonDefaultBorder}" />
@@ -371,6 +488,10 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBackground}" />
                 <Setter Property="Template" Value="{StaticResource Ant.PrimaryButtonTemplate}" />
             </Trigger>
+            <Trigger Property="Type" Value="Dashed">
+                
+                <Setter Property="Template" Value="{StaticResource Ant.DashedButtonTemplate}" />
+            </Trigger>
             <!-- Danger -->
             <Trigger Property="Type" Value="Danger">
                 <Setter Property="Foreground" Value="{DynamicResource ButtonDangerForeground}" />
@@ -378,16 +499,26 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonDangerBorder}" />
                 <Setter Property="Template" Value="{StaticResource Ant.DangerButtonTemplate}" />
             </Trigger>
+            <!-- Size -->
+            <Trigger Property="Size" Value="Large">
+                <Setter Property="Height" Value="{DynamicResource ButtonHeightLarge}" />
+                <Setter Property="Padding" Value="{DynamicResource ButtonPaddingLarge}" />
+                <Setter Property="FontSize" Value="{DynamicResource ButtonFontSizeLarge}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Small">
+                <Setter Property="Height" Value="{DynamicResource ButtonHeightSmall}" />
+                <Setter Property="Padding" Value="{DynamicResource ButtonPaddingSmall}" />
+                <Setter Property="FontSize" Value="{DynamicResource ButtonFontSizeSmall}" />
+            </Trigger>
             <Trigger Property="Ghost" Value="True">
                 <Setter Property="Background" Value="Transparent" />
             </Trigger>
-            <Trigger Property="Loading" Value="True">
-                <Setter Property="Icon" Value="loading" />
-            </Trigger>
+            <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="Helpers:Control.CornerRadius" Value="16" />
+                <Setter Property="Width" Value="{Binding Height, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, ConverterParameter=2, RelativeSource={RelativeSource Self}, 
+                                                                            Converter={x:Static Converters:SizeToCornerRadiusConverter.Instance}}" />
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -61,7 +61,7 @@
                     <Controls:CodeBox Title="Size">
                         <Controls:CodeBox.Description>
                             Ant Design supports a default button size as well as a large and small size.\n
-                            If a large or small button is desired, set the size property to either large or small respectively. Omit the size property for a button with the default size.
+                            If a large or small button is desired, set the `Size` property to either `large` or `small` respectively. Omit the `Size` property for a button with the default size.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <WrapPanel Orientation="Horizontal">
@@ -69,6 +69,8 @@
                                 <Antd:Button Content="Default" />
                                 <Antd:Button Type="Dashed" Content="Dashed" />
                                 <Antd:Button Type="Danger" Content="Danger" />
+                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
+                                <Antd:Button Type="Primary" Icon="search" Content="Search" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -77,6 +79,30 @@
                             &lt;Antd:Button Content="Default" /&gt;\n
                             &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
                             &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Loading">
+                        <Controls:CodeBox.Description>
+                            A loading indicator can be added to a button by setting the `Loading` property on the `Button`.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel Orientation="Horizontal">
+                                <Antd:Button Type="Primary" Content="Loading" Loading="True" />
+                                <Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" />
+                                <Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" />
+                                <Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" />
+                                <Antd:Button Circular="True" Loading="True" />
+                                <Antd:Button Type="Primary" Circular="True" Loading="True"  />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Content="Loading" Loading="True" /&gt;
+                            &lt;Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" /&gt;
+                            &lt;Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" /&gt;
+                            &lt;Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" /&gt;
+                            &lt;Antd:Button Circular="True" Loading="True" /&gt;
+                            &lt;Antd:Button Type="Primary" Circular="True" Loading="True"  /&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </WrapPanel>

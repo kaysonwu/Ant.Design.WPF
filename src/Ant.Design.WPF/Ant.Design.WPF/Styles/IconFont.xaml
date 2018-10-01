@@ -9,7 +9,8 @@
     <!-- Icon -->
     <!--&#xe6b6;-->
     <System:String x:Key="anticon-loading">&#xe64d;</System:String>
-
+    <System:String x:Key="anticon-poweroff">&#xe6d5;</System:String>
+    
     <!-- Test Usign -->
     <System:String x:Key="anticon-search">&#xe670;</System:String>
 </ResourceDictionary>

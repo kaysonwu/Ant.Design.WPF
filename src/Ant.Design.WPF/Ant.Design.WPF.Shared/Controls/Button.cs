@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using ButtonBase = System.Windows.Controls.Button;
 
@@ -45,7 +46,7 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty LoadingProperty =
-            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false, OnLoadingChanged));
+            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets/sets the loading state of the button
@@ -54,11 +55,6 @@ namespace Antd.Controls
         {
             get { return (bool)GetValue(LoadingProperty); }
             set { SetValue(LoadingProperty, value); }
-        }
-
-        private static void OnLoadingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            VisualStateManager.GoToState(d as Button, (bool)e.NewValue ? "Loaded" : "Unloaded", true);
         }
 
         public static readonly DependencyProperty CircularProperty =
@@ -71,6 +67,18 @@ namespace Antd.Controls
         {
             get { return (bool)GetValue(CircularProperty); }
             set { SetValue(CircularProperty, value); }
+        }
+
+        public static readonly DependencyProperty SizeProperty =
+            DependencyProperty.Register("Size", typeof(Size?), typeof(Button), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets the size of the button
+        /// </summary>
+        public Size? Size
+        {
+            get { return (Size?)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
         }
 
         public static readonly DependencyProperty TypeProperty = 
@@ -98,12 +106,6 @@ namespace Antd.Controls
 
         #region Overrides
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-        }
-
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (Loading) return;
@@ -112,12 +114,18 @@ namespace Antd.Controls
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (Loading) return;
-            base.OnMouseEnter(e);
+            if (Loading)
+            {
+                VisualStateManager.GoToState(this, "Normal", true);
+            } else
+            {
+                base.OnMouseEnter(e);
+            }
         }
 
         protected override void OnClick()
         {
+            // Preventing events in ClickMode.Press mode
             if (Loading) return;
             base.OnClick();
         }
@@ -125,7 +133,7 @@ namespace Antd.Controls
         #endregion
     }
 
-    public enum ButtonType
+    public enum ButtonType : byte
     {
         Primary, Dashed, Danger
     }

@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Icon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IThumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PropertyChangeNotifier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Thumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlAutomationPeer.cs" />
@@ -26,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\SizeToCornerRadiusConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
