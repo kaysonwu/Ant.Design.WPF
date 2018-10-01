@@ -210,13 +210,13 @@
                     <VisualState x:Name="Pressed">
                         <Storyboard>
                             <Animations:ColorAnimation Storyboard.TargetName="Border"
-                                                            Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                            ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
-                                                            Duration="0" />
+                                                       Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                       ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
+                                                       Duration="0" />
                             <Animations:ColorAnimation Storyboard.TargetName="Border"
-                                                            Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
-                                                            ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
-                                                            Duration="0" />
+                                                       Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Color)"
+                                                       ToEx="{DynamicResource ButtonPrimaryPressedBrush}"
+                                                       Duration="0" />
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Disabled" Storyboard="{StaticResource Ant.DisabledButtonStoryboard}" />
@@ -488,8 +488,8 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBackground}" />
                 <Setter Property="Template" Value="{StaticResource Ant.PrimaryButtonTemplate}" />
             </Trigger>
+            <!-- Dashed -->
             <Trigger Property="Type" Value="Dashed">
-                
                 <Setter Property="Template" Value="{StaticResource Ant.DashedButtonTemplate}" />
             </Trigger>
             <!-- Danger -->
@@ -509,9 +509,6 @@
                 <Setter Property="Height" Value="{DynamicResource ButtonHeightSmall}" />
                 <Setter Property="Padding" Value="{DynamicResource ButtonPaddingSmall}" />
                 <Setter Property="FontSize" Value="{DynamicResource ButtonFontSizeSmall}" />
-            </Trigger>
-            <Trigger Property="Ghost" Value="True">
-                <Setter Property="Background" Value="Transparent" />
             </Trigger>
             <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">

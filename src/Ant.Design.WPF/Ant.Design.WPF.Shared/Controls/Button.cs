@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using ButtonBase = System.Windows.Controls.Button;
 
@@ -8,18 +7,6 @@ namespace Antd.Controls
     public class Button : ButtonBase
     {
         #region Properties
-
-        public static readonly DependencyProperty GhostProperty = 
-            DependencyProperty.Register("Ghost", typeof(bool), typeof(Button), new PropertyMetadata(false));
-
-        /// <summary>
-        ///  Gets/sets ghost property to make the button background transparent
-        /// </summary>
-        public bool Ghost
-        {
-            get { return (bool)GetValue(GhostProperty); }
-            set { SetValue(GhostProperty, value); }
-        }
 
         public static readonly DependencyProperty HrefProperty =
             DependencyProperty.Register("Href", typeof(string), typeof(Button), new PropertyMetadata(null));

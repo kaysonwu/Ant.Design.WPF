@@ -152,12 +152,36 @@
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;
+                            &lt;Antd:Button Type="Primary" Content="Primary(disabled)" IsEnabled="False" /&gt;
+                            &lt;Antd:Button Content="Default" /&gt;
+                            &lt;Antd:Button Content="Default(disabled)" IsEnabled="False" /&gt;
+                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;
+                            &lt;Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <!--<Controls:CodeBox Title="Ghost Button">
+                        <Controls:CodeBox.Description>
+                            `Ghost` property will make button's background transparent, it is common used in colored background.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <Grid Background="#BEC8C8">
+                                <WrapPanel Margin="16 26 16 16" Orientation="Horizontal">
+                                    <Antd:Button Type="Primary" Content="Primary" Ghost="True" />
+                                    <Antd:Button Content="Default" Ghost="True" />
+                                    <Antd:Button Type="Dashed"  Content="Dashed" Ghost="True" />
+                                    <Antd:Button Type="Danger" Content="Danger" Ghost="True" />
+                                </WrapPanel>
+                            </Grid>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
                             &lt;Antd:Button Content="Default" /&gt;\n
                             &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
                             &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
                         </Controls:CodeBox.Code>
-                    </Controls:CodeBox>
+                    </Controls:CodeBox>-->
                 </WrapPanel>
             </Grid>
         </Grid>
