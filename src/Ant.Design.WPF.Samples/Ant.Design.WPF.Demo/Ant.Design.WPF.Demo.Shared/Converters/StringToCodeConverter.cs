@@ -42,7 +42,7 @@ namespace AntdDemo.Converters
                 var document   = new FlowDocument();
                 var paragraph  = new Paragraph();
                 var inlines    = paragraph.Inlines;
-                str            = str.Replace(@"\n", Environment.NewLine);
+                str            = str.Replace(@"\n", Environment.NewLine).Replace(@"\t", "\t");
 
                 foreach (Match match in Regex.Matches(str, pattern))
                 {

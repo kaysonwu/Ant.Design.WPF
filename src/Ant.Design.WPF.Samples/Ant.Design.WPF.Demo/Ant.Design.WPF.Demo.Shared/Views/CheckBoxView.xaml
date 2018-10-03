@@ -6,8 +6,8 @@
              xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
              xmlns:Controls="clr-namespace:AntdDemo.Controls"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="400">
+             d:DesignHeight="600"
+             d:DesignWidth="930">
 
     <ScrollViewer>
         <Grid Margin="16 0">
@@ -20,27 +20,29 @@
                 <TextBlock Style="{StaticResource Ant.P}" Text="Checkbox component." />
 
                 <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
-                <TextBlock Style="{StaticResource Ant.P}" xml:space="preserve">
-                    Used for selecting multiple values from several options.
-                    If you use only one checkbox, it is the same as using Switch to toggle between two states. The difference is that Switch will trigger the state change directly, but Checkbox just marks the state as changed and this needs to be submitted.
-                </TextBlock>
+                <TextBlock Style="{StaticResource Ant.P}"  
+                           TextWrapping="Wrap"
+                           Text="Used for selecting multiple values from several options.&#x0a;If you use only one checkbox, it is the same as using Switch to toggle between two states. The difference is that Switch will trigger the state change directly, but Checkbox just marks the state as changed and this needs to be submitted." />
 
                 <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Controls:CodeBox">
+                        <Setter Property="Margin" Value="0 0 0 16" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <WrapPanel Margin="8 0">
-                    <Controls:CodeBox Title="Type">
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
                         <Controls:CodeBox.Description>
                             Basic usage of checkbox.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
-                                <CheckBox Content="Checkbox" />
-                            </WrapPanel>
+                            <CheckBox Content="Checkbox" />
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
@@ -52,48 +54,93 @@
                             Communicated with other components.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
-                                <CheckBox Content="Checkbox" />
-                            </WrapPanel>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <CheckBox Content="{Binding CheckBox, Mode=OneWay}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsEnabled}" />
+                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 20 0 0">
+                                    <Antd:Button x:Name="ToggleCheck" Type="Primary" Content="{Binding Check, Mode=OneWay}"  Margin="0 0 10 0"/>
+                                    <Antd:Button x:Name="ToggleEnabled" Type="Primary" Content="{Binding Enabled, Mode=OneWay}" />
+                                </StackPanel>
+                            </Grid>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
-                            &lt;CheckBox Content="Checkbox" /&gt;
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Grid&gt;\n
+                                \t&lt;Grid.RowDefinitions&gt;\n
+                                    \t\t&lt;RowDefinition /&gt;\n
+                                    \t\t&lt;RowDefinition /&gt;\n
+                                \t&lt;/Grid.RowDefinitions&gt;\n
+                                \t&lt;CheckBox Content="{Binding CheckBox, Mode=OneWay}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsEnabled}" /&gt;\n
+                                \t&lt;StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 20 0 0"&gt;\n
+                                    \t\t&lt;Antd:Button x:Name="ToggleCheck" Type="Primary" Content="{Binding Check, Mode=OneWay}"  Margin="0 0 10 0"/&gt;\n
+                                    \t\t&lt;Antd:Button x:Name="ToggleEnabled" Type="Primary" Content="{Binding Enabled, Mode=OneWay}" /&gt;\n
+                                \t&lt;/StackPanel&gt;\n
+                            &lt;/Grid&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
-                    <Controls:CodeBox Title="Check all">
-                        <Controls:CodeBox.Description>
-                            Communicated with other components.
-                        </Controls:CodeBox.Description>
-                        <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
-                                <CheckBox Content="Checkbox" />
-                            </WrapPanel>
-                        </Controls:CodeBox.Content>
-                        <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
-                            &lt;CheckBox Content="Checkbox" /&gt;
-                        </Controls:CodeBox.Code>
-                    </Controls:CodeBox>
-                </WrapPanel>
-                <WrapPanel Grid.Column="1" Margin="8 0">
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
                     <Controls:CodeBox Title="Disabled">
                         <Controls:CodeBox.Description>
                             Disabled checkbox.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <CheckBox Content="Checkbox" IsEnabled="False" />
                                 <CheckBox Content="Checkbox" IsEnabled="False" IsChecked="True" />
-                            </WrapPanel>
+                            </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
-                             &lt;CheckBox Content="Checkbox" IsEnabled="False" /&gt;\n
-                             &lt;CheckBox Content="Checkbox" IsEnabled="False" IsChecked="True" /&gt;\n
+                            &lt;StackPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;CheckBox Content="Checkbox" IsEnabled="False" /&gt;\n
+                                \t&lt;CheckBox Content="Checkbox" IsEnabled="False" IsChecked="True" /&gt;\n
+                            &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
-                </WrapPanel>
+                    <Controls:CodeBox Title="Check all">
+                        <Controls:CodeBox.Description>
+                            The `indeterminate` state can help you to achieve a 'check all' effect.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border BorderBrush="#E9E9E9" BorderThickness="0 0 0 1" Padding="0 0 0 2">
+                                    <CheckBox x:Name="CheckAll" Content="Check all" />
+                                </Border>
+                                <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0 16 0 0">
+                                    <CheckBox x:Name="Apple" Content="Apple" />
+                                    <CheckBox x:Name="Pear" Content="Pear" />
+                                    <CheckBox x:Name="Orange" Content="Orange" />
+                                </WrapPanel>
+                            </Grid>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
+                            &lt;Grid&gt;\n
+                                \t&lt;Grid.RowDefinitions&gt;\n
+                                    \t\t&lt;RowDefinition /&gt;\n
+                                    \t\t&lt;RowDefinition /&gt;\n
+                                \t&lt;/Grid.RowDefinitions&gt;\n
+                                \t&lt;Border BorderBrush="#E9E9E9" BorderThickness="0 0 0 1" Padding="0 0 0 2"&gt;\n
+                                    \t\t&lt;CheckBox x:Name="CheckAll" Content="Check all" /&gt;\n
+                                \t&lt;/Border&gt;\n
+                                \t&lt;WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0 16 0 0"&gt;\n
+                                    \t\t&lt;CheckBox x:Name="Apple" Content="Apple" /&gt;\n
+                                    \t\t&lt;CheckBox x:Name="Pear" Content="Pear" /&gt;\n
+                                    \t\t&lt;CheckBox x:Name="Orange" Content="Orange" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
+                            &lt;/Grid&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
             </Grid>
         </Grid>
     </ScrollViewer>

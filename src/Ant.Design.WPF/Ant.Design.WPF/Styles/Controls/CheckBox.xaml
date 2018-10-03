@@ -10,6 +10,7 @@
     
     <Style x:Key="Ant.CheckBox" BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type CheckBox}">
         <Setter Property="Padding" Value="4 0 8 0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -49,14 +50,14 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
                         <Path x:Name="CheckedMark"
-                              Fill="White"
-                              Width="7"
-                              Height="11"
-                              Opacity="0"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"  
-                              RenderTransformOrigin="0.5,0.5"
-                              Data="M0,7 L3,7 3,0 5.6,0 5.6,9.6 0,9.6z">
+                                Fill="White"
+                                Width="7"
+                                Height="11"
+                                Opacity="0"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"  
+                                RenderTransformOrigin="0.5,0.5"
+                                Data="M0,7 L3,7 3,0 5.6,0 5.6,9.6 0,9.6z">
                             <Path.RenderTransform>
                                 <TransformGroup>
                                     <RotateTransform Angle="45" />
@@ -65,13 +66,13 @@
                             </Path.RenderTransform>
                         </Path>
                         <Rectangle x:Name="IndeterminateMark"
-                                   Opacity="0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   RenderTransformOrigin="0.5,0.5"
-                                   Fill="{DynamicResource CheckBoxBrush}"
-                                   Width="{DynamicResource CheckBoxIndeterminateSize}"
-                                   Height="{DynamicResource CheckBoxIndeterminateSize}">
+                                       Opacity="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       RenderTransformOrigin="0.5,0.5"
+                                       Fill="{DynamicResource CheckBoxBrush}"
+                                       Width="{DynamicResource CheckBoxIndeterminateSize}"
+                                       Height="{DynamicResource CheckBoxIndeterminateSize}">
                             <Rectangle.RenderTransform>
                                 <ScaleTransform x:Name="IndeterminateMarkTransform" ScaleX="0" ScaleY="0" />
                             </Rectangle.RenderTransform>

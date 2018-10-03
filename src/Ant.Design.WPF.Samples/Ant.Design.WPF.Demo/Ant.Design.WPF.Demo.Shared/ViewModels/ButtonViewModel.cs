@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.Composition;
-using Antd.Controls;
+﻿using System.Windows;
+using System.Windows.Media;
+using System.ComponentModel.Composition;
+using Size = Antd.Controls.Size;
 using Caliburn.Micro;
 
 namespace AntdDemo.ViewModels
@@ -40,6 +42,10 @@ namespace AntdDemo.ViewModels
         public void Click1()
         {
             Loading1 = true;
+            var app = Application.Current;
+
+            app.Resources["PrimaryColor1"] = Color.FromRgb(0, 0, 255);
+            //app.Resources["PrimaryColor"] = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
 
         public void Click2()
