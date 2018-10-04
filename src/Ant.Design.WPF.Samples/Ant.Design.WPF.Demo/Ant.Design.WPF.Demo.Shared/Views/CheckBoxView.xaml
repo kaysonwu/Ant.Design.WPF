@@ -27,11 +27,6 @@
                 <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
-                <Grid.Resources>
-                    <Style TargetType="Controls:CodeBox">
-                        <Setter Property="Margin" Value="0 0 0 16" />
-                    </Style>
-                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />

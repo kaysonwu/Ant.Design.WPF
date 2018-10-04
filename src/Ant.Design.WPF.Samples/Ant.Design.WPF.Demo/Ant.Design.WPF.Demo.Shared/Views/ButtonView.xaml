@@ -28,9 +28,6 @@
                     <Style TargetType="Antd:Button">
                         <Setter Property="Margin" Value="0 0 8 12" />
                     </Style>
-                    <Style TargetType="Controls:CodeBox">
-                        <Setter Property="Margin" Value="0 0 0 16" />
-                    </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

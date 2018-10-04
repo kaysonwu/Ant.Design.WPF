@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="AntdDemo.Views.RadioButtonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
+             xmlns:Controls="clr-namespace:AntdDemo.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="930">
+
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Radio" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="Radio." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
+                <TextBlock Style="{StaticResource Ant.P}"  
+                           TextWrapping="Wrap"
+                           Text="Used to select a single state in multiple options.&#x0a;The difference between Select is that Radio is visible to user and can facilitate the comparison of choice, which makes there shouldn't be too many of them." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            The simplest use.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <RadioButton Content="Radio" />
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
+                            &lt;RadioButton Content="Radio" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Disabled">
+                        <Controls:CodeBox.Description>
+                            Radio unavailable.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" Margin="0 0 0 8" />
+                                <RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" IsChecked="True" />
+
+                                <Antd:Button x:Name="Toggle" Type="Primary" Content="Toggle disabled" Margin="0 20 0 0" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
+                            &lt;RadioButton Content="Radio" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
