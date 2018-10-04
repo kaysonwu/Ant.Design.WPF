@@ -47,11 +47,14 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                            &lt;Antd:Button Content="Default" /&gt;\n
-                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                     <Controls:CodeBox Title="Size">
@@ -70,11 +73,16 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                            &lt;Antd:Button Content="Default" /&gt;\n
-                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" Size="Large" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                     <Controls:CodeBox Title="Loading">
@@ -92,13 +100,16 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Content="Loading" Loading="True" /&gt;
-                            &lt;Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" /&gt;
-                            &lt;Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" /&gt;
-                            &lt;Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" /&gt;
-                            &lt;Antd:Button Circular="True" Loading="True" /&gt;
-                            &lt;Antd:Button Type="Primary" Circular="True" Loading="True"  /&gt;
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Loading" Loading="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" /&gt;\n
+                                \t&lt;Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" /&gt;\n
+                                \t&lt;Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" /&gt;\n
+                                \t&lt;Antd:Button Circular="True" Loading="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Circular="True" Loading="True"  /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>
@@ -121,15 +132,18 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
-                            &lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
-                            &lt;Antd:Button Icon="search" Circular="True" /&gt;\n
-                            &lt;Antd:Button Icon="search" Content="Search" /&gt;\n
-                            &lt;Antd:Button Type="Dashed" Icon="search" Circular="True" /&gt;\n
-                            &lt;Antd:Button Type="Dashed" Icon="search" Content="Search" /&gt;\n
-                            &lt;Antd:Button Type="Danger" Icon="search" Circular="True" /&gt;\n
-                            &lt;Antd:Button Type="Danger" Icon="search" Content="Search" /&gt;\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
+                                \t&lt;Antd:Button Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Icon="search" Content="Search" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Icon="search" Content="Search" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Icon="search" Content="Search" /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                     <Controls:CodeBox Title="Disabled">
@@ -147,13 +161,16 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;
-                            &lt;Antd:Button Type="Primary" Content="Primary(disabled)" IsEnabled="False" /&gt;
-                            &lt;Antd:Button Content="Default" /&gt;
-                            &lt;Antd:Button Content="Default(disabled)" IsEnabled="False" /&gt;
-                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;
-                            &lt;Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" /&gt;
+                           &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary(disabled)" IsEnabled="False" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" /&gt;\n
+                                \t&lt;Antd:Button Content="Default(disabled)" IsEnabled="False" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                     <!--<Controls:CodeBox Title="Ghost Button">

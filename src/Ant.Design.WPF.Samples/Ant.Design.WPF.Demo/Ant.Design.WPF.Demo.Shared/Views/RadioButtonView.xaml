@@ -40,7 +40,7 @@
                             <RadioButton Content="Radio" />
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
                             &lt;RadioButton Content="Radio" /&gt;
                         </Controls:CodeBox.Code>
@@ -55,14 +55,17 @@
                             <StackPanel>
                                 <RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" Margin="0 0 0 8" />
                                 <RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" IsChecked="True" />
-
                                 <Antd:Button x:Name="Toggle" Type="Primary" Content="Toggle disabled" Margin="0 20 0 0" />
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
-                            &lt;RadioButton Content="Radio" /&gt;
+                           &lt;StackPanel&gt;\n
+                                \t&lt;RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" Margin="0 0 0 8" /&gt;\n
+                                \t&lt;RadioButton Content="Radio" IsEnabled="{Binding IsEnabled}" IsChecked="True" /&gt;\n
+                                \t&lt;Antd:Button x:Name="Toggle" Type="Primary" Content="Toggle disabled" Margin="0 20 0 0" /&gt;\n
+                            &lt;/StackPanel&gt;\n
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>

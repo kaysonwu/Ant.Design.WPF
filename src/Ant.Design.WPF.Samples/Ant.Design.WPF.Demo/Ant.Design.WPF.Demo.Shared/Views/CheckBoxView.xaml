@@ -40,6 +40,7 @@
                             <CheckBox Content="Checkbox" />
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
                             &lt;CheckBox Content="Checkbox" /&gt;
                         </Controls:CodeBox.Code>
@@ -62,6 +63,7 @@
                             </Grid>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;Grid&gt;\n
@@ -90,6 +92,7 @@
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
                             &lt;StackPanel Orientation="Horizontal"&gt;\n
                                 \t&lt;CheckBox Content="Checkbox" IsEnabled="False" /&gt;\n
@@ -118,6 +121,7 @@
                             </Grid>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
                             &lt;Grid&gt;\n
                                 \t&lt;Grid.RowDefinitions&gt;\n
