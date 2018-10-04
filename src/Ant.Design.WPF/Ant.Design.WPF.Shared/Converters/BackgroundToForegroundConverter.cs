@@ -9,19 +9,6 @@ namespace Antd.Converters
 {
     public class BackgroundToForegroundConverter : IValueConverter, IMultiValueConverter
     {
-        private static BackgroundToForegroundConverter instance;
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static BackgroundToForegroundConverter() {}
-
-        private BackgroundToForegroundConverter() {}
-
-        public static BackgroundToForegroundConverter Instance
-        {
-            get { return instance ?? (instance = new BackgroundToForegroundConverter()); }
-        }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SolidColorBrush)

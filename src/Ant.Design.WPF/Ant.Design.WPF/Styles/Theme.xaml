@@ -14,7 +14,7 @@
     <Color x:Key="info-color">#1890FF</Color>
     <Color x:Key="success-color">#52C41A</Color>
     <Color x:Key="processing-color">#1890FF</Color>
-    <Color x:Key="error-color">#F5222D</Color>
+    <Color x:Key="ErrorColor">#F5222D</Color>
     <Color x:Key="highlight-color">#F5222D</Color>
     <Color x:Key="warning-color">#FAAD14</Color>
     <Color x:Key="normal-color">#d9d9d9</Color>
@@ -83,21 +83,15 @@
     <CornerRadius x:Key="ButtonBorderRadiusSmall">4</CornerRadius>
 
     <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="White" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonPrimaryFocusedBrush" Color="#40A9FF" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonPrimaryPressedBrush" Color="#096DD9" Options:Freeze="True" />
-    
+    <SolidColorBrush x:Key="ButtonPrimaryBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+
     <SolidColorBrush x:Key="ButtonDefaultForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDefaultBackground" Color="White" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDefaultBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonDefaultFocusedBrush" Color="#40A9FF" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonDefaultPressedBrush" Color="#096DD9" Options:Freeze="True" />
-    
-    <SolidColorBrush x:Key="ButtonDangerForeground" Color="#F5222D" Options:Freeze="True" />
+
+    <SolidColorBrush x:Key="ButtonDangerBrush" Color="{StaticResource ErrorColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDangerBackground" Color="{StaticResource BackgroundColorBase}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDangerBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonDangerFocusedBrush" Color="#FF4D4f" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonDangerPressedBrush" Color="#CF1322" Options:Freeze="True" />
 
     <SolidColorBrush x:Key="ButtonDisableForeground" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDisableBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />

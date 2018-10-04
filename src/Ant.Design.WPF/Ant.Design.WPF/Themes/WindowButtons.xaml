@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:Antd.Controls"
-                    xmlns:Converters="clr-namespace:Antd.Converters">
+                    xmlns:Controls="clr-namespace:Antd.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
     <Style x:Key="Ant.WindowButton" TargetType="{x:Type Button}">
         <Setter Property="Padding" Value="12 0" />
         <Setter Property="Background" Value="Transparent" />
@@ -66,7 +69,7 @@
                                 Focusable="False"
                                 ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                 Visibility="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}, Mode=OneWay, 
-                                                Converter={x:Static Converters:ResizeModeToVisibilityConverter.Instance}, ConverterParameter=MIN}">
+                                                Converter={StaticResource ResizeModeToVisibilityConverter}, ConverterParameter=MIN}">
                             <Path SnapsToDevicePixels="True"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
@@ -78,7 +81,7 @@
                                 Focusable="False"
                                 ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                 Visibility="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}, Mode=OneWay, 
-                                                Converter={x:Static Converters:ResizeModeToVisibilityConverter.Instance}, ConverterParameter=MAX}">
+                                                Converter={StaticResource ResizeModeToVisibilityConverter}, ConverterParameter=MAX}">
                             <Path x:Name="PART_MaxPath" 
                                   UseLayoutRounding="True"
                                   SnapsToDevicePixels="True"

@@ -44,7 +44,7 @@ namespace AntdDemo.ViewModels
             Loading1 = true;
             var app = Application.Current;
 
-            app.Resources["PrimaryColor1"] = Color.FromRgb(0, 0, 255);
+            app.Resources["ButtonPrimaryBrush"] = new SolidColorBrush( Color.FromRgb(114, 46, 209));
             //app.Resources["PrimaryColor"] = new SolidColorBrush(Color.FromRgb(255, 0, 0));
         }
 

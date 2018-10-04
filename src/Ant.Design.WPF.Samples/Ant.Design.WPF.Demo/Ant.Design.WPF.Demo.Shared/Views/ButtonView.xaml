@@ -65,7 +65,7 @@
                         <Controls:CodeBox.Content>
                             <WrapPanel Orientation="Horizontal">
                                 <Antd:Button Type="Primary" Content="Primary" />
-                                <Antd:Button Content="Default" />
+                                <Antd:Button Content="Default" Size="Large" />
                                 <Antd:Button Type="Dashed" Content="Dashed" />
                                 <Antd:Button Type="Danger" Content="Danger" />
                                 <Antd:Button Type="Primary" Icon="search" Circular="True" />

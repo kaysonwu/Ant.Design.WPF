@@ -2,9 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:Antd.Controls"
                     xmlns:Helpers="clr-namespace:Antd.Helpers"
-                    xmlns:Converters="clr-namespace:Antd.Converters"
                     xmlns:Shell="clr-namespace:Microsoft.Windows.Shell">
-    
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style x:Key="Ant.TitleBarThumb" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -102,7 +105,7 @@
                                                   HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                   ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}">
                         <ContentControl.Foreground>
-                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                            <MultiBinding Converter="{StaticResource BackgroundToForegroundConverter}">
                                 <Binding ElementName="PART_TitleBar"
                                          Mode="OneWay"
                                          Path="Fill" />

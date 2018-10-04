@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Animations\ColorAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
@@ -22,13 +23,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\VisualStateType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\SizeToCornerRadiusConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToBooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\DoubleToCornerRadiusConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Control.cs" />
@@ -46,6 +49,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemParameters2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChrome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChromeWorker.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Themes\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Themes\ColorPalette.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Themes\ThemeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\RECT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\UnsafeNativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
