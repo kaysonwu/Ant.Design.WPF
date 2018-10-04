@@ -16,7 +16,7 @@
         <Setter Property="Padding" Value="{DynamicResource ButtonPaddingBase}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
         <Setter Property="FontWeight" Value="{DynamicResource ButtonFontWeight}" />
-        <Setter Property="EffectBrush" Value="{DynamicResource ButtonPrimaryBrush}" />
+        <Setter Property="EffectBrush" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
         <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonDefaultBorder}" />
@@ -89,7 +89,7 @@
                             <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
                         </Trigger>
                         <Trigger Property="Type" Value="Dashed">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="2.5" />
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
                         <Trigger Property="Loading" Value="True">
                             <Trigger.EnterActions>
@@ -113,7 +113,7 @@
                                                      Storyboard.TargetProperty="(UIElement.Opacity)"
                                                      EasingFunction="{StaticResource EaseOutCirc}"
                                                      Duration="0:0:0.4"
-                                                     From="0.5"
+                                                     From="0.4"
                                                      To="0" />
                                     <ThicknessAnimation Storyboard.TargetName="Effect" 
                                                         Storyboard.TargetProperty="(FrameworkElement.Margin)"
@@ -132,14 +132,13 @@
             <!-- Primary -->
             <Trigger Property="Type" Value="Primary">
                 <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
-                <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBrush}" />
-                
+                <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBackground}" />
             </Trigger>
             <!-- Danger -->
             <Trigger Property="Type" Value="Danger">
-                <Setter Property="EffectBrush" Value="{DynamicResource ButtonDangerBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ButtonDangerBrush}" />
+                <Setter Property="EffectBrush" Value="{DynamicResource ButtonDangerForeground}" />
+                <Setter Property="Foreground" Value="{DynamicResource ButtonDangerForeground}" />
                 <Setter Property="Background" Value="{DynamicResource ButtonDangerBackground}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonDangerBorder}" />
             </Trigger>
@@ -153,6 +152,7 @@
                 <Setter Property="Height" Value="{DynamicResource ButtonHeightSmall}" />
                 <Setter Property="Padding" Value="{DynamicResource ButtonPaddingSmall}" />
                 <Setter Property="FontSize" Value="{DynamicResource ButtonFontSizeSmall}" />
+                <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusSmall}" />
             </Trigger>
             <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">

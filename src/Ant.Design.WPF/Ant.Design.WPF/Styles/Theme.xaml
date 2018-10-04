@@ -47,6 +47,7 @@
     <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
 
     <!--<FontFamily x:Key="FontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>-->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" Options:Freeze="True" />
     
     <!-- Vertical Paddings -->
@@ -83,13 +84,13 @@
     <CornerRadius x:Key="ButtonBorderRadiusSmall">4</CornerRadius>
 
     <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="White" Options:Freeze="True" />
-    <SolidColorBrush x:Key="ButtonPrimaryBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
 
     <SolidColorBrush x:Key="ButtonDefaultForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDefaultBackground" Color="White" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDefaultBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
 
-    <SolidColorBrush x:Key="ButtonDangerBrush" Color="{StaticResource ErrorColor}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ButtonDangerForeground" Color="{StaticResource ErrorColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDangerBackground" Color="{StaticResource BackgroundColorBase}" Options:Freeze="True" />
     <SolidColorBrush x:Key="ButtonDangerBorder" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
 
