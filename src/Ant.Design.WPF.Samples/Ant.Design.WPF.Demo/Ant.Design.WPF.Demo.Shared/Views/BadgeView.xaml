@@ -68,6 +68,37 @@
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Overflow Count">
+                        <Controls:CodeBox.Description>
+                            `${OverflowCount}+` is displayed when count is larger than `OverflowCount`. The default value of `OverflowCount` is 99.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel Orientation="Horizontal">
+                                <Antd:Badge Count="99">
+                                    <Rectangle Style="{StaticResource HeadExample}" />
+                                </Antd:Badge>
+                                <Antd:Badge Count="100">
+                                    <Rectangle Style="{StaticResource HeadExample}" />
+                                </Antd:Badge>
+                                <Antd:Badge Count="99" OverflowCount="10">
+                                    <Rectangle Style="{StaticResource HeadExample}" />
+                                </Antd:Badge>
+                                <Antd:Badge Count="1000" OverflowCount="999">
+                                    <Rectangle Style="{StaticResource HeadExample}" />
+                                </Antd:Badge>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                     <Controls:CodeBox Title="Status">
                         <Controls:CodeBox.Description>
                             Standalone badge with status.
@@ -101,6 +132,28 @@
                     </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Standalone">
+                        <Controls:CodeBox.Description>
+                            Used in standalone when children is empty.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Badge Count="25" />
+                                <Antd:Badge Count="4" BadgeBackground="White" BadgeForeground="#999" />
+                                <Antd:Badge Count="109" BadgeBackground="#52c41a" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                     <Controls:CodeBox Title="Red badge">
                         <Controls:CodeBox.Description>
                             This will simply display a red badge, without a specific count. If count equals 0, it won't display the dot.
@@ -112,6 +165,9 @@
                                 </Antd:Badge>
                                 <Antd:Badge Count="0" Dot="True">
                                     <Antd:Icon Type="notification" />
+                                </Antd:Badge>
+                                <Antd:Badge Dot="True">
+                                    <Hyperlink>Link something</Hyperlink>
                                 </Antd:Badge>
                             </WrapPanel>
                         </Controls:CodeBox.Content>

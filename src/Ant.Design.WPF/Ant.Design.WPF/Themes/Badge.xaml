@@ -168,12 +168,13 @@
                                 Padding="6 0"
                                 VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
+                                MinWidth="{TemplateBinding Height}"
                                 Height="{TemplateBinding BadgeHeight}"
-                                MinWidth="{TemplateBinding BadgeHeight}"
                                 Background="{TemplateBinding BadgeBackground}"
                                 TextElement.FontSize="{DynamicResource BadgeFontSize}"
                                 TextElement.FontWeight="{DynamicResource BadgeFontWeight}"
                                 TextElement.Foreground="{TemplateBinding BadgeForeground}"
+                               
                                 CornerRadius="{Binding Height, RelativeSource={RelativeSource Self},
                                                 Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}"
                                 >
@@ -188,6 +189,10 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Dot" Value="True">
                             <Setter TargetName="PART_Count" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_BadgeContainer" Property="Padding" Value="0" />
+                            <Setter TargetName="PART_BadgeContainer" Property="MinWidth" Value="0" />
+                            <Setter TargetName="PART_BadgeContainer" Property="Width" Value="{DynamicResource BadgeDotSize}" />
+                            <Setter TargetName="PART_BadgeContainer" Property="Height" Value="{DynamicResource BadgeDotSize}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
