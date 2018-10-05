@@ -104,19 +104,21 @@
                             Standalone badge with status.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
-                                <Antd:Badge Status="Success" />
-                                <Antd:Badge Status="Error" />
-                                <Antd:Badge Status="Default" />
-                                <Antd:Badge Status="Processing" />
-                                <Antd:Badge Status="Warning" />
-                                <StackPanel Margin=" 0 8 0 0">
+                            <WrapPanel>
+                                <WrapPanel>
+                                    <Antd:Badge Status="Success" />
+                                    <Antd:Badge Status="Error" />
+                                    <Antd:Badge Status="Default" />
+                                    <Antd:Badge Status="Processing" />
+                                    <Antd:Badge Status="Warning" />
+                                </WrapPanel>
+                                <WrapPanel Margin=" 0 8 0 0" Orientation="Vertical">
                                     <Antd:Badge Status="Success" Text="Success" />
                                     <Antd:Badge Status="Error" Text="Error" />
                                     <Antd:Badge Status="Default" Text="Default" />
                                     <Antd:Badge Status="Processing" Text="Processing" />
                                     <Antd:Badge Status="Warning" Text="Warning" />
-                                </StackPanel>
+                                </WrapPanel>
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -168,6 +170,28 @@
                                 </Antd:Badge>
                                 <Antd:Badge Dot="True">
                                     <Hyperlink>Link something</Hyperlink>
+                                </Antd:Badge>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
+                                \t&lt;Antd:Button Content="Default" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="ToolTip">
+                        <Controls:CodeBox.Description>
+                            The badge will display `ToolTip` when hovered over, instead of `Count`.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Badge Count="5" ToolTip="Badge ToolTip">
+                                    <Rectangle ToolTip="Content ToolTip" Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
                             </WrapPanel>
                         </Controls:CodeBox.Content>
