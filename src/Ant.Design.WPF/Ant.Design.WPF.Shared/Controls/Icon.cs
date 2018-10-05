@@ -44,14 +44,16 @@ namespace Antd.Controls
                 return Type;
             }
 
-            var prefix = TryFindResource("IconFontPrefix") as string;
+            var key      = (TryFindResource("IconFontPrefix") as string) + Type;
+            var resource = TryFindResource(key);
 
-            if (!string.IsNullOrEmpty(prefix))
+            if (resource != null)
             {
-                prefix += "-";
+                return resource;
             }
 
-            return TryFindResource(prefix + Type) ?? Type;
+            // Forgive your misrepresentation
+            return TryFindResource(key.ToLower()) ?? Type;
         }
 
         public static readonly DependencyProperty SpinProperty =

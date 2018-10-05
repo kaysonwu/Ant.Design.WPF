@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToMarkDownConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IShell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ButtonViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BadgeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CheckBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RadioButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
@@ -32,6 +33,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\BadgeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

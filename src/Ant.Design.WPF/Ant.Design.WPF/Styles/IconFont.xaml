@@ -4,12 +4,13 @@
 
     <!-- Icon Font -->
     <FontFamily x:Key="IconFontFamily">pack://application:,,,/Antd;component/Resources/#anticon anticon</FontFamily>
-    <System:String x:Key="IconFontPrefix">anticon</System:String>
+    <System:String x:Key="IconFontPrefix">anticon-</System:String>
 
     <!-- Icon -->
     <!--&#xe6b6;-->
     <System:String x:Key="anticon-loading">&#xe64d;</System:String>
     <System:String x:Key="anticon-poweroff">&#xe6d5;</System:String>
+    <System:String x:Key="anticon-notification">&#xe677;</System:String>
     
     <!-- Test Usign -->
     <System:String x:Key="anticon-search">&#xe670;</System:String>
