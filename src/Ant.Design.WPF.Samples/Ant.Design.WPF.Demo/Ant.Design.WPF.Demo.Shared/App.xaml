@@ -27,6 +27,7 @@
             </Style>
 
             <Style x:Key="Ant.P" TargetType="TextBlock">
+                <Setter Property="TextWrapping" Value="Wrap" />
                 <Setter Property="Foreground" Value="#314659" />
                 <Setter Property="FontFamily" Value="Chinese Quote" />
                 <Setter Property="FontSize" Value="14" />

@@ -6,6 +6,30 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Storyboard x:Key="Ant.BadgeEffectStoryboard">
+        <DoubleAnimation Storyboard.TargetName="Effect"
+                         Storyboard.TargetProperty="(UIElement.Opacity)" 
+                         EasingFunction="{StaticResource EaseInOut}"
+                         RepeatBehavior="Forever" 
+                         Duration="0:0:1.2"
+                         From="0.5" 
+                         To="0" />
+        <DoubleAnimation Storyboard.TargetName="EffectTransform"
+                         Storyboard.TargetProperty="ScaleX" 
+                         EasingFunction="{StaticResource EaseInOut}"
+                         RepeatBehavior="Forever" 
+                         Duration="0:0:1.2"
+                         From="0.8" 
+                         To="2.4" />
+        <DoubleAnimation Storyboard.TargetName="EffectTransform"
+                         Storyboard.TargetProperty="ScaleY" 
+                         EasingFunction="{StaticResource EaseInOut}"
+                         RepeatBehavior="Forever" 
+                         Duration="0:0:1.2"
+                         From="0.8" 
+                         To="2.4" />
+    </Storyboard>
+    
     <ControlTemplate x:Key="Ant.BadgeTemplate" TargetType="{x:Type Controls:Badge}">
         <Grid>
             <!-- Effect -->
@@ -22,38 +46,37 @@
                         </Ellipse>-->
             <!-- Content -->
             <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
                 <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
             </Border>
             <!-- Count -->
             <Border x:Name="PART_BadgeContainer"
-                                Padding="6 0"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                MinWidth="{TemplateBinding Height}"
-                                Height="{TemplateBinding BadgeHeight}"
-                                Background="{TemplateBinding BadgeBackground}"
-                                TextElement.FontSize="{DynamicResource BadgeFontSize}"
-                                TextElement.FontWeight="{DynamicResource BadgeFontWeight}"
-                                TextElement.Foreground="{TemplateBinding BadgeForeground}"
-                               
-                                CornerRadius="{Binding Height, RelativeSource={RelativeSource Self},
-                                                Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}"
-                                >
+                    Padding="6 0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    MinWidth="{TemplateBinding Height}"
+                    Height="{TemplateBinding BadgeHeight}"
+                    Background="{TemplateBinding BadgeBackground}"
+                    TextElement.FontSize="{DynamicResource BadgeFontSize}"
+                    TextElement.FontWeight="{DynamicResource BadgeFontWeight}"
+                    TextElement.Foreground="{TemplateBinding BadgeForeground}"
+                    CornerRadius="{Binding Height, RelativeSource={RelativeSource Self},
+                                    Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}"
+                    >
                 <Border.RenderTransform>
                     <TranslateTransform X="-10" Y="-10" />
                 </Border.RenderTransform>
                 <ContentPresenter x:Name="PART_Count"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center" />
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center" />
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
@@ -78,24 +101,27 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <!-- Dot -->
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
                 <!-- Text -->
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <!-- Effect -->
             <Ellipse x:Name="Effect"
                      Opacity="0"
                      StrokeThickness="1"
+                     UseLayoutRounding="True"
                      RenderTransformOrigin="0.5,0.5"
                      Width="{TemplateBinding BadgeHeight}"
                      Height="{TemplateBinding BadgeHeight}"
-                     Stroke="{DynamicResource BadgeBackground}">
+                     Stroke="{TemplateBinding BadgeBackground}">
                 <Ellipse.RenderTransform>
                     <ScaleTransform x:Name="EffectTransform" />
                 </Ellipse.RenderTransform>
             </Ellipse>
             <!-- Dot -->
             <Ellipse x:Name="Dot"
+                     UseLayoutRounding="True"
+                     VerticalAlignment="Center"
                      Width="{TemplateBinding BadgeHeight}"
                      Height="{TemplateBinding BadgeHeight}"
                      Fill="{TemplateBinding BadgeBackground}" />
@@ -103,18 +129,167 @@
             <ContentControl Grid.Column="1"
                             Content="{TemplateBinding Text}"
                             Margin="{TemplateBinding Padding}"
-                            Foreground="{TemplateBinding BadgeForeground}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Status" Value="Processing">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Ant.BadgeEffectStoryboard}" />
+                </Trigger.EnterActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Badge}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="{DynamicResource BadgeFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource BadgeFontWeight}" />
+        <Setter Property="BadgeHeight" Value="{DynamicResource BadgeHeight}" />
+        <Setter Property="Background" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:Badge}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <!-- Content -->
+                        <ContentPresenter x:Name="Content"
+                                          Grid.ColumnSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                        <!-- Effect -->
+                        <Ellipse x:Name="Effect"
+                                 Opacity="0"
+                                 StrokeThickness="1"
+                                 UseLayoutRounding="True"
+                                 RenderTransformOrigin="0.5,0.5"
+                                 Width="{DynamicResource BadgeStatusSize}"
+                                 Height="{DynamicResource BadgeStatusSize}"
+                                 Stroke="{DynamicResource ProcessingBrush}">
+                            <Ellipse.RenderTransform>
+                                <ScaleTransform x:Name="EffectTransform" />
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                        <!-- Dot -->
+                        <Border x:Name="Dot"
+                                Grid.ColumnSpan="2"
+                                UseLayoutRounding="True"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Height="{TemplateBinding BadgeHeight}"
+                                MinWidth="{TemplateBinding BadgeHeight}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{Binding Height, RelativeSource={RelativeSource Self},
+                                                Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}"
+                                >
+                            <ContentPresenter x:Name="PART_Count"
+                                              Margin="6 0"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Dot" Value="True">
+                            <Setter TargetName="PART_Count" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Dot" Property="Width" Value="{DynamicResource BadgeDotSize}" />
+                            <Setter TargetName="Dot" Property="Height" Value="{DynamicResource BadgeDotSize}" />
+                            <Setter TargetName="Dot" Property="MinWidth" Value="0" />
+                        </Trigger>
+                        <Trigger Property="Status" Value="Success">
+                            <Setter TargetName="Dot" Property="Background" Value="{DynamicResource SuccessBrush}" />
+                        </Trigger>
+                        <Trigger Property="Status" Value="Processing">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)" 
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         RepeatBehavior="Forever" 
+                                                         Duration="0:0:1.2"
+                                                         From="0.5" 
+                                                         To="0" />
+                                        <DoubleAnimation Storyboard.TargetName="EffectTransform"
+                                                         Storyboard.TargetProperty="ScaleX" 
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         RepeatBehavior="Forever" 
+                                                         Duration="0:0:1.2"
+                                                         From="0.8" 
+                                                         To="2.4" />
+                                        <DoubleAnimation Storyboard.TargetName="EffectTransform"
+                                                         Storyboard.TargetProperty="ScaleY" 
+                                                         EasingFunction="{StaticResource EaseInOut}"
+                                                         RepeatBehavior="Forever" 
+                                                         Duration="0:0:1.2"
+                                                         From="0.8" 
+                                                         To="2.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Setter TargetName="Dot" Property="Background" Value="{DynamicResource ProcessingBrush}" />
+                        </Trigger>
+                        <Trigger Property="Status" Value="Default">
+                            <Setter TargetName="Dot" Property="Background" Value="{DynamicResource NormalBrush}" />
+                        </Trigger>
+                        <Trigger Property="Status" Value="Error">
+                            <Setter TargetName="Dot" Property="Background"  Value="{DynamicResource ErrorBrush}" />
+                        </Trigger>
+                        <Trigger Property="Status" Value="Warning">
+                            <Setter TargetName="Dot" Property="Background"  Value="{DynamicResource WarningBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Count" Value="0" />
+                                <Condition Property="ShowZero" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Dot" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <DataTrigger Binding="{Binding Status, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False">
+                            <Setter TargetName="PART_Count" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Dot" Property="Width" Value="{DynamicResource BadgeStatusSize}" />
+                            <Setter TargetName="Dot" Property="Height" Value="{DynamicResource BadgeStatusSize}" />
+                            <Setter TargetName="Dot" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Dot" Property="MinWidth" Value="0" />
+                        </DataTrigger>
+                        <!-- Stateful and no content -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Content, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True" />
+                                <Condition Binding="{Binding Status, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                            <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+                            <Setter TargetName="Dot" Property="VerticalAlignment" Value="Center" />
+                            <Setter TargetName="Dot" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="Dot" Property="Grid.ColumnSpan" Value="1" />
+                            
+                            <Setter TargetName="Content" Property="VerticalAlignment" Value="Center" />
+                            <Setter TargetName="Content" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
+                            <Setter TargetName="Content" Property="Grid.ColumnSpan" Value="1" />
+                            <Setter TargetName="Content" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Content" Property="Content" Value="{Binding Text, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="666" TargetType="{x:Type Controls:Badge}">
         <Setter Property="BadgeForeground" Value="White" />
         <Setter Property="BadgeHeight" Value="{DynamicResource BadgeHeight}" />
         <Setter Property="BadgeBackground" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template" Value="{StaticResource Ant.BadgeTemplate}" />
         <Style.Triggers>
             <Trigger Property="Status" Value="Success">
@@ -134,13 +309,17 @@
             </Trigger>
             <DataTrigger Binding="{Binding Status, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False">
                 <Setter Property="BadgeHeight" Value="{DynamicResource BadgeStatusSize}" />
-                <Setter Property="BadgeForeground" Value="{DynamicResource TextBrush}" />
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Content, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="True" />
                     <Condition Binding="{Binding Status, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNullConverter}}" Value="False" />
                 </MultiDataTrigger.Conditions>
+                <Setter Property="Padding" Value="8 0 0 0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
                 <Setter Property="Template" Value="{StaticResource Ant.BadgeStatusTemplate}" />
             </MultiDataTrigger>
         </Style.Triggers>

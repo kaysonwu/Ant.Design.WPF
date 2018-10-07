@@ -76,7 +76,7 @@
     <SolidColorBrush x:Key="BorderBrushBase" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
    
     <!-- Disabled states -->
-    <SolidColorBrush x:Key="DisabledBrush" Color="#3F000000" Options:Freeze="True" />
+    <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
 
     <!-- Window -->
     <SolidColorBrush x:Key="WindowTilteBarBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
@@ -139,6 +139,11 @@
     <!-- @FontSizeSmall-->
     <System:Double x:Key="BadgeFontSize">12</System:Double>
     <FontWeight x:Key="BadgeFontWeight">Normal</FontWeight>
-    <System:Double x:Key="BadgeStatusSize">6</System:Double>
+    <System:Double x:Key="BadgeStatusSize">6.5</System:Double>
 
+    <!-- Switch -->
+    <System:Double x:Key="SwitchHeight">22</System:Double>
+    <System:Double x:Key="SwitchHeightSmall">16</System:Double>
+    <System:Double x:Key="SwitchDisabledOpacity">0.4</System:Double>
+    <SolidColorBrush x:Key="SwitchBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
 </ResourceDictionary>

@@ -6,6 +6,10 @@
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <Converters:ToLowerConverter x:Key="ToLowerConverter" />
     <Converters:IsNullConverter x:Key="IsNullConverter" />
+    <Converters:AdditionConverter x:Key="AdditionConverter" />
+    <Converters:DivisionConverter x:Key="DivisionConverter" />
+    <Converters:SubtractionConverter x:Key="SubtractionConverter" />
+    <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <Converters:DoubleToCornerRadiusConverter x:Key="DoubleToCornerRadiusConverter" />
     <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />

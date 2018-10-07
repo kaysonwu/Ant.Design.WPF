@@ -27,7 +27,7 @@
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.Resources>
-                    <Style TargetType="Antd:Badge">
+                    <Style x:Key="Badge" TargetType="Antd:Badge">
                         <Setter Property="Margin" Value="0 20 20 0" />
                     </Style>
                     <Style x:Key="HeadExample" TargetType="Rectangle">
@@ -49,10 +49,10 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <WrapPanel>
-                                <Antd:Badge Count="5">
+                                <Antd:Badge Style="{StaticResource Badge}" Count="5">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
-                                <Antd:Badge Count="0" ShowZero="True">
+                                <Antd:Badge Style="{StaticResource Badge}" Count="0" ShowZero="True">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
                             </WrapPanel>
@@ -60,11 +60,23 @@
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                                \t&lt;Antd:Button Content="Default" /&gt;\n
-                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;Style x:Key="Badge" TargetType="Antd:Badge"&gt;\n
+                                \t&lt;Setter Property="Margin" Value="0 20 20 0" /&gt;\n
+                            &lt;/Style&gt;\n
+                            &lt;Style x:Key="HeadExample" TargetType="Rectangle"&gt;\n
+                                 \t&lt;Setter Property="Width" Value="42" /&gt;\n
+                                 \t&lt;Setter Property="Height" Value="42" /&gt;\n
+                                 \t&lt;Setter Property="RadiusX" Value="4" /&gt;\n
+                                 \t&lt;Setter Property="RadiusY" Value="4" /&gt;\n
+                                 \t&lt;Setter Property="Fill" Value="#EEEEEE" /&gt;\n
+                            &lt;/Style&gt;\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}" Count="5"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}" Count="0" ShowZero="True"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
@@ -73,17 +85,17 @@
                             `${OverflowCount}+` is displayed when count is larger than `OverflowCount`. The default value of `OverflowCount` is 99.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel Orientation="Horizontal">
-                                <Antd:Badge Count="99">
+                            <WrapPanel>
+                                <Antd:Badge Style="{StaticResource Badge}" Count="99">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
-                                <Antd:Badge Count="100">
+                                <Antd:Badge Style="{StaticResource Badge}"  Count="100">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
-                                <Antd:Badge Count="99" OverflowCount="10">
+                                <Antd:Badge Style="{StaticResource Badge}" Count="99" OverflowCount="10">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
-                                <Antd:Badge Count="1000" OverflowCount="999">
+                                <Antd:Badge Style="{StaticResource Badge}" Count="1000" OverflowCount="999">
                                     <Rectangle Style="{StaticResource HeadExample}" />
                                 </Antd:Badge>
                             </WrapPanel>
@@ -91,11 +103,29 @@
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                                \t&lt;Antd:Button Content="Default" /&gt;\n
-                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;Style x:Key="Badge" TargetType="Antd:Badge"&gt;\n
+                                \t&lt;Setter Property="Margin" Value="0 20 20 0" /&gt;\n
+                            &lt;/Style&gt;\n
+                            &lt;Style x:Key="HeadExample" TargetType="Rectangle"&gt;\n
+                                 \t&lt;Setter Property="Width" Value="42" /&gt;\n
+                                 \t&lt;Setter Property="Height" Value="42" /&gt;\n
+                                 \t&lt;Setter Property="RadiusX" Value="4" /&gt;\n
+                                 \t&lt;Setter Property="RadiusY" Value="4" /&gt;\n
+                                 \t&lt;Setter Property="Fill" Value="#EEEEEE" /&gt;\n
+                            &lt;/Style&gt;\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}" Count="99"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}"  Count="100"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}" Count="99" OverflowCount="10"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                                \t&lt;Antd:Badge Style="{StaticResource Badge}" Count="1000" OverflowCount="999"&gt;\n
+                                    \t\t&lt;Rectangle Style="{StaticResource HeadExample}" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
@@ -104,32 +134,42 @@
                             Standalone badge with status.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel>
-                                <WrapPanel>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 16">
                                     <Antd:Badge Status="Success" />
                                     <Antd:Badge Status="Error" />
                                     <Antd:Badge Status="Default" />
                                     <Antd:Badge Status="Processing" />
                                     <Antd:Badge Status="Warning" />
-                                </WrapPanel>
-                                <WrapPanel Margin=" 0 8 0 0" Orientation="Vertical">
+                                </StackPanel>
+                                <StackPanel>
                                     <Antd:Badge Status="Success" Text="Success" />
                                     <Antd:Badge Status="Error" Text="Error" />
                                     <Antd:Badge Status="Default" Text="Default" />
                                     <Antd:Badge Status="Processing" Text="Processing" />
                                     <Antd:Badge Status="Warning" Text="Warning" />
-                                </WrapPanel>
-                            </WrapPanel>
+                                </StackPanel>
+                            </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;WrapPanel Orientation="Horizontal"&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                                \t&lt;Antd:Button Content="Default" /&gt;\n
-                                \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                                \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
-                            &lt;/WrapPanel&gt;
+                            &lt;StackPanel&gt;\n
+                                \t&lt;StackPanel Orientation="Horizontal" Margin="0 0 0 16"&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Success" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Error" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Default" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Processing" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Warning" /&gt;\n
+                                \t&lt;/StackPanel&gt;\n
+                                \t&lt;StackPanel&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Success" Text="Success" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Error" Text="Error" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Default" Text="Default" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Processing" Text="Processing" /&gt;\n
+                                    \t\t&lt;Antd:Badge Status="Warning" Text="Warning" /&gt;\n
+                                \t&lt;/StackPanel&gt;\n
+                            &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>
@@ -163,7 +203,7 @@
                         <Controls:CodeBox.Content>
                             <WrapPanel>
                                 <Antd:Badge Dot="True">
-                                    <Antd:Icon Type="notification" />
+                                    <Antd:Icon Type="notification" Foreground="Black" />
                                 </Antd:Badge>
                                 <Antd:Badge Count="0" Dot="True">
                                     <Antd:Icon Type="notification" />
