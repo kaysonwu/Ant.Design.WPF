@@ -7,16 +7,32 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="Ant.SwitchFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Border Opacity="0.2"
+                            Margin="-2"
+                            BorderThickness="2.5"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            CornerRadius="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type Controls:Switch}">
         <Setter Property="MinWidth" Value="44" />
         <Setter Property="Padding" Value="6 0" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Helpers:Control.CornerRadius" Value="11" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Height" Value="{DynamicResource SwitchHeight}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}" />
-        <Setter Property="Background" Value="{DynamicResource SwitchBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DisabledBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ComponentBackground}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource Ant.SwitchFocusVisualStyle}" />
+        <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                                    Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Switch}">
@@ -28,95 +44,96 @@
                                 BorderBrush="{DynamicResource SwitchBrush}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Border -->
-                        <Border x:Name="PART_Border"
+                        <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Content -->
                         <ContentPresenter x:Name="Content"
-                                          HorizontalAlignment="Left"
+                                          HorizontalAlignment="Right"
                                           Margin="{TemplateBinding Padding}"
-                                          Content="{TemplateBinding Content}"
+                                          Content="{TemplateBinding UnCheckedContent}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                         <!-- Dot -->
-                        <!--<Border x:Name="Dot"
-                                CornerRadius="5"
+                        <Border x:Name="Dot"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
-                                RenderTransformOrigin="1,0.5"
+                                RenderTransformOrigin="0,0"
                                 Background="{TemplateBinding Foreground}"
-                                Width="24"
-                                Height="{Binding Height, RelativeSource={RelativeSource TemplatedParent}, 
-                                                Converter={StaticResource SubtractionConverter}, ConverterParameter=4}">
+                                Width="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                                Height="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, 
+                                            Converter={StaticResource SubtractionConverter}, ConverterParameter=4}"
+                                CornerRadius="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                    Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}">
+                            <Border.Margin>
+                                <MultiBinding Converter="{StaticResource DoubleToThicknessMultiConverter}" ConverterParameter="2">
+                                    <Binding Mode="OneWay"
+                                             Path="ActualWidth"
+                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Mode="OneWay"
+                                             Path="Height" 
+                                             RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.Margin>
+                            <Border.Effect>
+                                <DropShadowEffect  Direction="270" BlurRadius="4" ShadowDepth="1" Color="#005317" Opacity="0.2" />
+                            </Border.Effect>
                             <Border.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform x:Name="DotScale" />
-                                    <TranslateTransform x:Name="DotTranslate" X="24" />
-                                </TransformGroup>
+                                <ScaleTransform x:Name="DotScale" />
                             </Border.RenderTransform>
-                        </Border>-->
-
-                        <Rectangle x:Name="Dot"
-                                   RadiusX="18"
-                                   RadiusY="18"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   RenderTransformOrigin="1,0.5"
-                                   Fill="{TemplateBinding Foreground}"
-                                   Width="{Binding Height, RelativeSource={RelativeSource TemplatedParent}, 
-                                                    Converter={StaticResource SubtractionConverter}, ConverterParameter=4}"
-                                   Height="{Binding Height, RelativeSource={RelativeSource TemplatedParent}, 
-                                                    Converter={StaticResource SubtractionConverter}, ConverterParameter=4}">
-                            <Rectangle.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform x:Name="DotScale" />
-                                    <TranslateTransform x:Name="DotTranslate" X="24" />
-                                </TransformGroup>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-
+                            <!-- Loading -->
+                            <Controls:Icon x:Name="Icon"
+                                           Type="loading"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           Visibility="{Binding Loading, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, 
+                                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Border>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}"
-                                                         Duration="0:0:0.36" 
-                                                         To="1" />
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition From="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="DotScale"
+                                                             Storyboard.TargetProperty="ScaleX"
+                                                             EasingFunction="{StaticResource EaseInOutCirc}"
+                                                             Duration="0:0:0.36" />
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="DotScale"
                                                          Storyboard.TargetProperty="ScaleX"
                                                          EasingFunction="{StaticResource EaseInOutCirc}"
-                                                         Duration="0:0:0.36" 
-                                                         To="1.4" />
+                                                         Duration="0:0:0.36"
+                                                         To="1.33" />
                                     </Storyboard>
                                 </VisualState>
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotTranslate"
-                                                         Storyboard.TargetProperty="X"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.36"  />
+                                        <ThicknessAnimation Storyboard.TargetName="Dot"
+                                                            Storyboard.TargetProperty="(FrameworkElement.Margin)"
+                                                            EasingFunction="{StaticResource EaseInOutCirc}"
+                                                            Duration="0:0:0.36" />
                                     </Storyboard>
-                                 </VisualState>
+                                </VisualState>
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotTranslate"
-                                                         Storyboard.TargetProperty="X"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.36" 
-                                                         To="2"   />
+                                        <ThicknessAnimation Storyboard.TargetName="Dot"
+                                                            Storyboard.TargetProperty="(FrameworkElement.Margin)"
+                                                            EasingFunction="{StaticResource EaseInOutCirc}"
+                                                            Duration="0:0:0.36"
+                                                            To="3 0 0 0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Indeterminate" />
@@ -124,39 +141,22 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="Dot" Property="RenderTransformOrigin" Value="0,0.5" />
-                            <Setter TargetName="Content" Property="HorizontalAlignment" Value="Right" />
-                            <Setter TargetName="PART_Border" Property="Background" Value="{DynamicResource DisabledBrush}" />
-                            <Setter TargetName="Content" Property="Content" Value="{Binding UnCheckedContent, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Dot" Property="RenderTransformOrigin" Value="1,0" />
+                            <Setter TargetName="Content" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource SwitchBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SwitchBrush}" />
+                            <Setter TargetName="Content" Property="Content" Value="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.4" />
+                        <Trigger Property="Size" Value="Small">
+                            <Setter TargetName="Icon" Property="FontWeight" Value="Medium" />
+                            <Setter TargetName="Icon" Property="RenderTransformOrigin" Value="0.5,0.5" />
+                            <Setter TargetName="Icon" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
-                        <!--<Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.36"
-                                                         To="1.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}" 
-                                                         Duration="0:0:0.36"
-                                                         To="1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>-->
                         <EventTrigger RoutedEvent="ButtonBase.Click">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -179,6 +179,19 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Loading" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="{DynamicResource SwitchDisabledOpacity}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Small">
+                <Setter Property="Padding" Value="3 0" />
+                <Setter Property="MinWidth" Value="28" />
+                <Setter Property="Height" Value="{DynamicResource SwitchHeightSmall}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

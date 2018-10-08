@@ -15,7 +15,9 @@
     <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
     <Converters:ResizeModeToVisibilityConverter x:Key="ResizeModeToVisibilityConverter" />
     <Converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
-
+    <!-- For translate animation -->
+    <Converters:DoubleToThicknessMultiConverter x:Key="DoubleToThicknessMultiConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <!-- Animation -->
     <CubicEase x:Key="EaseInOut" EasingMode="EaseInOut" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
@@ -31,6 +32,30 @@ namespace Antd.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
+        }
+    }
+
+    public class DoubleToThicknessMultiConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var parent = values.Length > 0 ? values[0] as double? : null;
+            var self   = values.Length > 1 ? values[1] as double? : null;
+
+            if (parent == null || self == null)
+            {
+                return default(Thickness);
+            }
+
+            double param;
+            double.TryParse(parameter as string, out param);
+
+            return new Thickness(parent.Value - self.Value - param, 0.0, 0.0, 0.0);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return targetTypes.Select(t => DependencyProperty.UnsetValue).ToArray();
         }
     }
 }
