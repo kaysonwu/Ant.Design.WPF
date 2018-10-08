@@ -38,11 +38,11 @@
                                    Fill="{TemplateBinding Background}"
                                    Stroke="{TemplateBinding BorderBrush}" 
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   StrokeThickness="{Binding BorderThickness, RelativeSource={RelativeSource TemplatedParent},
+                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                         Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent},
+                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent},
+                                   RadiusY="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}" />
                         <!-- Content -->
                         <Grid Margin="{TemplateBinding Padding}"
@@ -157,9 +157,9 @@
             <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="Width" Value="{Binding Height, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, ConverterParameter=2, RelativeSource={RelativeSource Self}, 
-                                                                            Converter={StaticResource DoubleToCornerRadiusConverter}}" />
+                <Setter Property="Width" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                                            Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
             </Trigger>
             <!-- Disabled -->
             <Trigger Property="IsEnabled" Value="False">
