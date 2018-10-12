@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="AntdDemo.Views.SpinView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
+             xmlns:Controls="clr-namespace:AntdDemo.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="930">
+
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Spin" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="A spinner for displaying loading state of a page or a section." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="When part of the page is waiting for asynchronous data or during a rendering process, an appropriate loading animation can effectively alleviate users' inquietude." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            A simple loading status.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Spin />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Spin /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Custom spinning indicator">
+                        <Controls:CodeBox.Description>
+                            Use custom loading indicator.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Spin>
+                                    <Antd:Spin.Indicator>
+                                        <Antd:Icon Type="loading" FontSize="24" />
+                                    </Antd:Spin.Indicator>
+                                </Antd:Spin>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Spin&gt;\n
+                                    \t\t&lt;Antd:Spin.Indicator&gt;\n
+                                        \t\t\t&lt;Antd:Icon Type="loading" FontSize="24" /&gt;\n
+                                    \t\t&lt;/Antd:Spin.Indicator&gt;\n
+                                \t&lt;/Antd:Spin&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Size">
+                        <Controls:CodeBox.Description>
+                            A small `Spin` use in loading text, default `Spin` use in loading card-level block, and large `Spin` use in loading page.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Spin Size="Small" Margin="0 0 16 16" />
+                                <Antd:Spin Margin="0 0 16 16" />
+                                <Antd:Spin Size="Large" Margin="0 0 16 16" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Spin Size="Small" Margin="0 0 16 16" /&gt;\n
+                                \t&lt;Antd:Spin Margin="0 0 16 16" /&gt;\n
+                                \t&lt;Antd:Spin Size="Large" Margin="0 0 16 16" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Embedded mode">
+                        <Controls:CodeBox.Description>
+                            Embedding content into `Spin` will alter it into loading state.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}">
+                                </Antd:Spin>
+                                <WrapPanel Margin="0 16 0 0">
+                                    <Label Content="Loading state：" />
+                                    <Antd:Switch x:Name="SwitchOne" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Spin Size="Small" Margin="0 0 16 16" /&gt;\n
+                                \t&lt;Antd:Spin Margin="0 0 16 16" /&gt;\n
+                                \t&lt;Antd:Spin Size="Large" Margin="0 0 16 16" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

@@ -45,6 +45,37 @@
                             &lt;RadioButton Content="Radio" /&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Radio Group">
+                        <Controls:CodeBox.Description>
+                            A group of radio components.
+                        </Controls:CodeBox.Description>
+                        <!--<Controls:CodeBox.Content>
+                            <Antd:RadioButtonGroup Orientation="Vertical">
+                                <RadioButton Content="A" />
+                                <RadioButton Content="B" GroupName="A" />
+                                <RadioButton Content="C" GroupName="A" />
+                                <RadioButton Content="D" />
+                            </Antd:RadioButtonGroup>
+                        </Controls:CodeBox.Content>-->
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
+                            &lt;RadioButton Content="Radio" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="RadioGroup group - ItemsSource">
+                        <Controls:CodeBox.Description>
+                            Render radios by configuring `ItemsSource`.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <Antd:RadioButtonGroup ItemsSource="{Binding Items}" DisplayMemberPath="Label" Orientation="Vertical" />
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" /&gt;\n\n
+                            &lt;RadioButton Content="Radio" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
                     <Controls:CodeBox Title="Disabled">

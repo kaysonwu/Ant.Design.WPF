@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CheckBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RadioButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SpinViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SwitchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SpinView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

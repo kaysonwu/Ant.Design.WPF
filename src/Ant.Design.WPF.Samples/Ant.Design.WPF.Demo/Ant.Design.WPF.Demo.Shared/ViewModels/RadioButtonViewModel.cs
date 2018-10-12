@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Text;
 namespace AntdDemo.ViewModels
 {
     [Export(typeof(IScreen))]
-    internal class RadioButtonViewModel : Screen
+    public class RadioButtonViewModel : Screen
     {
         private bool isEnabled;
 
@@ -21,14 +22,31 @@ namespace AntdDemo.ViewModels
         }
 
 
+        public IEnumerable<RadioItem> Items { get; set; }
+
         public RadioButtonViewModel()
         {
             DisplayName = "Radio";
+
+          
+            Items = new List<RadioItem>
+            {
+                new RadioItem { Label = "Apple", Value = "Apple" },
+                new RadioItem { Label = "Pear", Value = "Pear" },
+                new RadioItem { Label = "Orange", Value = "Orange" }
+            };
         }
 
         public void Toggle()
         {
             IsEnabled = !isEnabled;
         }
+    }
+
+    public struct RadioItem
+    {
+        public string Label;
+
+        public string Value;
     }
 }

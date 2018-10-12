@@ -11,6 +11,8 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Badge.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Switch.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Spin.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/RadioButtonGroup.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  set up default styles for our custom controls  -->
