@@ -27,7 +27,6 @@
                         </Border>
                         <!-- IndicatorPanel -->
                         <Grid x:Name="IndicatorPanel"
-                              Panel.ZIndex="1"
                               VerticalAlignment="Center"
                               Visibility="{Binding Spinning, RelativeSource={RelativeSource TemplatedParent}, 
                                             Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -39,10 +38,12 @@
                             </Grid.RowDefinitions>
                             <!-- Indicator -->
                             <ContentPresenter x:Name="Indicator"
+                                              Grid.RowSpan="2"
                                               Visibility="Hidden"
                                               Content="{TemplateBinding Indicator}" />
                             <!-- Dot -->
                             <Grid x:Name="Dot"
+                                  Grid.RowSpan="2"
                                   RenderTransformOrigin="0.5,0.5"
                                   Width="{DynamicResource SpinDotSize}"
                                   Height="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}}">
@@ -87,8 +88,23 @@
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SpinStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition From="Spun" GeneratedDuration="0:0:0.2">
+                                        <Storyboard>
+                                            <!-- Content -->
+                                            <DoubleAnimation Storyboard.TargetName="Content"
+                                                             Storyboard.TargetProperty="(UIElement.Opacity)" />
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Spun">
                                     <Storyboard>
+                                        <!-- Content -->
+                                        <DoubleAnimation Storyboard.TargetName="Content"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Duration="0:0:0.2"
+                                                         To="0.5" />
+                                        <!-- Dot -->
                                         <DoubleAnimation Storyboard.TargetName="DotRotate"
                                                          Storyboard.TargetProperty="Angle"
                                                          RepeatBehavior="Forever" 
@@ -142,16 +158,17 @@
                             <Setter TargetName="Dot" Property="Width" Value="{DynamicResource SpinDotSizeLarge}" />
                         </Trigger>
                         <Trigger Property="Spinning" Value="True">
-                            <Setter TargetName="Content" Property="Opacity" Value="0.5" />
                             <Setter TargetName="Content" Property="Effect">
                                 <Setter.Value>
                                     <BlurEffect Radius="0.5" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <!-- Has Loading Text -->
+                        <!-- With Loading Text -->
                         <DataTrigger Binding="{Binding Tip, Mode=OneWay, RelativeSource={RelativeSource Self}, 
-                                                Converter={StaticResource IsNullConverter}}" Value="False">
+                                                Converter={StaticResource IsEmptyConverter}}" Value="False">
+                            <Setter TargetName="Dot" Property="Grid.RowSpan" Value="1" />
+                            <Setter TargetName="Indicator" Property="Grid.RowSpan" Value="1" />
                             <Setter TargetName="LoadingText" Property="Margin" Value="0 8 0 0" />
                         </DataTrigger>
                         <!-- Nested Loading -->
@@ -159,7 +176,7 @@
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
                             <Setter TargetName="IndicatorPanel" Property="HorizontalAlignment" Value="Center" />
                         </DataTrigger>
-                        <!-- Has Indicator -->
+                        <!-- With Indicator -->
                         <DataTrigger Binding="{Binding Indicator, Mode=OneWay, RelativeSource={RelativeSource Self},
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
                             <Setter TargetName="Dot" Property="Visibility" Value="Collapsed" />
@@ -169,6 +186,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Spinning" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

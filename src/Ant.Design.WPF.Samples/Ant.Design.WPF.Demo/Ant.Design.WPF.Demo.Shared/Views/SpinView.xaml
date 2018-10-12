@@ -101,14 +101,15 @@
                             Embedding content into `Spin` will alter it into loading state.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <StackPanel>
+                            <WrapPanel>
                                 <Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}">
+                                    <Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." />
                                 </Antd:Spin>
                                 <WrapPanel Margin="0 16 0 0">
                                     <Label Content="Loading state：" />
                                     <Antd:Switch x:Name="SwitchOne" />
                                 </WrapPanel>
-                            </StackPanel>
+                            </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n

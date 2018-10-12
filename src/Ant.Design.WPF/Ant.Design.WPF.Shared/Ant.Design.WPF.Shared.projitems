@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Animations\ColorAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Alert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Badge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
@@ -33,6 +34,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ArithmeticConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ColorPaletteConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IsEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DoubleToCornerRadiusConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />

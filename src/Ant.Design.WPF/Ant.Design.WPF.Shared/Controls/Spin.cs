@@ -3,6 +3,9 @@ using ContentControlBase = System.Windows.Controls.ContentControl;
 
 namespace Antd.Controls
 {
+    /// <summary>
+    /// A spinner for displaying loading state of a page or a section.
+    /// </summary>
     [TemplateVisualState(Name = "Spun", GroupName = "SpinStates")]
     [TemplateVisualState(Name = "Unspun", GroupName = "SpinStates")]
     public class Spin : ContentControlBase
@@ -50,11 +53,6 @@ namespace Antd.Controls
             (d as Spin).ApplySpinStates();
         }
 
-        private void ApplySpinStates()
-        {
-            VisualStateManager.GoToState(this, Spinning && null == Indicator ? "Spun" : "Unspun", true);
-        }
-
         public static readonly DependencyProperty TipProperty =
             DependencyProperty.Register("Tip", typeof(string), typeof(Spin), new PropertyMetadata(string.Empty));
 
@@ -84,6 +82,11 @@ namespace Antd.Controls
         {
             base.OnApplyTemplate();
             ApplySpinStates();
+        }
+
+        private void ApplySpinStates()
+        {
+            VisualStateManager.GoToState(this, Spinning && null == Indicator ? "Spun" : "Unspun", true);
         }
 
         #endregion
