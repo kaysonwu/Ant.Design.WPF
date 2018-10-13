@@ -5,8 +5,9 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Spin}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -82,10 +83,10 @@
                                          HorizontalAlignment="Right"
                                          Width="{Binding Width, Mode=OneWay, ElementName=Dot1}" />
                             </Grid>
-                            <ContentPresenter x:Name="LoadingText"
-                                              Grid.Row="1"
-                                              Content="{TemplateBinding Tip}" />
+                            <ContentPresenter x:Name="LoadingText" Grid.Row="1" Content="{TemplateBinding Tip}" />
                         </Grid>
+                        <!-- Mask -->
+                        <Rectangle x:Name="Mask" Fill="Transparent" Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SpinStates">
                                 <VisualStateGroup.Transitions>
@@ -157,7 +158,9 @@
                             <Setter TargetName="Dot1" Property="Width" Value="14" />
                             <Setter TargetName="Dot" Property="Width" Value="{DynamicResource SpinDotSizeLarge}" />
                         </Trigger>
+                        <!-- Spun State -->
                         <Trigger Property="Spinning" Value="True">
+                            <Setter TargetName="Mask" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Content" Property="Effect">
                                 <Setter.Value>
                                     <BlurEffect Radius="0.5" />
@@ -187,8 +190,10 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <!-- Spun State -->
             <Trigger Property="Spinning" Value="True">
-                <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+                <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None" />
             </Trigger>
         </Style.Triggers>
     </Style>

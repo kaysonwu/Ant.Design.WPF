@@ -48,6 +48,27 @@
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Customized description">
+                        <Controls:CodeBox.Description>
+                            Customized description content.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Spin Tip="Loading...">
+                                    <Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." />
+                                </Antd:Spin>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Spin Tip="Loading..."&gt;\n
+                                    \t\t&lt;Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." /&gt;\n
+                                \t&lt;/Antd:Spin&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                     <Controls:CodeBox Title="Custom spinning indicator">
                         <Controls:CodeBox.Description>
                             Use custom loading indicator.
@@ -101,24 +122,28 @@
                             Embedding content into `Spin` will alter it into loading state.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <WrapPanel>
+                            <StackPanel>
                                 <Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}">
                                     <Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." />
                                 </Antd:Spin>
                                 <WrapPanel Margin="0 16 0 0">
                                     <Label Content="Loading state：" />
-                                    <Antd:Switch x:Name="SwitchOne" />
+                                    <Antd:Switch x:Name="SwitchOne" IsChecked="True" />
                                 </WrapPanel>
-                            </WrapPanel>
+                            </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;WrapPanel&gt;\n
-                                \t&lt;Antd:Spin Size="Small" Margin="0 0 16 16" /&gt;\n
-                                \t&lt;Antd:Spin Margin="0 0 16 16" /&gt;\n
-                                \t&lt;Antd:Spin Size="Large" Margin="0 0 16 16" /&gt;\n
-                            &lt;/WrapPanel&gt;
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}"&gt;\n
+                                    \t\t&lt;Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." /&gt;\n
+                                \t&lt;/Antd:Spin&gt;\n
+                                \t&lt;WrapPanel Margin="0 16 0 0"&gt;\n
+                                    \t\t&lt;Label Content="Loading state：" /&gt;\n
+                                    \t\t&lt;Antd:Switch x:Name="SwitchOne" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
+                            &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>
