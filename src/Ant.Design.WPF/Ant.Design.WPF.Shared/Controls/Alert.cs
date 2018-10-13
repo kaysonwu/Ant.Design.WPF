@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Antd.Controls
@@ -8,13 +10,18 @@ namespace Antd.Controls
     /// Alert component for feedback.
     /// </summary>
     [TemplatePart(Name = PART_Icon, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_Close, Type = typeof(ContentPresenter))]
     public class Alert : Control
     {
         #region Fields
 
         private const string PART_Icon = "PART_Icon";
 
+        private const string PART_Close = "PART_Close";
+
         private ContentPresenter icon;
+
+        private ContentPresenter close;
 
         #endregion
 
@@ -45,7 +52,7 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty CloseTextProperty =
-            DependencyProperty.Register("CloseText", typeof(object), typeof(Alert), new PropertyMetadata(null));
+            DependencyProperty.Register("CloseText", typeof(object), typeof(Alert), new PropertyMetadata(null, OnCloseTextChanged));
 
         /// <summary>
         /// Gets/sets close text to show
@@ -54,6 +61,11 @@ namespace Antd.Controls
         {
             get { return GetValue(CloseTextProperty); }
             set { SetValue(CloseTextProperty, value); }
+        }
+
+        private static void OnCloseTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            
         }
 
         public static readonly DependencyProperty DescriptionProperty =
@@ -169,10 +181,18 @@ namespace Antd.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
             icon = GetTemplateChild(PART_Icon) as ContentPresenter;
+            close = GetTemplateChild(PART_Close) as ContentPresenter;
+
+            if (close != null)
+            {
+                close.MouseLeftButtonUp += OnClickClose;
+            }
 
             SetIconVisibility();
             ApplyIcon(true);
+            ApplyCloseButton();
         }
 
         private void ApplyIcon(bool force = false)
@@ -223,6 +243,17 @@ namespace Antd.Controls
             if (icon == null) return;
 
             icon.Visibility = ShowIcon ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void ApplyCloseButton()
+        {
+            if (close == null) return;
+            close.Content = CloseText != null ? CloseText : new Icon() { Type = "close" };
+        }
+
+        private void OnClickClose(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("单击咯");
         }
 
         #endregion

@@ -8,9 +8,12 @@
     
     <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Alert}">
         <Setter Property="Padding" Value="15 8" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None" />
         <Setter Property="IconBrush" Value="{DynamicResource InfoBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
@@ -65,11 +68,16 @@
                                               Content="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, 
                                                             Converter={StaticResource StringToTextBlockConverter}}" />
                             <!-- Close Button -->
+                            <ContentPresenter x:Name="PART_Close"
+                                              Grid.Column="2"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ShowIcon" Value="True">
                             <Setter TargetName="PART_Icon" Property="Margin" Value="0 0 8 0" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Close" Property="IsMouseOver" Value="True">
                         </Trigger>
                         <!-- With Description -->
                         <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource Self}, 
