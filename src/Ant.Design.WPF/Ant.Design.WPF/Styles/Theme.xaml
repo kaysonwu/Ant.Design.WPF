@@ -44,7 +44,6 @@
     <System:Double x:Key="FontSizeBase">14</System:Double>
     <System:Double x:Key="FontSizeLarge">16</System:Double>
     <System:Double x:Key="FontSizeSmall">12</System:Double>
-    <System:Double x:Key="LineHeightBase">1.5</System:Double>
     <CornerRadius x:Key="BorderRadiusBase">4</CornerRadius>
     <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
 

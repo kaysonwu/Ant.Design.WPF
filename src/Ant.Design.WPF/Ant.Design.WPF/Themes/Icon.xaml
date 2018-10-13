@@ -3,6 +3,7 @@
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
     <Style TargetType="{x:Type Controls:Icon}">
+        <Setter Property="TextBlock.LineHeight" Value="NaN" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{DynamicResource IconFontFamily}" />

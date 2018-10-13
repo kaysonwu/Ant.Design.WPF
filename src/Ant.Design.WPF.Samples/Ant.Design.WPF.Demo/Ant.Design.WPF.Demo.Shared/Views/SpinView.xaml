@@ -123,9 +123,11 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}">
-                                    <Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." />
-                                </Antd:Spin>
+                                <WrapPanel>
+                                    <Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}">
+                                        <Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." />
+                                    </Antd:Spin>
+                                </WrapPanel>
                                 <WrapPanel Margin="0 16 0 0">
                                     <Label Content="Loading state：" />
                                     <Antd:Switch x:Name="SwitchOne" IsChecked="True" />
@@ -136,9 +138,11 @@
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;StackPanel&gt;\n
-                                \t&lt;Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}"&gt;\n
-                                    \t\t&lt;Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." /&gt;\n
-                                \t&lt;/Antd:Spin&gt;\n
+                                \t&lt;WrapPanel&gt;\n
+                                    \t\t&lt;Antd:Spin Spinning="{Binding IsChecked, Mode=OneWay, ElementName=SwitchOne}"&gt;\n
+                                        \t\t\t&lt;Antd:Alert Message="Alert message title" Description="Further details about the context of this alert." /&gt;\n
+                                    \t\t&lt;/Antd:Spin&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
                                 \t&lt;WrapPanel Margin="0 16 0 0"&gt;\n
                                     \t\t&lt;Label Content="Loading state：" /&gt;\n
                                     \t\t&lt;Antd:Switch x:Name="SwitchOne" /&gt;\n

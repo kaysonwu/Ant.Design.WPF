@@ -12,6 +12,7 @@
     <Converters:SubtractionConverter x:Key="SubtractionConverter" />
     <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
     <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
+    <Converters:StringToTextBlockConverter x:Key="StringToTextBlockConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <Converters:DoubleToCornerRadiusConverter x:Key="DoubleToCornerRadiusConverter" />
     <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
@@ -32,6 +33,9 @@
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                            Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
     </Style>
     
 </ResourceDictionary>

@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="AntdDemo.Views.AlertView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
+             xmlns:Controls="clr-namespace:AntdDemo.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="930">
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Alert" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="Alert component for feedback." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="When you need to show alert messages to users.&#x0a;When you need a persistent static container which is closable by user actions." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Antd:Alert">
+                        <Setter Property="Margin" Value="0 0 0 15" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            The simplest usage for short messages.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <Antd:Alert Type="Success" Message="Success Text" />
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Icon">
+                        <Controls:CodeBox.Description>
+                            Decent icon make information more clear and more friendly.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Type="Success" Message="Success Tips" ShowIcon="True" />
+                                <Antd:Alert Message="Informational Notes" ShowIcon="True" />
+                                <Antd:Alert Type="Warning" Message="Warning" ShowIcon="True" />
+                                <Antd:Alert Type="Error" Message="Error" ShowIcon="True" />
+                                <Antd:Alert Type="Success" Message="Success Tips" Description="Detailed description and advices about successful copywriting." ShowIcon="True" />
+                                <Antd:Alert Message="Informational Notes" Description="Additional description and informations about copywriting." ShowIcon="True" />
+                                <Antd:Alert Type="Warning" Message="Warning" Description="This is a warning notice about copywriting." ShowIcon="True" />
+                                <Antd:Alert Type="Error" Message="Error" Description="This is an error message about copywriting." ShowIcon="True" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Type="Success" Message="Success Tips" ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Message="Informational Notes" ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Message="Warning" ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Type="Error" Message="Error" ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Type="Success" Message="Success Tips" Description="Detailed description and advices about successful copywriting." ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Message="Informational Notes" Description="Additional description and informations about copywriting." ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Message="Warning" Description="This is a warning notice about copywriting." ShowIcon="True" /&gt;\n
+                                \t&lt;Antd:Alert Type="Error" Message="Error" Description="This is an error message about copywriting." ShowIcon="True" /&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="More types">
+                        <Controls:CodeBox.Description>
+                            There are 4 types of Alert: `Success`, `Info`, `Warning`, `Error`.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Type="Success" Message="Success Text" />
+                                <Antd:Alert Message="Info Text" />
+                                <Antd:Alert Type="Warning" Message="Warning Text" />
+                                <Antd:Alert Type="Error" Message="Error Text" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Type="Success" Message="Success Text" /&gt;\n
+                                \t&lt;Antd:Alert Message="Info Text" /&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Message="Warning Text" /&gt;\n
+                                \t&lt;Antd:Alert Type="Error" Message="Error Text" /&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Description">
+                        <Controls:CodeBox.Description>
+                            Additional description for alert message.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Type="Success" Message="Success Text" Description="Success Description Success Description Success Description" />
+                                <Antd:Alert Message="Info Text" Description="Info Description Info Description Info Description Info Description" />
+                                <Antd:Alert Type="Warning" Message="Warning Text" Description="Warning Description Warning Description Warning Description Warning Description" />
+                                <Antd:Alert Type="Error" Message="Error Text" Description="Error Description Error Description Error Description Error Description" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Type="Success" Message="Success Text" Margin="0 0 0 16" /&gt;\n
+                                \t&lt;Antd:Alert Message="Info Text" Margin="0 0 0 16" /&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Message="Warning Text" Margin="0 0 0 16" /&gt;\n
+                                \t&lt;Antd:Alert Type="Error" Message="Error Text" /&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

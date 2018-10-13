@@ -7,8 +7,10 @@
     </ResourceDictionary.MergedDictionaries>
     
     <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Alert}">
-        <Setter Property="Padding" Value="15 8 37 8" />
+        <Setter Property="Padding" Value="15 8" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="IconBrush" Value="{DynamicResource InfoBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
@@ -32,6 +34,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <!-- Text -->
                                 <ColumnDefinition Width="*" />
+                                <!-- Close Button -->
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <!-- Message -->
@@ -41,22 +45,38 @@
                             </Grid.RowDefinitions>
                             <!-- Icon -->
                             <ContentPresenter x:Name="PART_Icon" 
-                                              TextElement.Foreground="{TemplateBinding IconBrush}" />
+                                              TextElement.Foreground="{TemplateBinding IconBrush}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             <!-- Message -->
                             <ContentPresenter x:Name="Message"
                                               Grid.Column="1"
-                                              Content="{TemplateBinding Message}" />
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Content="{Binding Message, RelativeSource={RelativeSource TemplatedParent}, 
+                                                            Converter={StaticResource StringToTextBlockConverter}}" />
                             <!-- Description -->
-                            <ContentPresenter Grid.Column="1"
+                            <ContentPresenter x:Name="Description"
                                               Grid.Row="1"
-                                              Content="{TemplateBinding Description}" />
+                                              Grid.Column="1"
+                                              Grid.ColumnSpan="2"
+                                              Visibility="Collapsed"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Content="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, 
+                                                            Converter={StaticResource StringToTextBlockConverter}}" />
+                            <!-- Close Button -->
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="ShowIcon" Value="True">
+                            <Setter TargetName="PART_Icon" Property="Margin" Value="0 0 8 0" />
+                        </Trigger>
                         <!-- With Description -->
                         <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource Self}, 
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
                             <Setter TargetName="Message" Property="Margin" Value="0 0 0 4" />
+                            <Setter TargetName="Description" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Icon" Property="TextElement.FontSize" Value="24" />
                             <Setter TargetName="Message" Property="TextElement.FontSize" Value="{DynamicResource FontSizeLarge}" />
                             <Setter TargetName="Message" Property="TextElement.Foreground" Value="{DynamicResource HeadingBrush}" />
                         </DataTrigger>
@@ -73,9 +93,6 @@
             </Trigger>
             <Trigger Property="Type" Value="Error">
                 <Setter Property="IconBrush" Value="{DynamicResource ErrorBrush}" />
-            </Trigger>
-            <Trigger Property="ShowIcon" Value="False">
-                <Setter Property="Padding" Value="15 8" />
             </Trigger>
             <Trigger Property="Banner" Value="True">
                 <Setter Property="BorderThickness" Value="0" />

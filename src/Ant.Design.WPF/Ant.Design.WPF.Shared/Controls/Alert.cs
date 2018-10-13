@@ -57,7 +57,17 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null, OnTypeChanged));
+            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null, OnTypeChanged, OnConValue));
+
+        private static object OnConValue(DependencyObject d, object baseValue)
+        {
+            if (baseValue is string)
+            {
+                return new TextBlock() { Text = (baseValue as string), TextWrapping = TextWrapping.Wrap };
+            }
+
+            return baseValue;
+        }
 
         /// <summary>
         /// Gets/sets additional content of Alert
@@ -188,9 +198,6 @@ namespace Antd.Controls
                     case AlertType.Success:
                         type = "check-circle";
                         break;
-                    case AlertType.Info:
-                        type = "info-circle";
-                        break;
                     case AlertType.Warning:
                         type = "close-circle";
                         break;
@@ -198,7 +205,7 @@ namespace Antd.Controls
                         type = "exclamation-circle";
                         break;
                     default:
-                        type = "default";
+                        type = "info-circle";
                         break;
                 }
 

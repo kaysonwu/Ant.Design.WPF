@@ -11,6 +11,14 @@
     <System:String x:Key="anticon-loading">&#xe64d;</System:String>
     <System:String x:Key="anticon-poweroff">&#xe6d5;</System:String>
     <System:String x:Key="anticon-notification">&#xe677;</System:String>
+    <System:String x:Key="anticon-check-circle">&#xe630;</System:String>
+    <System:String x:Key="anticon-check-circle-o">&#xe631;</System:String>
+    <System:String x:Key="anticon-info-circle">&#xe628;</System:String>
+    <System:String x:Key="anticon-info-circle-o">&#xe629;</System:String>
+    <System:String x:Key="anticon-close-circle">&#xe62e;</System:String>
+    <System:String x:Key="anticon-close-circle-o">&#xe62f;</System:String>
+    <System:String x:Key="anticon-exclamation-circle">&#xe62c;</System:String>
+    <System:String x:Key="anticon-exclamation-circle-o">&#xe62d;</System:String>
     
     <!-- Test Usign -->
     <System:String x:Key="anticon-search">&#xe670;</System:String>
