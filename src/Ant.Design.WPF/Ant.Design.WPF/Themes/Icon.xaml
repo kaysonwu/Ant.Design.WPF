@@ -15,14 +15,14 @@
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                         <ContentPresenter.RenderTransform>
-                            <RotateTransform x:Name="Transform" Angle="0" />
+                            <RotateTransform Angle="0" />
                         </ContentPresenter.RenderTransform>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SpinStates">
                                 <VisualState x:Name="Spun">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Transform"
-                                                         Storyboard.TargetProperty="Angle" 
+                                        <DoubleAnimation Storyboard.TargetName="PART_Content"
+                                                         Storyboard.TargetProperty="RenderTransform.Angle" 
                                                          RepeatBehavior="Forever" 
                                                          Duration="0:0:1"
                                                          From="0" 

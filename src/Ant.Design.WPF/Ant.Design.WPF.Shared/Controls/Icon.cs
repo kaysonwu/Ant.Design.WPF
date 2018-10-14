@@ -24,10 +24,10 @@ namespace Antd.Controls
 
         private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Icon).ApplyContent();
+            (d as Icon).SetContent();
         }
 
-        private void ApplyContent()
+        private void SetContent()
         {
             if(contentPresenter != null)
             {
@@ -103,7 +103,7 @@ namespace Antd.Controls
             base.OnApplyTemplate();
 
             contentPresenter = GetTemplateChild("PART_Content") as ContentPresenter;
-            ApplyContent();
+            SetContent();
         }
 
         #endregion

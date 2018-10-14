@@ -5,7 +5,20 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
+    <Storyboard x:Key="Ant.AlertCloseStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                         EasingFunction="{StaticResource EaseInOutCirc}"
+                         Duration="0:0:0.3"
+                         From="1"
+                         To="0" />
+        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
+                         EasingFunction="{StaticResource EaseInOutCirc}"
+                         Duration="0:0:0.3"
+                         From="1"
+                         To="0" />
+    </Storyboard>
+
     <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Alert}">
         <Setter Property="Padding" Value="15 8" />
         <Setter Property="IsTabStop" Value="False" />
@@ -16,11 +29,17 @@
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None" />
         <Setter Property="IconBrush" Value="{DynamicResource InfoBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
+        <Setter Property="CloseStoryboard" Value="{StaticResource Ant.AlertCloseStoryboard}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
         <Setter Property="Background" Value="{Binding IconBrush, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                     Converter={StaticResource ColorPaletteConverter}, ConverterParameter=1}" />
         <Setter Property="BorderBrush" Value="{Binding IconBrush, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                     Converter={StaticResource ColorPaletteConverter}, ConverterParameter=3}" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Alert}">
@@ -32,6 +51,44 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
                         <Grid>
+                            <Grid.Resources>
+                                <!-- TODO Does it have other uses? -->
+                                <Style x:Key="Ant.AlertCloseButton" TargetType="{x:Type Button}">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Foreground" Value="{DynamicResource LinkBrush}" />
+                                    <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <ControlTemplate.Resources>
+                                                    <Style TargetType="{x:Type Controls:Icon}">
+                                                        <Setter Property="Opacity" Value="0.65" />
+                                                        <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Opacity" Value="0.85" />
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsPressed, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                                                         Value="True">
+                                                                <Setter Property="Opacity" Value="1" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ControlTemplate.Resources>
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource LinkHoverBrush}" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource LinkActiveBrush}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
                             <Grid.ColumnDefinitions>
                                 <!-- Icon -->
                                 <ColumnDefinition Width="Auto" />
@@ -68,23 +125,23 @@
                                               Content="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, 
                                                             Converter={StaticResource StringToTextBlockConverter}}" />
                             <!-- Close Button -->
-                            <ContentPresenter x:Name="PART_Close"
-                                              Grid.Column="2"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Button x:Name="PART_Close"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource Ant.AlertCloseButton}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ShowIcon" Value="True">
                             <Setter TargetName="PART_Icon" Property="Margin" Value="0 0 8 0" />
                         </Trigger>
-                        <Trigger SourceName="PART_Close" Property="IsMouseOver" Value="True">
-                        </Trigger>
                         <!-- With Description -->
-                        <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource Self}, 
+                        <DataTrigger Binding="{Binding Description, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
                             <Setter TargetName="Message" Property="Margin" Value="0 0 0 4" />
                             <Setter TargetName="Description" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_Icon" Property="TextElement.FontSize" Value="24" />
+                            <Setter TargetName="PART_Close" Property="FontSize" Value="{DynamicResource FontSizeBase}" />
                             <Setter TargetName="Message" Property="TextElement.FontSize" Value="{DynamicResource FontSizeLarge}" />
                             <Setter TargetName="Message" Property="TextElement.Foreground" Value="{DynamicResource HeadingBrush}" />
                         </DataTrigger>

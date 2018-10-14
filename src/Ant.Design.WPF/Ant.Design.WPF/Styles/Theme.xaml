@@ -5,11 +5,8 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="Options">
 
-    <!-- 
-        ┏━━━━━━┓
-        ┃   Colors   ┃  
-        ┗━━━━━━┛
-    --> 
+  
+    <!-- Colors -->
     <Color x:Key="PrimaryColor">#1890FF</Color>
     <Color x:Key="InfoColor">#1890FF</Color>
     <Color x:Key="SuccessColor">#52C41A</Color>
@@ -19,35 +16,18 @@
     <Color x:Key="WarningColor">#FAAD14</Color>
     <Color x:Key="NormalColor">#d9d9d9</Color>
 
+    <Color x:Key="HeadingColor">#D8000000</Color>
     <Color x:Key="TextColor">#CC000000</Color>
+    <Color x:Key="TextSecondaryColor">#72000000</Color>
     <Color x:Key="BorderColorBase">#D9D9D9</Color>
     <Color x:Key="BackgroundColorLight">#F4F4F4</Color>
     <Color x:Key="BackgroundColorBase">#F5F5F5</Color>
-    <Color x:Key="HeadingColor">#D8000000</Color>
-    
-    <!-- Disabled states -->
+
     <Color x:Key="DisabledColor">#3F000000</Color>
     <Color x:Key="DisabledBackground">#F5F5F5</Color>
     <Color x:Key="DisabledColorDark">#59FFFFFF</Color>
 
-    <!-- 
-        ┏━━━━━━━━━━━━━━━━┓
-        ┃   Base Scaffolding Variables   ┃  
-        ┗━━━━━━━━━━━━━━━━┛
-    -->
-
-    <!-- Background color for `<Window>` -->
-    <SolidColorBrush x:Key="BodyBackground" Color="#fff" Options:Freeze="True" />
-    <!-- Base background color for most components -->
-    <SolidColorBrush x:Key="ComponentBackground" Color="#fff" Options:Freeze="True" />
-    <SolidColorBrush x:Key="HeadingBrush" Color="{StaticResource HeadingColor}" />
-    <System:Double x:Key="FontSizeBase">14</System:Double>
-    <System:Double x:Key="FontSizeLarge">16</System:Double>
-    <System:Double x:Key="FontSizeSmall">12</System:Double>
-    <CornerRadius x:Key="BorderRadiusBase">4</CornerRadius>
-    <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
-
-    <!--<FontFamily x:Key="FontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>-->
+    <!-- Color Brushs -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" Options:Freeze="True" />
@@ -56,8 +36,21 @@
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="NormalBrush" Color="{StaticResource NormalColor}" Options:Freeze="True" />
+
+    <!-- Base Scaffolding Variables  -->
+    <!-- Background color for `<Window>` -->
+    <SolidColorBrush x:Key="BodyBackground" Color="#fff" Options:Freeze="True" />
+    <!-- Base background color for most components -->
+    <SolidColorBrush x:Key="ComponentBackground" Color="#fff" Options:Freeze="True" />
+    <SolidColorBrush x:Key="HeadingBrush" Color="{StaticResource HeadingColor}" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}" Options:Freeze="True" />
-    
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" Options:Freeze="True" />
+    <System:Double x:Key="FontSizeBase">14</System:Double>
+    <System:Double x:Key="FontSizeLarge">16</System:Double>
+    <System:Double x:Key="FontSizeSmall">12</System:Double>
+    <CornerRadius x:Key="BorderRadiusBase">4</CornerRadius>
+    <CornerRadius x:Key="BorderRadiusSmall">2</CornerRadius>
+
     <!-- Vertical Paddings -->
     <!-- containers -->
     <System:Double x:Key="PaddingLarge">24</System:Double>

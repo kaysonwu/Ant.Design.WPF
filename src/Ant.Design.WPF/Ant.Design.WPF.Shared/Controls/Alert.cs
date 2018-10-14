@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Antd.Controls
 {
     /// <summary>
     /// Alert component for feedback.
     /// </summary>
+    [ContentProperty("Message")]
     [TemplatePart(Name = PART_Icon, Type = typeof(ContentPresenter))]
-    [TemplatePart(Name = PART_Close, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_Close, Type = typeof(ButtonBase))]
     public class Alert : Control
     {
         #region Fields
@@ -21,7 +24,20 @@ namespace Antd.Controls
 
         private ContentPresenter icon;
 
-        private ContentPresenter close;
+        private ButtonBase close;
+
+        #endregion
+
+        #region Events
+
+        public static readonly RoutedEvent CloseEvent =
+            EventManager.RegisterRoutedEvent("Close", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Alert));
+
+        public event RoutedEventHandler Close
+        {
+            add { this.AddHandler(CloseEvent, value); }
+            remove { this.RemoveHandler(CloseEvent, value); }
+        }
 
         #endregion
 
@@ -31,7 +47,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Banner", typeof(bool), typeof(Alert), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets Whether to show as banner
+        /// Gets/sets whether to show as banner
         /// </summary>
         public bool Banner
         {
@@ -40,15 +56,29 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty ClosableProperty =
-            DependencyProperty.Register("Closable", typeof(bool), typeof(Alert), new PropertyMetadata(false));
+            DependencyProperty.Register("Closable", typeof(bool?), typeof(Alert), new PropertyMetadata(null, OnClosableChanged));
 
         /// <summary>
-        /// Gets/sets whether Alert can be closed
+        /// Gets/sets whether alert can be closed
         /// </summary>
-        public bool Closable
+        public bool? Closable
         {
-            get { return (bool)GetValue(ClosableProperty); }
+            get { return (bool?)GetValue(ClosableProperty); }
             set { SetValue(ClosableProperty, value); }
+        }
+
+        private static void OnClosableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as Alert).SetCloseButtonVisibility();
+        }
+
+        private void SetCloseButtonVisibility()
+        {
+            if (close != null)
+            {
+                close.Visibility = (Closable.HasValue && Closable.Value || !Closable.HasValue && CloseText != null) 
+                                        ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         public static readonly DependencyProperty CloseTextProperty =
@@ -65,24 +95,24 @@ namespace Antd.Controls
 
         private static void OnCloseTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            
+            (d as Alert).SetCloseButton();
+        }
+
+        private void SetCloseButton()
+        {
+            if (close != null)
+            {
+                close.Content = CloseText != null ? CloseText : new Icon() { Type = "close" };
+            }
+
+            SetCloseButtonVisibility();
         }
 
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null, OnTypeChanged, OnConValue));
-
-        private static object OnConValue(DependencyObject d, object baseValue)
-        {
-            if (baseValue is string)
-            {
-                return new TextBlock() { Text = (baseValue as string), TextWrapping = TextWrapping.Wrap };
-            }
-
-            return baseValue;
-        }
+            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null, OnDefaultIconChanged));
 
         /// <summary>
-        /// Gets/sets additional content of Alert
+        /// Gets/sets additional content of alert
         /// </summary>
         public object Description
         {
@@ -104,114 +134,16 @@ namespace Antd.Controls
 
         private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Alert).ApplyIcon(true);
+            (d as Alert).SetIcon(true);
         }
 
-        public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register("Message", typeof(object), typeof(Alert), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets content of Alert
-        /// </summary>
-        public object Message
+        private void SetIcon(bool force = false)
         {
-            get { return GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
-        }
-
-        public static readonly DependencyProperty ShowIconProperty =
-            DependencyProperty.Register("ShowIcon", typeof(bool), typeof(Alert), new PropertyMetadata(false, OnShowIcon));
-
-        /// <summary>
-        /// Gets/sets whether to show icon
-        /// </summary>
-        public bool ShowIcon
-        {
-            get { return (bool)GetValue(ShowIconProperty); }
-            set { SetValue(ShowIconProperty, value); }
-        }
-
-        private static void OnShowIcon(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Alert).SetIconVisibility();
-        }
-
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(AlertType), typeof(Alert), new PropertyMetadata(AlertType.Info, OnTypeChanged));
-
-        /// <summary>
-        /// Gets/sets type of Alert styles
-        /// </summary>
-        public AlertType Type
-        {
-            get { return (AlertType)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
-        }
-
-        private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Alert).ApplyIcon();
-        }
-
-        public static readonly DependencyProperty IconBrushProperty =
-            DependencyProperty.Register("IconBrush", typeof(Brush), typeof(Alert), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets icon brush
-        /// </summary>
-        public Brush IconBrush
-        {
-            get { return (Brush)GetValue(IconBrushProperty); }
-            set { SetValue(IconBrushProperty, value); }
-        }
-
-        #endregion
-
-        #region Constructors
-
-        static Alert()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Alert), new FrameworkPropertyMetadata(typeof(Alert)));
-        }
-
-        #endregion
-
-        #region Overrides
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            icon = GetTemplateChild(PART_Icon) as ContentPresenter;
-            close = GetTemplateChild(PART_Close) as ContentPresenter;
-
-            if (close != null)
-            {
-                close.MouseLeftButtonUp += OnClickClose;
-            }
-
-            SetIconVisibility();
-            ApplyIcon(true);
-            ApplyCloseButton();
-        }
-
-        private void ApplyIcon(bool force = false)
-        {
-            if (icon == null || !force && Icon != null) return;
-
-            if (Icon is UIElement)
-            {
-                icon.Content = Icon;
-                return;
-            }
+            if (icon == null || (!force && Icon != null)) return;
 
             string type;
 
-            if (Icon is string)
-            {
-                type = Icon as string;
-
-            } else
+            if (Icon == null)
             {
                 switch (Type)
                 {
@@ -233,31 +165,153 @@ namespace Antd.Controls
                 {
                     type += "-o";
                 }
+
+            } else if (Icon is string)
+            {
+                type = Icon as string;
+            }
+            else
+            {
+                icon.Content = Icon;
+                return;
             }
 
             icon.Content = new Icon() { Type = type };
         }
 
+        public static readonly DependencyProperty MessageProperty =
+            DependencyProperty.Register("Message", typeof(object), typeof(Alert), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets content of alert
+        /// </summary>
+        public object Message
+        {
+            get { return GetValue(MessageProperty); }
+            set { SetValue(MessageProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowIconProperty =
+            DependencyProperty.Register("ShowIcon", typeof(bool), typeof(Alert), new PropertyMetadata(false, OnShowIconChanged));
+
+        /// <summary>
+        /// Gets/sets whether to show icon
+        /// </summary>
+        public bool ShowIcon
+        {
+            get { return (bool)GetValue(ShowIconProperty); }
+            set { SetValue(ShowIconProperty, value); }
+        }
+
+        private static void OnShowIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as Alert).SetIconVisibility();
+        }
+
         private void SetIconVisibility()
         {
-            if (icon == null) return;
-
-            icon.Visibility = ShowIcon ? Visibility.Visible : Visibility.Collapsed;
+            if (icon != null)
+            {
+                icon.Visibility = ShowIcon ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
-        private void ApplyCloseButton()
+        public static readonly DependencyProperty TypeProperty =
+            DependencyProperty.Register("Type", typeof(AlertType), typeof(Alert), new PropertyMetadata(AlertType.Info, OnDefaultIconChanged));
+
+        /// <summary>
+        /// Gets/sets the type of alert
+        /// </summary>
+        public AlertType Type
         {
-            if (close == null) return;
-            close.Content = CloseText != null ? CloseText : new Icon() { Type = "close" };
+            get { return (AlertType)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
         }
 
-        private void OnClickClose(object sender, MouseButtonEventArgs e)
+        private static void OnDefaultIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Console.WriteLine("单击咯");
+            (d as Alert).SetIcon();
+        }
+
+        public static readonly DependencyProperty IconBrushProperty =
+            DependencyProperty.Register("IconBrush", typeof(Brush), typeof(Alert), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets the alert icon brush
+        /// </summary>
+        public Brush IconBrush
+        {
+            get { return (Brush)GetValue(IconBrushProperty); }
+            set { SetValue(IconBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseStoryboardProperty =
+            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(Alert), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets the closing animation of the alert
+        /// </summary>
+        public Storyboard CloseStoryboard
+        {
+            get { return (Storyboard)GetValue(CloseStoryboardProperty); }
+            set { SetValue(CloseStoryboardProperty, value); }
         }
 
         #endregion
 
+        #region Constructors
+
+        static Alert()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Alert), new FrameworkPropertyMetadata(typeof(Alert)));
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            icon = GetTemplateChild(PART_Icon) as ContentPresenter;
+            close = GetTemplateChild(PART_Close) as ButtonBase;
+
+            if (close != null)
+            {
+                close.Click -= OnClose;
+                close.Click += OnClose;
+            }
+
+            SetIconVisibility();
+            SetIcon(true);
+
+            SetCloseButton();
+        }
+
+        private void OnClose(object sender, RoutedEventArgs e)
+        {
+            if (CloseStoryboard != null)
+            {
+                var storyboard = CloseStoryboard.Clone();
+                storyboard.Completed += OnAnimationCompleted;
+                BeginStoryboard(storyboard);
+
+            }
+            else
+            {
+                Visibility = Visibility.Collapsed;
+            }
+
+            RaiseEvent(new RoutedEventArgs(CloseEvent, this));
+        }
+
+        private void OnAnimationCompleted(object sender, EventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
     }
 
     public enum AlertType : byte

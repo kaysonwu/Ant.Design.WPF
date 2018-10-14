@@ -48,6 +48,37 @@
                             &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Closable">
+                        <Controls:CodeBox.Description>
+                            To show close button.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Type="Warning" Closable="True">
+                                    Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text
+                                </Antd:Alert>
+                                <Antd:Alert Type="Error" Message="Error Text" Closable="True">
+                                    <Antd:Alert.Description>
+                                        Error Description Error Description Error Description Error Description Error Description Error Description
+                                    </Antd:Alert.Description>
+                                </Antd:Alert>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Closable="True"&gt;\n
+                                    \t\tWarning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text\n
+                                \t&lt;/Antd:Alert&gt;\n
+                                \t&lt;Antd:Alert Type="Error" Message="Error Text" Closable="True"&gt;\n
+                                    \t\t&lt;Antd:Alert.Description&gt;\n
+                                        \t\tError Description Error Description Error Description Error Description Error Description Error Description\n
+                                    \t\t&lt;/Antd:Alert.Description&gt;\n
+                                \t&lt;/Antd:Alert&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                     <Controls:CodeBox Title="Icon">
                         <Controls:CodeBox.Description>
                             Decent icon make information more clear and more friendly.
@@ -124,6 +155,42 @@
                                 \t&lt;Antd:Alert Message="Info Text" Margin="0 0 0 16" /&gt;\n
                                 \t&lt;Antd:Alert Type="Warning" Message="Warning Text" Margin="0 0 0 16" /&gt;\n
                                 \t&lt;Antd:Alert Type="Error" Message="Error Text" /&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Customized Close Text">
+                        <Controls:CodeBox.Description>
+                            Replace the default icon with customized text.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Message="Info Text" CloseText="Close Now" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Message="Info Text" CloseText="Close Now" /&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Smoothly Unmount">
+                        <Controls:CodeBox.Description>
+                            Smoothly and unaffectedly unmount Alert.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <Antd:Alert Message="Alert Message Text" Closable="True" />
+                                <TextBlock Text="placeholder text here" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;Antd:Alert Message="Alert Message Text" Closable="True" /&gt;\n
+                                \t&lt;TextBlock Text="placeholder text here" /&gt;\n
                             &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
