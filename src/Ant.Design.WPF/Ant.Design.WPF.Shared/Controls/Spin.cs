@@ -50,7 +50,12 @@ namespace Antd.Controls
 
         private static void OnSpinningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Spin).ApplySpinStates();
+            (d as Spin).GoToSpinState();
+        }
+
+        private void GoToSpinState()
+        {
+            VisualStateManager.GoToState(this, Spinning && null == Indicator ? "Spun" : "Unspun", true);
         }
 
         public static readonly DependencyProperty TipProperty =
@@ -81,12 +86,7 @@ namespace Antd.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            ApplySpinStates();
-        }
-
-        private void ApplySpinStates()
-        {
-            VisualStateManager.GoToState(this, Spinning && null == Indicator ? "Spun" : "Unspun", true);
+            GoToSpinState();
         }
 
         #endregion

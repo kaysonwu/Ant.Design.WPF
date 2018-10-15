@@ -49,9 +49,7 @@
                                   Width="{DynamicResource SpinDotSize}"
                                   Height="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}}">
                                 <Grid.RenderTransform>
-                                    <TransformGroup>
-                                        <RotateTransform x:Name="DotRotate" />
-                                    </TransformGroup>
+                                    <RotateTransform />
                                 </Grid.RenderTransform>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type Ellipse}">
@@ -106,8 +104,8 @@
                                                          Duration="0:0:0.2"
                                                          To="0.5" />
                                         <!-- Dot -->
-                                        <DoubleAnimation Storyboard.TargetName="DotRotate"
-                                                         Storyboard.TargetProperty="Angle"
+                                        <DoubleAnimation Storyboard.TargetName="Dot"
+                                                         Storyboard.TargetProperty="RenderTransform.Angle"
                                                          RepeatBehavior="Forever" 
                                                          Duration="0:0:1.2"
                                                          From="45"
@@ -163,7 +161,7 @@
                             <Setter TargetName="Mask" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Content" Property="Effect">
                                 <Setter.Value>
-                                    <BlurEffect Radius="0.5" />
+                                    <BlurEffect Radius="2" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
