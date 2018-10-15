@@ -36,7 +36,7 @@
                                 BorderBrush="{DynamicResource CheckBoxBrush}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
                             <Border.RenderTransform>
-                                <ScaleTransform x:Name="EffectTransform" ScaleX="1" ScaleY="1" />
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
                         </Border>
                         <!-- Inner -->
@@ -74,7 +74,7 @@
                                        Width="{DynamicResource CheckBoxIndeterminateSize}"
                                        Height="{DynamicResource CheckBoxIndeterminateSize}">
                             <Rectangle.RenderTransform>
-                                <ScaleTransform x:Name="IndeterminateMarkTransform" ScaleX="0" ScaleY="0" />
+                                <ScaleTransform ScaleX="0" ScaleY="0" />
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <!-- Content -->
@@ -118,13 +118,13 @@
                                                          Duration="0:0:0.36"
                                                          From="0.5"
                                                          To="0" />
-                                        <DoubleAnimation Storyboard.TargetName="EffectTransform"
-                                                         Storyboard.TargetProperty="ScaleX"
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                                          EasingFunction="{StaticResource EaseInOut}"
                                                          Duration="0:0:0.36"
                                                          To="1.6" />
-                                        <DoubleAnimation Storyboard.TargetName="EffectTransform"
-                                                         Storyboard.TargetProperty="ScaleY"
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                                          EasingFunction="{StaticResource EaseInOut}"
                                                          Duration="0:0:0.36"
                                                          To="1.6" />
@@ -138,13 +138,13 @@
                                                          EasingFunction="{StaticResource EaseInBack}"
                                                          Duration="0:0:0.1"
                                                          To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="IndeterminateMarkTransform"
-                                                         Storyboard.TargetProperty="ScaleX"
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateMark"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                                          EasingFunction="{StaticResource EaseInBack}"
                                                          Duration="0:0:0.1"
                                                          To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="IndeterminateMarkTransform"
-                                                         Storyboard.TargetProperty="ScaleY"
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateMark"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                                          EasingFunction="{StaticResource EaseInBack}"
                                                          Duration="0:0:0.1"
                                                          To="1" />

@@ -32,7 +32,7 @@
                                  Stroke="{DynamicResource RadioDotBrush}"
                                  StrokeThickness="{TemplateBinding BorderThickness}">
                             <Ellipse.RenderTransform>
-                                <ScaleTransform x:Name="EffectScale" ScaleX="1" ScaleY="1" />
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
                         <!-- Circle -->
@@ -49,7 +49,7 @@
                                  Height="{DynamicResource RadioDotSize}"
                                  Fill="{DynamicResource RadioDotBrush}">
                             <Ellipse.RenderTransform>
-                                <ScaleTransform x:Name="DotTransform" ScaleX="0" ScaleY="0" />
+                                <ScaleTransform ScaleX="0" ScaleY="0" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
                         <!-- Content -->
@@ -73,13 +73,13 @@
                                                          EasingFunction="{StaticResource EaseInOutCirc}" 
                                                          Duration="0:0:0.2" 
                                                          To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="DotTransform"
-                                                         Storyboard.TargetProperty="ScaleX"
+                                        <DoubleAnimation Storyboard.TargetName="Dot"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                                          EasingFunction="{StaticResource EaseInOutCirc}" 
                                                          Duration="0:0:0.2" 
                                                          To="1" />
-                                        <DoubleAnimation Storyboard.TargetName="DotTransform"
-                                                         Storyboard.TargetProperty="ScaleY"
+                                        <DoubleAnimation Storyboard.TargetName="Dot"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                                          EasingFunction="{StaticResource EaseInOutCirc}" 
                                                          Duration="0:0:0.2" 
                                                          To="1" />
@@ -90,13 +90,13 @@
                                                          Duration="0:0:0.36" 
                                                          From="0.4"
                                                          To="0" />
-                                        <DoubleAnimation Storyboard.TargetName="EffectScale"
-                                                         Storyboard.TargetProperty="ScaleX"
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleX"
                                                          EasingFunction="{StaticResource EaseInOut}" 
                                                          Duration="0:0:0.36"
                                                          To="1.6" />
-                                        <DoubleAnimation Storyboard.TargetName="EffectScale"
-                                                         Storyboard.TargetProperty="ScaleY"
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="RenderTransform.ScaleY"
                                                          EasingFunction="{StaticResource EaseInOut}"
                                                          Duration="0:0:0.36"
                                                          To="1.6" />
