@@ -15,7 +15,7 @@
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                         <ContentPresenter.RenderTransform>
-                            <RotateTransform Angle="0" />
+                            <RotateTransform />
                         </ContentPresenter.RenderTransform>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SpinStates">

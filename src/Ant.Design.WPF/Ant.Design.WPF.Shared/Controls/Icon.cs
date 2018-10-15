@@ -3,10 +3,20 @@ using System.Windows.Controls;
 
 namespace Antd.Controls
 {
+
+    /// <summary>
+    /// Semantic vector graphics.
+    /// </summary>
+    [TemplateVisualState(Name = "Spun", GroupName = "SpinStates")]
+    [TemplateVisualState(Name = "Unspun", GroupName = "SpinStates")]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Icon : Control
     {
+        #region Fields
+
         private ContentPresenter contentPresenter;
+
+        #endregion
 
         #region Properties
 
@@ -34,7 +44,7 @@ namespace Antd.Controls
                 contentPresenter.Content = GetContent();
             }
 
-            DoSpin();
+            GoToSpinState();
         }
 
         private object GetContent()
@@ -70,19 +80,13 @@ namespace Antd.Controls
 
         private static void OnSpinChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Icon).DoSpin();
+            (d as Icon).GoToSpinState();
         }
 
-        private void DoSpin()
+        private void GoToSpinState()
         {
-            if (Spin == true || (Spin == null && Type == "loading"))
-            {
-                VisualStateManager.GoToState(this, "Spun", true);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, "Unspun", true);
-            }
+            var spun = Spin.HasValue ? Spin.Value : (!string.IsNullOrEmpty(Type) && Type.ToLower() == "loading");
+            VisualStateManager.GoToState(this, spun ? "Spun" : "Unspun", true);
         }
 
         #endregion

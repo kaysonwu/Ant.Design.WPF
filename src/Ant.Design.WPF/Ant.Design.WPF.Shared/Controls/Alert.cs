@@ -76,8 +76,8 @@ namespace Antd.Controls
         {
             if (close != null)
             {
-                close.Visibility = (Closable.HasValue && Closable.Value || !Closable.HasValue && CloseText != null) 
-                                        ? Visibility.Visible : Visibility.Collapsed;
+                var visible      = Closable.HasValue ? Closable.Value : CloseText != null;
+                close.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
