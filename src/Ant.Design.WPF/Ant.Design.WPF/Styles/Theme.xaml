@@ -5,7 +5,6 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="Options">
 
-  
     <!-- Colors -->
     <Color x:Key="PrimaryColor">#1890FF</Color>
     <Color x:Key="InfoColor">#1890FF</Color>
@@ -141,6 +140,16 @@
     <FontWeight x:Key="BadgeFontWeight">Normal</FontWeight>
     <System:Double x:Key="BadgeStatusSize">6.5</System:Double>
 
+    <!-- Avatar -->
+    <System:Double x:Key="AvatarSizeSmall">24</System:Double>
+    <System:Double x:Key="AvatarSize">32</System:Double>
+    <System:Double x:Key="AvatarSizeLarge">40</System:Double>
+    <System:Double x:Key="AvatarFontSizeSmall">14</System:Double>
+    <System:Double x:Key="AvatarFontSize">18</System:Double>
+    <System:Double x:Key="AvatarFontSizeLarge">24</System:Double>
+    <SolidColorBrush x:Key="AvatarBackground" Color="#CCCCCC" Options:Freeze="True" />
+    <SolidColorBrush x:Key="AvatarForeground" Color="White" Options:Freeze="True" />
+    
     <!-- Switch -->
     <System:Double x:Key="SwitchHeight">22</System:Double>
     <System:Double x:Key="SwitchHeightSmall">16</System:Double>

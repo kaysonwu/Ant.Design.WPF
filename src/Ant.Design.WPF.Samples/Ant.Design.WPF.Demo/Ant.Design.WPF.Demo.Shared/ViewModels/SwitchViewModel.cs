@@ -1,8 +1,5 @@
-﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Text;
+﻿using System.ComponentModel.Composition;
+using Caliburn.Micro;
 
 namespace AntdDemo.ViewModels
 {

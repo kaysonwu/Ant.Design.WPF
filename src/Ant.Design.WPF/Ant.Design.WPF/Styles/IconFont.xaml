@@ -20,6 +20,7 @@
     <System:String x:Key="anticon-info-circle-o">&#xe629;</System:String>
     <System:String x:Key="anticon-close-circle-o">&#xe62f;</System:String>
     <System:String x:Key="anticon-exclamation-circle-o">&#xe62d;</System:String>
+    <System:String x:Key="anticon-user">&#xe66a;</System:String>
     
     <!-- Test Usign -->
     <System:String x:Key="anticon-search">&#xe670;</System:String>
