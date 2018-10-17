@@ -9,7 +9,115 @@
              d:DesignHeight="600"
              d:DesignWidth="930">
 
-    <Grid>
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Tooltip" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="A simple text popup tip." />
 
-    </Grid>
+                <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="The tip is shown on mouse enter, and is hidden on mouse leave. The Tooltip doesn't support complex text or operations.&#x0a;To provide an explanation of a button/text/operation. It's often used instead of the html title attribute." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Antd:Button">
+                        <Setter Property="Margin" Value="8 0 0 8" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            The simplest usage.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <TextBlock Text="Tooltip will show when mouse enter." ToolTip="prompt text" />
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                           &lt;WrapPanel&gt;
+                                &lt;Antd:Switch IsChecked="True" /&gt;
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Arrow pointing at the center">
+                        <Controls:CodeBox.Description>
+                            By specifying `arrowPointAtCenter` prop, the arrow will point to the center of the target element.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Antd:Button Content="Align edge / 边缘对齐" />
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Antd:Button Content="Arrow points to center / 箭头指向中心" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                           &lt;WrapPanel&gt;
+                                &lt;Antd:Switch IsChecked="True" /&gt;
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Placement">
+                        <Controls:CodeBox.Description>
+                            The ToolTip has 12 placements choice.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <Grid MaxWidth="335">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <WrapPanel HorizontalAlignment="Center">
+                                    <Antd:Button Content="TL" />
+                                    <Antd:Button Content="Top" />
+                                    <Antd:Button Content="TR" />
+                                </WrapPanel>
+                                <StackPanel Grid.Row="1" HorizontalAlignment="Left">
+                                    <Antd:Button Content="LT" />
+                                    <Antd:Button Content="Left" />
+                                    <Antd:Button Content="LB" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" HorizontalAlignment="Right">
+                                    <Antd:Button Content="RT" />
+                                    <Antd:Button Content="Right" />
+                                    <Antd:Button Content="RB" />
+                                </StackPanel>
+                                <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
+                                    <Antd:Button Content="BL" />
+                                    <Antd:Button Content="Bottom" />
+                                    <Antd:Button Content="BR" />
+                                </WrapPanel>
+                            </Grid>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                           &lt;WrapPanel&gt;
+                                &lt;Antd:Switch IsChecked="True" /&gt;
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
