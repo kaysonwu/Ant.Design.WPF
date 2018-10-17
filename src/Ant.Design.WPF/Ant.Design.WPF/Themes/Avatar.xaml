@@ -13,9 +13,9 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="{DynamicResource AvatarSize}" />
-        <!--<Setter Property="FontSize" Value="{DynamicResource AvatarFontSize}" />-->
         <Setter Property="Foreground" Value="{DynamicResource AvatarForeground}" />
         <Setter Property="Background" Value="{DynamicResource AvatarBackground}" />
+        <!--<Setter Property="Controls:Icon.FontSize" Value="{DynamicResource AvatarFontSize}" />-->
         <Setter Property="Height" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                                     Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
@@ -38,11 +38,11 @@
         <Style.Triggers>
             <Trigger Property="Size" Value="Small">
                 <Setter Property="Width" Value="{DynamicResource AvatarSizeSmall}" />
-                <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeSmall}" />
+                <!--<Setter Property="Controls:Icon.FontSize" Value="{DynamicResource AvatarFontSizeSmall}" />-->
             </Trigger>
             <Trigger Property="Size" Value="Large">
                 <Setter Property="Width" Value="{DynamicResource AvatarSizeLarge}" />
-                <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeLarge}" />
+                <!--<Setter Property="Controls:Icon.FontSize" Value="{DynamicResource AvatarFontSizeLarge}" />-->
             </Trigger>
         </Style.Triggers>
     </Style>
