@@ -41,7 +41,7 @@
                             The simplest usage.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <TextBlock Text="Tooltip will show when mouse enter." ToolTip="prompt text" />
+                            <TextBlock Text="Tooltip will show when mouse enter." ToolTip="prompt text" ToolTipService.Placement="Top" ToolTipService.ShowDuration="0" />
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n

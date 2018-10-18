@@ -126,7 +126,12 @@
     
     <!-- Input -->
     <SolidColorBrush x:Key="InputDisabledBackground" Color="{StaticResource DisabledBackground}" Options:Freeze="True" />
-
+    
+    <!-- ToolTip -->
+    <SolidColorBrush x:Key="ToolTipForeground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="ToolTipBackground" Color="#BF000000" Options:Freeze="True" />
+    <System:Double x:Key="ToolTipArrowSize">5</System:Double>
+    
     <!-- Spin -->
     <System:Double x:Key="SpinDotSizeSmall">14</System:Double>
     <System:Double x:Key="SpinDotSize">20</System:Double>

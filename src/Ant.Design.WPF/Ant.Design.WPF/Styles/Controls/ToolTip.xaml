@@ -1,15 +1,81 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Helpers="clr-namespace:Antd.Helpers">
 
-    <Style TargetType="{x:Type ToolTip}">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--<Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type ToolTip}">
+        <Setter Property="Padding" Value="8 6" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
+        <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+        <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
-                    
+                    <DockPanel>
+                        --><!-- Inner --><!--
+                        <Border x:Name="Inner"
+                                DockPanel.Dock="Top"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                        </Border>
+                        --><!-- Arrow --><!--
+                        <Path x:Name="Arrow"
+                              DockPanel.Dock="Bottom"
+                              Stretch="Uniform"
+                              Data="M0,0 L6,5.5 12.5,0z" 
+                              HorizontalAlignment="Center"
+                              Fill="{TemplateBinding Background}"
+                              Height="{DynamicResource ToolTipArrowSize}"
+                              Width="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self},
+                                        Converter={StaticResource DultiplicationConverter}, ConverterParameter=2.166}" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Placement" Value="Left">
+                            <Setter TargetName="Inner" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="Arrow" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="Arrow" Property="VerticalAlignment" Value="Center" />
+                            <Setter TargetName="Arrow" Property="Data" Value="M0,0 L6,6,0,13z" />
+                            <Setter TargetName="Arrow" Property="Width" Value="{DynamicResource ToolTipArrowSize}" />
+                            <Setter TargetName="Arrow" Property="Height" Value="{Binding Width, Mode=OneWay, 
+                                                                                    ElementName=Arrow, ConverterParameter=2.2,
+                                                                                    Converter={StaticResource DultiplicationConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Placement" Value="Right">
+                            <Setter TargetName="Inner" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="Arrow" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="Arrow" Property="VerticalAlignment" Value="Center" />
+                            <Setter TargetName="Arrow" Property="Width" Value="{DynamicResource ToolTipArrowSize}" />
+                            <Setter TargetName="Arrow" Property="Height" Value="{Binding Width, Mode=OneWay, 
+                                                                                    ElementName=Arrow, ConverterParameter=2.2,
+                                                                                    Converter={StaticResource DultiplicationConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Placement" Value="Bottom">
+                            <Setter TargetName="Inner" Property="DockPanel.Dock" Value="Bottom" />
+                            <Setter TargetName="Arrow" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="Arrow" Property="HorizontalAlignment" Value="Center" />
+                            <Setter TargetName="Arrow" Property="Data" Value="M0,6 L6,0 12,6z" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     
 </ResourceDictionary>
