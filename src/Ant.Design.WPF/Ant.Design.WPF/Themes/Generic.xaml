@@ -14,6 +14,7 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Spin.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Alert.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Avatar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Tag.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/RadioButtonGroup.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
