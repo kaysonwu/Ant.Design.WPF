@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Antd.Controls;
 
 namespace Antd.Helpers
 {
@@ -19,11 +20,8 @@ namespace Antd.Helpers
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender
             ));
 
-        /// <summary> 
-        /// The CornerRadius property allows users to control the roundness of the button corners independently by 
-        /// setting a radius value for each corner. Radius values that are too large are scaled so that they
-        /// smoothly blend from corner to corner. (Can be used e.g. at MetroButton style)
-        /// Description taken from original Microsoft description :-D
+        /// <summary>
+        /// Get a value that represents the degree to which the corners of a control border are rounded.
         /// </summary>
         [Category(DesignerConstants.LibraryName)]
         public static CornerRadius GetCornerRadius(DependencyObject obj)
@@ -31,9 +29,34 @@ namespace Antd.Helpers
             return (CornerRadius)obj.GetValue(CornerRadiusProperty);
         }
 
+        /// <summary>
+        /// Set a value that represents the degree to which the corners of a control border are rounded.
+        /// </summary>
         public static void SetCornerRadius(DependencyObject obj, CornerRadius value)
         {
             obj.SetValue(CornerRadiusProperty, value);
+        }
+
+        public static readonly DependencyProperty BorderStyleProperty = DependencyProperty.RegisterAttached(
+            "BorderStyle", 
+            typeof(BorderStyle), 
+            typeof(Control), 
+            new PropertyMetadata(BorderStyle.Solid));
+
+        /// <summary>
+        /// Get the style of the control border.
+        /// </summary>
+        public static BorderStyle GetBorderStyle(DependencyObject obj)
+        {
+            return (BorderStyle)obj.GetValue(BorderStyleProperty);
+        }
+
+        /// <summary>
+        /// Set the style of the control border.
+        /// </summary>
+        public static void SetBorderStyle(DependencyObject obj, BorderStyle value)
+        {
+            obj.SetValue(BorderStyleProperty, value);
         }
 
         public static readonly DependencyProperty ContentCharacterCasingProperty = DependencyProperty.RegisterAttached(
