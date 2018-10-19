@@ -137,6 +137,12 @@
     <System:Double x:Key="SpinDotSize">20</System:Double>
     <System:Double x:Key="SpinDotSizeLarge">32</System:Double>
 
+    <!-- Tag -->
+    <SolidColorBrush x:Key="TagDefaultBackground" Color="{StaticResource BackgroundColorLight}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="TagDefaultForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
+    <!-- @FontSizeSmall-->
+    <System:Double x:Key="TagFontSize">12</System:Double>
+    
     <!-- Badge -->
     <System:Double x:Key="BadgeHeight">20</System:Double>
     <System:Double x:Key="BadgeDotSize">6</System:Double>
