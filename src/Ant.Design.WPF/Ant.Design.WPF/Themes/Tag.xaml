@@ -11,6 +11,9 @@
         <Setter Property="Opacity" Value="1" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushBase}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
+        <Setter Property="Helpers:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -20,9 +23,9 @@
                         <Border x:Name="Effect"
                                 Opacity="0"
                                 BorderThickness="6"
-                                BorderBrush="{TemplateBinding EffectBrush}"
+                                BorderBrush="{DynamicResource PrimaryBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Border -->
                         <Rectangle x:Name="PART_Border"
                                    Fill="{TemplateBinding Background}"
@@ -34,7 +37,28 @@
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
+                        <Grid Margin="{TemplateBinding Padding}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                        </Grid>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- BorderStyle -->
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
+                        </Trigger>
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

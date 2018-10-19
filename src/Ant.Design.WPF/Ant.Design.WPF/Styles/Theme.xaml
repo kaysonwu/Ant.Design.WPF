@@ -3,6 +3,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:Options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:Controls="clr-namespace:Antd.Controls"
                     mc:Ignorable="Options">
 
     <!-- Colors -->
@@ -68,7 +69,8 @@
     <!-- Border -->
     <Thickness x:Key="BorderThicknessBase">1</Thickness>
     <SolidColorBrush x:Key="BorderBrushBase" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
-   
+    <Controls:BorderStyle x:Key="BorderStyleBase">Solid</Controls:BorderStyle>
+    
     <!-- Disabled states -->
     <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
 
