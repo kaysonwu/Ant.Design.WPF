@@ -41,7 +41,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Closable", typeof(bool), typeof(Tag), new PropertyMetadata(false, OnClosableChnaged));
 
         /// <summary>
-        /// Gets/sets whether the Tag can be closed
+        /// Gets/sets whether the Tag can be closed.
         /// </summary>
         public bool Closable
         {
@@ -62,11 +62,23 @@ namespace Antd.Controls
             }
         }
 
+        public static readonly DependencyProperty ColorfulProperty =
+            DependencyProperty.Register("Colorful", typeof(bool), typeof(Tag), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets/sets whether the tag automatically sets the background and border brush based on the foreground.
+        /// </summary>
+        public bool Colorful
+        {
+            get { return (bool)GetValue(ColorfulProperty); }
+            set { SetValue(ColorfulProperty, value); }
+        }
+
         public static readonly DependencyProperty CloseStoryboardProperty =
             DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(Tag), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the close animation of the tag
+        /// Gets/sets the close animation of the tag.
         /// </summary>
         public Storyboard CloseStoryboard
         {
