@@ -31,8 +31,55 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            Usage of basic Tag, and it could be closable by set `Closable` property. Closable Tag support `Closed` event.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Tag>Tag 1</Antd:Tag>
+                                <Antd:Tag>
+                                    <Hyperlink>Link</Hyperlink>
+                                </Antd:Tag>
+                                <Antd:Tag Closable="True">Tag 2</Antd:Tag>
+                                <Antd:Tag Closable="True">Prevent Default</Antd:Tag>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Colorful Tag">
+                        <Controls:CodeBox.Description>
+                            We preset a series of colorful tag style for different situation usage. And you can always set it to a hex color string for custom color.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <TextBlock Text="Presets:" />
+                                <WrapPanel>
+                                    <Antd:Tag Foreground="Magenta" Content="magenta" />
+                                    <Antd:Tag Foreground="Red" Content="red" />
+                                    <Antd:Tag Foreground="Orange" Content="orange" />
+                                    <Antd:Tag Foreground="Gold" Content="Gold" />
+                                    <Antd:Tag Foreground="Lime" Content="lime" />
+                                    <Antd:Tag Foreground="Green" Content="green" />
+                                    <Antd:Tag Foreground="Cyan" Content="cyan" />
+                                    <Antd:Tag Foreground="Blue" Content="blue" />
+                                    <Antd:Tag Foreground="Purple" Content="purple" />
+                                </WrapPanel>
+                                <TextBlock Text="Custom:" />
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
             </Grid>
         </Grid>
