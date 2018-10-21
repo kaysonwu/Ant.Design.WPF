@@ -20,7 +20,7 @@
     <Color x:Key="TextColor">#CC000000</Color>
     <Color x:Key="TextSecondaryColor">#72000000</Color>
     <Color x:Key="BorderColorBase">#D9D9D9</Color>
-    <Color x:Key="BackgroundColorLight">#F4F4F4</Color>
+    <Color x:Key="BackgroundColorLight">#FAFAFA</Color>
     <Color x:Key="BackgroundColorBase">#F5F5F5</Color>
 
     <Color x:Key="DisabledColor">#3F000000</Color>

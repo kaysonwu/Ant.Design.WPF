@@ -6,12 +6,17 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
-    <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Tag}">
-        <Setter Property="Opacity" Value="1" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+    <Style TargetType="{x:Type Controls:Tag}">
+        <Setter Property="Padding" Value="8 4" />
+        <Setter Property="Margin" Value="0 0 8 0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontSize" Value="{DynamicResource TagFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushBase}" />
+        <Setter Property="Background" Value="{DynamicResource TagDefaultBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource TagDefaultForeground}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
         <Setter Property="Helpers:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
@@ -37,18 +42,38 @@
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
-                        <Grid Margin="{TemplateBinding Padding}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                        <Grid Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
+                                <!-- Content -->
                                 <ColumnDefinition Width="*" />
+                                <!-- Close Button -->
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                            <Controls:Icon x:Name="PART_Close" 
+                                           Grid.Column="1" 
+                                           Type="close" 
+                                           Style="{StaticResource Ant.IconClose}" />
                         </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.3" GeneratedEasingFunction="{StaticResource EaseOut}" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To="0.85" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!-- BorderStyle -->
@@ -58,15 +83,13 @@
                         <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
+                        <Trigger Property="Closable" Value="True">
+                            <Setter TargetName="PART_Close" Property="Margin" Value="3 0 0 0" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Opacity" Value="0.85" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:Antd.Converters">
+                    xmlns:Converters="clr-namespace:Antd.Converters"
+                    xmlns:Controls="clr-namespace:Antd.Controls">
 
     <!-- Converters -->
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
@@ -23,11 +24,18 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <!-- Animation -->
+    <CubicEase x:Key="EaseIn" EasingMode="EaseIn" />
+    <CubicEase x:Key="EaseOut" EasingMode="EaseOut" />
     <CubicEase x:Key="EaseInOut" EasingMode="EaseInOut" />
     <BackEase x:Key="EaseInBack" EasingMode="EaseIn" />
     <BackEase x:Key="EaseOutBack" EasingMode="EaseOut" />
+    <BackEase x:Key="EaseInOutBack" EasingMode="EaseInOut" />
+    <CircleEase x:Key="EaseInCirc" EasingMode="EaseIn" />
     <CircleEase x:Key="EaseOutCirc" EasingMode="EaseOut" />
     <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
+    <QuinticEase x:Key="EaseInQuint" EasingMode="EaseIn" />
+    <QuinticEase x:Key="EaseOutQuint" EasingMode="EaseOut" />
+    <QuinticEase x:Key="EaseInOutQuint" EasingMode="EaseInOut" />
 
     <Style x:Key="Ant.Control" TargetType="{x:Type Control}">
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
@@ -36,6 +44,21 @@
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
         <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                             Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
+    </Style>
+    
+    <!-- Alert/Tag -->
+    <Style x:Key="Ant.IconClose" TargetType="{x:Type Controls:Icon}">
+        <Setter Property="Opacity" Value="0.65" />
+        <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.85" />
+            </Trigger>
+            <DataTrigger Binding="{Binding IsPressed, Mode=OneWay, 
+                                    RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}}}" Value="True">
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>
