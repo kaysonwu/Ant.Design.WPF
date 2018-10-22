@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
              xmlns:Controls="clr-namespace:AntdDemo.Controls"
              mc:Ignorable="d"
@@ -42,7 +43,7 @@
                                     <Hyperlink>Link</Hyperlink>
                                 </Antd:Tag>
                                 <Antd:Tag Closable="True">Tag 2</Antd:Tag>
-                                <Antd:Tag Closable="True">Prevent Default</Antd:Tag>
+                                <Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]">Prevent Default</Antd:Tag>
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>

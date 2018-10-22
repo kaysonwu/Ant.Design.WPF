@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Windows;
 using Caliburn.Micro;
 
 namespace AntdDemo.ViewModels
@@ -9,6 +10,11 @@ namespace AntdDemo.ViewModels
         public TagViewModel()
         {
             DisplayName = "Tag";
+        }
+
+        public void Closing(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
