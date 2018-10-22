@@ -54,7 +54,7 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <Antd:Alert Type="Warning" Closable="True">
+                                <Antd:Alert Type="Warning" Closable="True" VerticalContentAlignment="Top">
                                     Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text
                                 </Antd:Alert>
                                 <Antd:Alert Type="Error" Message="Error Text" Closable="True">
