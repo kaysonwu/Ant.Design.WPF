@@ -47,11 +47,11 @@
                         <Grid Margin="{TemplateBinding Padding}">
                             <Grid.Resources>
                                 <Style x:Key="Ant.IconClose" TargetType="{x:Type Controls:Icon}">
+                                    <Setter Property="Opacity" Value="0.65" />
                                     <Setter Property="Margin" Value="3 0 0 0" />
-                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
+                                            <Setter Property="Opacity" Value="1" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -84,7 +84,7 @@
                         <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
-                        <Trigger Property="Colorful" Value="True">
+                        <Trigger Property="ColorStyle" Value="Colorful">
                             <Setter TargetName="Effect" 
                                     Property="BorderBrush" 
                                     Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -97,13 +97,22 @@
                                     Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource ColorPaletteConverter}, ConverterParameter=3}" />
                         </Trigger>
+                        <Trigger Property="ColorStyle" Value="Inverse">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter TargetName="Effect" 
+                                    Property="BorderBrush" 
+                                    Value="{Binding Background, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_Border" 
+                                    Property="Stroke" 
+                                    Value="{Binding Background, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
                         <EventTrigger RoutedEvent="MouseLeftButtonUp">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation Storyboard.TargetName="Effect" 
                                                      Storyboard.TargetProperty="Opacity"
                                                      EasingFunction="{StaticResource EaseOutCirc}"
-                                                     Duration="0:0:0.8"
+                                                     Duration="0:0:0.6"
                                                      From="0.2"
                                                      To="0" />
                                     <ThicknessAnimation Storyboard.TargetName="Effect" 

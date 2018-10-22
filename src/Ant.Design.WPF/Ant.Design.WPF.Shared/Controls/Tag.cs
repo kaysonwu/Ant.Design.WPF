@@ -74,16 +74,17 @@ namespace Antd.Controls
             }
         }
 
-        public static readonly DependencyProperty ColorfulProperty =
-            DependencyProperty.Register("Colorful", typeof(bool), typeof(Tag), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty ColorStyleProperty =
+            DependencyProperty.Register("ColorStyle", typeof(ColorStyle?), typeof(Tag), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets whether the tag automatically sets the background and border brush based on the foreground.
+        /// Gets/sets the color style of the label
         /// </summary>
-        public bool Colorful
+        public ColorStyle? ColorStyle
         {
-            get { return (bool)GetValue(ColorfulProperty); }
-            set { SetValue(ColorfulProperty, value); }
+            get { return (ColorStyle?)GetValue(ColorStyleProperty); }
+            set { SetValue(ColorStyleProperty, value); }
         }
 
         public static readonly DependencyProperty CloseStoryboardProperty =
@@ -163,5 +164,10 @@ namespace Antd.Controls
         }
 
         #endregion
+    }
+
+    public enum ColorStyle : byte
+    {
+        Colorful, Inverse
     }
 }

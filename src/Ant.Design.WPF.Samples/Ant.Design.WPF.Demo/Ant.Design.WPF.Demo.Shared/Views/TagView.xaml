@@ -61,24 +61,30 @@
                 <StackPanel Grid.Column="1" Margin="8 0">
                     <Controls:CodeBox Title="Colorful Tag">
                         <Controls:CodeBox.Description>
-                            We preset a series of colorful tag style for different situation usage. And you can always set it to a hex color string for custom color.
+                            Colorful Tag can be easily implemented by setting the `ColorStyle` property.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <TextBlock Text="Presets:" />
+                                <TextBlock Text="Colorful:" />
                                 <WrapPanel>
-                                    <Antd:Tag Foreground="#EB2F96" Content="magenta" Colorful="True" />
-                                    <Antd:Tag Foreground="#F5222D" Content="red" Colorful="True" />
-                                    <Antd:Tag Foreground="#FA541C" Content="volcano" Colorful="True" />
-                                    <Antd:Tag Foreground="#FA8C16" Content="orange" Colorful="True" />
-                                    <Antd:Tag Foreground="#FAAD14" Content="Gold" Colorful="True" />
-                                    <Antd:Tag Foreground="#A0D911" Content="lime" Colorful="True" />
-                                    <Antd:Tag Foreground="#52C41A" Content="green" Colorful="True" />
-                                    <Antd:Tag Foreground="#13C2C2" Content="cyan" Colorful="True" />
-                                    <Antd:Tag Foreground="#1890FF" Content="blue" Colorful="True" />
-                                    <Antd:Tag Foreground="#2F54EB" Content="purple" Colorful="True" />
+                                    <Antd:Tag Foreground="#EB2F96" Content="magenta" ColorStyle="Colorful" Closable="True" />
+                                    <Antd:Tag Foreground="#F5222D" Content="red" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#FA541C" Content="volcano" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#FA8C16" Content="orange" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#FAAD14" Content="Gold" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#A0D911" Content="lime" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#52C41A" Content="green" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#13C2C2" Content="cyan" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#1890FF" Content="blue" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#2F54EB" Content="purple" ColorStyle="Colorful" />
                                 </WrapPanel>
-                                <TextBlock Text="Custom:" />
+                                <TextBlock Text="Inverse:" />
+                                <WrapPanel>
+                                    <Antd:Tag Background="#FF5500" Content="#FF5500" ColorStyle="Inverse" Closable="True" />
+                                    <Antd:Tag Background="#2DB7F5" Content="#2DB7F5" ColorStyle="Inverse" />
+                                    <Antd:Tag Background="#87d068" Content="#87d068" ColorStyle="Inverse" />
+                                    <Antd:Tag Background="#108EE9" Content="#108EE9" ColorStyle="Inverse" />
+                                </WrapPanel>
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
