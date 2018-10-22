@@ -27,6 +27,11 @@
                 <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Antd:Tag">
+                        <Setter Property="Margin" Value="0 0 8 8" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -62,15 +67,16 @@
                             <StackPanel>
                                 <TextBlock Text="Presets:" />
                                 <WrapPanel>
-                                    <Antd:Tag Foreground="Magenta" Content="magenta" />
-                                    <Antd:Tag Foreground="Red" Content="red" />
-                                    <Antd:Tag Foreground="Orange" Content="orange" />
-                                    <Antd:Tag Foreground="Gold" Content="Gold" />
-                                    <Antd:Tag Foreground="Lime" Content="lime" />
-                                    <Antd:Tag Foreground="Green" Content="green" />
-                                    <Antd:Tag Foreground="Cyan" Content="cyan" />
-                                    <Antd:Tag Foreground="Blue" Content="blue" />
-                                    <Antd:Tag Foreground="Purple" Content="purple" />
+                                    <Antd:Tag Foreground="#EB2F96" Content="magenta" Colorful="True" />
+                                    <Antd:Tag Foreground="#F5222D" Content="red" Colorful="True" />
+                                    <Antd:Tag Foreground="#FA541C" Content="volcano" Colorful="True" />
+                                    <Antd:Tag Foreground="#FA8C16" Content="orange" Colorful="True" />
+                                    <Antd:Tag Foreground="#FAAD14" Content="Gold" Colorful="True" />
+                                    <Antd:Tag Foreground="#A0D911" Content="lime" Colorful="True" />
+                                    <Antd:Tag Foreground="#52C41A" Content="green" Colorful="True" />
+                                    <Antd:Tag Foreground="#13C2C2" Content="cyan" Colorful="True" />
+                                    <Antd:Tag Foreground="#1890FF" Content="blue" Colorful="True" />
+                                    <Antd:Tag Foreground="#2F54EB" Content="purple" Colorful="True" />
                                 </WrapPanel>
                                 <TextBlock Text="Custom:" />
                             </StackPanel>

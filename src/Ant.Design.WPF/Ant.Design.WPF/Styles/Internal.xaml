@@ -46,19 +46,22 @@
                                                             Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
     </Style>
     
-    <!-- Alert/Tag -->
-    <Style x:Key="Ant.IconClose" TargetType="{x:Type Controls:Icon}">
-        <Setter Property="Opacity" Value="0.65" />
-        <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Opacity" Value="0.85" />
-            </Trigger>
-            <DataTrigger Binding="{Binding IsPressed, Mode=OneWay, 
-                                    RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}}}" Value="True">
-                <Setter Property="Opacity" Value="1" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+    <!-- Zoom -->
+    <Storyboard x:Key="Ant.ZoomOut">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                         EasingFunction="{StaticResource EaseInOutCirc}"
+                         Duration="0:0:0.3"
+                         To="0" />
+        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX"
+                         EasingFunction="{StaticResource EaseInOutCirc}"
+                         Duration="0:0:0.3"
+                         From="1"
+                         To="0.2" />
+        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
+                         EasingFunction="{StaticResource EaseInOutCirc}"
+                         Duration="0:0:0.3"
+                         From="1"
+                         To="0.2" />
+    </Storyboard>
     
 </ResourceDictionary>

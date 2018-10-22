@@ -12,8 +12,10 @@
         <Setter Property="Margin" Value="0 0 8 0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="{DynamicResource TagFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="CloseStoryboard" Value="{StaticResource Ant.ZoomOut}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushBase}" />
         <Setter Property="Background" Value="{DynamicResource TagDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource TagDefaultForeground}" />
@@ -43,6 +45,17 @@
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
                         <Grid Margin="{TemplateBinding Padding}">
+                            <Grid.Resources>
+                                <Style x:Key="Ant.IconClose" TargetType="{x:Type Controls:Icon}">
+                                    <Setter Property="Margin" Value="3 0 0 0" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
                             <Grid.ColumnDefinitions>
                                 <!-- Content -->
                                 <ColumnDefinition Width="*" />
@@ -58,22 +71,10 @@
                             <Controls:Icon x:Name="PART_Close" 
                                            Grid.Column="1" 
                                            Type="close" 
-                                           Style="{StaticResource Ant.IconClose}" />
+                                           Style="{StaticResource Ant.IconClose}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.3" GeneratedEasingFunction="{StaticResource EaseOut}" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="0.85" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!-- BorderStyle -->
@@ -83,13 +84,54 @@
                         <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
-                        <Trigger Property="Closable" Value="True">
-                            <Setter TargetName="PART_Close" Property="Margin" Value="3 0 0 0" />
+                        <Trigger Property="Colorful" Value="True">
+                            <Setter TargetName="Effect" 
+                                    Property="BorderBrush" 
+                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_Border" 
+                                    Property="Fill" 
+                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource ColorPaletteConverter}, ConverterParameter=1}" />
+                            <Setter TargetName="PART_Border" 
+                                    Property="Stroke" 
+                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource ColorPaletteConverter}, ConverterParameter=3}" />
                         </Trigger>
+                        <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Effect" 
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     EasingFunction="{StaticResource EaseOutCirc}"
+                                                     Duration="0:0:0.8"
+                                                     From="0.2"
+                                                     To="0" />
+                                    <ThicknessAnimation Storyboard.TargetName="Effect" 
+                                                        Storyboard.TargetProperty="Margin"
+                                                        EasingFunction="{StaticResource EaseOutCirc}"
+                                                        Duration="0:0:0.4"
+                                                        From="-1"
+                                                        To="-5.6" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.85" />
+            </Trigger>
+            <Trigger Property="Closable" Value="True">
+                <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>
