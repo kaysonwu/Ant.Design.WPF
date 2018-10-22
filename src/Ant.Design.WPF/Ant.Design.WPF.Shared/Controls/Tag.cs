@@ -137,6 +137,7 @@ namespace Antd.Controls
 
         private void OnRaiseClosingEvent(object sender, RoutedEventArgs e)
         {
+            e.Handled = true;
             RaiseEvent(new RoutedEventArgs(ClosingEvent, this));
         }
 
