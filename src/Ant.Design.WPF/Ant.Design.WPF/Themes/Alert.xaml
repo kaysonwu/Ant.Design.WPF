@@ -31,6 +31,7 @@
         <Setter Property="IconBrush" Value="{DynamicResource InfoBrush}" />
         <Setter Property="CloseStoryboard" Value="{StaticResource Ant.AlertSlideUpOut}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
+        <Setter Property="Helpers:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
         <Setter Property="Background" Value="{Binding IconBrush, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                     Converter={StaticResource ColorPaletteConverter}, ConverterParameter=1}" />
@@ -39,14 +40,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Alert}">
-                    <Border UseLayoutRounding="True"
-                            Padding="{TemplateBinding Padding}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
-                        <Grid>
+                    <Grid UseLayoutRounding="True">
+                        <!-- Border -->
+                        <Rectangle x:Name="PART_Border"
+                                   Fill="{TemplateBinding Background}"
+                                   Stroke="{TemplateBinding BorderBrush}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
+                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
+                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                        <Grid Margin="{TemplateBinding Padding}">
                             <Grid.Resources>
                                 <!-- TODO Does it have other uses? -->
                                 <Style x:Key="Ant.AlertCloseButton" TargetType="{x:Type Button}">
@@ -125,8 +130,15 @@
                                     Style="{StaticResource Ant.AlertCloseButton}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <!-- BorderStyle -->
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
+                        </Trigger>
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
                         <Trigger Property="ShowIcon" Value="True">
                             <Setter TargetName="PART_Icon" Property="Margin" Value="0 0 8 0" />
                         </Trigger>
