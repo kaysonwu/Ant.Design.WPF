@@ -68,7 +68,7 @@
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;StackPanel&gt;\n
-                                \t&lt;Antd:Alert Type="Warning" Closable="True"&gt;\n
+                                \t&lt;Antd:Alert Type="Warning" Closable="True" VerticalContentAlignment="Top"&gt;\n
                                     \t\tWarning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text\n
                                 \t&lt;/Antd:Alert&gt;\n
                                 \t&lt;Antd:Alert Type="Error" Message="Error Text" Closable="True"&gt;\n
