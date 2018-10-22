@@ -22,8 +22,13 @@
             </Style>
 
             <Style x:Key="Ant.H2" BasedOn="{StaticResource Ant.H1}" TargetType="Control">
-                <Setter Property="FontFamily" Value="24" />
+                <Setter Property="FontSize" Value="24" />
                 <Setter Property="Margin" Value="0 14" />
+            </Style>
+
+            <Style x:Key="Ant.H4" BasedOn="{StaticResource Ant.H1}" TargetType="Control">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0 0 0 16" />
             </Style>
 
             <Style x:Key="Ant.P" TargetType="TextBlock">
