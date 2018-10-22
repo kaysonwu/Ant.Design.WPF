@@ -30,13 +30,28 @@ namespace Antd.Controls
 
         #region Events
 
-        public static readonly RoutedEvent CloseEvent =
-            EventManager.RegisterRoutedEvent("Close", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Alert));
+        public static readonly RoutedEvent ClosingEvent =
+            EventManager.RegisterRoutedEvent("Closing", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Alert));
 
-        public event RoutedEventHandler Close
+        /// <summary>
+        /// Occurs when closing the tag.
+        /// </summary>
+        public event RoutedEventHandler Closing
         {
-            add { this.AddHandler(CloseEvent, value); }
-            remove { this.RemoveHandler(CloseEvent, value); }
+            add { AddHandler(ClosingEvent, value); }
+            remove { RemoveHandler(ClosingEvent, value); }
+        }
+
+        public static readonly RoutedEvent ClosedEvent =
+            EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Alert));
+
+        /// <summary>
+        /// Occurs when a Tag is closed and is no longer visible.
+        /// </summary>
+        public event RoutedEventHandler Closed
+        {
+            add { AddHandler(ClosedEvent, value); }
+            remove { RemoveHandler(ClosedEvent, value); }
         }
 
         #endregion
@@ -279,8 +294,11 @@ namespace Antd.Controls
 
             if (close != null)
             {
-                close.Click -= OnClose;
-                close.Click += OnClose;
+                Loaded -= OnLoaded;
+                Loaded += OnLoaded;
+
+                close.Click -= OnRaiseClosingEvent;
+                close.Click += OnRaiseClosingEvent;
             }
 
             SetIconVisibility();
@@ -289,26 +307,37 @@ namespace Antd.Controls
             SetCloseButton();
         }
 
-        private void OnClose(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Closing -= OnClosing;
+            Closing += OnClosing;
+        }
+
+        private void OnRaiseClosingEvent(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            RaiseEvent(new RoutedEventArgs(ClosingEvent, this));
+        }
+
+        private void OnClosing(object sender, RoutedEventArgs e)
         {
             if (CloseStoryboard != null)
             {
                 var storyboard = CloseStoryboard.Clone();
-                storyboard.Completed += OnAnimationCompleted;
+                storyboard.Completed += OnRaiseClosedEvent;
                 BeginStoryboard(storyboard);
 
             }
             else
             {
-                Visibility = Visibility.Collapsed;
+                OnRaiseClosedEvent(null, null);
             }
-
-            RaiseEvent(new RoutedEventArgs(CloseEvent, this));
         }
 
-        private void OnAnimationCompleted(object sender, EventArgs e)
+        private void OnRaiseClosedEvent(object sender, EventArgs e)
         {
             Visibility = Visibility.Collapsed;
+            RaiseEvent(new RoutedEventArgs(ClosedEvent, this));
         }
 
         #endregion

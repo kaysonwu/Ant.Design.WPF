@@ -21,18 +21,6 @@ namespace Antd.Controls
 
         #region Events
 
-        public static readonly RoutedEvent ClosedEvent =
-            EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Tag));
-
-        /// <summary>
-        /// Occurs when a Tag is closed and is no longer visible.
-        /// </summary>
-        public event RoutedEventHandler Closed
-        {
-            add { AddHandler(ClosedEvent, value); }
-            remove { RemoveHandler(ClosedEvent, value); }
-        }
-
         public static readonly RoutedEvent ClosingEvent =
             EventManager.RegisterRoutedEvent("Closing", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Tag));
 
@@ -43,6 +31,18 @@ namespace Antd.Controls
         {
             add { AddHandler(ClosingEvent, value); }
             remove { RemoveHandler(ClosingEvent, value); }
+        }
+
+        public static readonly RoutedEvent ClosedEvent =
+            EventManager.RegisterRoutedEvent("Closed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Tag));
+
+        /// <summary>
+        /// Occurs when a Tag is closed and is no longer visible.
+        /// </summary>
+        public event RoutedEventHandler Closed
+        {
+            add { AddHandler(ClosedEvent, value); }
+            remove { RemoveHandler(ClosedEvent, value); }
         }
 
         #endregion
