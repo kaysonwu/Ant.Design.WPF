@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media.Animation;
+﻿using System.Windows;
 using ContentControlBase = System.Windows.Controls.ContentControl;
 
 namespace Antd.Controls
@@ -75,28 +73,16 @@ namespace Antd.Controls
         }
 
 
-        public static readonly DependencyProperty ColorStyleProperty =
-            DependencyProperty.Register("ColorStyle", typeof(ColorStyle?), typeof(Tag), new PropertyMetadata(null));
+        public static readonly DependencyProperty ColorModeProperty =
+            DependencyProperty.Register("ColorMode", typeof(ColorMode?), typeof(Tag), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the color style of the label
+        /// Gets/sets the color mode of the tag.
         /// </summary>
-        public ColorStyle? ColorStyle
+        public ColorMode? ColorMode
         {
-            get { return (ColorStyle?)GetValue(ColorStyleProperty); }
-            set { SetValue(ColorStyleProperty, value); }
-        }
-
-        public static readonly DependencyProperty CloseStoryboardProperty =
-            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(Tag), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets the close animation of the tag.
-        /// </summary>
-        public Storyboard CloseStoryboard
-        {
-            get { return (Storyboard)GetValue(CloseStoryboardProperty); }
-            set { SetValue(CloseStoryboardProperty, value); }
+            get { return (ColorMode?)GetValue(ColorModeProperty); }
+            set { SetValue(ColorModeProperty, value); }
         }
 
         #endregion
@@ -115,7 +101,7 @@ namespace Antd.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
+            
             close = GetTemplateChild(PART_Close) as UIElement;
 
             if (close != null)
@@ -144,29 +130,14 @@ namespace Antd.Controls
 
         private void OnClosing(object sender, RoutedEventArgs e)
         {
-            if (CloseStoryboard != null)
-            {
-                var storyboard = CloseStoryboard.Clone();
-                storyboard.Completed += OnRaiseClosedEvent;
-                BeginStoryboard(storyboard);
-
-            }
-            else
-            {
-                OnRaiseClosedEvent(null, null);
-            }
-        }
-
-        private void OnRaiseClosedEvent(object sender, EventArgs e)
-        {
-            Visibility = Visibility.Collapsed;
+            SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             RaiseEvent(new RoutedEventArgs(ClosedEvent, this));
         }
 
         #endregion
     }
 
-    public enum ColorStyle : byte
+    public enum ColorMode : byte
     {
         Colorful, Inverse
     }

@@ -46,22 +46,4 @@
                                                             Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
     </Style>
     
-    <!-- Zoom -->
-    <Storyboard x:Key="Ant.ZoomOut">
-        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                         EasingFunction="{StaticResource EaseInOutCirc}"
-                         Duration="0:0:0.3"
-                         To="0" />
-        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX"
-                         EasingFunction="{StaticResource EaseInOutCirc}"
-                         Duration="0:0:0.3"
-                         From="1"
-                         To="0.2" />
-        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
-                         EasingFunction="{StaticResource EaseInOutCirc}"
-                         Duration="0:0:0.3"
-                         From="1"
-                         To="0.2" />
-    </Storyboard>
-    
 </ResourceDictionary>

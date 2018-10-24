@@ -64,29 +64,29 @@
                 <StackPanel Grid.Column="1" Margin="8 0">
                     <Controls:CodeBox Title="Colorful Tag">
                         <Controls:CodeBox.Description>
-                            Colorful Tag can be easily implemented by setting the `ColorStyle` property.
+                            Colorful Tag can be easily implemented by setting the `ColorMode` property.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
                                 <Label Style="{StaticResource Ant.H4}" Content="Colorful:" />
                                 <WrapPanel>
-                                    <Antd:Tag Foreground="#EB2F96" Content="magenta" ColorStyle="Colorful" Closable="True" />
-                                    <Antd:Tag Foreground="#F5222D" Content="red" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#FA541C" Content="volcano" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#FA8C16" Content="orange" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#FAAD14" Content="Gold" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#A0D911" Content="lime" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#52C41A" Content="green" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#13C2C2" Content="cyan" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#1890FF" Content="blue" ColorStyle="Colorful" />
-                                    <Antd:Tag Foreground="#2F54EB" Content="purple" ColorStyle="Colorful" />
+                                    <Antd:Tag Foreground="#EB2F96" Content="magenta" ColorMode="Colorful" Closable="True" />
+                                    <Antd:Tag Foreground="#F5222D" Content="red" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#FA541C" Content="volcano" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#FA8C16" Content="orange" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#FAAD14" Content="Gold" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#A0D911" Content="lime" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#52C41A" Content="green" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#13C2C2" Content="cyan" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#1890FF" Content="blue" ColorMode="Colorful" />
+                                    <Antd:Tag Foreground="#2F54EB" Content="purple" ColorMode="Colorful" />
                                 </WrapPanel>
                                 <Label Style="{StaticResource Ant.H4}" Content="Inverse:" />
                                 <WrapPanel>
-                                    <Antd:Tag Background="#FF5500" Content="#FF5500" ColorStyle="Inverse" Closable="True" />
-                                    <Antd:Tag Background="#2DB7F5" Content="#2DB7F5" ColorStyle="Inverse" />
-                                    <Antd:Tag Background="#87d068" Content="#87d068" ColorStyle="Inverse" />
-                                    <Antd:Tag Background="#108EE9" Content="#108EE9" ColorStyle="Inverse" />
+                                    <Antd:Tag Background="#FF5500" Content="#FF5500" ColorMode="Inverse" Closable="True" />
+                                    <Antd:Tag Background="#2DB7F5" Content="#2DB7F5" ColorMode="Inverse" />
+                                    <Antd:Tag Background="#87d068" Content="#87d068" ColorMode="Inverse" />
+                                    <Antd:Tag Background="#108EE9" Content="#108EE9" ColorMode="Inverse" />
                                 </WrapPanel>
                             </StackPanel>
                         </Controls:CodeBox.Content>
@@ -96,23 +96,50 @@
                             &lt;StackPanel&gt;\n
                                 \t&lt;Label Style="{StaticResource Ant.H4}" Content="Colorful:" /&gt;\n
                                 \t&lt;WrapPanel&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#EB2F96" Content="magenta" ColorStyle="Colorful" Closable="True" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#F5222D" Content="red" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#FA541C" Content="volcano" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#FA8C16" Content="orange" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#FAAD14" Content="Gold" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#A0D911" Content="lime" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#52C41A" Content="green" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#13C2C2" Content="cyan" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#1890FF" Content="blue" ColorStyle="Colorful" /&gt;\n
-                                    \t\t&lt;Antd:Tag Foreground="#2F54EB" Content="purple" ColorStyle="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#EB2F96" Content="magenta" ColorMode="Colorful" Closable="True" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#F5222D" Content="red" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#FA541C" Content="volcano" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#FA8C16" Content="orange" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#FAAD14" Content="Gold" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#A0D911" Content="lime" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#52C41A" Content="green" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#13C2C2" Content="cyan" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#1890FF" Content="blue" ColorMode="Colorful" /&gt;\n
+                                    \t\t&lt;Antd:Tag Foreground="#2F54EB" Content="purple" ColorMode="Colorful" /&gt;\n
                                 \t&lt;/WrapPanel&gt;\n
                                 \t&lt;Label Style="{StaticResource Ant.H4}" Content="Inverse:" /&gt;\n
                                 \t&lt;WrapPanel&gt;\n
-                                    \t\t&lt;Antd:Tag Background="#FF5500" Content="#FF5500" ColorStyle="Inverse" Closable="True" /&gt;\n
-                                    \t\t&lt;Antd:Tag Background="#2DB7F5" Content="#2DB7F5" ColorStyle="Inverse" /&gt;\n
-                                    \t\t&lt;Antd:Tag Background="#87d068" Content="#87d068" ColorStyle="Inverse" /&gt;\n
-                                    \t\t&lt;Antd:Tag Background="#108EE9" Content="#108EE9" ColorStyle="Inverse" /&gt;\n
+                                    \t\t&lt;Antd:Tag Background="#FF5500" Content="#FF5500" ColorMode="Inverse" Closable="True" /&gt;\n
+                                    \t\t&lt;Antd:Tag Background="#2DB7F5" Content="#2DB7F5" ColorMode="Inverse" /&gt;\n
+                                    \t\t&lt;Antd:Tag Background="#87d068" Content="#87d068" ColorMode="Inverse" /&gt;\n
+                                    \t\t&lt;Antd:Tag Background="#108EE9" Content="#108EE9" ColorMode="Inverse" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
+                            &lt;/StackPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Controlled">
+                        <Controls:CodeBox.Description>
+                            By using the `Visibility` property, you can control the close state of Tag.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <WrapPanel>
+                                    <Antd:Tag Content="Movies" Closable="True" Visibility="{Binding Visibility, Mode=TwoWay}" />
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Antd:Button x:Name="Toggle" Size="Small" Content="Toggle" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;StackPanel&gt;\n
+                                \t&lt;WrapPanel&gt;\n
+                                    \t\t&lt;Antd:Tag Content="Movies" Closable="True" Visibility="{Binding Visibility, Mode=TwoWay}" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
+                                \t&lt;WrapPanel&gt;\n
+                                    \t\t&lt;Antd:Button x:Name="Toggle" Size="Small" Content="Toggle" /&gt;\n
                                 \t&lt;/WrapPanel&gt;\n
                             &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>

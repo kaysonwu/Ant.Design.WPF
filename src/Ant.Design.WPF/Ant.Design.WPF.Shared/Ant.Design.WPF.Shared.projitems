@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Animations\ColorAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviorCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Alert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Avatar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Badge.cs" />
@@ -31,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Behaviors\VisibilityBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\VisualStateType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
