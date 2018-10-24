@@ -8,11 +8,12 @@ namespace Antd.Controls
     /// <summary>
     /// Switching Selector.
     /// </summary>
+    [TemplatePart(Name = PART_Dot, Type = typeof(FrameworkElement))]
     public class Switch : ToggleButton
     {
         #region Fields
 
-        private const string PART_Dot = "Dot";
+        private const string PART_Dot = "PART_Dot";
 
         private FrameworkElement dot;
 

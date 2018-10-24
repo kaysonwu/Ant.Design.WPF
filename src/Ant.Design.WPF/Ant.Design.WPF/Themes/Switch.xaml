@@ -60,7 +60,7 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                         <!-- Dot -->
-                        <Border x:Name="Dot"
+                        <Border x:Name="PART_Dot"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 RenderTransformOrigin="0,0"
@@ -94,11 +94,11 @@
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition From="Pressed">
                                         <Storyboard>
-                                            <ThicknessAnimation Storyboard.TargetName="Dot"
+                                            <ThicknessAnimation Storyboard.TargetName="PART_Dot"
                                                                 Storyboard.TargetProperty="Margin"
                                                                 EasingFunction="{StaticResource EaseInOutCirc}"
                                                                 Duration="0:0:0.36" />
-                                            <DoubleAnimation Storyboard.TargetName="Dot"
+                                            <DoubleAnimation Storyboard.TargetName="PART_Dot"
                                                              Storyboard.TargetProperty="Width"
                                                              EasingFunction="{StaticResource EaseInOutCirc}"
                                                              Duration="0:0:0.36" />
@@ -113,7 +113,7 @@
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="Dot"
+                                        <ThicknessAnimation Storyboard.TargetName="PART_Dot"
                                                             Storyboard.TargetProperty="(FrameworkElement.Margin)"
                                                             EasingFunction="{StaticResource EaseInOutCirc}"
                                                             Duration="0:0:0.36" />
@@ -121,7 +121,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="Dot"
+                                        <ThicknessAnimation Storyboard.TargetName="PART_Dot"
                                                             Storyboard.TargetProperty="(FrameworkElement.Margin)"
                                                             EasingFunction="{StaticResource EaseInOutCirc}"
                                                             Duration="0:0:0.36"
@@ -134,8 +134,8 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Dot" Property="RenderTransformOrigin" Value="1,0" />
                             <Setter TargetName="Content" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="PART_Dot" Property="RenderTransformOrigin" Value="1,0" />
                             <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource SwitchBrush}" />
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource SwitchBrush}" />
                             <Setter TargetName="Content" Property="Content" Value="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
