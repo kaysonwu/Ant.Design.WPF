@@ -3,6 +3,9 @@ using System.Windows.Controls.Primitives;
 
 namespace Antd.Controls
 {
+    /// <summary>
+    /// Switching Selector.
+    /// </summary>
     public class Switch : ToggleButton
     {
         #region Properties
@@ -11,7 +14,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Loading", typeof(bool), typeof(Switch), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets loading state of switch
+        /// Gets/sets loading state of switch.
         /// </summary>
         public bool Loading
         {
@@ -23,7 +26,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Size", typeof(Size?), typeof(Switch), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the size of the Switch
+        /// Gets/sets the size of the switch.
         /// </summary>
         public Size? Size
         {
@@ -35,7 +38,7 @@ namespace Antd.Controls
             DependencyProperty.Register("UnCheckedContent", typeof(object), typeof(Switch), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets content to be shown when the state is unchecked
+        /// Gets/sets content to be shown when the state is unchecked.
         /// </summary>
         public object UnCheckedContent
         {

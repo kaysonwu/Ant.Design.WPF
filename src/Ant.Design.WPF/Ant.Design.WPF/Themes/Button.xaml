@@ -107,22 +107,7 @@
                             <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
                         </DataTrigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="Effect" 
-                                                     Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                     EasingFunction="{StaticResource EaseOutCirc}"
-                                                     Duration="0:0:0.4"
-                                                     From="0.4"
-                                                     To="0" />
-                                    <ThicknessAnimation Storyboard.TargetName="Effect" 
-                                                        Storyboard.TargetProperty="(FrameworkElement.Margin)"
-                                                        EasingFunction="{StaticResource EaseOutCirc}"
-                                                        Duration="0:0:0.4"
-                                                        From="-1"
-                                                        To="-5.6" />
-                                </Storyboard>
-                            </BeginStoryboard>
+                            <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
                         </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

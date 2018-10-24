@@ -148,22 +148,7 @@
                                     Value="{Binding Background, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <EventTrigger RoutedEvent="MouseLeftButtonUp">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="Effect" 
-                                                     Storyboard.TargetProperty="Opacity"
-                                                     EasingFunction="{StaticResource EaseOutCirc}"
-                                                     Duration="0:0:0.6"
-                                                     From="0.2"
-                                                     To="0" />
-                                    <ThicknessAnimation Storyboard.TargetName="Effect" 
-                                                        Storyboard.TargetProperty="Margin"
-                                                        EasingFunction="{StaticResource EaseOutCirc}"
-                                                        Duration="0:0:0.4"
-                                                        From="-1"
-                                                        To="-5.6" />
-                                </Storyboard>
-                            </BeginStoryboard>
+                            <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
                         </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

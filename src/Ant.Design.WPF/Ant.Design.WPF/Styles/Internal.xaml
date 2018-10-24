@@ -46,4 +46,20 @@
                                                             Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
     </Style>
     
+    <!-- Button/Swtich/Tag -->
+    <Storyboard x:Key="Ant.ClickAnimating">
+        <DoubleAnimation Storyboard.TargetName="Effect" 
+                         Storyboard.TargetProperty="Opacity"
+                         EasingFunction="{StaticResource EaseOutCirc}"
+                         Duration="0:0:0.6"
+                         From="0.35"
+                         To="0" />
+        <ThicknessAnimation Storyboard.TargetName="Effect" 
+                            Storyboard.TargetProperty="Margin"
+                            EasingFunction="{StaticResource EaseOutCirc}"
+                            Duration="0:0:0.4"
+                            From="-1"
+                            To="-5.6" />
+    </Storyboard>
+    
 </ResourceDictionary>
