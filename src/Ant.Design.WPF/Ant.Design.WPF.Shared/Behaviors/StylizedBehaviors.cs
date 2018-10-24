@@ -3,6 +3,9 @@ using System.Windows.Interactivity;
 
 namespace Antd.Behaviors
 {
+    /// <summary>
+    /// From https://github.com/MahApps/MahApps.Metro/tree/1.6.1/src/MahApps.Metro/Behaviours/StylizedBehaviors.cs
+    /// </summary>
     public class StylizedBehaviors
     {
         #region Properties

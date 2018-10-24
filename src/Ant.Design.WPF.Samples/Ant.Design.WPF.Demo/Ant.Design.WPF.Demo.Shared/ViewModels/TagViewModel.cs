@@ -22,7 +22,6 @@ namespace AntdDemo.ViewModels
         public TagViewModel()
         {
             DisplayName = "Tag";
-          //  Visibility = Visibility.Collapsed;
         }
 
         public void Closing(object sender, RoutedEventArgs e)
