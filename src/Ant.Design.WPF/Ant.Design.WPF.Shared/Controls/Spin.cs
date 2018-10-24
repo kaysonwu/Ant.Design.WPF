@@ -16,7 +16,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Indicator", typeof(UIElement), typeof(Spin), new PropertyMetadata(null, OnSpinningChanged));
 
         /// <summary>
-        /// Gets/sets element of the spinning indicator
+        /// Gets/sets element of the spinning indicator.
         /// </summary>
         public UIElement Indicator
         {
@@ -28,7 +28,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Size", typeof(Size?), typeof(Spin), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets size of Spin
+        /// Gets/sets size of spin.
         /// </summary>
         public Size? Size
         {
@@ -40,7 +40,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Spinning", typeof(bool), typeof(Spin), new PropertyMetadata(true, OnSpinningChanged));
 
         /// <summary>
-        /// Gets/sets whether Spin is spinning
+        /// Gets/sets whether spin is spinning.
         /// </summary>
         public bool Spinning
         {
@@ -62,7 +62,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Tip", typeof(string), typeof(Spin), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// Gets/sets customize description content when Spin has children
+        /// Gets/sets customize description content when spin has children.
         /// </summary>
         public string Tip
         {

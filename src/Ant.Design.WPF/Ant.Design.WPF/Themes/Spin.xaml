@@ -92,7 +92,7 @@
                                         <Storyboard>
                                             <!-- Content -->
                                             <DoubleAnimation Storyboard.TargetName="Content"
-                                                             Storyboard.TargetProperty="(UIElement.Opacity)" />
+                                                             Storyboard.TargetProperty="Opacity" />
                                         </Storyboard>
                                     </VisualTransition>
                                 </VisualStateGroup.Transitions>
@@ -100,7 +100,7 @@
                                     <Storyboard>
                                         <!-- Content -->
                                         <DoubleAnimation Storyboard.TargetName="Content"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          Duration="0:0:0.2"
                                                          To="0.5" />
                                         <!-- Dot -->
@@ -111,14 +111,14 @@
                                                          From="45"
                                                          To="405" />
                                         <DoubleAnimation Storyboard.TargetName="Dot1"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          RepeatBehavior="Forever" 
                                                          AutoReverse="True"
                                                          Duration="0:0:1"
                                                          From="0.3"
                                                          To="1" />
                                         <DoubleAnimation Storyboard.TargetName="Dot2"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          RepeatBehavior="Forever" 
                                                          AutoReverse="True"
                                                          BeginTime="0:0:0.4"
@@ -126,7 +126,7 @@
                                                          From="0.3"
                                                          To="1" />
                                         <DoubleAnimation Storyboard.TargetName="Dot3"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          RepeatBehavior="Forever" 
                                                          AutoReverse="True"
                                                          BeginTime="0:0:0.8"
@@ -134,7 +134,7 @@
                                                          From="0.3"
                                                          To="1" />
                                         <DoubleAnimation Storyboard.TargetName="Dot4"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          RepeatBehavior="Forever" 
                                                          AutoReverse="True"
                                                          BeginTime="0:0:1.2"
