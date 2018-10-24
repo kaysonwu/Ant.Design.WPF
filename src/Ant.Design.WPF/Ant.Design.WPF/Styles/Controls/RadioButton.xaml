@@ -53,23 +53,21 @@
                             </Ellipse.RenderTransform>
                         </Ellipse>
                         <!-- Content -->
-                        <Controls:ContentControl Grid.Column="1"
-                                                 RecognizesAccessKey="True"
-                                                 Padding="{TemplateBinding Padding}"
-                                                 Content="{TemplateBinding Content}"
-                                                 ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                 ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                 ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                 ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
-                                                                                  RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter Grid.Column="1"
+                                          RecognizesAccessKey="True"
+                                          Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="Dot"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          EasingFunction="{StaticResource EaseInOutCirc}" 
                                                          Duration="0:0:0.2" 
                                                          To="1" />
@@ -85,7 +83,7 @@
                                                          To="1" />
                                         <!-- Effect -->
                                         <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetProperty="Opacity"
                                                          EasingFunction="{StaticResource EaseInOut}"
                                                          Duration="0:0:0.36" 
                                                          From="0.4"
