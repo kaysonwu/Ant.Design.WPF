@@ -83,10 +83,6 @@
                             <Border.Effect>
                                 <DropShadowEffect  Direction="270" BlurRadius="4" ShadowDepth="1" Color="#005317" Opacity="0.2" />
                             </Border.Effect>
-                            <Border.RenderTransform>
-                                <ScaleTransform x:Name="DotScale" />
-                            </Border.RenderTransform>
-                            <!-- Loading -->
                             <Controls:Icon x:Name="Icon"
                                            Type="loading"
                                            Foreground="{DynamicResource TextBrush}"
@@ -98,8 +94,12 @@
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition From="Pressed">
                                         <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                             Storyboard.TargetProperty="ScaleX"
+                                            <ThicknessAnimation Storyboard.TargetName="Dot"
+                                                                Storyboard.TargetProperty="Margin"
+                                                                EasingFunction="{StaticResource EaseInOutCirc}"
+                                                                Duration="0:0:0.36" />
+                                            <DoubleAnimation Storyboard.TargetName="Dot"
+                                                             Storyboard.TargetProperty="Width"
                                                              EasingFunction="{StaticResource EaseInOutCirc}"
                                                              Duration="0:0:0.36" />
                                         </Storyboard>
@@ -107,15 +107,7 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DotScale"
-                                                         Storyboard.TargetProperty="ScaleX"
-                                                         EasingFunction="{StaticResource EaseInOutCirc}"
-                                                         Duration="0:0:0.36"
-                                                         To="1.33" />
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Pressed" />
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">

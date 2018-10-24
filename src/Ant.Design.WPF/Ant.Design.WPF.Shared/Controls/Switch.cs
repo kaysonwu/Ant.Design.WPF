@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Animation;
 
 namespace Antd.Controls
 {
@@ -8,6 +10,20 @@ namespace Antd.Controls
     /// </summary>
     public class Switch : ToggleButton
     {
+        #region Fields
+
+        private const string PART_Dot = "Dot";
+
+        private FrameworkElement dot;
+
+        private VisualState pressedState;
+
+        private Storyboard pressedStoryboard;
+
+        private AnimationTimeline dotAnimation;
+
+        #endregion
+
         #region Properties
 
         public static readonly DependencyProperty LoadingProperty =
@@ -48,11 +64,67 @@ namespace Antd.Controls
 
         #endregion
 
-        #region Switch
+        #region Constructors
 
         static Switch()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Switch), new FrameworkPropertyMetadata(typeof(Switch)));
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            dot = GetTemplateChild(PART_Dot) as FrameworkElement;
+            pressedState = GetTemplateChild("Pressed") as VisualState;
+
+            if (pressedState != null && pressedState.Storyboard != null)
+            {
+                pressedStoryboard = pressedState.Storyboard.Clone();
+            }
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+            SetDotAnimation();
+        }
+
+        protected override void OnIsPressedChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsPressedChanged(e);
+
+            if (dotAnimation != null && IsChecked.HasValue && IsChecked.Value && IsPressed)
+            {
+                dot.BeginAnimation(MarginProperty, dotAnimation);
+            }
+        }
+
+        private void SetDotAnimation()
+        {
+            if (dot == null || pressedState == null) return;
+
+            var storyboard = pressedStoryboard != null ? pressedStoryboard.Clone() : new Storyboard();
+            var ease       = new CircleEase() { EasingMode = EasingMode.EaseInOut };
+
+            var duration   = TimeSpan.FromSeconds(0.36);
+            var to         = dot.ActualWidth * 1.3333;
+
+            var margin     = dot.Margin;
+            margin.Left   -= to - dot.ActualWidth; 
+
+            var animation  = new DoubleAnimation(to, duration) { EasingFunction = ease };
+            dotAnimation   = new ThicknessAnimation(margin, duration) { EasingFunction = ease };
+
+            Storyboard.SetTargetName(animation, PART_Dot);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Width"));
+
+            storyboard.Children.Add(animation);
+            pressedState.Storyboard = storyboard;
         }
 
         #endregion
