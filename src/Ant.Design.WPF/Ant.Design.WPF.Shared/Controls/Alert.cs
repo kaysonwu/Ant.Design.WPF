@@ -1,10 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace Antd.Controls
 {
@@ -260,18 +258,6 @@ namespace Antd.Controls
             set { SetValue(IconBrushProperty, value); }
         }
 
-        public static readonly DependencyProperty CloseStoryboardProperty =
-            DependencyProperty.Register("CloseStoryboard", typeof(Storyboard), typeof(Alert), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets the closing animation of the alert
-        /// </summary>
-        public Storyboard CloseStoryboard
-        {
-            get { return (Storyboard)GetValue(CloseStoryboardProperty); }
-            set { SetValue(CloseStoryboardProperty, value); }
-        }
-
         #endregion
 
         #region Constructors
@@ -321,22 +307,7 @@ namespace Antd.Controls
 
         private void OnClosing(object sender, RoutedEventArgs e)
         {
-            if (CloseStoryboard != null)
-            {
-                var storyboard = CloseStoryboard.Clone();
-                storyboard.Completed += OnRaiseClosedEvent;
-                BeginStoryboard(storyboard);
-
-            }
-            else
-            {
-                OnRaiseClosedEvent(null, null);
-            }
-        }
-
-        private void OnRaiseClosedEvent(object sender, EventArgs e)
-        {
-            Visibility = Visibility.Collapsed;
+            SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             RaiseEvent(new RoutedEventArgs(ClosedEvent, this));
         }
 
