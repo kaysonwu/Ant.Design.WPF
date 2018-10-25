@@ -11,6 +11,8 @@ namespace Antd.Controls
     /// To trigger an operation.
     /// </summary>
     [TemplatePart(Name = PART_Border, Type = typeof(FrameworkElement))]
+    [TemplateVisualState(Name = "Loaded", GroupName = "LoadStates")]
+    [TemplateVisualState(Name = "Unloaded", GroupName = "LoadStates")]
     public class Button : ButtonBase
     {
         #region Fields
@@ -54,7 +56,7 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty LoadingProperty =
-            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false));
+            DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false, OnLoadingChanged));
 
         /// <summary>
         /// Gets/sets the loading state of the button.
@@ -63,6 +65,16 @@ namespace Antd.Controls
         {
             get { return (bool)GetValue(LoadingProperty); }
             set { SetValue(LoadingProperty, value); }
+        }
+
+        private static void OnLoadingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as Button).SetLoadVisualState();
+        }
+
+        private void SetLoadVisualState()
+        {
+            VisualStateManager.GoToState(this, (Loading ? "Loaded" : "Unloaded"), true);
         }
 
         public static readonly DependencyProperty CircularProperty =
@@ -122,7 +134,7 @@ namespace Antd.Controls
 
         private static void OnEffectBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Button).SetVisualState();
+            (d as Button).SetVisualStateAnimation();
         }
 
         /// <summary>
@@ -164,14 +176,15 @@ namespace Antd.Controls
             focusedState   = GetTemplateChild("Focused") as VisualState;
             pressedState   = GetTemplateChild("Pressed") as VisualState;
 
-            SetVisualState();
+            SetVisualStateAnimation();
+            SetLoadVisualState();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void SetVisualState()
+        private void SetVisualStateAnimation()
         {
             // No initialization or no need for me to handle.
             if (border == null || mouseOverState == null && focusedState == null && pressedState == null) return;

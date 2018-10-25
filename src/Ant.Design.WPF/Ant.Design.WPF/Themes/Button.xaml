@@ -85,6 +85,18 @@
                                 <VisualState x:Name="Focused" />
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="LoadStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.2" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Loaded">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.65" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unloaded" />
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
