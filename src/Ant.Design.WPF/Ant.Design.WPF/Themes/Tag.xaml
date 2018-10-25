@@ -68,8 +68,9 @@
                     <Grid UseLayoutRounding="True">
                         <!-- Effect -->
                         <Border x:Name="Effect"
-                                Opacity="0"
-                                BorderThickness="6"
+                                Margin="-1"
+                                Opacity="0.35"
+                                BorderThickness="0"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />

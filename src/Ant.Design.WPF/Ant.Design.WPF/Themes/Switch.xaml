@@ -39,8 +39,9 @@
                     <Grid>
                         <!-- Effect -->
                         <Border x:Name="Effect"
-                                Opacity="0"
-                                BorderThickness="6"
+                                Margin="-1"
+                                Opacity="0.4"
+                                BorderThickness="0"
                                 BorderBrush="{DynamicResource SwitchBrush}"
                                 CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Border -->
