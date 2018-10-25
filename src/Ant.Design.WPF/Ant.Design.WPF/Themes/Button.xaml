@@ -56,7 +56,6 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Controls:Icon x:Name="Icon" 
-                                           Grid.Column="0" 
                                            Margin="0 0 8 0"
                                            Focusable="False" 
                                            Type="{TemplateBinding Icon}" />
@@ -77,6 +76,7 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualStateGroup.Transitions>
@@ -95,12 +95,16 @@
                         <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
+                        <!-- Loading State -->
+                        <Trigger Property="Loading" Value="True">
+                            <Setter TargetName="Icon" Property="Type" Value="loading" />
+                        </Trigger>
                         <!-- Content State -->
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter TargetName="Icon" Property="Margin" Value="0" />
                             <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
                         </Trigger>
-                        <Trigger Property="Icon" Value="{x:Null}">
+                        <Trigger SourceName="Icon" Property="Type" Value="{x:Null}">
                             <Setter TargetName="Content" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Content" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
@@ -158,9 +162,7 @@
             </Trigger>
             <!-- Loading State -->
             <Trigger Property="Loading" Value="True">
-                <Setter Property="Icon" Value="loading" />
                 <Setter Property="IsEnabled" Value="False" />
-                <Setter Property="Opacity" Value="0.65" />
             </Trigger>
             <!-- Ghost States -->
             <MultiTrigger>
