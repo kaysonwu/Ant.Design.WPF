@@ -158,6 +158,12 @@
                                 <Antd:Button Content="Default(disabled)" IsEnabled="False" />
                                 <Antd:Button Type="Dashed" Content="Dashed" />
                                 <Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" />
+                                <StackPanel Background="#BEC8C8">
+                                    <WrapPanel Margin="8 8 8 0">
+                                        <Antd:Button Content="Ghost" Ghost="True" />
+                                        <Antd:Button Content="Ghost(disabled)" Ghost="True" IsEnabled="False" />
+                                    </WrapPanel>
+                                </StackPanel>
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -170,31 +176,42 @@
                                 \t&lt;Antd:Button Content="Default(disabled)" IsEnabled="False" /&gt;\n
                                 \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
                                 \t&lt;Antd:Button Type="Dashed" Content="Dashed(disabled)" IsEnabled="False" /&gt;\n
+                                \t&lt;StackPanel Background="#BEC8C8"&gt;\n
+                                    \t\t&lt;WrapPanel Margin="8 8 8 0"&gt;\n
+                                        \t\t\t&lt;Antd:Button Content="Ghost" Ghost="True" /&gt;\n
+                                        \t\t\t&lt;Antd:Button Content="Ghost(disabled)" Ghost="True" IsEnabled="False" /&gt;\n
+                                    \t\t&lt;/WrapPanel&gt;\n
+                                \t&lt;/StackPanel&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
-                    <!--<Controls:CodeBox Title="Ghost Button">
+                    <Controls:CodeBox Title="Ghost Button">
                         <Controls:CodeBox.Description>
                             `Ghost` property will make button's background transparent, it is common used in colored background.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <Grid Background="#BEC8C8">
+                            <StackPanel Background="#BEC8C8">
                                 <WrapPanel Margin="16 26 16 16" Orientation="Horizontal">
                                     <Antd:Button Type="Primary" Content="Primary" Ghost="True" />
                                     <Antd:Button Content="Default" Ghost="True" />
                                     <Antd:Button Type="Dashed"  Content="Dashed" Ghost="True" />
                                     <Antd:Button Type="Danger" Content="Danger" Ghost="True" />
                                 </WrapPanel>
-                            </Grid>
+                            </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Button Type="Primary" Content="Primary" /&gt;\n
-                            &lt;Antd:Button Content="Default" /&gt;\n
-                            &lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
-                            &lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
+                            &lt;StackPanel Background="#BEC8C8"&gt;\n
+                                \t&lt;WrapPanel Margin="16 26 16 16" Orientation="Horizontal"&gt;\n
+                                    \t\t&lt;Antd:Button Type="Primary" Content="Primary" Ghost="True" /&gt;\n
+                                    \t\t&lt;Antd:Button Content="Default" Ghost="True" /&gt;\n
+                                    \t\t&lt;Antd:Button Type="Dashed"  Content="Dashed" Ghost="True" /&gt;\n
+                                    \t\t&lt;Antd:Button Type="Danger" Content="Danger" Ghost="True" /&gt;\n
+                                \t&lt;/WrapPanel&gt;
+                            &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
-                    </Controls:CodeBox>-->
+                    </Controls:CodeBox>
                 </StackPanel>
             </Grid>
         </Grid>
