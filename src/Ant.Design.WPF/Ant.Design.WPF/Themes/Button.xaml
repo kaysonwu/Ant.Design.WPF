@@ -12,15 +12,16 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Height" Value="{DynamicResource ButtonHeightBase}" />
-        <Setter Property="Padding" Value="{DynamicResource ButtonPaddingBase}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="FontWeight" Value="{DynamicResource ButtonFontWeight}" />
+        <Setter Property="Height" Value="{DynamicResource ButtonHeightBase}" />
         <Setter Property="EffectBrush" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
-        <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPaddingBase}" />
+        <Setter Property="FontWeight" Value="{DynamicResource ButtonFontWeight}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonDefaultBorder}" />
+        <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
+        <Setter Property="Helpers:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
         <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusBase}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -28,11 +29,12 @@
                     <Grid UseLayoutRounding="True">
                         <!-- Effect -->
                         <Border x:Name="Effect"
-                                Opacity="0"
-                                BorderThickness="6"
+                                Margin="-1"
+                                Opacity="0.4"
+                                BorderThickness="0"
                                 BorderBrush="{TemplateBinding EffectBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
+                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Border -->
                         <Rectangle x:Name="PART_Border"
                                    Fill="{TemplateBinding Background}"
@@ -42,8 +44,7 @@
                                                         Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
                                    RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                Converter={StaticResource CornerRadiusToDoubleConverter}}" />
+                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
                         <Grid Margin="{TemplateBinding Padding}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -54,16 +55,18 @@
                                 <!-- Content -->
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Controls:Icon x:Name="Icon" Grid.Column="0" Focusable="False" Type="{TemplateBinding Icon}" />
-                            <Controls:ContentControl x:Name="Content"
-                                                     Grid.Column="1"
-                                                     RecognizesAccessKey="True"
-                                                     Content="{TemplateBinding Content}"
-                                                     ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                     ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                     ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                     ContentCharacterCasing="{Binding Path=(Helpers:Control.ContentCharacterCasing), 
-                                                                                RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Controls:Icon x:Name="Icon" 
+                                           Grid.Column="0" 
+                                           Margin="0 0 8 0"
+                                           Focusable="False" 
+                                           Type="{TemplateBinding Icon}" />
+                            <ContentPresenter x:Name="Content"
+                                              Grid.Column="1"
+                                              RecognizesAccessKey="True"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -85,27 +88,23 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Content" Value="{x:Null}">
-                            <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
+                        <!-- BorderStyle -->
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
                         </Trigger>
-                        <Trigger Property="Type" Value="Dashed">
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
-                        <Trigger Property="Loading" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Duration="0:0:0.2"
-                                                         To="0.65" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Setter TargetName="Icon" Property="Type" Value="loading" />
+                        <!-- Content State -->
+                        <Trigger Property="Content" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Margin" Value="0" />
+                            <Setter TargetName="Icon" Property="Grid.ColumnSpan" Value="2" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding Type, ElementName=Icon, Converter={StaticResource IsNullConverter}}" Value="False">
-                            <Setter TargetName="Content" Property="Margin" Value="8 0 0 0" />
-                        </DataTrigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Content" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Content" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
                             <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
                         </EventTrigger>
@@ -114,11 +113,22 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <!-- Ghost State -->
+            <Trigger Property="Ghost" Value="True">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="BorderBrush" Value="White" />
+                <Setter Property="Background" Value="Transparent" />
+            </Trigger>
             <!-- Primary -->
             <Trigger Property="Type" Value="Primary">
+                <Setter Property="EffectBrush" Value="{DynamicResource ButtonPrimaryBackground}" />
                 <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryForeground}" />
                 <Setter Property="Background" Value="{DynamicResource ButtonPrimaryBackground}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonPrimaryBackground}" />
+            </Trigger>
+            <!-- Dashed -->
+            <Trigger Property="Type" Value="Dashed">
+                <Setter Property="Helpers:Control.BorderStyle" Value="Dashed" />
             </Trigger>
             <!-- Danger -->
             <Trigger Property="Type" Value="Danger">
@@ -146,12 +156,37 @@
                 <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                                             Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
             </Trigger>
+            <!-- Loading State -->
+            <Trigger Property="Loading" Value="True">
+                <Setter Property="Icon" Value="loading" />
+                <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="Opacity" Value="0.65" />
+            </Trigger>
+            <!-- Ghost States -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Ghost" Value="True" />
+                    <Condition Property="Type" Value="Primary" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Foreground" Value="{DynamicResource ButtonPrimaryBackground}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Ghost" Value="True" />
+                    <Condition Property="Type" Value="Danger" />
+                </MultiTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{DynamicResource ButtonDangerForeground}" />
+            </MultiTrigger>
             <!-- Disabled -->
-            <Trigger Property="IsEnabled" Value="False">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Loading" Value="False" />
+                    <Condition Property="IsEnabled" Value="False" />
+                </MultiTrigger.Conditions>
                 <Setter Property="Foreground" Value="{DynamicResource ButtonDisableForeground}" />
                 <Setter Property="Background" Value="{DynamicResource ButtonDisableBackground}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ButtonDisableBorder}" />
-            </Trigger>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

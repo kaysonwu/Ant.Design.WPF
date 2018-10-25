@@ -16,7 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Avatar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Badge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderStyle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
@@ -34,7 +33,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\VisibilityBehavior.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\VisualStateType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />

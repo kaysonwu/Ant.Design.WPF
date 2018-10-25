@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -9,7 +7,9 @@ using ButtonBase = System.Windows.Controls.Button;
 
 namespace Antd.Controls
 {
-
+    /// <summary>
+    /// To trigger an operation.
+    /// </summary>
     [TemplatePart(Name = PART_Border, Type = typeof(FrameworkElement))]
     public class Button : ButtonBase
     {
@@ -17,36 +17,35 @@ namespace Antd.Controls
 
         private const string PART_Border = "PART_Border";
 
+        private FrameworkElement border;
+
         private VisualState mouseOverState;
 
         private VisualState pressedState;
 
         private VisualState focusedState;
 
-        // Border control type
-        private BorderType? borderType;
-
         #endregion
 
         #region Properties
 
-        public static readonly DependencyProperty HrefProperty =
-            DependencyProperty.Register("Href", typeof(string), typeof(Button), new PropertyMetadata(null));
+        public static readonly DependencyProperty GhostProperty =
+            DependencyProperty.Register("Ghost", typeof(bool), typeof(Button), new PropertyMetadata(false, OnEffectBrushChanged));
 
         /// <summary>
-        /// Gets/sets click the button to jump to the url
+        /// Gets/sets whether to make the background transparent and invert text and border colors.
         /// </summary>
-        public string Href
+        public bool Ghost
         {
-            get { return (string)GetValue(HrefProperty); }
-            set { SetValue(HrefProperty, value); }
+            get { return (bool)GetValue(GhostProperty); }
+            set { SetValue(GhostProperty, value); }
         }
 
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(string), typeof(Button), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the icon type of the button
+        /// Gets/sets the icon type of the button.
         /// </summary>
         public string Icon
         {
@@ -58,7 +57,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Loading", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets the loading state of the button
+        /// Gets/sets the loading state of the button.
         /// </summary>
         public bool Loading
         {
@@ -70,7 +69,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Circular", typeof(bool), typeof(Button), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets the shape of the button to be circular. Used to replace the shape attribute in ant design
+        /// Gets/sets the shape of the button to be circle.
         /// </summary>
         public bool Circular
         {
@@ -82,7 +81,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Size", typeof(Size?), typeof(Button), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the size of the button
+        /// Gets/sets the size of the button.
         /// </summary>
         public Size? Size
         {
@@ -91,11 +90,11 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty TypeProperty = 
-            DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null, OnBrushChanged));
+            DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null));
 
 
         /// <summary>
-        /// Gets/sets button type
+        /// Gets/sets the type of the button.
         /// </summary>
         public ButtonType? Type
         {
@@ -110,10 +109,10 @@ namespace Antd.Controls
             new FrameworkPropertyMetadata(
                 Brushes.Transparent,
                 FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits,
-                OnBrushChanged));
+                OnEffectBrushChanged));
 
         /// <summary>
-        /// Gets/sets the border effect brush of the button
+        /// Gets/sets the border effect brush of the button.
         /// </summary>
         public Brush EffectBrush
         {
@@ -121,9 +120,24 @@ namespace Antd.Controls
             set { SetValue(EffectBrushProperty, value); }
         }
 
-        private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnEffectBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as Button).ApplyVisualState(e.Property);
+            (d as Button).SetVisualState();
+        }
+
+        /// <summary>
+        /// Force background transparent in Ghost state.
+        /// </summary>
+        private static object OnBackgroundCoerceValue(DependencyObject d, object baseValue)
+        {
+            var button = d as Button;
+
+            if (button.Ghost)
+            {
+                return Brushes.Transparent;
+            }
+
+            return baseValue;
         }
 
         #endregion
@@ -133,8 +147,7 @@ namespace Antd.Controls
         static Button()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(typeof(Button)));
-            BackgroundProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(OnBrushChanged));
-            ForegroundProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(OnBrushChanged));
+            BackgroundProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata() { CoerceValueCallback = OnBackgroundCoerceValue });
         }
 
         #endregion
@@ -145,135 +158,150 @@ namespace Antd.Controls
         {
             base.OnApplyTemplate();
 
-            var border = GetTemplateChild(PART_Border);
-            borderType = border is Border ? BorderType.Border : (border is Shape ? BorderType.Shape : (BorderType?)null);
-
+            border         = GetTemplateChild(PART_Border) as FrameworkElement;
             mouseOverState = GetTemplateChild("MouseOver") as VisualState;
-            focusedState = GetTemplateChild("Focused") as VisualState;
 
-            pressedState = GetTemplateChild("Pressed") as VisualState;
-            ApplyVisualState(TypeProperty);
+            focusedState   = GetTemplateChild("Focused") as VisualState;
+            pressedState   = GetTemplateChild("Pressed") as VisualState;
+
+            SetVisualState();
         }
 
-        private void ApplyVisualState(DependencyProperty property)
+        #endregion
+
+        #region Private Methods
+
+        private void SetVisualState()
         {
-            // No initialization or no need for me to handle
-            if (!borderType.HasValue || mouseOverState == null && focusedState == null && pressedState == null) return;
+            // No initialization or no need for me to handle.
+            if (border == null || mouseOverState == null && focusedState == null && pressedState == null) return;
 
-            Color color;
-            Func<Color, int, VisualStateType, BorderType, Storyboard> func;
+            // Unable to extract color.
+            var brush = EffectBrush as SolidColorBrush;
+            if (brush == null) return;
 
-            // If the primary color does not change, it will not be processed.
+            var isShape = border is Shape;
+            Func<Color, int, bool, bool, bool, Duration?, Storyboard> func;
+   
             if (!Type.HasValue || Type.Value == ButtonType.Dashed)
             {
-                if (property != TypeProperty && property != EffectBrushProperty) return;
-
                 func = CreateDefaultStoryboard;
-                color = (EffectBrush as SolidColorBrush).Color;
-            }
-            else if (Type.Value == ButtonType.Primary)
-            {
-                if (property != TypeProperty && property != BackgroundProperty) return;
 
-                func  = CreatePrimaryStoryboard;
-                color = (Background as SolidColorBrush).Color;
-            }
-            else
+            } else if (Type.Value == ButtonType.Primary)
+            {
+                func = CreatePrimaryStoryboard;
+
+            } else
             {
                 // Danger
-                if (property != TypeProperty && property != ForegroundProperty) return;
-
-                func  = CreateDangerStoryboard;
-                color = (Foreground as SolidColorBrush).Color;
+                func = CreateDangerStoryboard;
             }
 
             if (mouseOverState != null)
             {
-                mouseOverState.Storyboard = func(color, 5, VisualStateType.MouseOver, borderType.Value);
+                mouseOverState.Storyboard = func(brush.Color, 5, isShape, false, Ghost, null);
             }
 
             if (focusedState != null)
             {
-                focusedState.Storyboard = func(color, 5, VisualStateType.Focused, borderType.Value);
+                focusedState.Storyboard = func(brush.Color, 5, isShape, true, Ghost, null);
             }
 
             if (pressedState != null)
             {
-                pressedState.Storyboard = func(color, 7, VisualStateType.Pressed, borderType.Value);
+                pressedState.Storyboard = func(brush.Color, 7, isShape, false, Ghost, TimeSpan.FromSeconds(0));
             }
         }
 
-        private static Storyboard CreateDefaultStoryboard(Color color, int index, VisualStateType visualStateType, BorderType borderType)
+        private static Storyboard CreateDefaultStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
         {
             var storyboard = new Storyboard();
             var children = storyboard.Children;
 
             color = ColorPalette.Toning(color, index);
-            children.Add(CreateForegroundAnimation(color, visualStateType));
-            children.Add(CreateBorderAnimation(color, visualStateType, borderType));
+            children.Add(CreateForegroundAnimation(color, duration));
+            children.Add(CreateBorderAnimation(color, IsShape, duration));
 
             return storyboard;
         }
 
-        private static Storyboard CreatePrimaryStoryboard(Color color, int index, VisualStateType visualStateType, BorderType borderType)
+        private static Storyboard CreatePrimaryStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
         {
             var storyboard = new Storyboard();
             var children   = storyboard.Children;
 
             color = ColorPalette.Toning(color, index);
-            children.Add(CreateBackgroundAnimation(color, visualStateType, borderType));
-            children.Add(CreateBorderAnimation(color, visualStateType, borderType));
 
-            return storyboard;
-        }
-
-        private static Storyboard CreateDangerStoryboard(Color color, int index, VisualStateType visualStateType, BorderType borderType)
-        {
-            var storyboard = new Storyboard();
-            var children   = storyboard.Children;
-
-            Color foreground, background;
-            color = ColorPalette.Toning(color, index);
-
-            if (visualStateType == VisualStateType.Focused)
+            if (ghost)
             {
-                foreground = color;
-                background = Colors.White;
+                children.Add(CreateForegroundAnimation(color, duration));
             } else
             {
-                foreground = Colors.White;
-                background = color;
+                children.Add(CreateBackgroundAnimation(color, IsShape, duration));
             }
 
-            children.Add(CreateForegroundAnimation(foreground, visualStateType));
-            children.Add(CreateBackgroundAnimation(background, visualStateType, borderType));
-            children.Add(CreateBorderAnimation(color, visualStateType, borderType));
+            children.Add(CreateBorderAnimation(color, IsShape, duration));
 
             return storyboard;
         }
 
-        private static Timeline CreateForegroundAnimation(Color color, VisualStateType visualStateType)
+        private static Storyboard CreateDangerStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
         {
-            return CreateColorAnimation("(Control.Foreground).(SolidColorBrush.Color)", color, visualStateType, null);
+            var storyboard = new Storyboard();
+            var children   = storyboard.Children;
+
+            Color foreground;
+            color = ColorPalette.Toning(color, index);
+
+            if (ghost)
+            {
+                foreground = color;
+            } else
+            {
+                Color background;
+
+                if (focused)
+                {
+                    foreground = color;
+                    background = Colors.White;
+                }
+                else
+                {
+                    foreground = Colors.White;
+                    background = color;
+                }
+
+                children.Add(CreateBackgroundAnimation(background, IsShape, duration));
+            }
+
+            children.Add(CreateForegroundAnimation(foreground, duration));
+            children.Add(CreateBorderAnimation(color, IsShape, duration));
+
+            return storyboard;
         }
 
-        private static Timeline CreateBackgroundAnimation(Color color, VisualStateType visualStateType, BorderType borderType, string name = PART_Border)
+        private static Timeline CreateForegroundAnimation(Color color, Duration? duration = null)
         {
-            return CreateColorAnimation((borderType == BorderType.Shape ? "Fill" : "Background") + ".Color", color, visualStateType, name);
+            return CreateColorAnimation("(Control.Foreground).(SolidColorBrush.Color)", color, duration, null);
         }
 
-        private static Timeline CreateBorderAnimation(Color color, VisualStateType visualStateType, BorderType borderType, string name = PART_Border)
+        private static Timeline CreateBackgroundAnimation(Color color, bool IsShape, Duration? duration = null, string name = PART_Border)
         {
-            return CreateColorAnimation((borderType == BorderType.Shape ? "Stroke" : "BorderBrush") + ".Color", color, visualStateType, name);
+            return CreateColorAnimation((IsShape ? "Fill" : "Background") + ".Color", color, duration, name);
         }
 
-        private static Timeline CreateColorAnimation(string path, Color color, VisualStateType visualStateType, string name)
+        private static Timeline CreateBorderAnimation(Color color, bool IsShape, Duration? duration = null, string name = PART_Border)
+        {
+            return CreateColorAnimation((IsShape ? "Stroke" : "BorderBrush") + ".Color", color, duration, name);
+        }
+
+        private static Timeline CreateColorAnimation(string path, Color color, Duration? duration, string name)
         {
             var animation = new ColorAnimation() { To = color };
 
-            if (visualStateType == VisualStateType.Pressed)
+            if (duration.HasValue)
             {
-                animation.Duration = TimeSpan.FromSeconds(0);
+                animation.Duration = duration.Value;
             }
 
             if (!string.IsNullOrEmpty(name))
@@ -284,30 +312,6 @@ namespace Antd.Controls
             Storyboard.SetTargetProperty(animation, new PropertyPath(path));
 
             return animation;
-        }
-
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            if (Loading) return;
-            base.OnMouseLeftButtonDown(e);
-        }
-
-        protected override void OnMouseEnter(MouseEventArgs e)
-        {
-            if (Loading)
-            {
-                VisualStateManager.GoToState(this, "Normal", true);
-            } else
-            {
-                base.OnMouseEnter(e);
-            }
-        }
-
-        protected override void OnClick()
-        {
-            // Preventing events in ClickMode.Press mode
-            if (Loading) return;
-            base.OnClick();
         }
 
         #endregion
