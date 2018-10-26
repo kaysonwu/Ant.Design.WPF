@@ -9,7 +9,51 @@
             d:DesignHeight="600"
             d:DesignWidth="930">
 
-    <Grid>
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Icon" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="Semantic vector graphics." />
+                
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="Antd:Icon">
+                        <Setter Property="Margin" Value="0 0 8 0" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic">
+                        <Controls:CodeBox.Description>
+                            Use tag `&lt;Antd:Icon /&gt;` to create an icon and set its type in the `Type` property. Specific the `Spin` property to show spinning animation and the `Theme` property to switch different themes.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Icon Type="setting" />
+                                <Antd:Icon Type="loading" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 
-    </Grid>
 </UserControl>
