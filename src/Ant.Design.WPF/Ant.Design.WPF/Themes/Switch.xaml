@@ -142,7 +142,6 @@
                             <Setter TargetName="Content" Property="Content" Value="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="Size" Value="Small">
-                            <Setter TargetName="Icon" Property="FontWeight" Value="Medium" />
                             <Setter TargetName="Icon" Property="RenderTransformOrigin" Value="0.5,0.5" />
                             <Setter TargetName="Icon" Property="RenderTransform">
                                 <Setter.Value>

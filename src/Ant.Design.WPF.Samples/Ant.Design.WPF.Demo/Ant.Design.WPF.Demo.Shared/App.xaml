@@ -11,7 +11,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/IconFont.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="Ant.H1" TargetType="Control">

@@ -20,7 +20,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Icon.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\IThumb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Contracts\ISpinable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Contracts\IThumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PropertyChangeNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RadioButtonGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Size.cs" />
@@ -33,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\VisibilityBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\Spinner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
@@ -68,5 +70,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Win32\RECT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\UnsafeNativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\Contracts\" />
   </ItemGroup>
 </Project>
