@@ -1,12 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using SizeBase = System.Windows.Size;
 
 namespace Antd.Controls
@@ -15,14 +12,9 @@ namespace Antd.Controls
     /// <summary>
     /// Semantic vector graphics.
     /// </summary>
-    [TemplateVisualState(Name = "Spun", GroupName = "SpinStates")]
-    [TemplateVisualState(Name = "Unspun", GroupName = "SpinStates")]
-    [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Icon : FrameworkElement, ISpinable
     {
         #region Fields
-
-        private ContentPresenter contentPresenter;
 
         private Matrix stretchMatrix;
 
@@ -125,47 +117,13 @@ namespace Antd.Controls
             return (Brush)element.GetValue(ForegroundProperty);
         }
 
-        /// <summary>
-        /// DependencyProperty for <see cref="Background" /> property.
-        /// </summary>
-        public static readonly DependencyProperty BackgroundProperty =
-            TextElement.BackgroundProperty.AddOwner(
-                typeof(Icon),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        /// <summary>
-        /// The Background property defines the brush used to fill the content area.
-        /// </summary>
-        public Brush Background
-        {
-            get { return (Brush)GetValue(BackgroundProperty); }
-            set { SetValue(BackgroundProperty, value); }
-        }
-
-        /// <summary>
-        /// DependencyProperty for <see cref="Padding" /> property.
-        /// </summary>
-        public static readonly DependencyProperty PaddingProperty =
-            Block.PaddingProperty.AddOwner(
-                typeof(Icon),
-                new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        /// <summary>
-        /// The Padding property specifies the padding of the element.
-        /// </summary>
-        public Thickness Padding
-        {
-            get { return (Thickness)GetValue(PaddingProperty); }
-            set { SetValue(PaddingProperty, value); }
-        }
-
         #endregion
 
         #region Properties
 
         public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register("Type", typeof(string), typeof(Icon),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnTypeChanged));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnKeyChanged));
 
         /// <summary>
         /// Gets/sets the type of the ant design icon.
@@ -176,13 +134,14 @@ namespace Antd.Controls
             set { SetValue(TypeProperty, value); }
         }
 
-        private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as Icon).UpdateDefiningGeometry();
         }
 
         public static readonly DependencyProperty ThemeProperty =
-            DependencyProperty.Register("Theme", typeof(IconTheme), typeof(Icon), new PropertyMetadata(IconTheme.Outlined));
+            DependencyProperty.Register("Theme", typeof(IconTheme), typeof(Icon), 
+                new FrameworkPropertyMetadata(IconTheme.Outlined, FrameworkPropertyMetadataOptions.AffectsRender, OnKeyChanged));
 
         /// <summary>
         /// Gets/sets the theme of the ant design icon.
@@ -212,6 +171,66 @@ namespace Antd.Controls
 
         #endregion
 
+        #region ReadOnly Properties
+
+        /// <summary>
+        /// Get the geometry that defines this icon.
+        /// </summary>
+        protected Geometry DefiningGeometry
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// The RenderedGeometry property returns the final rendered geometry.
+        /// </summary>
+        public Geometry RenderedGeometry
+        {
+            get
+            {
+                EnsureRenderedGeometry();
+                var geometry = renderedGeometry.CloneCurrentValue();
+
+                if (geometry == null || geometry == Geometry.Empty)
+                {
+                    return Geometry.Empty;
+                }
+
+                // We need to return a frozen copy
+                if (ReferenceEquals(geometry, renderedGeometry))
+                {
+                    // geometry is a reference to _renderedGeometry, so we need to copy
+                    geometry = geometry.Clone();
+                    geometry.Freeze();
+                }
+
+                return geometry;
+            }
+        }
+
+        #endregion
+
+        #region Attached Propperties
+
+        public static readonly DependencyProperty ViewBoxProperty =
+            DependencyProperty.RegisterAttached("ViewBox", typeof(Rect), typeof(Icon), new PropertyMetadata(new Rect(0, 0, 1024, 1024)));
+
+        [AttachedPropertyBrowsableForType(typeof(Geometry))]
+        public static Rect GetViewBox(DependencyObject obj)
+        {
+            return (Rect)obj.GetValue(ViewBoxProperty);
+        }
+
+        public static void SetViewBox(DependencyObject obj, Rect value)
+        {
+            obj.SetValue(ViewBoxProperty, value);
+        }
+
+        #endregion
+
+
+
+
         #region Constructors
 
         static Icon()
@@ -223,33 +242,46 @@ namespace Antd.Controls
 
         #region Overrides
 
-        protected override SizeBase MeasureOverride(SizeBase availableSize)
+        /// <summary>
+        /// Updates DesiredSize of the icon.  Called by parent UIElement during is the first pass of layout.
+        /// </summary>
+        /// <param name="constraint">Constraint size is an "upper limit" that should not exceed.</param>
+        /// <returns>icon desired size.</returns>
+        protected override SizeBase MeasureOverride(SizeBase constraint)
         {
-            var newSize = GetRenderSize(new SizeBase(FontSize, FontSize), GetDefiningGeometryBounds());
 
-            if (SizeIsInvalidOrEmpty(newSize))
-            {
-                // We've encountered a numerical error. Don't draw anything.
-                newSize = new SizeBase(0, 0);
-                renderedGeometry = Geometry.Empty;
-            }
+            return GetRenderSize(constraint, FontSize, DefiningGeometry);
 
-            Console.WriteLine("MeasureOverride|" + newSize + "|" + Type);
-            return newSize;
+            //var geometryBounds = GetDefiningGeometryBounds();
+
+            //if (geometryBounds.IsEmpty || geometryBounds.Width == 0d || geometryBounds.Height == 0d)
+            //{
+            //    return new SizeBase(0d, 0d);
+            //}
+
+            //var width  = Math.Min(constraint.Width, FontSize);
+            //var height = Math.Min(constraint.Height, FontSize);
+
+            //return new SizeBase(width, height);
         }
 
         protected override SizeBase ArrangeOverride(SizeBase finalSize)
         {
-            var newSize = GetStretchedRenderSizeAndSetStretchMatrix(finalSize, GetDefiningGeometryBounds());
+            renderedGeometry = null;
+            return GetRenderSize(finalSize, FontSize, DefiningGeometry);
+            //    var newSize =  GetRenderSize(FontSize, GetDefiningGeometryBounds(), out double scaleX, out double scaleY);
 
-            if (SizeIsInvalidOrEmpty(newSize))
-            {
-                // We've encountered a numerical error. Don't draw anything.
-                newSize = new SizeBase(0, 0);
-                renderedGeometry = Geometry.Empty;
-            }
-            Console.WriteLine("ArrangeOverride|" + newSize + "|" + Type);
-            return newSize;
+            //    Console.WriteLine("ArrangeOverride|" + newSize + "|" + scaleX + "|" + scaleY + "|" + Type);
+            //    // reset rendered geometry
+            //    renderedGeometry = null;
+
+            //    // Construct the matrix
+            //    stretchMatrix    = Matrix.Identity;
+            //    stretchMatrix.ScaleAt(scaleX, scaleY, 0, 0);
+
+            ////    stretchMatrix.Translate(-4, -1.71);
+
+            //    return newSize;
         }
 
         protected override void OnRender(DrawingContext dc)
@@ -260,26 +292,29 @@ namespace Antd.Controls
             {
                 dc.DrawGeometry(Foreground, null, renderedGeometry);
             }
-
-            // Draw background in rectangle.
-            if (Background != null)
-            {
-                dc.DrawRectangle(Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
-            }
         }
 
         #endregion
 
         #region Private Methods
 
-        private bool SizeIsInvalidOrEmpty(SizeBase size)
-        {
-            return size.IsEmpty || double.IsNaN(size.Width) || double.IsNaN(size.Height);
-        }
-
         private void UpdateDefiningGeometry()
         {
-            definingGeometry = GetGeometry();
+            Geometry geometry = null;
+
+            if (!string.IsNullOrEmpty(Type))
+            {
+                var key = "anticon." + Type;
+
+                if (Theme == IconTheme.Filled)
+                {
+                    key += ".fill";
+                }
+
+                geometry = TryFindResource(key) as Geometry;
+            }
+
+            DefiningGeometry = geometry ?? Geometry.Empty;
             SetSpinAnimation();
         }
 
@@ -297,173 +332,22 @@ namespace Antd.Controls
             }
         }
 
-        /// <summary>
-        /// Get geometry by type.
-        /// </summary>
-        private Geometry GetGeometry()
-        {
-            if (string.IsNullOrEmpty(Type))
-            {
-                return Geometry.Empty;
-            }
-
-            // TODO Theme
-            var key = "anticon." + Type;
-            return (TryFindResource(key) as Geometry) ?? Geometry.Empty;
-        }
-
-        /// <summary>
-        /// Get the bounds of the geometry that defines this icon.
-        /// </summary>
-        private Rect GetDefiningGeometryBounds()
-        {
-            Debug.Assert(definingGeometry != null);
-
-            return definingGeometry.Bounds;
-        }
-
-        private SizeBase GetRenderSize(SizeBase availableSize, Rect geometryBounds)
-        {
-            double xScale, yScale, dX, dY;
-            SizeBase renderSize;
-
-            GetStretchMetrics(availableSize, geometryBounds,
-                                out xScale, out yScale, out dX, out dY, out renderSize);
-
-            return renderSize;
-        }
-
-        private SizeBase GetStretchedRenderSizeAndSetStretchMatrix(SizeBase availableSize, Rect geometryBounds)
-        {
-            double xScale, yScale, dX, dY;
-            SizeBase renderSize;
-
-            GetStretchMetrics(availableSize, geometryBounds,
-                out xScale, out yScale, out dX, out dY, out renderSize);
-
-            // Construct the matrix
-            stretchMatrix = Matrix.Identity;
-
-            Console.WriteLine(xScale + "|" + yScale + "|" + geometryBounds.Location + "|" + dX + "|" + dY);
-            stretchMatrix.Scale(0.03515625, 0.03515625);
-         //   stretchMatrix.Translate(0, 0);
-
-            ResetRenderedGeometry();
-            return renderSize;
-        }
-
-        private void GetMetrics(SizeBase availableSize, Rect geometryBounds)
-        {
-            if (!geometryBounds.IsEmpty)
-            {
-                var a = geometryBounds.Left / geometryBounds.Right;
-                var b = geometryBounds.Top / geometryBounds.Bottom;
-
-
-            }
-
-        }
-
-        private void GetStretchMetrics(SizeBase availableSize, Rect geometryBounds,
-                                out double xScale, out double yScale, out double dX, out double dY, out SizeBase stretchedSize)
-        {
-            if (!geometryBounds.IsEmpty)
-            {
-                // double margin = strokeThickness / 2;
-                bool hasThinDimension = false;
-
-                // Initialization for mode == Fill
-                xScale = Math.Max(availableSize.Width, 0);
-                yScale = Math.Max(availableSize.Height, 0);
-                dX = -geometryBounds.Left;
-                dY = -geometryBounds.Top;
-
-                // Compute the scale factors from the geometry to the size.
-                // The scale factors are ratios, and they have already been initialize to the numerators.
-                // To prevent fp overflow, we need to make sure that numerator / denomiator < limit;
-                // To do that without actually deviding, we check that denominator > numerator / limit.
-                // We take 1/epsilon as the limit, so the check is denominator > numerator * epsilon
-
-                // See Dev10 bug #453150.
-                // If the scale is infinite in both dimensions, return the natural size.
-                // If it's infinite in only one dimension, for non-fill stretch modes we constrain the size based
-                // on the unconstrained dimension.
-                // If our shape is "thin", i.e. a horizontal or vertical line, we can ignore non-fill stretches.
-                if (geometryBounds.Width > xScale * double.Epsilon)
-                {
-                    xScale /= geometryBounds.Width;
-                }
-                else
-                {
-                    xScale = 1;
-                    // We can ignore uniform and uniform-to-fill stretches if we have a vertical line.
-                    if (geometryBounds.Width == 0)
-                    {
-                        hasThinDimension = true;
-                    }
-                }
-
-                if (geometryBounds.Height > yScale * double.Epsilon)
-                {
-                    yScale /= geometryBounds.Height;
-                }
-                else
-                {
-                    yScale = 1;
-                    // We can ignore uniform and uniform-to-fill stretches if we have a horizontal line.
-                    if (geometryBounds.Height == 0)
-                    {
-                        hasThinDimension = true;
-                    }
-                }
-
-                // We are initialized for Fill, but for the other modes
-                // If one of our dimensions is thin, uniform stretches are
-                // meaningless, so we treat the stretch as fill.
-                if (!hasThinDimension)
-                {
-                    if (yScale > xScale)
-                    {
-                        // Resize to fit the size's width
-                        yScale = xScale;
-                    }
-                    else // if xScale >= yScale
-                    {
-                        // Resize to fit the size's height
-                        xScale = yScale;
-                    }
-                }
-
-                stretchedSize = new SizeBase(geometryBounds.Width * xScale, geometryBounds.Height * yScale);
-            }
-            else
-            {
-                dX = dY = 0;
-                xScale = yScale = 1;
-                stretchedSize = new SizeBase(0, 0);
-            }
-        }
-
         private void EnsureRenderedGeometry()
         {
             if (renderedGeometry == null)
             {
-                renderedGeometry = definingGeometry;
+                var geometry = DefiningGeometry;
+                Debug.Assert(geometry != null);
 
-                Debug.Assert(renderedGeometry != null);
-                var currentValue = renderedGeometry.CloneCurrentValue();
+                renderedGeometry = geometry.CloneCurrentValue();
 
-                if (ReferenceEquals(renderedGeometry, currentValue))
+                if (ReferenceEquals(geometry, renderedGeometry))
                 {
-                    renderedGeometry = currentValue.Clone();
-                }
-                else
-                {
-                    renderedGeometry = currentValue;
+                    renderedGeometry = renderedGeometry.Clone();
                 }
 
                 var transform = renderedGeometry.Transform;
-                var matrix    = (stretchMatrix == null) ? Matrix.Identity : stretchMatrix;
+                var matrix    = GetMatrix(renderedGeometry);
 
                 if (transform == null)
                 {
@@ -476,13 +360,81 @@ namespace Antd.Controls
             }
         }
 
-        private void ResetRenderedGeometry()
+        private bool IsGeometryEmptyOrInvalid(Geometry geometry)
         {
-            // reset rendered geometry
-            renderedGeometry = null;
+            return geometry.IsEmpty() || geometry.Bounds.IsEmpty;
+        }
+
+        private SizeBase GetRenderSize(SizeBase availableSize, double fontSize, Geometry geometry)
+        {
+            Debug.Assert(geometry != null);
+
+            if (IsGeometryEmptyOrInvalid(geometry))
+            {
+                return new SizeBase(0d, 0d);
+            }
+
+            var width = Math.Min(availableSize.Width, fontSize);
+            var height = Math.Min(availableSize.Height, fontSize);
+
+          //  Console.WriteLine(width + "|" + height);
+            return new SizeBase(width, height);
+        }
+
+        private Matrix GetMatrix(Geometry geometry)
+        {
+            var matrix  = Matrix.Identity;
+
+            if (!IsGeometryEmptyOrInvalid(geometry))
+            {
+                var viewBox = (Rect)geometry.GetValue(ViewBoxProperty);
+                var baseVal = Math.Max(FontSize, 0d);
+
+                var scaleX = baseVal / viewBox.Width;
+                var scaleY = baseVal / viewBox.Height;
+
+                matrix.Scale(scaleX, scaleY);
+                Console.WriteLine(-(scaleX * viewBox.X) + "|" + -(scaleY * viewBox.Y) + "|" + Type);
+                matrix.Translate(-(scaleX * viewBox.X), -(scaleY * viewBox.Y));
+            }
+
+            return matrix;
         }
 
         #endregion
+
+        private SizeBase GetRenderSizeA(double fontSize, Rect geometryBounds, out double scaleX, out double scaleY)
+        {
+            // I personally think of a geometry if its width or height is 0, then it is not a valid value.
+            if (geometryBounds.IsEmpty || geometryBounds.Width == 0d || geometryBounds.Height == 0d)
+            {
+                scaleX = scaleY = 1;
+                return new SizeBase(0d, 0d);
+            }
+
+            scaleX = scaleY = Math.Max(fontSize, 0d);
+
+            scaleX /= 1024;
+            scaleY /= 1024;
+
+
+            // If there is offset, we need to subtract it.
+            //Console.WriteLine(scaleY * (geometryBounds.Top / geometryBounds.Bottom) + "|" + scaleX * (geometryBounds.Left / geometryBounds.Right) + "|" + Type);
+            //scaleX  = (scaleX - scaleX * (geometryBounds.Left / geometryBounds.Right)) / geometryBounds.Width;
+            //scaleY  = (scaleY - scaleY * (geometryBounds.Top / geometryBounds.Bottom)) / geometryBounds.Height;
+
+            //// icon geometry must be proportional.
+            //if (scaleX > scaleY)
+            //{
+            //    scaleX = scaleY;
+            //}
+            //else // if (scaleY > scaleX)
+            //{
+            //    scaleY = scaleX;
+            //}
+
+            return new SizeBase(fontSize, fontSize);
+        }
     }
 
     public enum IconTheme : byte
