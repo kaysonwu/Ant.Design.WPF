@@ -46,9 +46,7 @@
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
-                        <Grid Margin="{TemplateBinding Padding}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                        <Grid Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <!-- Icon -->
                                 <ColumnDefinition Width="Auto" />
@@ -58,14 +56,18 @@
                             <Controls:Icon x:Name="Icon" 
                                            Margin="0 0 8 0"
                                            Focusable="False" 
-                                           Type="{TemplateBinding Icon}" />
+                                           Type="{TemplateBinding Icon}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                             <ContentPresenter x:Name="Content"
                                               Grid.Column="1"
                                               RecognizesAccessKey="True"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -120,6 +122,13 @@
                             <Setter TargetName="Content" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Content" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!-- Shape Circle -->
+                        <Trigger Property="Circular" Value="True">
+                            <Setter TargetName="Icon" 
+                                    Property="FontSize" 
+                                    Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource AdditionConverter}, ConverterParameter=2}" />
                         </Trigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
                             <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
