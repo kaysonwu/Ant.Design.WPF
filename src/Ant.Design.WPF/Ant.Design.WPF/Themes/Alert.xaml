@@ -119,9 +119,14 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <!-- Icon -->
-                            <ContentPresenter x:Name="PART_Icon" 
-                                              TextElement.Foreground="{TemplateBinding IconBrush}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Controls:Icon x:Name="Icon"
+                                           Theme="Filled"
+                                           Margin="0 0 8 0"
+                                           Type="{TemplateBinding Icon}"
+                                           Foreground="{TemplateBinding IconBrush}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Visibility="{Binding ShowIcon, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                            Converter={StaticResource BooleanToVisibilityConverter}}"/>
                             <!-- Message -->
                             <ContentPresenter x:Name="Message"
                                               Grid.Column="1"
@@ -153,15 +158,13 @@
                         <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
-                        <Trigger Property="ShowIcon" Value="True">
-                            <Setter TargetName="PART_Icon" Property="Margin" Value="0 0 8 0" />
-                        </Trigger>
                         <!-- With Description -->
                         <DataTrigger Binding="{Binding Description, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
+                            <Setter TargetName="Icon" Property="FontSize" Value="24" />
+                            <Setter TargetName="Icon" Property="Theme" Value="Outlined" />
                             <Setter TargetName="Message" Property="Margin" Value="0 0 0 4" />
                             <Setter TargetName="Description" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_Icon" Property="TextElement.FontSize" Value="24" />
                             <Setter TargetName="PART_Close" Property="FontSize" Value="{DynamicResource FontSizeBase}" />
                             <Setter TargetName="Message" Property="TextElement.FontSize" Value="{DynamicResource FontSizeLarge}" />
                             <Setter TargetName="Message" Property="TextElement.Foreground" Value="{DynamicResource HeadingBrush}" />
@@ -171,13 +174,19 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <Trigger Property="Type" Value="Info">
+                <Setter Property="Icon" Value="info-circle" />
+            </Trigger>
             <Trigger Property="Type" Value="Success">
+                <Setter Property="Icon" Value="check-circle" />
                 <Setter Property="IconBrush" Value="{DynamicResource SuccessBrush}" />
             </Trigger>
             <Trigger Property="Type" Value="Warning">
+                <Setter Property="Icon" Value="exclamation-circle" />
                 <Setter Property="IconBrush" Value="{DynamicResource WarningBrush}" />
             </Trigger>
             <Trigger Property="Type" Value="Error">
+                <Setter Property="Icon" Value="close-circle" />
                 <Setter Property="IconBrush" Value="{DynamicResource ErrorBrush}" />
             </Trigger>
             <Trigger Property="Banner" Value="True">

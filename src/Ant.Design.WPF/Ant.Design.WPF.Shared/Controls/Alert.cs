@@ -10,17 +10,12 @@ namespace Antd.Controls
     /// Alert component for feedback.
     /// </summary>
     [ContentProperty("Message")]
-    [TemplatePart(Name = PART_Icon, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_Close, Type = typeof(ButtonBase))]
     public class Alert : Control
     {
         #region Fields
 
-        private const string PART_Icon = "PART_Icon";
-
         private const string PART_Close = "PART_Close";
-
-        private ContentPresenter icon;
 
         private ButtonBase close;
 
@@ -60,7 +55,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Banner", typeof(bool), typeof(Alert), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets whether to show as banner
+        /// Gets/sets whether to show as banner.
         /// </summary>
         public bool Banner
         {
@@ -72,7 +67,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Closable", typeof(bool?), typeof(Alert), new PropertyMetadata(null, OnClosableChanged));
 
         /// <summary>
-        /// Gets/sets whether alert can be closed
+        /// Gets/sets whether alert can be closed.
         /// </summary>
         public bool? Closable
         {
@@ -98,7 +93,7 @@ namespace Antd.Controls
             DependencyProperty.Register("CloseText", typeof(object), typeof(Alert), new PropertyMetadata(null, OnCloseTextChanged));
 
         /// <summary>
-        /// Gets/sets close text to show
+        /// Gets/sets close text to show.
         /// </summary>
         public object CloseText
         {
@@ -122,10 +117,10 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty DescriptionProperty =
-            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null, OnDefaultIconChanged));
+            DependencyProperty.Register("Description", typeof(object), typeof(Alert), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets additional content of alert
+        /// Gets/sets additional content of alert.
         /// </summary>
         public object Description
         {
@@ -134,69 +129,22 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(object), typeof(Alert), new PropertyMetadata(null, OnIconChanged));
+            DependencyProperty.Register("Icon", typeof(string), typeof(Alert), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// Gets/sets custom icon, effective when showIcon is true
+        /// Gets/sets the icon type of the alert.
         /// </summary>
-        public object Icon
+        public string Icon
         {
-            get { return GetValue(IconProperty); }
+            get { return (string)GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
-        }
-
-        private static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Alert).SetIcon(true);
-        }
-
-        private void SetIcon(bool force = false)
-        {
-            if (icon == null || (!force && Icon != null)) return;
-
-            string type;
-
-            if (Icon == null)
-            {
-                switch (Type)
-                {
-                    case AlertType.Success:
-                        type = "check-circle";
-                        break;
-                    case AlertType.Warning:
-                        type = "close-circle";
-                        break;
-                    case AlertType.Error:
-                        type = "exclamation-circle";
-                        break;
-                    default:
-                        type = "info-circle";
-                        break;
-                }
-
-                if (Description != null)
-                {
-                    type += "-o";
-                }
-
-            } else if (Icon is string)
-            {
-                type = Icon as string;
-            }
-            else
-            {
-                icon.Content = Icon;
-                return;
-            }
-
-            icon.Content = new Icon() { Type = type };
         }
 
         public static readonly DependencyProperty MessageProperty =
             DependencyProperty.Register("Message", typeof(object), typeof(Alert), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets content of alert
+        /// Gets/sets content of alert.
         /// </summary>
         public object Message
         {
@@ -205,10 +153,10 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty ShowIconProperty =
-            DependencyProperty.Register("ShowIcon", typeof(bool), typeof(Alert), new PropertyMetadata(false, OnShowIconChanged));
+            DependencyProperty.Register("ShowIcon", typeof(bool), typeof(Alert), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets/sets whether to show icon
+        /// Gets/sets whether to show icon.
         /// </summary>
         public bool ShowIcon
         {
@@ -216,24 +164,11 @@ namespace Antd.Controls
             set { SetValue(ShowIconProperty, value); }
         }
 
-        private static void OnShowIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Alert).SetIconVisibility();
-        }
-
-        private void SetIconVisibility()
-        {
-            if (icon != null)
-            {
-                icon.Visibility = ShowIcon ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
-
         public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(AlertType), typeof(Alert), new PropertyMetadata(AlertType.Info, OnDefaultIconChanged));
+            DependencyProperty.Register("Type", typeof(AlertType), typeof(Alert), new PropertyMetadata(AlertType.Info));
 
         /// <summary>
-        /// Gets/sets the type of alert
+        /// Gets/sets the type of alert.
         /// </summary>
         public AlertType Type
         {
@@ -241,16 +176,11 @@ namespace Antd.Controls
             set { SetValue(TypeProperty, value); }
         }
 
-        private static void OnDefaultIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Alert).SetIcon();
-        }
-
         public static readonly DependencyProperty IconBrushProperty =
             DependencyProperty.Register("IconBrush", typeof(Brush), typeof(Alert), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the alert icon brush
+        /// Gets/sets the alert icon brush.
         /// </summary>
         public Brush IconBrush
         {
@@ -275,7 +205,6 @@ namespace Antd.Controls
         {
             base.OnApplyTemplate();
 
-            icon = GetTemplateChild(PART_Icon) as ContentPresenter;
             close = GetTemplateChild(PART_Close) as ButtonBase;
 
             if (close != null)
@@ -286,9 +215,6 @@ namespace Antd.Controls
                 close.Click -= OnRaiseClosingEvent;
                 close.Click += OnRaiseClosingEvent;
             }
-
-            SetIconVisibility();
-            SetIcon(true);
 
             SetCloseButton();
         }
