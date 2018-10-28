@@ -40,10 +40,8 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <WrapPanel>
-                                <Border BorderBrush="Red" BorderThickness="0">
-                                    <Antd:Icon Type="setting" Theme="Filled" />
-                                </Border>
-                                <Antd:Icon Type="loading" />
+                                <Antd:Icon Type="panda" Theme="Colorful" />
+
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>

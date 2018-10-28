@@ -16,11 +16,7 @@ namespace Antd.Controls
     {
         #region Fields
 
-        private Matrix stretchMatrix;
-
         private Geometry definingGeometry;
-
-        private Geometry renderedGeometry = Geometry.Empty;
 
         #endregion
 
@@ -117,13 +113,60 @@ namespace Antd.Controls
             return (Brush)element.GetValue(ForegroundProperty);
         }
 
+        public static readonly DependencyProperty BackgroundProperty =
+         TextElement.BackgroundProperty.AddOwner(
+                 typeof(Icon),
+                 new FrameworkPropertyMetadata(
+                         Brushes.Transparent,
+                         FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// The Background property defines the brush used to fill the content area.
+        /// </summary>
+        public Brush Background
+        {
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
+        }
+
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Get the geometry that defines this icon.
+        /// </summary>
+        protected Geometry DefiningGeometry
+        {
+            get
+            {
+                if (definingGeometry == null)
+                {
+                    if (!string.IsNullOrEmpty(Type))
+                    {
+                        var key = "anticon." + Type;
+
+                        if (Theme == IconTheme.Filled)
+                        {
+                            key += ".fill";
+                        }
+
+                        definingGeometry = TryFindResource(key) as Geometry ?? Geometry.Empty;
+
+                    }
+                    else
+                    {
+                        definingGeometry = Geometry.Empty;
+                    }
+                }
+
+                return definingGeometry;
+            }
+        }
+
         public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register("Type", typeof(string), typeof(Icon),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnKeyChanged));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnSpinChanged));
 
         /// <summary>
         /// Gets/sets the type of the ant design icon.
@@ -134,14 +177,10 @@ namespace Antd.Controls
             set { SetValue(TypeProperty, value); }
         }
 
-        private static void OnKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as Icon).UpdateDefiningGeometry();
-        }
-
         public static readonly DependencyProperty ThemeProperty =
             DependencyProperty.Register("Theme", typeof(IconTheme), typeof(Icon), 
-                new FrameworkPropertyMetadata(IconTheme.Outlined, FrameworkPropertyMetadataOptions.AffectsRender, OnKeyChanged));
+                new FrameworkPropertyMetadata(IconTheme.Outlined, FrameworkPropertyMetadataOptions.AffectsRender));
+
 
         /// <summary>
         /// Gets/sets the theme of the ant design icon.
@@ -171,65 +210,59 @@ namespace Antd.Controls
 
         #endregion
 
-        #region ReadOnly Properties
-
-        /// <summary>
-        /// Get the geometry that defines this icon.
-        /// </summary>
-        protected Geometry DefiningGeometry
-        {
-            get; private set;
-        }
-
-        /// <summary>
-        /// The RenderedGeometry property returns the final rendered geometry.
-        /// </summary>
-        public Geometry RenderedGeometry
-        {
-            get
-            {
-                EnsureRenderedGeometry();
-                var geometry = renderedGeometry.CloneCurrentValue();
-
-                if (geometry == null || geometry == Geometry.Empty)
-                {
-                    return Geometry.Empty;
-                }
-
-                // We need to return a frozen copy
-                if (ReferenceEquals(geometry, renderedGeometry))
-                {
-                    // geometry is a reference to _renderedGeometry, so we need to copy
-                    geometry = geometry.Clone();
-                    geometry.Freeze();
-                }
-
-                return geometry;
-            }
-        }
-
-        #endregion
-
         #region Attached Propperties
 
+        /// <summary>
+        /// Why is it not a dependency property?
+        /// icons are introduced by way of resources. if you define them as dependency properties, you will lose more flexibility.
+        /// For example, each icon needs to use different stretch parameters.
+        /// </summary>
         public static readonly DependencyProperty ViewBoxProperty =
             DependencyProperty.RegisterAttached("ViewBox", typeof(Rect), typeof(Icon), new PropertyMetadata(new Rect(0, 0, 1024, 1024)));
 
+        /// <summary>
+        /// Get the rectangular area of the geometric stretch.
+        /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Geometry))]
         public static Rect GetViewBox(DependencyObject obj)
         {
             return (Rect)obj.GetValue(ViewBoxProperty);
         }
 
+        /// <summary>
+        /// Set a rectangular area for geometric stretch.
+        /// </summary>
         public static void SetViewBox(DependencyObject obj, Rect value)
         {
             obj.SetValue(ViewBoxProperty, value);
         }
 
+        /// <summary>
+        /// When you need colorful icons, you need to be able to support custom brushes.
+        /// </summary>
+        public static readonly DependencyProperty FillProperty =
+            DependencyProperty.RegisterAttached("Fill", typeof(Brush), typeof(Icon), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Get the brush that fill the geometry.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [AttachedPropertyBrowsableForType(typeof(Geometry))]
+        public static Brush GetFill(DependencyObject obj)
+        {
+            return (Brush)obj.GetValue(FillProperty);
+        }
+
+        /// <summary>
+        /// Set the brush to fill the geometry. Valid when Theme is colorful.
+        /// </summary>
+        public static void SetFill(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(FillProperty, value);
+        }
+
         #endregion
-
-
-
 
         #region Constructors
 
@@ -243,54 +276,86 @@ namespace Antd.Controls
         #region Overrides
 
         /// <summary>
+        /// Notification that a specified property has been invalidated.
+        /// </summary>
+        /// <param name="e">EventArgs that contains the property, metadata, old value, and new value for this change</param>
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue && (e.Property == TypeProperty || e.Property == ThemeProperty))
+            {
+                // Reset definition geometry.
+                definingGeometry = null;
+            }
+
+            base.OnPropertyChanged(e);
+        }
+
+        /// <summary>
         /// Updates DesiredSize of the icon.  Called by parent UIElement during is the first pass of layout.
         /// </summary>
         /// <param name="constraint">Constraint size is an "upper limit" that should not exceed.</param>
         /// <returns>icon desired size.</returns>
         protected override SizeBase MeasureOverride(SizeBase constraint)
         {
+            if (IsGeometryNullOrEmpty(DefiningGeometry))
+            {
+                return new SizeBase(0d, 0d);
+            }
 
-            return GetRenderSize(constraint, FontSize, DefiningGeometry);
-
-            //var geometryBounds = GetDefiningGeometryBounds();
-
-            //if (geometryBounds.IsEmpty || geometryBounds.Width == 0d || geometryBounds.Height == 0d)
-            //{
-            //    return new SizeBase(0d, 0d);
-            //}
-
-            //var width  = Math.Min(constraint.Width, FontSize);
-            //var height = Math.Min(constraint.Height, FontSize);
-
-            //return new SizeBase(width, height);
+            var fontSize = FontSize;
+            return new SizeBase(Math.Min(constraint.Width, fontSize), Math.Min(constraint.Height, fontSize));
         }
 
-        protected override SizeBase ArrangeOverride(SizeBase finalSize)
-        {
-            renderedGeometry = null;
-            return GetRenderSize(finalSize, FontSize, DefiningGeometry);
-            //    var newSize =  GetRenderSize(FontSize, GetDefiningGeometryBounds(), out double scaleX, out double scaleY);
-
-            //    Console.WriteLine("ArrangeOverride|" + newSize + "|" + scaleX + "|" + scaleY + "|" + Type);
-            //    // reset rendered geometry
-            //    renderedGeometry = null;
-
-            //    // Construct the matrix
-            //    stretchMatrix    = Matrix.Identity;
-            //    stretchMatrix.ScaleAt(scaleX, scaleY, 0, 0);
-
-            ////    stretchMatrix.Translate(-4, -1.71);
-
-            //    return newSize;
-        }
-
+        /// <summary>
+        /// Render callback.
+        /// </summary>
         protected override void OnRender(DrawingContext dc)
         {
-            EnsureRenderedGeometry();
+            Geometry rendered;
+            var geometry = DefiningGeometry;
+            var matrix   = GetStretchMatrix(geometry, FontSize);
 
-            if (renderedGeometry != Geometry.Empty)
+            Debug.Assert(geometry != null);
+
+            if (Theme == IconTheme.Colorful && geometry is GeometryGroup)
             {
-                dc.DrawGeometry(Foreground, null, renderedGeometry);
+                Brush brush;
+                var children = ((GeometryGroup)geometry).Children;
+        
+                foreach (var child in children)
+                {
+                    rendered = GetRenderedGeometry(child, matrix);
+
+                    if (rendered != Geometry.Empty)
+                    {
+                        brush = rendered.GetValue(FillProperty) as Brush;
+
+                        // TODO
+                        if (brush == null)
+                        {
+
+                        }
+
+                        dc.DrawGeometry(brush, null, rendered);
+                    }
+                }
+
+            } else
+            {
+                rendered = GetRenderedGeometry(geometry, matrix);
+
+                if (rendered != Geometry.Empty)
+                {
+                    dc.DrawGeometry(Foreground, null, rendered);
+                }
+            }
+
+            // Without background, the mouse can penetrate geometry and cause event failure.
+            var background = Background;
+
+            if (background != null)
+            {
+                dc.DrawRectangle(background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
             }
         }
 
@@ -298,29 +363,9 @@ namespace Antd.Controls
 
         #region Private Methods
 
-        private void UpdateDefiningGeometry()
-        {
-            Geometry geometry = null;
-
-            if (!string.IsNullOrEmpty(Type))
-            {
-                var key = "anticon." + Type;
-
-                if (Theme == IconTheme.Filled)
-                {
-                    key += ".fill";
-                }
-
-                geometry = TryFindResource(key) as Geometry;
-            }
-
-            DefiningGeometry = geometry ?? Geometry.Empty;
-            SetSpinAnimation();
-        }
-
         private void SetSpinAnimation()
         {
-            var spin = Spin ?? !string.IsNullOrEmpty(Type) && Type.ToLower() == "loading";
+            var spin = Spin ?? Type == "loading";
 
             if (spin)
             {
@@ -332,69 +377,51 @@ namespace Antd.Controls
             }
         }
 
-        private void EnsureRenderedGeometry()
+        private bool IsGeometryNullOrEmpty(Geometry geometry)
         {
-            if (renderedGeometry == null)
-            {
-                var geometry = DefiningGeometry;
-                Debug.Assert(geometry != null);
-
-                renderedGeometry = geometry.CloneCurrentValue();
-
-                if (ReferenceEquals(geometry, renderedGeometry))
-                {
-                    renderedGeometry = renderedGeometry.Clone();
-                }
-
-                var transform = renderedGeometry.Transform;
-                var matrix    = GetMatrix(renderedGeometry);
-
-                if (transform == null)
-                {
-                    renderedGeometry.Transform = new MatrixTransform(matrix);
-                }
-                else
-                {
-                    renderedGeometry.Transform = new MatrixTransform(transform.Value * matrix);
-                }
-            }
+            return geometry == null || geometry.IsEmpty() || geometry.Bounds.IsEmpty;
         }
 
-        private bool IsGeometryEmptyOrInvalid(Geometry geometry)
+        /// <summary>
+        /// Get the rendered geometry.
+        /// </summary>
+        private Geometry GetRenderedGeometry(Geometry geometry, Matrix matrix)
         {
-            return geometry.IsEmpty() || geometry.Bounds.IsEmpty;
-        }
+            var rendered = geometry.CloneCurrentValue();
 
-        private SizeBase GetRenderSize(SizeBase availableSize, double fontSize, Geometry geometry)
-        {
-            Debug.Assert(geometry != null);
-
-            if (IsGeometryEmptyOrInvalid(geometry))
+            if (ReferenceEquals(geometry, rendered))
             {
-                return new SizeBase(0d, 0d);
+                rendered = rendered.Clone();
             }
 
-            var width = Math.Min(availableSize.Width, fontSize);
-            var height = Math.Min(availableSize.Height, fontSize);
+            var transform = rendered.Transform;
 
-          //  Console.WriteLine(width + "|" + height);
-            return new SizeBase(width, height);
+            if (transform == null)
+            {
+                rendered.Transform = new MatrixTransform(matrix);
+            }
+            else
+            {
+                rendered.Transform = new MatrixTransform(transform.Value * matrix);
+            }
+
+            return rendered;
         }
 
-        private Matrix GetMatrix(Geometry geometry)
+        /// <summary>
+        /// Get the stretch matrix of the geometry.
+        /// </summary>
+        private Matrix GetStretchMatrix(Geometry geometry, double size)
         {
             var matrix  = Matrix.Identity;
 
-            if (!IsGeometryEmptyOrInvalid(geometry))
+            if (!IsGeometryNullOrEmpty(geometry))
             {
                 var viewBox = (Rect)geometry.GetValue(ViewBoxProperty);
-                var baseVal = Math.Max(FontSize, 0d);
-
-                var scaleX = baseVal / viewBox.Width;
-                var scaleY = baseVal / viewBox.Height;
+                var scaleX  = size / viewBox.Width;
+                var scaleY  = size / viewBox.Height;
 
                 matrix.Scale(scaleX, scaleY);
-                Console.WriteLine(-(scaleX * viewBox.X) + "|" + -(scaleY * viewBox.Y) + "|" + Type);
                 matrix.Translate(-(scaleX * viewBox.X), -(scaleY * viewBox.Y));
             }
 
@@ -402,43 +429,10 @@ namespace Antd.Controls
         }
 
         #endregion
-
-        private SizeBase GetRenderSizeA(double fontSize, Rect geometryBounds, out double scaleX, out double scaleY)
-        {
-            // I personally think of a geometry if its width or height is 0, then it is not a valid value.
-            if (geometryBounds.IsEmpty || geometryBounds.Width == 0d || geometryBounds.Height == 0d)
-            {
-                scaleX = scaleY = 1;
-                return new SizeBase(0d, 0d);
-            }
-
-            scaleX = scaleY = Math.Max(fontSize, 0d);
-
-            scaleX /= 1024;
-            scaleY /= 1024;
-
-
-            // If there is offset, we need to subtract it.
-            //Console.WriteLine(scaleY * (geometryBounds.Top / geometryBounds.Bottom) + "|" + scaleX * (geometryBounds.Left / geometryBounds.Right) + "|" + Type);
-            //scaleX  = (scaleX - scaleX * (geometryBounds.Left / geometryBounds.Right)) / geometryBounds.Width;
-            //scaleY  = (scaleY - scaleY * (geometryBounds.Top / geometryBounds.Bottom)) / geometryBounds.Height;
-
-            //// icon geometry must be proportional.
-            //if (scaleX > scaleY)
-            //{
-            //    scaleX = scaleY;
-            //}
-            //else // if (scaleY > scaleX)
-            //{
-            //    scaleY = scaleX;
-            //}
-
-            return new SizeBase(fontSize, fontSize);
-        }
     }
 
     public enum IconTheme : byte
     {
-        Filled, Outlined, TwoTone
+        Filled, Outlined, Colorful
     }
 }
