@@ -128,24 +128,24 @@
                         <Trigger Property="ColorMode" Value="Colorful">
                             <Setter TargetName="Effect" 
                                     Property="BorderBrush" 
-                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    Value="{Binding Foreground, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="PART_Border" 
                                     Property="Fill" 
-                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                    Value="{Binding Foreground, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource ColorPaletteConverter}, ConverterParameter=1}" />
                             <Setter TargetName="PART_Border" 
                                     Property="Stroke" 
-                                    Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                    Value="{Binding Foreground, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource ColorPaletteConverter}, ConverterParameter=3}" />
                         </Trigger>
                         <Trigger Property="ColorMode" Value="Inverse">
                             <Setter Property="Foreground" Value="White" />
                             <Setter TargetName="Effect" 
                                     Property="BorderBrush" 
-                                    Value="{Binding Background, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    Value="{Binding Background, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="PART_Border" 
                                     Property="Stroke" 
-                                    Value="{Binding Background, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    Value="{Binding Background, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <EventTrigger RoutedEvent="MouseLeftButtonUp">
                             <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
