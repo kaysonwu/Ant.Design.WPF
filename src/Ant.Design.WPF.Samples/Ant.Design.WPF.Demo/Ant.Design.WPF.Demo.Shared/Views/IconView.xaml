@@ -60,7 +60,7 @@
                             Use resources to define a reusable custom icon。Naming the resource `x:Key` must follow the ant icon naming convention.\n\n
                             We provide semantic name for every icon, and naming rules are as follows:\n
                             Scanning line icon has the similar name with its solid one，but it's distinguished by `.fill`, for example, `anticon.question-circle` (an empty circle) and `anticon.question-circle.fill` (a full circle);\n
-                            Naming sequence：`[anticon].[[name]-[shape?]].[fill?]`\n
+                            Naming sequence：`[anticon].[[name]-[shape?]].[fill|colorful?]`\n
                             Icon Type: `[[name]-[shape?]]`\n
                             `?` means is optional.
                         </Controls:CodeBox.Description>
@@ -81,7 +81,7 @@
                                     </GeometryGroup>
                                 </WrapPanel.Resources>
                                 <Antd:Icon Type="heart" FontSize="14" VerticalAlignment="Center" Foreground="HotPink" />
-                                <Antd:Icon Type="panda" FontSize="32" Theme="Colorful" />
+                                <Antd:Icon Type="panda" FontSize="32" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -115,26 +115,35 @@
                         <Controls:CodeBox.Content>
                             <WrapPanel>
                                 <WrapPanel.Resources>
-                                    <GeometryGroup x:Key="anticon.smile">
+                                    <GeometryGroup x:Key="anticon.smile.colorful">
                                         <PathGeometry Figures="M 512 64 C 264.6 64 64 264.6 64 512 s 200.6 448 448 448 s 448 -200.6 448 -448 S 759.4 64 512 64 Z m 0 820 c -205.4 0 -372 -166.6 -372 -372 s 166.6 -372 372 -372 s 372 166.6 372 372 s -166.6 372 -372 372 ZM 288 421 a 48 48 0 1 0 96 0 a 48 48 0 1 0 -96 0 Z M 664 533 h -48.1 c -4.2 0 -7.8 3.2 -8.1 7.4 c -3.7 49.5 -45.3 88.6 -95.8 88.6 s -92 -39.1 -95.8 -88.6 c -0.3 -4.2 -3.9 -7.4 -8.1 -7.4 H 360 a 8 8 0 0 0 -8 8.4 c 4.4 84.3 74.5 151.6 160 151.6 s 155.6 -67.3 160 -151.6 a 8 8 0 0 0 -8 -8.4 Z M 640 421 a 48 48 0 1 0 96 0 a 48 48 0 1 0 -96 0 Z" />
                                         <PathGeometry Figures="M 512 140 c -205.4 0 -372 166.6 -372 372 s 166.6 372 372 372 s 372 -166.6 372 -372 s -166.6 -372 -372 -372 Z M 288 421 a 48.01 48.01 0 0 1 96 0 a 48.01 48.01 0 0 1 -96 0 Z m 224 272 c -85.5 0 -155.6 -67.3 -160 -151.6 a 8 8 0 0 1 8 -8.4 h 48.1 c 4.2 0 7.8 3.2 8.1 7.4 C 420 589.9 461.5 629 512 629 s 92.1 -39.1 95.8 -88.6 c 0.3 -4.2 3.9 -7.4 8.1 -7.4 H 664 a 8 8 0 0 1 8 8.4 C 667.6 625.7 597.5 693 512 693 Z m 176 -224 a 48.01 48.01 0 0 1 0 -96 a 48.01 48.01 0 0 1 0 96 Z" />
                                     </GeometryGroup>
-                                    <GeometryGroup x:Key="anticon.heart">
+                                    <GeometryGroup x:Key="anticon.heart.colorful">
                                         <PathGeometry Figures="M 923 283.6 a 260.04 260.04 0 0 0 -56.9 -82.8 a 264.4 264.4 0 0 0 -84 -55.5 A 265.34 265.34 0 0 0 679.7 125 c -49.3 0 -97.4 13.5 -139.2 39 c -10 6.1 -19.5 12.8 -28.5 20.1 c -9 -7.3 -18.5 -14 -28.5 -20.1 c -41.8 -25.5 -89.9 -39 -139.2 -39 c -35.5 0 -69.9 6.8 -102.4 20.3 c -31.4 13 -59.7 31.7 -84 55.5 a 258.44 258.44 0 0 0 -56.9 82.8 c -13.9 32.3 -21 66.6 -21 101.9 c 0 33.3 6.8 68 20.3 103.3 c 11.3 29.5 27.5 60.1 48.2 91 c 32.8 48.9 77.9 99.9 133.9 151.6 c 92.8 85.7 184.7 144.9 188.6 147.3 l 23.7 15.2 c 10.5 6.7 24 6.7 34.5 0 l 23.7 -15.2 c 3.9 -2.5 95.7 -61.6 188.6 -147.3 c 56 -51.7 101.1 -102.7 133.9 -151.6 c 20.7 -30.9 37 -61.5 48.2 -91 c 13.5 -35.3 20.3 -70 20.3 -103.3 c 0.1 -35.3 -7 -69.6 -20.9 -101.9 Z M 512 814.8 S 156 586.7 156 385.5 C 156 283.6 240.3 201 344.3 201 c 73.1 0 136.5 40.8 167.7 100.4 C 543.2 241.8 606.6 201 679.7 201 c 104 0 188.3 82.6 188.3 184.5 c 0 201.2 -356 429.3 -356 429.3 Z" />
                                         <PathGeometry Figures="M 679.7 201 c -73.1 0 -136.5 40.8 -167.7 100.4 C 480.8 241.8 417.4 201 344.3 201 c -104 0 -188.3 82.6 -188.3 184.5 c 0 201.2 356 429.3 356 429.3 s 356 -228.1 356 -429.3 C 868 283.6 783.7 201 679.7 201 Z" />
                                     </GeometryGroup>
                                 </WrapPanel.Resources>
                                 <Antd:Icon Type="smile" Theme="Colorful" Foreground="#1890ff" />
-                                <Antd:Icon Type="heart" Foreground="#eb2f96" />
+                                <Antd:Icon Type="heart" Theme="Colorful" Foreground="#eb2f96" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;WrapPanel&gt;\n
-                                &lt;Antd:Icon Type="check-circle" /&gt;\n
-                                &lt;Antd:Icon Type="check-circle" Theme="Filled" /&gt;\n
-                                &lt;Antd:Icon Type="loading" /&gt;\n
+                                \t&lt;WrapPanel.Resources&gt;\n
+                                    \t\t&lt;GeometryGroup x:Key="anticon.smile.colorful"&gt;\n
+                                        \t\t\t&lt;PathGeometry Figures="M 512 64 C 264.6 64 64 264.6 64 512 s 200.6 448 448 448 s 448 -200.6 448 -448 S 759.4 64 512 64 Z m 0 820 c -205.4 0 -372 -166.6 -372 -372 s 166.6 -372 372 -372 s 372 166.6 372 372 s -166.6 372 -372 372 ZM 288 421 a 48 48 0 1 0 96 0 a 48 48 0 1 0 -96 0 Z M 664 533 h -48.1 c -4.2 0 -7.8 3.2 -8.1 7.4 c -3.7 49.5 -45.3 88.6 -95.8 88.6 s -92 -39.1 -95.8 -88.6 c -0.3 -4.2 -3.9 -7.4 -8.1 -7.4 H 360 a 8 8 0 0 0 -8 8.4 c 4.4 84.3 74.5 151.6 160 151.6 s 155.6 -67.3 160 -151.6 a 8 8 0 0 0 -8 -8.4 Z M 640 421 a 48 48 0 1 0 96 0 a 48 48 0 1 0 -96 0 Z" /&gt;\n
+                                        \t\t\t&lt;PathGeometry Figures="M 512 140 c -205.4 0 -372 166.6 -372 372 s 166.6 372 372 372 s 372 -166.6 372 -372 s -166.6 -372 -372 -372 Z M 288 421 a 48.01 48.01 0 0 1 96 0 a 48.01 48.01 0 0 1 -96 0 Z m 224 272 c -85.5 0 -155.6 -67.3 -160 -151.6 a 8 8 0 0 1 8 -8.4 h 48.1 c 4.2 0 7.8 3.2 8.1 7.4 C 420 589.9 461.5 629 512 629 s 92.1 -39.1 95.8 -88.6 c 0.3 -4.2 3.9 -7.4 8.1 -7.4 H 664 a 8 8 0 0 1 8 8.4 C 667.6 625.7 597.5 693 512 693 Z m 176 -224 a 48.01 48.01 0 0 1 0 -96 a 48.01 48.01 0 0 1 0 96 Z" /&gt;\n
+                                    \t&lt;/GeometryGroup&gt;\n
+                                    \t&lt;GeometryGroup x:Key="anticon.heart.colorful"&gt;\n
+                                        \t\t\t&lt;PathGeometry Figures="M 923 283.6 a 260.04 260.04 0 0 0 -56.9 -82.8 a 264.4 264.4 0 0 0 -84 -55.5 A 265.34 265.34 0 0 0 679.7 125 c -49.3 0 -97.4 13.5 -139.2 39 c -10 6.1 -19.5 12.8 -28.5 20.1 c -9 -7.3 -18.5 -14 -28.5 -20.1 c -41.8 -25.5 -89.9 -39 -139.2 -39 c -35.5 0 -69.9 6.8 -102.4 20.3 c -31.4 13 -59.7 31.7 -84 55.5 a 258.44 258.44 0 0 0 -56.9 82.8 c -13.9 32.3 -21 66.6 -21 101.9 c 0 33.3 6.8 68 20.3 103.3 c 11.3 29.5 27.5 60.1 48.2 91 c 32.8 48.9 77.9 99.9 133.9 151.6 c 92.8 85.7 184.7 144.9 188.6 147.3 l 23.7 15.2 c 10.5 6.7 24 6.7 34.5 0 l 23.7 -15.2 c 3.9 -2.5 95.7 -61.6 188.6 -147.3 c 56 -51.7 101.1 -102.7 133.9 -151.6 c 20.7 -30.9 37 -61.5 48.2 -91 c 13.5 -35.3 20.3 -70 20.3 -103.3 c 0.1 -35.3 -7 -69.6 -20.9 -101.9 Z M 512 814.8 S 156 586.7 156 385.5 C 156 283.6 240.3 201 344.3 201 c 73.1 0 136.5 40.8 167.7 100.4 C 543.2 241.8 606.6 201 679.7 201 c 104 0 188.3 82.6 188.3 184.5 c 0 201.2 -356 429.3 -356 429.3 Z" /&gt;\n
+                                        \t\t\t&lt;PathGeometry Figures="M 679.7 201 c -73.1 0 -136.5 40.8 -167.7 100.4 C 480.8 241.8 417.4 201 344.3 201 c -104 0 -188.3 82.6 -188.3 184.5 c 0 201.2 356 429.3 356 429.3 s 356 -228.1 356 -429.3 C 868 283.6 783.7 201 679.7 201 Z" /&gt;\n
+                                    \t\t&lt;/GeometryGroup&gt;\n
+                                \t&lt;/WrapPanel.Resources&gt;\n
+                                \t&lt;Antd:Icon Type="smile" Theme="Colorful" Foreground="#1890ff" /&gt;\n
+                                \t&lt;Antd:Icon Type="heart" Theme="Colorful" Foreground="#eb2f96" /&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
