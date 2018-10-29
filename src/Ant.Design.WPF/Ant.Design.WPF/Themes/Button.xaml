@@ -126,7 +126,7 @@
                         <Trigger Property="Circular" Value="True">
                             <Setter TargetName="Icon" 
                                     Property="FontSize" 
-                                    Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                    Value="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource AdditionConverter}, ConverterParameter=2}" />
                         </Trigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
@@ -176,8 +176,8 @@
             <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="Width" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="Controls:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                <Setter Property="Width" Value="{Binding Height, Mode=OneTime, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Controls:Control.CornerRadius" Value="{Binding Height, Mode=OneTime, RelativeSource={RelativeSource Self}, 
                                                                             Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
             </Trigger>
             <!-- Loading State -->
