@@ -2,4 +2,60 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
+    <Style TargetType="{x:Type Controls:CheckableTag}">
+        <Setter Property="Padding" Value="8 4" />
+        <Setter Property="Margin" Value="0 0 8 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{DynamicResource TagFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="Foreground" Value="{DynamicResource TagDefaultForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:CheckableTag}">
+                    <Grid UseLayoutRounding="True">
+                        <!-- Border -->
+                        <Rectangle x:Name="PART_Border"
+                                   Fill="{TemplateBinding Background}"
+                                   Stroke="{TemplateBinding BorderBrush}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
+                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
+                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                        <!-- Content -->
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- BorderStyle -->
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
+                        </Trigger>
+                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
 </ResourceDictionary>
