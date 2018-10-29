@@ -218,7 +218,13 @@ namespace Antd.Controls
         /// For example, each icon needs to use different stretch parameters.
         /// </summary>
         public static readonly DependencyProperty ViewBoxProperty =
-            DependencyProperty.RegisterAttached("ViewBox", typeof(Rect), typeof(Icon), new PropertyMetadata(new Rect(0, 0, 1024, 1024)));
+            DependencyProperty.RegisterAttached("ViewBox", typeof(Rect), typeof(Icon), new PropertyMetadata(new Rect(0, 0, 1024, 1024)), OnViewBoxValidate);
+
+        private static bool OnViewBoxValidate(object value)
+        {
+            var viewBox = (Rect)value;
+            return viewBox.IsEmpty || (viewBox.Width >= 0 && viewBox.Height >= 0);
+        }
 
         /// <summary>
         /// Get the rectangular area of the geometric stretch.
@@ -297,7 +303,7 @@ namespace Antd.Controls
         /// <returns>icon desired size.</returns>
         protected override SizeBase MeasureOverride(SizeBase constraint)
         {
-            if (IsGeometryNullOrEmpty(DefiningGeometry))
+            if (IsGeometryEmpty(DefiningGeometry))
             {
                 return new SizeBase(0d, 0d);
             }
@@ -312,15 +318,19 @@ namespace Antd.Controls
         protected override void OnRender(DrawingContext dc)
         {
             Geometry rendered;
-            var geometry = DefiningGeometry;
-            var matrix   = GetStretchMatrix(geometry, FontSize);
+            var geometry   = DefiningGeometry;
 
             Debug.Assert(geometry != null);
+
+            var foreground = Foreground;
+            var matrix     = GetStretchMatrix(geometry, FontSize);
 
             if (Theme == IconTheme.Colorful && geometry is GeometryGroup)
             {
                 Brush brush;
-                var children = ((GeometryGroup)geometry).Children;
+                int index        = 0;
+                var isSolidColor = foreground is SolidColorBrush;
+                var children     = ((GeometryGroup)geometry).Children;
         
                 foreach (var child in children)
                 {
@@ -330,10 +340,18 @@ namespace Antd.Controls
                     {
                         brush = rendered.GetValue(FillProperty) as Brush;
 
-                        // TODO
+                        // It may need to be tinted
                         if (brush == null)
                         {
+                            if (!isSolidColor || index == 0 || index == 6 || index > 9)
+                            {
+                                brush = foreground;
+                            }else
+                            {
+                                brush = new SolidColorBrush(ColorPalette.Toning(((SolidColorBrush)foreground).Color, index));
+                            }
 
+                            index++;
                         }
 
                         dc.DrawGeometry(brush, null, rendered);
@@ -346,7 +364,7 @@ namespace Antd.Controls
 
                 if (rendered != Geometry.Empty)
                 {
-                    dc.DrawGeometry(Foreground, null, rendered);
+                    dc.DrawGeometry(foreground, null, rendered);
                 }
             }
 
@@ -377,9 +395,9 @@ namespace Antd.Controls
             }
         }
 
-        private bool IsGeometryNullOrEmpty(Geometry geometry)
+        private bool IsGeometryEmpty(Geometry geometry)
         {
-            return geometry == null || geometry.IsEmpty() || geometry.Bounds.IsEmpty;
+            return geometry.IsEmpty() || geometry.Bounds.IsEmpty;
         }
 
         /// <summary>
@@ -415,14 +433,33 @@ namespace Antd.Controls
         {
             var matrix  = Matrix.Identity;
 
-            if (!IsGeometryNullOrEmpty(geometry))
+            if (!IsGeometryEmpty(geometry))
             {
+                double scaleX, scaleY;
                 var viewBox = (Rect)geometry.GetValue(ViewBoxProperty);
-                var scaleX  = size / viewBox.Width;
-                var scaleY  = size / viewBox.Height;
+
+                if (viewBox.IsEmpty)
+                {
+                    viewBox = geometry.Bounds;
+                    scaleX  = size / viewBox.Right;
+                    scaleY  = size / viewBox.Bottom;
+
+                    if (scaleX > scaleY)
+                    {
+                        scaleX = scaleY;
+                    } else
+                    {
+                        scaleY = scaleX;
+                    }
+
+                } else
+                {
+                    scaleX = size / viewBox.Width;
+                    scaleY = size / viewBox.Height;
+                    matrix.Translate(-(scaleX * viewBox.X), -(scaleY * viewBox.Y));
+                }
 
                 matrix.Scale(scaleX, scaleY);
-                matrix.Translate(-(scaleX * viewBox.X), -(scaleY * viewBox.Y));
             }
 
             return matrix;
