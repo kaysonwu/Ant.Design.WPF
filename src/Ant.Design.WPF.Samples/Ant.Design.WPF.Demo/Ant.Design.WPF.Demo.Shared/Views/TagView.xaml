@@ -66,11 +66,13 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <WrapPanel>
-                                <TextBlock Text="Categories:" />
-                                <Antd:CheckableTag Content="Movies" />
-                                <Antd:CheckableTag Content="Books" />
-                                <Antd:CheckableTag Content="Music" />
-                                <Antd:CheckableTag Content="Sports" />
+                                <TextBlock Text="Categories:" FontSize="10" VerticalAlignment="Center" Margin="0 0 8 0" />
+                                <WrapPanel VerticalAlignment="Center">
+                                    <Antd:CheckableTag Content="Movies" />
+                                    <Antd:CheckableTag Content="Books" />
+                                    <Antd:CheckableTag Content="Music" />
+                                    <Antd:CheckableTag Content="Sports" />
+                                </WrapPanel>
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
