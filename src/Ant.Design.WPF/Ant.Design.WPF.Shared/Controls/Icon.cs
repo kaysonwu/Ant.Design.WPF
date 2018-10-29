@@ -146,13 +146,16 @@ namespace Antd.Controls
                     {
                         var key = "anticon." + Type;
 
+                        // With theme suffix.
                         if (Theme == IconTheme.Filled)
                         {
                             key += ".fill";
+                        } else if (Theme == IconTheme.Colorful)
+                        {
+                            key += ".colorful";
                         }
 
                         definingGeometry = TryFindResource(key) as Geometry ?? Geometry.Empty;
-
                     }
                     else
                     {
@@ -325,7 +328,8 @@ namespace Antd.Controls
             var foreground = Foreground;
             var matrix     = GetStretchMatrix(geometry, FontSize);
 
-            if (Theme == IconTheme.Colorful && geometry is GeometryGroup)
+            // Need to use colorful render.
+            if (geometry is GeometryGroup)
             {
                 Brush brush;
                 int index        = 0;
