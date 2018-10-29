@@ -306,13 +306,17 @@ namespace Antd.Controls
         /// <returns>icon desired size.</returns>
         protected override SizeBase MeasureOverride(SizeBase constraint)
         {
-            if (IsGeometryEmpty(DefiningGeometry))
-            {
-                return new SizeBase(0d, 0d);
-            }
+            return GetRenderSize(constraint, FontSize);
+        }
 
-            var fontSize = FontSize;
-            return new SizeBase(Math.Min(constraint.Width, fontSize), Math.Min(constraint.Height, fontSize));
+        /// <summary>
+        /// Compute the rendered geometry.
+        /// </summary>
+        /// <param name="finalSize"></param>
+        /// <returns></returns>
+        protected override SizeBase ArrangeOverride(SizeBase finalSize)
+        {
+            return GetRenderSize(finalSize, FontSize);
         }
 
         /// <summary>
@@ -397,6 +401,16 @@ namespace Antd.Controls
             {
                 this.StopSpin();
             }
+        }
+
+        private SizeBase GetRenderSize(SizeBase availableSize, double fontSize)
+        {
+            if (IsGeometryEmpty(DefiningGeometry))
+            {
+                return new SizeBase(0d, 0d);
+            }
+
+            return new SizeBase(Math.Min(availableSize.Width, fontSize), Math.Min(availableSize.Height, fontSize));
         }
 
         private bool IsGeometryEmpty(Geometry geometry)
