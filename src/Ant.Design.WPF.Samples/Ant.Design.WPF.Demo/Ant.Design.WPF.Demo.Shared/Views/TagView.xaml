@@ -50,7 +50,8 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;WrapPanel&gt;\n
                                 \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
@@ -76,13 +77,17 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;WrapPanel&gt;\n
-                                \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
-                                \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
-                                \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
-                                \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                                \t&lt;TextBlock Text="Categories:" FontSize="10" VerticalAlignment="Center" Margin="0 0 8 0" /&gt;\n
+                                \t&lt;WrapPanel VerticalAlignment="Center"&gt;\n
+                                    \t\t&lt;Antd:CheckableTag Content="Movies" /&gt;\n
+                                    \t\t&lt;Antd:CheckableTag Content="Books" /&gt;\n
+                                    \t\t&lt;Antd:CheckableTag Content="Music" /&gt;\n
+                                    \t\t&lt;Antd:CheckableTag Content="Sports" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
@@ -117,7 +122,8 @@
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;StackPanel&gt;\n
                                 \t&lt;Label Style="{StaticResource Ant.H4}" Content="Colorful:" /&gt;\n
@@ -143,6 +149,29 @@
                             &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Checkable">
+                        <Controls:CodeBox.Description>
+                            `CheckableTag` works like Checkbox, click it to toggle checked.\n
+                            it is an absolute controlled component and has no uncontrolled mode.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:CheckableTag Content="Tag1" />
+                                <Antd:CheckableTag Content="Tag2" />
+                                <Antd:CheckableTag Content="Tag3" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;
+                                &lt;Antd:CheckableTag Content="Tag1" /&gt;
+                                &lt;Antd:CheckableTag Content="Tag2" /&gt;
+                                &lt;Antd:CheckableTag Content="Tag3" /&gt;
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                     <Controls:CodeBox Title="Controlled">
                         <Controls:CodeBox.Description>
                             By using the `Visibility` property, you can control the close state of Tag.
@@ -158,7 +187,8 @@
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;StackPanel&gt;\n
                                 \t&lt;WrapPanel&gt;\n
