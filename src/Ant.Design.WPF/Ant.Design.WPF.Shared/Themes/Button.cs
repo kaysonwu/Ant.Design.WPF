@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media.Animation;
-using ControlHelper = Antd.Helpers.Control;
+using ControlHelper = Antd.Controls.Control;
 
 namespace Antd.Themes
 {

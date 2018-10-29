@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:Antd.Controls"
-                    xmlns:Helpers="clr-namespace:Antd.Helpers"
                     xmlns:Shell="clr-namespace:Microsoft.Windows.Shell">
 
     <ResourceDictionary.MergedDictionaries>
@@ -28,7 +27,7 @@
                 LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
                 RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"                
                 Margin="{Binding WindowNonClientFrameThickness, Source={x:Static Shell:SystemParameters2.Current}}"
-                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Helpers:Control.CornerRadius), Mode=OneWay}">
+                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:Control.CornerRadius), Mode=OneWay}">
             
             <AdornerDecorator>
                 <Grid x:Name="LayoutRoot" UseLayoutRounding="False">

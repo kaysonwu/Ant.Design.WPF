@@ -23,7 +23,7 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                         Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
@@ -37,10 +37,10 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!-- BorderStyle -->
-                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
                         </Trigger>
-                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
                     </ControlTemplate.Triggers>

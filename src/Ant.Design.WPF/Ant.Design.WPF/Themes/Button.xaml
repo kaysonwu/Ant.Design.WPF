@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:Antd.Controls"
-                    xmlns:Helpers="clr-namespace:Antd.Helpers">
+                    xmlns:Controls="clr-namespace:Antd.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
@@ -21,8 +20,8 @@
         <Setter Property="Background" Value="{DynamicResource ButtonDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonDefaultForeground}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
-        <Setter Property="Helpers:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
-        <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusBase}" />
+        <Setter Property="Controls:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
+        <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusBase}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Button}">
@@ -34,7 +33,7 @@
                                 BorderThickness="0"
                                 BorderBrush="{TemplateBinding EffectBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                CornerRadius="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         <!-- Border -->
                         <Rectangle x:Name="PART_Border"
                                    Fill="{TemplateBinding Background}"
@@ -42,7 +41,7 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                         Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Helpers:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Content -->
@@ -103,10 +102,10 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!-- BorderStyle -->
-                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dotted">
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
                         </Trigger>
-                        <Trigger Property="Helpers:Control.BorderStyle" Value="Dashed">
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
                         </Trigger>
                         <!-- Loading State -->
@@ -153,7 +152,7 @@
             </Trigger>
             <!-- Dashed -->
             <Trigger Property="Type" Value="Dashed">
-                <Setter Property="Helpers:Control.BorderStyle" Value="Dashed" />
+                <Setter Property="Controls:Control.BorderStyle" Value="Dashed" />
             </Trigger>
             <!-- Danger -->
             <Trigger Property="Type" Value="Danger">
@@ -172,13 +171,13 @@
                 <Setter Property="Height" Value="{DynamicResource ButtonHeightSmall}" />
                 <Setter Property="Padding" Value="{DynamicResource ButtonPaddingSmall}" />
                 <Setter Property="FontSize" Value="{DynamicResource ButtonFontSizeSmall}" />
-                <Setter Property="Helpers:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusSmall}" />
+                <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusSmall}" />
             </Trigger>
             <!-- Shape Circle -->
             <Trigger Property="Circular" Value="True">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="Width" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                <Setter Property="Controls:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                                             Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
             </Trigger>
             <!-- Loading State -->

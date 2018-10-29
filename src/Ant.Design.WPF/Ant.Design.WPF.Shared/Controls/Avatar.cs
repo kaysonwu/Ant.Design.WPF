@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using ControlBase = System.Windows.Controls.Control;
 
 namespace Antd.Controls
 {
@@ -10,7 +11,7 @@ namespace Antd.Controls
     /// </summary>
     [ContentProperty("Text")]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
-    public class Avatar : Control
+    public class Avatar : ControlBase
     {
         #region Fields
 

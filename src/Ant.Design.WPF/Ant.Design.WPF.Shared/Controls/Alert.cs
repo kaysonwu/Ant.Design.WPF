@@ -1,8 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
+using ControlBase = System.Windows.Controls.Control;
 
 namespace Antd.Controls
 {
@@ -11,7 +11,7 @@ namespace Antd.Controls
     /// </summary>
     [ContentProperty("Message")]
     [TemplatePart(Name = PART_Close, Type = typeof(ButtonBase))]
-    public class Alert : Control
+    public class Alert : ControlBase
     {
         #region Fields
 

@@ -50,7 +50,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DesignerConstants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Control.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helpers\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />

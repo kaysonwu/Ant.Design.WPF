@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Antd.Controls;
 
-namespace Antd.Helpers
+namespace Antd.Controls
 {
     /// <summary>
     /// A helper class that provides various controls.

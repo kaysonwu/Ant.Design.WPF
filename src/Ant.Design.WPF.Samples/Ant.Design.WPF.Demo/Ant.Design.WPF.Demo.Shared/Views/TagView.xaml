@@ -60,6 +60,30 @@
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Hot Tags">
+                        <Controls:CodeBox.Description>
+                            Select your favourite topics.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <TextBlock Text="Categories:" />
+                                <Antd:CheckableTag Content="Movies" />
+                                <Antd:CheckableTag Content="Books" />
+                                <Antd:CheckableTag Content="Music" />
+                                <Antd:CheckableTag Content="Sports" />
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
+                                \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
+                                \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
+                                \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
                     <Controls:CodeBox Title="Colorful Tag">

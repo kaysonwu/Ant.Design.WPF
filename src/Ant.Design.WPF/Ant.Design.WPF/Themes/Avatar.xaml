@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:Antd.Controls"
-                    xmlns:Helpers="clr-namespace:Antd.Helpers">
+                    xmlns:Controls="clr-namespace:Antd.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
@@ -17,7 +16,7 @@
         <Setter Property="Background" Value="{DynamicResource AvatarBackground}" />
         <!--<Setter Property="Controls:Icon.FontSize" Value="{DynamicResource AvatarFontSize}" />-->
         <Setter Property="Height" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
-        <Setter Property="Helpers:Control.CornerRadius" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+        <Setter Property="Controls:Control.CornerRadius" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                                     Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -27,7 +26,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            CornerRadius="{Binding Path=(Helpers:Control.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}">
+                            CornerRadius="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter x:Name="PART_Content"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
