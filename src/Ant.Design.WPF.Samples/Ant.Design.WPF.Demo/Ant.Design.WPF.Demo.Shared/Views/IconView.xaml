@@ -125,7 +125,7 @@
                                     </GeometryGroup>
                                 </WrapPanel.Resources>
                                 <Antd:Icon Type="smile" Theme="Colorful" Foreground="#1890ff" />
-                                <Antd:Icon Type="smile" Theme="Colorful" Foreground="#eb2f96" />
+                                <Antd:Icon Type="heart" Foreground="#eb2f96" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
