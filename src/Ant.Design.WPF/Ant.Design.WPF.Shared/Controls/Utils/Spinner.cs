@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -13,22 +11,42 @@ namespace Antd.Controls
         private const string storyBoardName = "Antd.SpinnerStoryBoard";
 
         /// <summary>
-        /// Start the spinning animation. From https://github.com/charri/Font-Awesome-WPF/blob/master/src/WPF/FontAwesome.WPF/ControlExtensions.cs
+        /// Start the spinning animation.
         /// </summary>
-        public static void BeginSpin<T>(this T control, Duration duration) where T : FrameworkElement, ISpinable
+        public static void BeginSpin<T>(this T control, double seconds) where T : FrameworkElement, ISpinable
         {
-            var transformGroup  = control.RenderTransform as TransformGroup ?? new TransformGroup();
-            var rotateTransform = transformGroup.Children.OfType<RotateTransform>().FirstOrDefault();
+            var transform = control.RenderTransform;
+            control.SetCurrentValue(UIElement.RenderTransformOriginProperty, new Point(0.5, 0.5));
+            TransformGroup transformGroup;
 
-            if (rotateTransform != null)
+            if (transform is TransformGroup)
             {
-                rotateTransform.Angle = 0;
+                if (!(((TransformGroup)transform).Children.FirstOrDefault() is RotateTransform))
+                {
+                    transformGroup = (TransformGroup)transform.Clone();
+                    transformGroup.Children.Insert(0, new RotateTransform(0.0));
+                    control.SetCurrentValue(UIElement.RenderTransformProperty, transformGroup);
+                }
             }
             else
             {
-                transformGroup.Children.Add(new RotateTransform(0.0));
-                control.RenderTransform = transformGroup;
-                control.RenderTransformOrigin = new Point(0.5, 0.5);
+                transformGroup = new TransformGroup();
+
+                if (transform is RotateTransform)
+                {
+                    transformGroup.Children.Add(transform);
+                }
+                else
+                {
+                    transformGroup.Children.Add(new RotateTransform(0.0));
+
+                    if (transform != null && transform != Transform.Identity)
+                    {
+                        transformGroup.Children.Add(transform);
+                    }
+                }
+
+                control.SetCurrentValue(UIElement.RenderTransformProperty, transformGroup);
             }
 
             if (!(control.Resources[storyBoardName] is Storyboard storyboard))
@@ -39,7 +57,7 @@ namespace Antd.Controls
                     From = 0,
                     To = 360,
                     AutoReverse = false,
-                    Duration = duration,
+                    Duration = TimeSpan.FromSeconds(seconds),
                     RepeatBehavior = RepeatBehavior.Forever
                 };
 
@@ -47,7 +65,6 @@ namespace Antd.Controls
                 Storyboard.SetTargetProperty(animation,
                     new PropertyPath("(0).(1)[0].(2)", UIElement.RenderTransformProperty,
                         TransformGroup.ChildrenProperty, RotateTransform.AngleProperty));
-
 
                 storyboard.Children.Add(animation);
                 control.Resources.Add(storyBoardName, storyboard);

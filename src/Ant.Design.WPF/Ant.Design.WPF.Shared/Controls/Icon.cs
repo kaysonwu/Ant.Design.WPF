@@ -280,6 +280,16 @@ namespace Antd.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Icon), new FrameworkPropertyMetadata(typeof(Icon)));
         }
 
+        public Icon()
+        {
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SetSpinAnimation();
+        }
+
         #endregion
 
         #region Overrides
@@ -395,7 +405,7 @@ namespace Antd.Controls
 
             if (spin)
             {
-                this.BeginSpin(TimeSpan.FromSeconds(1d));
+                this.BeginSpin(1d);
             }
             else
             {
