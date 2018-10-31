@@ -6,6 +6,13 @@ using System.Windows.Media.Animation;
 
 namespace Antd.Controls
 {
+    /// <summary>
+    /// Provides the ability to spin for controls.
+    /// Known defects:
+    /// Using trigger to change control RenderTransform property will result in animation lose. 
+    /// Try adding the Spin property Setter after the RenderTransform property Setter for notification purposes.
+    /// Example: Theme/Switch.xaml
+    /// </summary>
     public static class Spinner
     {
         private const string storyBoardName = "Antd.SpinnerStoryBoard";

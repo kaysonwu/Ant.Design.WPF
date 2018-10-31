@@ -282,12 +282,7 @@ namespace Antd.Controls
 
         public Icon()
         {
-            Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            SetSpinAnimation();
+            Loaded += (s, e) => SetSpinAnimation();
         }
 
         #endregion

@@ -146,6 +146,7 @@
                                     <ScaleTransform  ScaleX="0.75" ScaleY="0.75" />
                                 </Setter.Value>
                             </Setter>
+                            <Setter TargetName="Icon" Property="Spin" Value="True" />
                         </Trigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
                             <BeginStoryboard Storyboard="{StaticResource Ant.ClickAnimating}" />
