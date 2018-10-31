@@ -25,7 +25,7 @@
             <Grid Grid.Row="1">
                 <Grid.Resources>
                     <Style TargetType="Antd:Avatar">
-                        <Setter Property="Margin" Value="0 0 16 0" />
+                        <Setter Property="Margin" Value="0 16 16 0" />
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
@@ -45,12 +45,32 @@
                                     <Antd:Avatar Icon="user" />
                                     <Antd:Avatar Size="Small"  Icon="user" />
                                 </WrapPanel>
+                                <WrapPanel>
+                                    <Antd:Avatar Shape="Square" Icon="user" />
+                                    <Antd:Avatar Shape="Square" Size="Large"  Icon="user" />
+                                    <Antd:Avatar Shape="Square" Icon="user" />
+                                    <Antd:Avatar Shape="Square" Size="Small"  Icon="user" />
+                                </WrapPanel>
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                            &lt;StackPanel&gt;\n
+                                \t&lt;WrapPanel&gt;\n
+                                    \t\t&lt;Antd:Avatar Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Size="Large"  Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Size="Small"  Icon="user" /&gt;\n
+                                \t&lt;/WrapPanel&gt;\n
+                                \t&lt;WrapPanel&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Size="Large"  Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Size="Small"  Icon="user" /&gt;\n
+                                \t&lt;/WrapPanel&gt;
+                            &lt;/StackPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                     <Controls:CodeBox Title="Autoset Font Size">
@@ -58,17 +78,19 @@
                             For letter type Avatar, when the letters are too long to display, the font size can be automatically adjusted according to the width of the Avatar.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <StackPanel>
-                                <WrapPanel>
-                                    <Antd:Avatar Background="{Binding Background}" Text="{Binding Text}" />
-                                    <Antd:Button x:Name="Change" Size="Small" Content="Change" />
-                                </WrapPanel>
-                            </StackPanel>
+                            <WrapPanel>
+                                <Antd:Avatar Background="{Binding Background}" Margin="0 0 16 0" Text="{Binding Text}" />
+                                <Antd:Button x:Name="Change" Size="Small" Content="Change" />
+                            </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Avatar Background="{Binding Background}" Margin="0 0 16 0" Text="{Binding Text}" /&gt;\n
+                                \t&lt;Antd:Button x:Name="Change" Size="Small" Content="Change" /&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>
@@ -88,9 +110,45 @@
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
-                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
-                            &lt;Antd:Alert Type="Success" Message="Success Text" /&gt;
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Avatar Icon="user" /&gt;\n
+                                \t&lt;Antd:Avatar Text="U" /&gt;\n
+                                \t&lt;Antd:Avatar&gt;USER&lt;/Antd:Avatar&gt;\n
+                                \t&lt;Antd:Avatar Source="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" /&gt;\n
+                                \t&lt;Antd:Avatar Text="U" Background="#FDE3CF" Foreground="#F56A00" /&gt;\n
+                                \t&lt;Antd:Avatar Icon="user" Background="#87D068" /&gt;\n
+                            &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="With Badge">
+                        <Controls:CodeBox.Description>
+                            Usually used for messages remind.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <WrapPanel>
+                                <Antd:Badge Count="1" Margin="0 0 24 0">
+                                    <Antd:Avatar Shape="Square" Icon="user" Margin="0" />
+                                </Antd:Badge>
+                                <Antd:Badge Dot="True">
+                                    <Antd:Avatar Shape="Square" Icon="user" Margin="0" />
+                                </Antd:Badge>
+                            </WrapPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                            xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                            &lt;WrapPanel&gt;\n
+                                \t&lt;Antd:Badge Count="1" Margin="0 0 24 0"&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Icon="user" Margin="0" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                                \t&lt;Antd:Badge Dot="True"&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Icon="user" Margin="0" /&gt;\n
+                                \t&lt;/Antd:Badge&gt;\n
+                            &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
                 </StackPanel>
