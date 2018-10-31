@@ -27,7 +27,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Icon", typeof(string), typeof(Avatar), new PropertyMetadata(null, OnContentChanged));
 
         /// <summary>
-        /// Gets/sets the Icon type for an icon avatar, see Icon Control
+        /// Gets/sets the icon type for an icon avatar.
         /// </summary>
         public string Icon
         {
@@ -40,18 +40,92 @@ namespace Antd.Controls
             (d as Avatar).SetContent(true);
         }
 
+        public static readonly DependencyProperty SizeProperty =
+            DependencyProperty.Register("Size", typeof(Size?), typeof(Avatar), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets/sets the size of the avatar.
+        /// </summary>
+        public Size? Size
+        {
+            get { return (Size?)GetValue(SizeProperty); }
+            set { SetValue(SizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.Register("Source", typeof(ImageSource), typeof(Avatar), new PropertyMetadata(null, OnContentChanged));
+
+        /// <summary>
+        /// Gets/sets the ImageSource for an image avatar.
+        /// </summary>
+        public ImageSource Source
+        {
+            get { return (ImageSource)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(Avatar), new PropertyMetadata(string.Empty, OnContentChanged));
+
+        /// <summary>
+        /// Gets/sets the text for an text avatar.
+        /// </summary>
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public static readonly DependencyProperty AlternativeProperty =
+            DependencyProperty.Register("Alternative", typeof(string), typeof(Avatar), new PropertyMetadata(string.Empty));
+
+        /// <summary>
+        /// This attribute defines the alternative text describing the image.
+        /// </summary>
+        public string Alternative
+        {
+            get { return (string)GetValue(AlternativeProperty); }
+            set { SetValue(AlternativeProperty, value); }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        static Avatar()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Avatar), new FrameworkPropertyMetadata(typeof(Avatar)));
+        }
+
+        #endregion
+
+        #region Overrides
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            contentPresenter = GetTemplateChild(PART_Content) as ContentPresenter;
+            SetContent(true);
+        }
+
+        #endregion
+
+        #region Private Methods
+
         private void SetContent(bool imageExist)
         {
             if (contentPresenter == null) return;
 
             var content = contentPresenter.Content;
- 
+
             // Clear Event
             if (content is Image)
             {
+                ClearValue(BackgroundProperty);
                 ((Image)content).ImageFailed -= OnImageFailed;
-
-            } else if (content is TextBlock)
+            }
+            else if (content is TextBlock)
             {
                 ((TextBlock)content).SizeChanged -= OnTextSizeChanged;
             }
@@ -63,24 +137,28 @@ namespace Antd.Controls
                     content = new Image();
                 }
 
-                var image    = (Image)content;
+                SetCurrentValue(BackgroundProperty, Brushes.Transparent);
+
+                var image = (Image)content;
                 image.Source = Source;
 
                 image.ImageFailed += OnImageFailed;
                 RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
 
-            } else if (Icon != null)
+            }
+            else if (Icon != null)
             {
                 if (!(content is Icon))
                 {
                     content = new Icon();
                 }
 
-                ((Icon)content).Type = Icon;
+              ((Icon)content).Type = Icon;
 
-            } else
+            }
+            else
             {
-                var text = string.IsNullOrEmpty(Text) ?  (imageExist ? string.Empty : Alternative) : Text;
+                var text = string.IsNullOrEmpty(Text) ? (imageExist ? string.Empty : Alternative) : Text;
 
                 if (!(content is TextBlock))
                 {
@@ -110,12 +188,12 @@ namespace Antd.Controls
         /// <param name="e"></param>
         private void OnTextSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var children      = sender as FrameworkElement;
+            var children = sender as FrameworkElement;
             var childrenWidth = children.ActualWidth;
 
-            var width         = ActualWidth - 8;
-            var scale         = 1d;
-            var left          = 0d;
+            var width = ActualWidth - 8;
+            var scale = 1d;
+            var left = 0d;
 
             if (width < childrenWidth)
             {
@@ -123,71 +201,8 @@ namespace Antd.Controls
                 left = ActualWidth / 2 - childrenWidth / 2;
             }
 
-            children.Margin          = new Thickness(left, 0d, left, 0d);
+            children.Margin = new Thickness(left, 0d, left, 0d);
             children.RenderTransform = new ScaleTransform(scale, scale);
-        }
-
-        public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(Size?), typeof(Avatar), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets/sets the size of the avatar
-        /// </summary>
-        public Size? Size
-        {
-            get { return (Size?)GetValue(SizeProperty); }
-            set { SetValue(SizeProperty, value); }
-        }
-
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(ImageSource), typeof(Avatar), new PropertyMetadata(null, OnContentChanged));
-
-        public ImageSource Source
-        {
-            get { return (ImageSource)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(Avatar), new PropertyMetadata(string.Empty, OnContentChanged));
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlternativeProperty =
-            DependencyProperty.Register("Alternative", typeof(string), typeof(Avatar), new PropertyMetadata(string.Empty));
-
-        /// <summary>
-        /// This attribute defines the alternative text describing the image
-        /// </summary>
-        public string Alternative
-        {
-            get { return (string)GetValue(AlternativeProperty); }
-            set { SetValue(AlternativeProperty, value); }
-        }
-
-        #endregion
-
-        #region Constructors
-
-        static Avatar()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Avatar), new FrameworkPropertyMetadata(typeof(Avatar)));
-        }
-
-        #endregion
-
-        #region Overrides
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            contentPresenter = GetTemplateChild(PART_Content) as ContentPresenter;
-            SetContent(true);
         }
 
         #endregion
