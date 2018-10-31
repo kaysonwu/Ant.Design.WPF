@@ -40,6 +40,18 @@ namespace Antd.Controls
             (d as Avatar).SetContent(true);
         }
 
+        public static readonly DependencyProperty ShapeProperty =
+            DependencyProperty.Register("Shape", typeof(Shapes), typeof(Avatar), new PropertyMetadata(Shapes.Circle));
+
+        /// <summary>
+        /// Gets/sets the shape of avatar.
+        /// </summary>
+        public Shapes Shape
+        {
+            get { return (Shapes)GetValue(ShapeProperty); }
+            set { SetValue(ShapeProperty, value); }
+        }
+
         public static readonly DependencyProperty SizeProperty =
             DependencyProperty.Register("Size", typeof(Size?), typeof(Avatar), new PropertyMetadata(null));
 
