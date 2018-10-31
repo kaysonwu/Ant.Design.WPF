@@ -11,9 +11,9 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Width" Value="{DynamicResource AvatarSize}" />
+        <Setter Property="Width" Value="{DynamicResource AvatarSizeBase}" />
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource AvatarFontSize}" />
+        <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeBase}" />
         <Setter Property="Foreground" Value="{DynamicResource AvatarForeground}" />
         <Setter Property="Background" Value="{DynamicResource AvatarBackground}" />
         <Setter Property="Height" Value="{Binding Width, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
@@ -36,6 +36,9 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+            <Trigger Property="Shape" Value="Square">
+                <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource AvatarBorderRadius}" />
+            </Trigger>
             <Trigger Property="Size" Value="Small">
                 <Setter Property="Width" Value="{DynamicResource AvatarSizeSmall}" />
                 <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeSmall}" />

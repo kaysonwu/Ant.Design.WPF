@@ -155,13 +155,15 @@
 
     <!-- Avatar -->
     <System:Double x:Key="AvatarSizeSmall">24</System:Double>
-    <System:Double x:Key="AvatarSize">32</System:Double>
+    <System:Double x:Key="AvatarSizeBase">32</System:Double>
     <System:Double x:Key="AvatarSizeLarge">40</System:Double>
     <System:Double x:Key="AvatarFontSizeSmall">14</System:Double>
-    <System:Double x:Key="AvatarFontSize">18</System:Double>
+    <System:Double x:Key="AvatarFontSizeBase">18</System:Double>
     <System:Double x:Key="AvatarFontSizeLarge">24</System:Double>
     <SolidColorBrush x:Key="AvatarBackground" Color="#CCCCCC" Options:Freeze="True" />
     <SolidColorBrush x:Key="AvatarForeground" Color="White" Options:Freeze="True" />
+    <!--@BorderRadiusBase-->
+    <CornerRadius x:Key="AvatarBorderRadius">4</CornerRadius>
     
     <!-- Switch -->
     <System:Double x:Key="SwitchHeight">22</System:Double>
