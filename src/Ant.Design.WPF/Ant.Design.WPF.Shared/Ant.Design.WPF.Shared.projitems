@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Contracts\IThumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PropertyChangeNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RadioButtonGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Shapes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Size.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Spin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Switch.cs" />
