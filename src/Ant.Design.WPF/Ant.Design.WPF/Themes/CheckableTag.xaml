@@ -71,7 +71,7 @@
                             <Setter TargetName="PART_Border" 
                                     Property="Fill" 
                                     Value="{Binding Background, 
-                                                    Mode=OneTime, 
+                                                    Mode=OneWay, 
                                                     ConverterParameter=7,
                                                     RelativeSource={RelativeSource Mode=TemplatedParent},
                                                     Converter={StaticResource ColorPaletteConverter}}" />

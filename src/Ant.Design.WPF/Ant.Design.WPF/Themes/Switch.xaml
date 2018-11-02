@@ -138,7 +138,7 @@
                             <Setter TargetName="PART_Dot" Property="RenderTransformOrigin" Value="1,0" />
                             <Setter TargetName="Icon" Property="Foreground" Value="{DynamicResource SwitchBrush}" />
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource SwitchBrush}" />
-                            <Setter TargetName="Content" Property="Content" Value="{Binding Content, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="Content" Property="Content" Value="{Binding Content, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="Size" Value="Small">
                             <Setter TargetName="Icon" Property="RenderTransform">
