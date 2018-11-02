@@ -21,8 +21,6 @@ namespace Antd.Controls
 
         private Storyboard pressedStoryboard;
 
-        private AnimationTimeline dotAnimation;
-
         #endregion
 
         #region Properties
@@ -99,9 +97,15 @@ namespace Antd.Controls
         {
             base.OnIsPressedChanged(e);
 
-            if (dotAnimation != null && IsChecked.HasValue && IsChecked.Value && IsPressed)
+            if (dot != null && IsChecked.HasValue && IsChecked.Value && IsPressed)
             {
-                dot.BeginAnimation(MarginProperty, dotAnimation);
+                var to   = dot.Margin;
+                to.Left -= dot.ActualWidth * 1.3333 - dot.ActualWidth;
+
+                var ease = new CircleEase() { EasingMode = EasingMode.EaseInOut };
+                var animation = new ThicknessAnimation(to, TimeSpan.FromSeconds(0.36)) { EasingFunction = ease };
+
+                dot.BeginAnimation(MarginProperty, animation);
             }
         }
 
@@ -111,15 +115,7 @@ namespace Antd.Controls
 
             var storyboard = pressedStoryboard != null ? pressedStoryboard.Clone() : new Storyboard();
             var ease       = new CircleEase() { EasingMode = EasingMode.EaseInOut };
-
-            var duration   = TimeSpan.FromSeconds(0.36);
-            var to         = dot.ActualWidth * 1.3333;
-
-            var margin     = dot.Margin;
-            margin.Left   -= to - dot.ActualWidth; 
-
-            var animation  = new DoubleAnimation(to, duration) { EasingFunction = ease };
-            dotAnimation   = new ThicknessAnimation(margin, duration) { EasingFunction = ease };
+            var animation  = new DoubleAnimation(dot.ActualWidth * 1.3333, TimeSpan.FromSeconds(0.36)) { EasingFunction = ease };
 
             Storyboard.SetTargetName(animation, PART_Dot);
             Storyboard.SetTargetProperty(animation, new PropertyPath("Width"));
