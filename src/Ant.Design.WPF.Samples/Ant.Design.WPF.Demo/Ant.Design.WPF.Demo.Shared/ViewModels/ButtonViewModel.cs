@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel.Composition;
-using Size = Antd.Controls.Size;
+using Antd.Controls;
 using Caliburn.Micro;
 
 namespace AntdDemo.ViewModels
@@ -9,7 +9,7 @@ namespace AntdDemo.ViewModels
     [Export(typeof(IScreen))]
     internal class ButtonViewModel : Screen
     {
-        public Size? Size { get; set; }
+        public Sizes? Size { get; set; }
 
         private bool loading1;
 

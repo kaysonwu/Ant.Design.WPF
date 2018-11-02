@@ -25,14 +25,14 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(Size?), typeof(Spin), new PropertyMetadata(null));
+            DependencyProperty.Register("Size", typeof(Sizes?), typeof(Spin), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets/sets size of spin.
         /// </summary>
-        public Size? Size
+        public Sizes? Size
         {
-            get { return (Size?)GetValue(SizeProperty); }
+            get { return (Sizes?)GetValue(SizeProperty); }
             set { SetValue(SizeProperty, value); }
         }
 

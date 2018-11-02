@@ -12,14 +12,14 @@ namespace Antd.Controls
         #region Properties
 
         public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(Size?), typeof(RadioButtonGroup), new PropertyMetadata(null));
+            DependencyProperty.Register("Size", typeof(Sizes?), typeof(RadioButtonGroup), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets/sets size for radio button style
         /// </summary>
-        public Size? Size
+        public Sizes? Size
         {
-            get { return (Size?)GetValue(SizeProperty); }
+            get { return (Sizes?)GetValue(SizeProperty); }
             set { SetValue(SizeProperty, value); }
         }
 
