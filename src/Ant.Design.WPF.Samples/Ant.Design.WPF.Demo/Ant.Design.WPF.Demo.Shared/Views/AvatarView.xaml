@@ -40,13 +40,13 @@
                         <Controls:CodeBox.Content>
                             <StackPanel>
                                 <WrapPanel>
-                                    <Antd:Avatar Icon="user" />
+                                    <Antd:Avatar Size="64" Icon="user" />
                                     <Antd:Avatar Size="Large"  Icon="user" />
                                     <Antd:Avatar Icon="user" />
                                     <Antd:Avatar Size="Small"  Icon="user" />
                                 </WrapPanel>
                                 <WrapPanel>
-                                    <Antd:Avatar Shape="Square" Icon="user" />
+                                    <Antd:Avatar Shape="Square" Size="64" Icon="user" />
                                     <Antd:Avatar Shape="Square" Size="Large"  Icon="user" />
                                     <Antd:Avatar Shape="Square" Icon="user" />
                                     <Antd:Avatar Shape="Square" Size="Small"  Icon="user" />
@@ -59,13 +59,13 @@
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;StackPanel&gt;\n
                                 \t&lt;WrapPanel&gt;\n
-                                    \t\t&lt;Antd:Avatar Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Size="64" Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Size="Large"  Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Size="Small"  Icon="user" /&gt;\n
                                 \t&lt;/WrapPanel&gt;\n
                                 \t&lt;WrapPanel&gt;\n
-                                    \t\t&lt;Antd:Avatar Shape="Square" Icon="user" /&gt;\n
+                                    \t\t&lt;Antd:Avatar Shape="Square" Size="64" Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Shape="Square" Size="Large"  Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Shape="Square" Icon="user" /&gt;\n
                                     \t\t&lt;Antd:Avatar Shape="Square" Size="Small"  Icon="user" /&gt;\n
