@@ -39,6 +39,7 @@
             <Trigger Property="Shape" Value="Square">
                 <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource AvatarBorderRadius}" />
             </Trigger>
+            <!-- Sizes -->
             <Trigger Property="Size" Value="Small">
                 <Setter Property="Width" Value="{DynamicResource AvatarSizeSmall}" />
                 <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeSmall}" />
@@ -47,6 +48,7 @@
                 <Setter Property="Width" Value="{DynamicResource AvatarSizeLarge}" />
                 <Setter Property="FontSize" Value="{DynamicResource AvatarFontSizeLarge}" />
             </Trigger>
+            <!-- without icon -->
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
             </Trigger>

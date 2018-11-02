@@ -4,4 +4,9 @@
     {
         Large, Small
     }
+
+    public enum Sizes
+    {
+        Large = -1, Small = -2
+    }
 }

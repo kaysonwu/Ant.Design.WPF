@@ -53,15 +53,36 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(Size?), typeof(Avatar), new PropertyMetadata(null));
+            DependencyProperty.Register("Size", typeof(Sizes?), typeof(Avatar), new PropertyMetadata(null, OnSizeChanged));
 
         /// <summary>
         /// Gets/sets the size of the avatar.
         /// </summary>
-        public Size? Size
+        public Sizes? Size
         {
-            get { return (Size?)GetValue(SizeProperty); }
+            get { return (Sizes?)GetValue(SizeProperty); }
             set { SetValue(SizeProperty, value); }
+        }
+
+        private static void OnSizeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var avatar = d as Avatar;
+            var newValue = (Sizes?)e.NewValue;
+            var oldValue = (Sizes?)e.OldValue;
+
+            if (newValue.HasValue && newValue.Value >= 0)
+            {
+                var size = (double)newValue.Value;
+                avatar.SetValue(WidthProperty, size);
+                avatar.SetValue(HeightProperty, size);
+                avatar.SetValue(FontSizeProperty, size / 2);
+            }
+            else if (oldValue.HasValue && oldValue.Value >= 0)
+            {
+                avatar.ClearValue(WidthProperty);
+                avatar.ClearValue(HeightProperty);
+                avatar.ClearValue(FontSizeProperty);
+            }
         }
 
         public static readonly DependencyProperty SourceProperty =
@@ -130,7 +151,7 @@ namespace Antd.Controls
             if (contentPresenter == null) return;
 
             var content = contentPresenter.Content;
-
+     
             // Clear Event
             if (content is Image)
             {
@@ -139,6 +160,7 @@ namespace Antd.Controls
             }
             else if (content is TextBlock)
             {
+                SizeChanged -= OnTextSizeChanged;
                 ((TextBlock)content).SizeChanged -= OnTextSizeChanged;
             }
 
@@ -149,7 +171,7 @@ namespace Antd.Controls
                     content = new Image();
                 }
 
-                SetCurrentValue(BackgroundProperty, Brushes.Transparent);
+                SetValue(BackgroundProperty, Brushes.Transparent);
 
                 var image = (Image)content;
                 image.Source = Source;
@@ -165,8 +187,7 @@ namespace Antd.Controls
                     content = new Icon();
                 }
 
-              ((Icon)content).Type = Icon;
-
+                ((Icon)content).Type = Icon;
             }
             else
             {
@@ -178,10 +199,12 @@ namespace Antd.Controls
                 }
 
                 var textblock = (TextBlock)content;
-                textblock.Text = text;
 
-                textblock.RenderTransformOrigin = new Point(0.5, 0.5);
+                SizeChanged += OnTextSizeChanged;
                 textblock.SizeChanged += OnTextSizeChanged;
+
+                textblock.Text = text;
+                textblock.RenderTransformOrigin = new Point(0.5, 0.5);
             }
 
             // 引用传递对 Null 无效
@@ -200,21 +223,22 @@ namespace Antd.Controls
         /// <param name="e"></param>
         private void OnTextSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var children = sender as FrameworkElement;
-            var childrenWidth = children.ActualWidth;
-
-            var width = ActualWidth - 8;
-            var scale = 1d;
-            var left = 0d;
-
-            if (width < childrenWidth)
+            if (contentPresenter != null && contentPresenter.Content is TextBlock textBlock)
             {
-                scale = width / childrenWidth;
-                left = ActualWidth / 2 - childrenWidth / 2;
-            }
+                var childrenWidth = textBlock.ActualWidth;
+                var width         = ActualWidth - 8;
+                var scale         = 1d;
+                var left          = 0d;
 
-            children.Margin = new Thickness(left, 0d, left, 0d);
-            children.RenderTransform = new ScaleTransform(scale, scale);
+                if (width < childrenWidth)
+                {
+                    scale = width / childrenWidth;
+                    left = ActualWidth / 2 - childrenWidth / 2;
+                }
+
+                textBlock.Margin = new Thickness(left, 0d, left, 0d);
+                textBlock.RenderTransform = new ScaleTransform(scale, scale);
+            }
         }
 
         #endregion
