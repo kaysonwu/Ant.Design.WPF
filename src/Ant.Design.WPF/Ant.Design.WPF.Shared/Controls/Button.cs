@@ -77,33 +77,33 @@ namespace Antd.Controls
             VisualStateManager.GoToState(this, (Loading ? "Loaded" : "Unloaded"), true);
         }
 
-        public static readonly DependencyProperty CircularProperty =
-            DependencyProperty.Register("Circular", typeof(bool), typeof(Button), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty ShapeProperty =
+            DependencyProperty.Register("Shape", typeof(Shapes), typeof(Button), new PropertyMetadata(Shapes.Square));
 
         /// <summary>
-        /// Gets/sets the shape of the button to be circle.
+        /// Gets/sets the shape of button.
         /// </summary>
-        public bool Circular
+        public Shapes Shape
         {
-            get { return (bool)GetValue(CircularProperty); }
-            set { SetValue(CircularProperty, value); }
+            get { return (Shapes)GetValue(ShapeProperty); }
+            set { SetValue(ShapeProperty, value); }
         }
 
         public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(Size?), typeof(Button), new PropertyMetadata(null));
+            DependencyProperty.Register("Size", typeof(Sizes?), typeof(Button), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets/sets the size of the button.
         /// </summary>
-        public Size? Size
+        public Sizes? Size
         {
-            get { return (Size?)GetValue(SizeProperty); }
+            get { return (Sizes?)GetValue(SizeProperty); }
             set { SetValue(SizeProperty, value); }
         }
 
         public static readonly DependencyProperty TypeProperty = 
             DependencyProperty.Register("Type", typeof(ButtonType?), typeof(Button), new PropertyMetadata(null));
-
 
         /// <summary>
         /// Gets/sets the type of the button.

@@ -68,7 +68,7 @@
                                 <Antd:Button Content="Default" Size="Large" />
                                 <Antd:Button Type="Dashed" Content="Dashed" />
                                 <Antd:Button Type="Danger" Content="Danger" />
-                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
+                                <Antd:Button Type="Primary" Icon="search" Shape="Circle" />
                                 <Antd:Button Type="Primary" Icon="search" Content="Search" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
@@ -80,7 +80,7 @@
                                 \t&lt;Antd:Button Content="Default" Size="Large" /&gt;\n
                                 \t&lt;Antd:Button Type="Dashed" Content="Dashed" /&gt;\n
                                 \t&lt;Antd:Button Type="Danger" Content="Danger" /&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Shape="Circle" /&gt;\n
                                 \t&lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
@@ -95,8 +95,8 @@
                                 <Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" />
                                 <Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" />
                                 <Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" />
-                                <Antd:Button Circular="True" Loading="True" />
-                                <Antd:Button Type="Primary" Circular="True" Loading="True"  />
+                                <Antd:Button Shape="Circle" Loading="True" />
+                                <Antd:Button Type="Primary" Shape="Circle" Loading="True"  />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -107,8 +107,8 @@
                                 \t&lt;Antd:Button Type="Primary" Content="Loading" Loading="True" Size="small" /&gt;\n
                                 \t&lt;Antd:Button x:Name="Click1" Type="Primary" Content="Click Me!" Loading="{Binding Loading1}" /&gt;\n
                                 \t&lt;Antd:Button x:Name="Click2" Type="Primary" Content="Click Me!" Icon="poweroff" Loading="{Binding Loading2}" /&gt;\n
-                                \t&lt;Antd:Button Circular="True" Loading="True" /&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Circular="True" Loading="True"  /&gt;\n
+                                \t&lt;Antd:Button Shape="Circle" Loading="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Shape="Circle" Loading="True"  /&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
@@ -121,13 +121,13 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <WrapPanel Orientation="Horizontal">
-                                <Antd:Button Type="Primary" Icon="search" Circular="True" />
+                                <Antd:Button Type="Primary" Icon="search" Shape="Circle" />
                                 <Antd:Button Type="Primary" Icon="search" Content="Search" />
-                                <Antd:Button Icon="search" Circular="True" />
+                                <Antd:Button Icon="search" Shape="Circle" />
                                 <Antd:Button Icon="search" Content="Search" />
-                                <Antd:Button Type="Dashed" Icon="search" Circular="True" />
+                                <Antd:Button Type="Dashed" Icon="search" Shape="Circle" />
                                 <Antd:Button Type="Dashed" Icon="search" Content="Search" />
-                                <Antd:Button Type="Danger" Icon="search" Circular="True" />
+                                <Antd:Button Type="Danger" Icon="search" Shape="Circle" />
                                 <Antd:Button Type="Danger" Icon="search" Content="Search" />
                             </WrapPanel>
                         </Controls:CodeBox.Content>
@@ -135,13 +135,13 @@
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n\n
                             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
                             &lt;WrapPanel Orientation="Horizontal"&gt;\n
-                                \t&lt;Antd:Button Type="Primary" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Primary" Icon="search" Shape="Circle" /&gt;\n
                                 \t&lt;Antd:Button Type="Primary" Icon="search" Content="Search" /&gt;\n
-                                \t&lt;Antd:Button Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Icon="search" Shape="Circle" /&gt;\n
                                 \t&lt;Antd:Button Icon="search" Content="Search" /&gt;\n
-                                \t&lt;Antd:Button Type="Dashed" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Dashed" Icon="search" Shape="Circle" /&gt;\n
                                 \t&lt;Antd:Button Type="Dashed" Icon="search" Content="Search" /&gt;\n
-                                \t&lt;Antd:Button Type="Danger" Icon="search" Circular="True" /&gt;\n
+                                \t&lt;Antd:Button Type="Danger" Icon="search" Shape="Circle" /&gt;\n
                                 \t&lt;Antd:Button Type="Danger" Icon="search" Content="Search" /&gt;\n
                             &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>

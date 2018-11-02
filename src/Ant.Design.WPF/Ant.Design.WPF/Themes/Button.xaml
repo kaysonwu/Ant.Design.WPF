@@ -123,10 +123,10 @@
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <!-- Shape Circle -->
-                        <Trigger Property="Circular" Value="True">
+                        <Trigger Property="Shape" Value="Circle">
                             <Setter TargetName="Icon" 
                                     Property="FontSize" 
-                                    Value="{Binding FontSize, Mode=OneTime, RelativeSource={RelativeSource TemplatedParent},
+                                    Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
                                                 Converter={StaticResource AdditionConverter}, ConverterParameter=2}" />
                         </Trigger>
                         <EventTrigger RoutedEvent="ButtonBase.Click">
@@ -174,10 +174,10 @@
                 <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource ButtonBorderRadiusSmall}" />
             </Trigger>
             <!-- Shape Circle -->
-            <Trigger Property="Circular" Value="True">
+            <Trigger Property="Shape" Value="Circle">
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="Width" Value="{Binding Height, Mode=OneTime, RelativeSource={RelativeSource Self}}" />
-                <Setter Property="Controls:Control.CornerRadius" Value="{Binding Height, Mode=OneTime, RelativeSource={RelativeSource Self}, 
+                <Setter Property="Width" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                <Setter Property="Controls:Control.CornerRadius" Value="{Binding Height, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                                             Converter={StaticResource DoubleToCornerRadiusConverter}, ConverterParameter=2}" />
             </Trigger>
             <!-- Loading State -->
