@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BadgeViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CheckBoxViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\IconViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\InputViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RadioButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SpinViewModel.cs" />
@@ -84,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\TagView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\InputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
