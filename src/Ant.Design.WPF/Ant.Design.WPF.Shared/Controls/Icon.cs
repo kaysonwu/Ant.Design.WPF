@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using SizeBase = System.Windows.Size;
 
 namespace Antd.Controls
 {
@@ -169,7 +168,8 @@ namespace Antd.Controls
 
         public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register("Type", typeof(string), typeof(Icon),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnSpinChanged));
+                new FrameworkPropertyMetadata(null, 
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnSpinChanged));
 
         /// <summary>
         /// Gets/sets the type of the ant design icon.
@@ -309,7 +309,7 @@ namespace Antd.Controls
         /// </summary>
         /// <param name="constraint">Constraint size is an "upper limit" that should not exceed.</param>
         /// <returns>icon desired size.</returns>
-        protected override SizeBase MeasureOverride(SizeBase constraint)
+        protected override Size MeasureOverride(Size constraint)
         {
             return GetRenderSize(constraint, FontSize);
         }
@@ -319,7 +319,7 @@ namespace Antd.Controls
         /// </summary>
         /// <param name="finalSize"></param>
         /// <returns></returns>
-        protected override SizeBase ArrangeOverride(SizeBase finalSize)
+        protected override Size ArrangeOverride(Size finalSize)
         {
             return GetRenderSize(finalSize, FontSize);
         }
@@ -408,14 +408,14 @@ namespace Antd.Controls
             }
         }
 
-        private SizeBase GetRenderSize(SizeBase availableSize, double fontSize)
+        private Size GetRenderSize(Size availableSize, double fontSize)
         {
             if (IsGeometryEmpty(DefiningGeometry))
             {
-                return new SizeBase(0d, 0d);
+                return new Size(0d, 0d);
             }
 
-            return new SizeBase(Math.Min(availableSize.Width, fontSize), Math.Min(availableSize.Height, fontSize));
+            return new Size(Math.Min(availableSize.Width, fontSize), Math.Min(availableSize.Height, fontSize));
         }
 
         private bool IsGeometryEmpty(Geometry geometry)
