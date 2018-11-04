@@ -37,7 +37,21 @@
                             Basic usage example.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <TextBox />
+                            <TextBox>
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="剪切" InputGestureText="Ctrl+T" />
+                                        <MenuItem Header="复制" InputGestureText="Ctrl+C" />
+                                        <MenuItem Header="粘帖" />
+                                        <MenuItem Header="全部选择" />
+                                        <Separator />
+                                        <MenuItem Header="字体" />
+                                        <Separator />
+                                        <MenuItem Header="允许使用QQ秀聊天随动标签" IsCheckable="True" />
+                                        <MenuItem Header="使用快捷输入表情" IsCheckable="True" />
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                            </TextBox>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n

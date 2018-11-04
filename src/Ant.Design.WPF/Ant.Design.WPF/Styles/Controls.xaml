@@ -12,5 +12,6 @@
     <Style BasedOn="{StaticResource Ant.RadioButton}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource Ant.CheckBox}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource Ant.ContextMenu}" TargetType="ContextMenu" />
+    <Style BasedOn="{StaticResource Ant.MenuItem}" TargetType="MenuItem" />
    
 </ResourceDictionary>
