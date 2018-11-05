@@ -72,7 +72,7 @@
     <Controls:BorderStyle x:Key="BorderStyleBase">Solid</Controls:BorderStyle>
     
     <!-- Outline -->
-    <System:Double x:Key="OutlineWidth">2</System:Double>
+    <System:Double x:Key="OutlineWidth">2.4</System:Double>
     <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     
     <!-- Disabled states -->
@@ -131,6 +131,7 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="White"  Options:Freeze="True" />
     
     <!-- Input -->
+    <SolidColorBrush x:Key="InputPlaceholderBrush" Color="#BFBFBF" Options:Freeze="True" />
     <SolidColorBrush x:Key="InputForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
     <SolidColorBrush x:Key="InputBackground" Color="White" Options:Freeze="True" />

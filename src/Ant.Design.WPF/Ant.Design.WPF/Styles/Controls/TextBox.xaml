@@ -6,39 +6,46 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Ant.TextBox" TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="11 4" />
+    <Style x:Key="Ant.TextBox" BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type TextBox}">
+        <Setter Property="Padding" Value="12 5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <!--<Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />-->
         <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
         <Setter Property="Background" Value="{DynamicResource InputBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
         <Setter Property="Controls:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
         <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
+        <Setter Property="Controls:Input.PlaceholderBrush" Value="{DynamicResource InputPlaceholderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <!-- Addon Before -->
+                             <!-- Addon Before -->
                             <ColumnDefinition Width="Auto" />
                             <!-- Input -->
                             <ColumnDefinition Width="*" />
-                            <!-- AddonAfter -->
+                            <!-- Addon After --> 
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+                        <!-- Addon Before -->
+                        <ContentPresenter x:Name="AddonBefore"
+                                          Grid.Column="0"
+                                          Content="{TemplateBinding Controls:Input.AddonBefore}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <!-- Input Effect -->
                         <Rectangle x:Name="Input_Effect"
                                    Opacity="0"
                                    Grid.Column="1"
-                                   Margin="-1.6"
+                                   Margin="-2"
                                    Stroke="{TemplateBinding BorderBrush}" 
                                    StrokeThickness="{DynamicResource OutlineWidth}"
                                    RadiusX="{Binding RadiusX, Mode=OneWay, ElementName=PART_Border}"
-                                   RadiusY="{Binding RadiusY, Mode=OneWay, ElementName=PART_Border}" />
+                                   RadiusY="{Binding RadiusY, Mode=OneWay, ElementName=PART_Border}"  />
                         <!-- Input Border -->
                         <Rectangle x:Name="PART_Border"
                                    Grid.Column="1"
@@ -51,9 +58,52 @@
                                                 Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                    RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
                         <!-- Input -->
-                        <ScrollViewer x:Name="PART_ContentHost"
-                                      Grid.Column="1"
-                                      Margin="{TemplateBinding Padding}" />
+                        <Grid Grid.Column="1"
+                              Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <!-- Prefix -->
+                                <ColumnDefinition Width="Auto" />
+                                <!-- Input -->
+                                <ColumnDefinition Width="*" />
+                                <!-- Suffix -->
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Prefix -->
+                            <ContentPresenter x:Name="Prefix"
+                                              Grid.Column="0"
+                                              Margin="1 0 5 0"
+                                              Content="{TemplateBinding Controls:Input.Prefix}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <!-- Placeholder -->
+                            <TextBlock x:Name="Placeholder"
+                                       Grid.Column="1"
+                                       Visibility="Collapsed"
+                                       TextWrapping="{TemplateBinding TextWrapping}"
+                                       TextAlignment="{TemplateBinding TextAlignment}"
+                                       Text="{TemplateBinding Controls:Input.Placeholder}"
+                                       Foreground="{TemplateBinding Controls:Input.PlaceholderBrush}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            <!-- Input -->
+                            <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Grid.Column="1"
+                                          Margin="-12 -5"
+                                          IsTabStop="False"
+                                          BorderThickness="0"
+                                          Background="{x:Null}" />
+                            <!-- Suffix -->
+                            <ContentPresenter x:Name="Suffix"
+                                              Grid.Column="2"
+                                              Margin="5 0 1 0"
+                                              Content="{TemplateBinding Controls:Input.Suffix}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
+                        <!-- Addon After -->
+                        <ContentPresenter x:Name="AddonAfter"
+                                          Grid.Column="2"
+                                          Content="{TemplateBinding Controls:Input.AddonAfter}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualStateGroup.Transitions>
@@ -77,6 +127,16 @@
                         </Trigger>
                         <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
                             <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="">
+                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <!-- Prefix & Suffix -->
+                        <Trigger SourceName="Prefix" Property="Content" Value="{x:Null}">
+                            <Setter TargetName="Prefix" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger SourceName="Suffix" Property="Content" Value="{x:Null}">
+                            <Setter TargetName="Suffix" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

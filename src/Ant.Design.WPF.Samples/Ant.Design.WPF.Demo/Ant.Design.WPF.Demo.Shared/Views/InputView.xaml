@@ -37,7 +37,7 @@
                             Basic usage example.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <TextBox>
+                            <TextBox Antd:Input.Placeholder="Basic usage">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="剪切" InputGestureText="Ctrl+T" />
@@ -65,8 +65,65 @@
                                 &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Basic usage">
+                        <Controls:CodeBox.Description>
+                            Basic usage example.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <TextBox Antd:Input.AddonBefore="http://" Antd:Input.AddonAfter=".com">
+                                </TextBox>
+                                <TextBox Antd:Input.Placeholder="Enter keywords" Margin="0 16 0 0">
+                                    <Antd:Input.AddonAfter>
+                                        <Antd:Button Type="Primary" Content="Search" Antd:Control.CornerRadius="0" />
+                                    </Antd:Input.AddonAfter>
+                                </TextBox>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                                &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                                xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                                &lt;WrapPanel&gt;\n
+                                    \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                                &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
+                    <Controls:CodeBox Title="Basic usage">
+                        <Controls:CodeBox.Description>
+                            Basic usage example.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <TextBox Antd:Input.Placeholder="Enter your username">
+                                    <Antd:Input.Prefix>
+                                        <Antd:Icon Type="user" FontSize="16" Foreground="#3F000000" />
+                                    </Antd:Input.Prefix>
+                                </TextBox>
+                                <TextBox Antd:Input.Placeholder="Enter keywords" Margin="0 16 0 0">
+                                    <Antd:Input.Suffix>
+                                        <Antd:Icon Type="search" FontSize="16" Foreground="#3F000000" />
+                                    </Antd:Input.Suffix>
+                                </TextBox>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                                &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                                xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                                &lt;WrapPanel&gt;\n
+                                    \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                                &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
             </Grid>
         </Grid>
