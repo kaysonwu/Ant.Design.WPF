@@ -2,8 +2,94 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style x:Key="Ant.TextBox" TargetType="{x:Type TextBox}">
-        
+        <Setter Property="Padding" Value="11 4" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
+        <Setter Property="Background" Value="{DynamicResource InputBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
+        <Setter Property="Controls:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
+        <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Addon Before -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Input -->
+                            <ColumnDefinition Width="*" />
+                            <!-- AddonAfter -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Input Effect -->
+                        <Rectangle x:Name="Input_Effect"
+                                   Opacity="0"
+                                   Grid.Column="1"
+                                   Margin="-1.6"
+                                   Stroke="{TemplateBinding BorderBrush}" 
+                                   StrokeThickness="{DynamicResource OutlineWidth}"
+                                   RadiusX="{Binding RadiusX, Mode=OneWay, ElementName=PART_Border}"
+                                   RadiusY="{Binding RadiusY, Mode=OneWay, ElementName=PART_Border}" />
+                        <!-- Input Border -->
+                        <Rectangle x:Name="PART_Border"
+                                   Grid.Column="1"
+                                   Fill="{TemplateBinding Background}"
+                                   Stroke="{TemplateBinding BorderBrush}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
+                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
+                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
+                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                        <!-- Input -->
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Grid.Column="1"
+                                      Margin="{TemplateBinding Padding}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.3" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Input_Effect"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- BorderStyle -->
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
+                        </Trigger>
+                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
+                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource InputMouseOverBorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>
