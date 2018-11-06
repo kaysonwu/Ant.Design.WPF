@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragCompletedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControlDragStartedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\VisibilityBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\BorderUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\Spinner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
