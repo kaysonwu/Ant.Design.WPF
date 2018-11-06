@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Alert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Avatar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Badge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Border.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderStyle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CheckableTag.cs" />
