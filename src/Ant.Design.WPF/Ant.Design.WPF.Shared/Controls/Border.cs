@@ -16,7 +16,7 @@ namespace Antd.Controls
 
         private StreamGeometry borderGeometryCache;
 
-        private bool useComplexRenderCodePath;
+        private bool useComplexRender;
 
         private Pen leftPenCache;
 
@@ -247,10 +247,9 @@ namespace Antd.Controls
             }
 
             var radii = CornerRadius;
-            var borderBrush = BorderBrush;
-            useComplexRenderCodePath = false; // !radii.IsUniform() || !borders.IsUniform();
+            useComplexRender = !radii.IsUniform() || !borders.IsUniform();
 
-            if (useComplexRenderCodePath)
+            if (useComplexRender)
             {
                 // 取一个边框最大值，然后计算
                 if (!boundRect.Width.IsZero() && !boundRect.Height.IsZero())
@@ -303,146 +302,57 @@ namespace Antd.Controls
 
         protected override void OnRender(DrawingContext dc)
         {
+            if (useComplexRender)
+            {
+                ComplexRender(dc);
+            } else
+            {
+                SimpleRender(dc);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void SimpleRender(DrawingContext dc)
+        {
             var useLayoutRounding = UseLayoutRounding;
             var dpi = this.GetDpi();
 
+            Brush brush; 
             var borderStyle = BorderStyle;
-            var borderBrush = BorderBrush;
-
+ 
             var border = BorderThickness;
             var cornerRadius = CornerRadius;
 
-            var outerCornerRadius = CornerRadius.TopLeft;
+            var outerCornerRadius = cornerRadius.TopLeft; // Already validated that all corners have the same radius
             var roundedCorners = !outerCornerRadius.IsZero();
 
-            if (!border.IsZero() && borderBrush != null)
+            var width = RenderSize.Width;
+            var height = RenderSize.Height;
+
+            // Draw border
+            if (!border.IsZero() && (brush = BorderBrush) != null)
             {
-                var pen = leftPenCache ?? (leftPenCache = GetPen(borderBrush, borderStyle, border.Left, dpi.DpiScaleX, useLayoutRounding));
+                var pen = GetPen(brush, borderStyle, border.Left, dpi.DpiScaleX, useLayoutRounding);
                 var penThickness = pen.Thickness;
-                double x, y;
 
-                if (border.IsUniform() && cornerRadius.IsUniform())
+                double x = penThickness * 0.5;
+                var rect = new Rect(x, x, width - penThickness, height - penThickness);
+
+                if (roundedCorners)
                 {
-                    x = penThickness * 0.5;
-                    var rect = new Rect(x, x, RenderSize.Width - penThickness, RenderSize.Height - penThickness);
-
-                    if (roundedCorners)
-                    {
-                        dc.DrawRoundedRectangle(null, pen, rect, outerCornerRadius, outerCornerRadius);
-                    }
-                    else
-                    {
-                        dc.DrawRectangle(null, pen, rect);
-                    }
-
-                } else
+                    dc.DrawRoundedRectangle(null, pen, rect, outerCornerRadius, outerCornerRadius);
+                }
+                else
                 {
-                    border = new Thickness(RoundLayoutValue(border.Left, dpi.DpiScaleX), RoundLayoutValue(border.Top, dpi.DpiScaleY),
-                                    RoundLayoutValue(border.Right, dpi.DpiScaleX), RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
-                    XXXC(dc, new Rect(RenderSize), borderBrush, border, cornerRadius, dpi);
-
-
-
-                    //// Left Line
-                    //if (border.Left.IsGreaterThan(0d))
-                    //{
-                    //    x = pen.Thickness * 0.5;
-                    //    y = RenderSize.Height - cornerRadius.BottomLeft;
-
-                    //    dc.DrawLine(pen, new Point(x, cornerRadius.TopLeft), new Point(x, y));
-
-                    //} else
-                    //{
-                    //    leftPenCache = null;
-                    //}
-
-                    //// Top Line
-                    //if (border.Top.IsGreaterThan(0d))
-                    //{
-                    //    pen = topPenCache ?? (topPenCache = GetPen(borderBrush, borderStyle, border.Top, dpi.DpiScaleY, useLayoutRounding));
-
-                    //    x = RenderSize.Width - cornerRadius.TopRight;
-                    //    y = pen.Thickness * 0.5;
-
-                    //    dc.DrawLine(pen, new Point(cornerRadius.TopLeft, y), new Point(x, y));
-                    //}
-
-                    // Right Line
-                    if (border.Right.IsGreaterThan(0d))
-                    {
-                    //    pen = rightPenCache ?? (rightPenCache = GetPen(borderBrush, borderStyle, border.Right, dpi.DpiScaleX, useLayoutRounding));
-
-                      //  x = RenderSize.Width - pen.Thickness * 0.5;
-                    //    y = RenderSize.Height - cornerRadius.BottomRight;
-                     //   Console.WriteLine(new Point(x, cornerRadius.TopRight) + "|" + new Point(x, y));
-                        //dc.DrawLine(pen, new Point(x, cornerRadius.TopRight), new Point(x, y));
-                    }
-
-                    //// Bottom Line
-                    //if (border.Bottom.IsGreaterThan(0d))
-                    //{
-                    //    pen = bottomPenCache ?? (bottomPenCache = GetPen(borderBrush, borderStyle, border.Bottom, dpi.DpiScaleY, useLayoutRounding));
-
-                    //    x = RenderSize.Width - cornerRadius.BottomRight;
-                    //    y = RenderSize.Height - pen.Thickness * 0.5;
-
-
-
-                    //    dc.DrawLine(pen, new Point(cornerRadius.BottomLeft, y), new Point(x, y));
-                    //}
-
-                    //Point startPoint, endPoint;
-
-                    //// Draw Border Radius
-                    //if (!cornerRadius.TopLeft.IsZero() && (leftPenCache != null || topPenCache != null))
-                    //{
-                    //    pen = (topPenCache == null || leftPenCache.Thickness > topPenCache.Thickness) ? leftPenCache : topPenCache;
-                    //    startPoint = new Point(0, 4);
-                    //    endPoint = new Point(4, 0);
-
-                    //    //new Pen
-                    //    //{
-                    //    //    Brush = borderBrush,
-                    //    //    Thickness = leftPenCache.Thickness,
-                    //    //    DashCap = PenLineCap.Flat
-                    //    //}
-                    //    //  Console.WriteLine(startPoint +":"+endPoint);
-                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopLeft, cornerRadius.TopLeft));
-                    //}
-
-                    //if (!cornerRadius.TopRight.IsZero() && (rightPenCache != null || topPenCache != null))
-                    //{
-                    //    pen = (topPenCache == null || rightPenCache.Thickness > topPenCache.Thickness) ? rightPenCache : topPenCache;
-                    //    startPoint = new Point(RenderSize.Width - cornerRadius.TopRight, 0);
-                    //    endPoint = new Point(RenderSize.Width, cornerRadius.TopRight);
-
-                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopRight, cornerRadius.TopRight));
-                    //}
-
-                    //if (!cornerRadius.BottomRight.IsZero() && (rightPenCache != null || bottomPenCache != null))
-                    //{
-                    //    pen = (bottomPenCache == null || rightPenCache.Thickness > bottomPenCache.Thickness) ? rightPenCache : bottomPenCache;
-                    //    startPoint = new Point(99.6, 96);
-                    //    endPoint = new Point(96, 99.6);
-
-                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(4, 4));
-                    //}
-
-                    //if (!cornerRadius.BottomLeft.IsZero() && (leftPenCache != null || bottomPenCache != null))
-                    //{
-                    //    pen = (bottomPenCache == null || leftPenCache.Thickness > bottomPenCache.Thickness) ? leftPenCache : bottomPenCache;
-                    //    startPoint = new Point(4, 99.6);
-                    //    endPoint = new Point(0.4, 96);
-
-                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopRight, cornerRadius.TopRight));
-                    //}
-
+                    dc.DrawRectangle(null, pen, rect);
                 }
             }
 
             // Draw background in rectangle inside border.
-            var background = Background;
-            if (background != null)
+            if ((brush = Background) != null)
             {
                 // Intialize background 
                 Point ptTL, ptBR;
@@ -451,13 +361,13 @@ namespace Antd.Controls
                 {
                     ptTL = new Point(RoundLayoutValue(border.Left, dpi.DpiScaleX),
                                      RoundLayoutValue(border.Top, dpi.DpiScaleY));
-                    ptBR = new Point(RenderSize.Width - RoundLayoutValue(border.Right, dpi.DpiScaleX),
-                                     RenderSize.Height - RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
+                    ptBR = new Point(width - RoundLayoutValue(border.Right, dpi.DpiScaleX),
+                                     height - RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
                 }
                 else
                 {
                     ptTL = new Point(border.Left, border.Top);
-                    ptBR = new Point(RenderSize.Width - border.Right, RenderSize.Height - border.Bottom);
+                    ptBR = new Point(width - border.Right, height - border.Bottom);
                 }
 
                 // Do not draw background if the borders are so large that they overlap.
@@ -465,123 +375,23 @@ namespace Antd.Controls
                 {
                     if (roundedCorners)
                     {
-                        var innerRadii = new Radii(cornerRadius, border, false); // Determine the inner edge radius
-                        var innerCornerRadius = innerRadii.TopLeft;  // Already validated that all corners have the same radius
-                        dc.DrawRoundedRectangle(background, null, new Rect(ptTL, ptBR), innerCornerRadius, innerCornerRadius);
+                        // Determine the inner edge radius
+                        var innerCornerRadius = Math.Max(0.0, outerCornerRadius - border.Top * 0.5);
+                        dc.DrawRoundedRectangle(brush, null, new Rect(ptTL, ptBR), innerCornerRadius, innerCornerRadius);
                     }
                     else
                     {
-                        dc.DrawRectangle(background, null, new Rect(ptTL, ptBR));
+                        dc.DrawRectangle(brush, null, new Rect(ptTL, ptBR));
                     }
                 }
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private static void XXXC(DrawingContext dc, Rect rect, Brush brush, Thickness thickness, CornerRadius cornerRadius, DpiScale dpi)
+        private void ComplexRender(DrawingContext dc)
         {
-            var radii = new Radii(cornerRadius, thickness, true);
 
-            //  compute the coordinates of the key points
-            var topLeft = new Point(radii.LeftTop, thickness.Top * 0.5);
-            var topRight = new Point(rect.Width - radii.RightTop, thickness.Top * 0.5);
-            var rightTop = new Point(rect.Width - thickness.Right * 0.5, radii.TopRight);
-            var rightBottom = new Point(rect.Width - thickness.Right * 0.5, rect.Height - radii.BottomRight);
-            var bottomRight = new Point(rect.Width - radii.RightBottom, rect.Height - thickness.Bottom * 0.5);
-            var bottomLeft = new Point(radii.LeftBottom, rect.Height - thickness.Bottom * 0.5);
-            var leftBottom = new Point(thickness.Left * 0.5, rect.Height - radii.BottomLeft);
-            var leftTop = new Point(thickness.Left * 0.5, radii.TopLeft);
-
-            //  check keypoints for overlap and resolve by partitioning corners according to
-            //  the percentage of each one.  
-
-            //  top edge
-            if (topLeft.X > topRight.X)
-            {
-                var v = (radii.LeftTop) / (radii.LeftTop + radii.RightTop) * rect.Width;
-                topLeft.X = v;
-                topRight.X = v;
-            }
-
-            //  right edge
-            if (rightTop.Y > rightBottom.Y)
-            {
-                var v = (radii.TopRight) / (radii.TopRight + radii.BottomRight) * rect.Height;
-                rightTop.Y = v;
-                rightBottom.Y = v;
-            }
-
-            //  bottom edge
-            if (bottomRight.X < bottomLeft.X)
-            {
-                var v = (radii.LeftBottom) / (radii.LeftBottom + radii.RightBottom) * rect.Width;
-                bottomRight.X = v;
-                bottomLeft.X = v;
-            }
-
-            // left edge
-            if (leftBottom.Y < leftTop.Y)
-            {
-                var v = (radii.TopLeft) / (radii.TopLeft + radii.BottomLeft) * rect.Height;
-                leftBottom.Y = v;
-                leftTop.Y = v;
-            }
-
-            // Apply offset
-            var offset = new Vector(rect.TopLeft.X, rect.TopLeft.Y);
-            topLeft += offset;
-            topRight += offset;
-            rightTop += offset;
-            rightBottom += offset;
-            bottomRight += offset;
-            bottomLeft += offset;
-            leftBottom += offset;
-            leftTop += offset;
-
-            Pen pen;
-
-            // Top line
-            if (!thickness.Top.IsZero())
-            {
-                pen = GetPen(brush, BorderStyle.Dashed, thickness.Top, dpi.DpiScaleY, false);
-                dc.DrawLine(pen, topLeft, topRight);
-            }
-
-            // Right line
-            if (!thickness.Right.IsZero())
-            {
-                pen = GetPen(brush, BorderStyle.Dashed, thickness.Right, dpi.DpiScaleX, false);
-                dc.DrawLine(pen, rightTop, rightBottom);
-
-                DrawArc(dc, pen, topRight, rightTop, new Size(4, 4));
- 
-            }
-
-            // Bottom line
-            if (!thickness.Bottom.IsZero())
-            {
-                pen = GetPen(brush, BorderStyle.Dashed, thickness.Bottom, dpi.DpiScaleY, false);
-                dc.DrawLine(pen, bottomRight, bottomLeft);
-
-                DrawArc(dc, pen, rightBottom, bottomRight, new Size(4, 4));
-            }
-
-            // Left line
-            if (!thickness.Left.IsZero())
-            {
-                pen = GetPen(brush, BorderStyle.Dashed, thickness.Left, dpi.DpiScaleX, false);
-                dc.DrawLine(pen, leftBottom, leftTop);
-
-                DrawArc(dc, pen, bottomLeft, leftBottom, new Size(4, 4));
-                DrawArc(dc, pen, leftTop, topLeft, new Size(4, 4));
-            }
-
-            
         }
-
+       
         private static void DrawArc(DrawingContext dc, Pen pen, Point startPoint, Point endPoint, Size size)
         {
             var streamGeometry = new StreamGeometry();
@@ -685,7 +495,6 @@ namespace Antd.Controls
             radiusY = rect.BottomRight.Y - rightBottom.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
-                Console.WriteLine("BottomRight:" + rightBottom + "|" + bottomRight);
                 ctx.ArcTo(bottomRight, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -697,7 +506,6 @@ namespace Antd.Controls
             radiusY = rect.BottomLeft.Y - leftBottom.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
-                Console.WriteLine("BottomLeft:" + bottomLeft + "|" + leftBottom);
                 ctx.ArcTo(leftBottom, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -709,7 +517,6 @@ namespace Antd.Controls
             radiusY = leftTop.Y - rect.TopLeft.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
-                Console.WriteLine("LeftTop:" + leftTop + ":" + topLeft + ":" + new Size(radiusX, radiusY));
                 ctx.ArcTo(topLeft, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -745,6 +552,7 @@ namespace Antd.Controls
             return pen;
         }
 
+        // TODO 迁移到独立的帮助类里
         private static double RoundLayoutValue(double value, double dpiScale)
         {
             double newValue;
