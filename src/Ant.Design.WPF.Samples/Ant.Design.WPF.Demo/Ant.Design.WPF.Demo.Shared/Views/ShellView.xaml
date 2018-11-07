@@ -8,5 +8,25 @@
              mc:Ignorable="d"
              Width="930"
              Height="600">
-    <TabControl x:Name="Items" TabStripPlacement="Left" />
+    <WrapPanel>
+        <WrapPanel.Resources>
+            <Style x:Key="Decorator" TargetType="Decorator">
+                <Setter Property="Width" Value="100" />
+                <Setter Property="Height" Value="100" />
+                <Setter Property="Margin" Value="16 16" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+            </Style>
+            <Style BasedOn="{StaticResource Decorator}" TargetType="Border" />
+            <Style BasedOn="{StaticResource Decorator}" TargetType="Antd:Border" />
+            <Style BasedOn="{StaticResource Decorator}" TargetType="Antd:ClipBorder" />
+        </WrapPanel.Resources>
+        <Border BorderBrush="Red" BorderThickness="5 1" CornerRadius="4 4 0 0" />
+        <Antd:ClipBorder BorderBrush="Red" BorderThickness="5 1" />
+        <Antd:Border BorderBrush="Red" BorderThickness="1"  />
+        <Rectangle Width="100" Height="100" Stroke="Blue" StrokeThickness="0.8" StrokeDashArray="1" RadiusX="4" RadiusY="4" />
+        <Antd:Border BorderBrush="Blue" BorderThickness="1 0 1 1" BorderStyle="Dashed" CornerRadius="4" />
+        <Antd:Border BorderBrush="Black" Background="Red" BorderThickness="1"  BorderStyle="Dashed" CornerRadius="4" />
+    </WrapPanel>
+    <!--<TabControl x:Name="Items" TabStripPlacement="Left" />-->
 </Antd:Window>

@@ -16,6 +16,16 @@ namespace Antd.Controls
 
         private StreamGeometry borderGeometryCache;
 
+        private bool useComplexRenderCodePath;
+
+        private Pen leftPenCache;
+
+        private Pen topPenCache;
+
+        private Pen rightPenCache;
+
+        private Pen bottomPenCache;
+
         #endregion
 
         #region Properties
@@ -26,7 +36,8 @@ namespace Antd.Controls
             typeof(Border),
             new FrameworkPropertyMetadata(
                 null,
-                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender
+            ));
 
         /// <summary>
         /// Gets or sets the brush that fills the area between the bounds of a Border.
@@ -43,7 +54,9 @@ namespace Antd.Controls
             typeof(Border),
             new FrameworkPropertyMetadata(
                 null,
-                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender,
+                OnClearPenCache
+            ));
 
         /// <summary>
         /// Gets or sets the brush that draws the outer border color.
@@ -60,7 +73,8 @@ namespace Antd.Controls
             typeof(Border),
             new FrameworkPropertyMetadata(
                  new Thickness(),
-                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender
+                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                 OnClearPenCache
             ),
             IsThicknessValid);
 
@@ -71,6 +85,12 @@ namespace Antd.Controls
         {
             get { return (Thickness)GetValue(BorderThicknessProperty); }
             set { SetValue(BorderThicknessProperty, value); }
+        }
+
+        private static void OnClearPenCache(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var border = (Border)d;
+            border.leftPenCache = border.topPenCache = border.rightPenCache = border.bottomPenCache = null;
         }
 
         private static bool IsThicknessValid(object value)
@@ -129,7 +149,9 @@ namespace Antd.Controls
             typeof(Border),
             new FrameworkPropertyMetadata(
                 BorderStyle.Solid,
-                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+                FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender,
+                OnClearPenCache
+            ));
 
         /// <summary>
         /// Gets or sets the border style.
@@ -159,11 +181,18 @@ namespace Antd.Controls
             var desiredSize = new Size();
             var borders = BorderThickness;
 
+            if (UseLayoutRounding)
+            {
+                var dpi = this.GetDpi();
+                borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
+                   RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
+            }
+    
             // Compute the total size required
             var borderSize = borders.CollapseThickness();
             var paddingSize = Padding.CollapseThickness();
 
-            // Does the ClipBorder have a child?
+            // If we have a child
             if (child != null)
             {
                 // Combine into total decorating size
@@ -183,8 +212,7 @@ namespace Antd.Controls
             }
             else
             {
-                // Since there is no child, the border requires only the size occupied by the BorderThickness
-                // and the Padding
+                // Combine into total decorating size
                 desiredSize = new Size(borderSize.Width + paddingSize.Width, borderSize.Height + paddingSize.Height);
             }
 
@@ -199,69 +227,75 @@ namespace Antd.Controls
         protected override Size ArrangeOverride(Size finalSize)
         {
             var borders = BorderThickness;
+
+            if (UseLayoutRounding)
+            {
+                var dpi = this.GetDpi();
+                borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
+                   RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
+            }
+
             var boundRect = new Rect(finalSize);
             var innerRect = boundRect.Deflate(borders);
-            var corners = CornerRadius;
 
-            //  calculate border rendering geometry
-            if (!boundRect.Width.IsZero() && !boundRect.Height.IsZero())
-            {
-                var outerRadii = new Radii(corners, borders, new Thickness(), true);
-                var borderGeometry = new StreamGeometry();
-
-                using (var ctx = borderGeometry.Open())
-                {
-                    GenerateGeometry(ctx, boundRect, outerRadii);
-                }
-
-                // Freeze the geometry for better perfomance
-                borderGeometry.Freeze();
-                borderGeometryCache = borderGeometry;
-            }
-            else
-            {
-                borderGeometryCache = null;
-            }
-
-            //  calculate background rendering geometry
-            if (!innerRect.Width.IsZero() && !innerRect.Height.IsZero())
-            {
-                var innerRadii = new Radii(corners, borders, new Thickness(), false);
-                var backgroundGeometry = new StreamGeometry();
-
-                using (var ctx = backgroundGeometry.Open())
-                {
-                    GenerateGeometry(ctx, innerRect, innerRadii);
-                }
-
-                // Freeze the geometry for better perfomance
-                backgroundGeometry.Freeze();
-                backgroundGeometryCache = backgroundGeometry;
-            }
-            else
-            {
-                backgroundGeometryCache = null;
-            }
-
-            //  Arrange the Child and set its clip
+            //  arrange child
             var child = Child;
             if (child != null)
             {
-                var padding = Padding;
-                var childRect = innerRect.Deflate(padding);
+                Rect childRect = innerRect.Deflate(Padding);
                 child.Arrange(childRect);
-                // Calculate the Clipping Geometry
-                var clipGeometry = new StreamGeometry();
-                var childRadii = new Radii(corners, borders, padding, false);
-                using (var ctx = clipGeometry.Open())
+            }
+
+            var radii = CornerRadius;
+            var borderBrush = BorderBrush;
+            useComplexRenderCodePath = false; // !radii.IsUniform() || !borders.IsUniform();
+
+            if (useComplexRenderCodePath)
+            {
+                // 取一个边框最大值，然后计算
+                if (!boundRect.Width.IsZero() && !boundRect.Height.IsZero())
                 {
-                    GenerateGeometry(ctx, new Rect(0, 0, childRect.Width, childRect.Height), childRadii);
+                    var outerRadii = new Radii(radii, borders, true);
+                    var borderGeometry = new StreamGeometry();
+                    
+                    using (StreamGeometryContext ctx = borderGeometry.Open())
+                    {
+                        GenerateGeometry(ctx, boundRect, outerRadii, borders, false);
+                    }
+
+                    borderGeometry.Freeze();
+                    borderGeometryCache = borderGeometry;
+                }
+                else
+                {
+                    borderGeometryCache = null;
                 }
 
-                // Freeze the geometry for better perfomance
-                clipGeometry.Freeze();
-                // Apply the clip to the Child
-                // child.Clip = clipGeometry;
+                //    var innerRadii = new Radii(radii, borders, false);
+                //    StreamGeometry backgroundGeometry = null;
+
+                //    //  calculate border / background rendering geometry
+                //    if (!innerRect.Width.IsZero() && !innerRect.Height.IsZero())
+                //    {
+                //        backgroundGeometry = new StreamGeometry();
+
+                //        using (StreamGeometryContext ctx = backgroundGeometry.Open())
+                //        {
+                //            GenerateGeometry(ctx, innerRect, innerRadii);
+                //        }
+
+                //        backgroundGeometry.Freeze();
+                //        backgroundGeometryCache = backgroundGeometry;
+                //    }
+                //    else
+                //    {
+                //        backgroundGeometryCache = null;
+                //    }
+
+            }
+            else
+            {
+                backgroundGeometryCache = borderGeometryCache = null;
             }
 
             return finalSize;
@@ -269,93 +303,298 @@ namespace Antd.Controls
 
         protected override void OnRender(DrawingContext dc)
         {
-            var borders = BorderThickness;
+            var useLayoutRounding = UseLayoutRounding;
+            var dpi = this.GetDpi();
+
+            var borderStyle = BorderStyle;
             var borderBrush = BorderBrush;
-            var bgBrush = Background;
-            var borderGeometry = borderGeometryCache;
-            var backgroundGeometry = backgroundGeometryCache;
 
-            if ((borderBrush != null) && (!borders.IsZero()))
+            var border = BorderThickness;
+            var cornerRadius = CornerRadius;
+
+            var outerCornerRadius = CornerRadius.TopLeft;
+            var roundedCorners = !outerCornerRadius.IsZero();
+
+            if (!border.IsZero() && borderBrush != null)
             {
-                // If both Border and Background are valid
-                if (bgBrush != null)
+                var pen = leftPenCache ?? (leftPenCache = GetPen(borderBrush, borderStyle, border.Left, dpi.DpiScaleX, useLayoutRounding));
+                var penThickness = pen.Thickness;
+                double x, y;
+
+                if (border.IsUniform() && cornerRadius.IsUniform())
                 {
-                    // If both the background and border brushes are same,
-                    // just draw the filled borderGeometry
-                    if (borderBrush.IsEqualTo(bgBrush))
-                    {
-                        dc.DrawGeometry(borderBrush, GetPen(), borderGeometry);
-                    }
-                    // If both are opaque SolidColorBrushes, first draw the borderGeometry filled
-                    // with borderbrush and then draw the backgroundGeometry filled with background brush
-                    else if (borderBrush.IsOpaqueSolidColorBrush() && bgBrush.IsOpaqueSolidColorBrush())
-                    {
-                        dc.DrawGeometry(borderBrush, GetPen(), borderGeometry);
-                        dc.DrawGeometry(bgBrush, null, backgroundGeometry);
-                    }
-                    // If only the border is opaque, then first draw the borderGeometry filled with
-                    // background brush and then draw ONLY the borderOutlineGeometry (obtained by excluding 
-                    // backgroundGeometry from borderGeometry) with the border brush.
-                    // This will prevent gaps between the border and the background while rendering.
-                    else if (borderBrush.IsOpaqueSolidColorBrush())
-                    {
-                        if ((borderGeometry == null) || (backgroundGeometry == null))
-                            return;
+                    x = penThickness * 0.5;
+                    var rect = new Rect(x, x, RenderSize.Width - penThickness, RenderSize.Height - penThickness);
 
-                        var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
-                        var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
-                        var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                            GeometryCombineMode.Exclude, null);
-
-                        dc.DrawGeometry(bgBrush, null, borderGeometry);
-                        dc.DrawGeometry(borderBrush, GetPen(), borderOutlineGeometry);
+                    if (roundedCorners)
+                    {
+                        dc.DrawRoundedRectangle(null, pen, rect, outerCornerRadius, outerCornerRadius);
                     }
-                    // If none of the above, then it means that the border and the background must be separately drawn.
-                    // This might result in small gaps between the border and the background
-                    // Draw the borderOutlineGeometry and backgroundGeometry separately with their respective brushes
                     else
                     {
-                        if ((borderGeometry == null) || (backgroundGeometry == null))
-                            return;
-
-                        var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
-                        var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
-                        var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                            GeometryCombineMode.Exclude, null);
-
-                        dc.DrawGeometry(borderBrush, GetPen(), borderOutlineGeometry);
-                        dc.DrawGeometry(bgBrush, null, backgroundGeometry);
+                        dc.DrawRectangle(null, pen, rect);
                     }
 
-                    return;
-                }
-
-                // Only Border is valid
-                if ((borderGeometry != null) && (backgroundGeometry != null))
+                } else
                 {
-                    var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
-                    var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
-                    var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                        GeometryCombineMode.Exclude, null);
+                    border = new Thickness(RoundLayoutValue(border.Left, dpi.DpiScaleX), RoundLayoutValue(border.Top, dpi.DpiScaleY),
+                                    RoundLayoutValue(border.Right, dpi.DpiScaleX), RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
+                    XXXC(dc, new Rect(RenderSize), borderBrush, border, cornerRadius, dpi);
 
-                    dc.DrawGeometry(borderBrush, null, borderOutlineGeometry);
-                }
-                else
-                {
-                    dc.DrawGeometry(borderBrush, null, borderGeometry);
+
+
+                    //// Left Line
+                    //if (border.Left.IsGreaterThan(0d))
+                    //{
+                    //    x = pen.Thickness * 0.5;
+                    //    y = RenderSize.Height - cornerRadius.BottomLeft;
+
+                    //    dc.DrawLine(pen, new Point(x, cornerRadius.TopLeft), new Point(x, y));
+
+                    //} else
+                    //{
+                    //    leftPenCache = null;
+                    //}
+
+                    //// Top Line
+                    //if (border.Top.IsGreaterThan(0d))
+                    //{
+                    //    pen = topPenCache ?? (topPenCache = GetPen(borderBrush, borderStyle, border.Top, dpi.DpiScaleY, useLayoutRounding));
+
+                    //    x = RenderSize.Width - cornerRadius.TopRight;
+                    //    y = pen.Thickness * 0.5;
+
+                    //    dc.DrawLine(pen, new Point(cornerRadius.TopLeft, y), new Point(x, y));
+                    //}
+
+                    // Right Line
+                    if (border.Right.IsGreaterThan(0d))
+                    {
+                    //    pen = rightPenCache ?? (rightPenCache = GetPen(borderBrush, borderStyle, border.Right, dpi.DpiScaleX, useLayoutRounding));
+
+                      //  x = RenderSize.Width - pen.Thickness * 0.5;
+                    //    y = RenderSize.Height - cornerRadius.BottomRight;
+                     //   Console.WriteLine(new Point(x, cornerRadius.TopRight) + "|" + new Point(x, y));
+                        //dc.DrawLine(pen, new Point(x, cornerRadius.TopRight), new Point(x, y));
+                    }
+
+                    //// Bottom Line
+                    //if (border.Bottom.IsGreaterThan(0d))
+                    //{
+                    //    pen = bottomPenCache ?? (bottomPenCache = GetPen(borderBrush, borderStyle, border.Bottom, dpi.DpiScaleY, useLayoutRounding));
+
+                    //    x = RenderSize.Width - cornerRadius.BottomRight;
+                    //    y = RenderSize.Height - pen.Thickness * 0.5;
+
+
+
+                    //    dc.DrawLine(pen, new Point(cornerRadius.BottomLeft, y), new Point(x, y));
+                    //}
+
+                    //Point startPoint, endPoint;
+
+                    //// Draw Border Radius
+                    //if (!cornerRadius.TopLeft.IsZero() && (leftPenCache != null || topPenCache != null))
+                    //{
+                    //    pen = (topPenCache == null || leftPenCache.Thickness > topPenCache.Thickness) ? leftPenCache : topPenCache;
+                    //    startPoint = new Point(0, 4);
+                    //    endPoint = new Point(4, 0);
+
+                    //    //new Pen
+                    //    //{
+                    //    //    Brush = borderBrush,
+                    //    //    Thickness = leftPenCache.Thickness,
+                    //    //    DashCap = PenLineCap.Flat
+                    //    //}
+                    //    //  Console.WriteLine(startPoint +":"+endPoint);
+                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopLeft, cornerRadius.TopLeft));
+                    //}
+
+                    //if (!cornerRadius.TopRight.IsZero() && (rightPenCache != null || topPenCache != null))
+                    //{
+                    //    pen = (topPenCache == null || rightPenCache.Thickness > topPenCache.Thickness) ? rightPenCache : topPenCache;
+                    //    startPoint = new Point(RenderSize.Width - cornerRadius.TopRight, 0);
+                    //    endPoint = new Point(RenderSize.Width, cornerRadius.TopRight);
+
+                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopRight, cornerRadius.TopRight));
+                    //}
+
+                    //if (!cornerRadius.BottomRight.IsZero() && (rightPenCache != null || bottomPenCache != null))
+                    //{
+                    //    pen = (bottomPenCache == null || rightPenCache.Thickness > bottomPenCache.Thickness) ? rightPenCache : bottomPenCache;
+                    //    startPoint = new Point(99.6, 96);
+                    //    endPoint = new Point(96, 99.6);
+
+                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(4, 4));
+                    //}
+
+                    //if (!cornerRadius.BottomLeft.IsZero() && (leftPenCache != null || bottomPenCache != null))
+                    //{
+                    //    pen = (bottomPenCache == null || leftPenCache.Thickness > bottomPenCache.Thickness) ? leftPenCache : bottomPenCache;
+                    //    startPoint = new Point(4, 99.6);
+                    //    endPoint = new Point(0.4, 96);
+
+                    //    DrawArc(dc, pen, startPoint, endPoint, new Size(cornerRadius.TopRight, cornerRadius.TopRight));
+                    //}
+
                 }
             }
 
-            // Only Background is valid
-            if (bgBrush != null)
+            // Draw background in rectangle inside border.
+            var background = Background;
+            if (background != null)
             {
-                dc.DrawGeometry(bgBrush, null, backgroundGeometry);
+                // Intialize background 
+                Point ptTL, ptBR;
+
+                if (useLayoutRounding)
+                {
+                    ptTL = new Point(RoundLayoutValue(border.Left, dpi.DpiScaleX),
+                                     RoundLayoutValue(border.Top, dpi.DpiScaleY));
+                    ptBR = new Point(RenderSize.Width - RoundLayoutValue(border.Right, dpi.DpiScaleX),
+                                     RenderSize.Height - RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
+                }
+                else
+                {
+                    ptTL = new Point(border.Left, border.Top);
+                    ptBR = new Point(RenderSize.Width - border.Right, RenderSize.Height - border.Bottom);
+                }
+
+                // Do not draw background if the borders are so large that they overlap.
+                if (ptBR.X > ptTL.X && ptBR.Y > ptTL.Y)
+                {
+                    if (roundedCorners)
+                    {
+                        var innerRadii = new Radii(cornerRadius, border, false); // Determine the inner edge radius
+                        var innerCornerRadius = innerRadii.TopLeft;  // Already validated that all corners have the same radius
+                        dc.DrawRoundedRectangle(background, null, new Rect(ptTL, ptBR), innerCornerRadius, innerCornerRadius);
+                    }
+                    else
+                    {
+                        dc.DrawRectangle(background, null, new Rect(ptTL, ptBR));
+                    }
+                }
             }
         }
 
         #endregion
 
         #region Private Methods
+
+        private static void XXXC(DrawingContext dc, Rect rect, Brush brush, Thickness thickness, CornerRadius cornerRadius, DpiScale dpi)
+        {
+            var radii = new Radii(cornerRadius, thickness, true);
+
+            //  compute the coordinates of the key points
+            var topLeft = new Point(radii.LeftTop, thickness.Top * 0.5);
+            var topRight = new Point(rect.Width - radii.RightTop, thickness.Top * 0.5);
+            var rightTop = new Point(rect.Width - thickness.Right * 0.5, radii.TopRight);
+            var rightBottom = new Point(rect.Width - thickness.Right * 0.5, rect.Height - radii.BottomRight);
+            var bottomRight = new Point(rect.Width - radii.RightBottom, rect.Height - thickness.Bottom * 0.5);
+            var bottomLeft = new Point(radii.LeftBottom, rect.Height - thickness.Bottom * 0.5);
+            var leftBottom = new Point(thickness.Left * 0.5, rect.Height - radii.BottomLeft);
+            var leftTop = new Point(thickness.Left * 0.5, radii.TopLeft);
+
+            //  check keypoints for overlap and resolve by partitioning corners according to
+            //  the percentage of each one.  
+
+            //  top edge
+            if (topLeft.X > topRight.X)
+            {
+                var v = (radii.LeftTop) / (radii.LeftTop + radii.RightTop) * rect.Width;
+                topLeft.X = v;
+                topRight.X = v;
+            }
+
+            //  right edge
+            if (rightTop.Y > rightBottom.Y)
+            {
+                var v = (radii.TopRight) / (radii.TopRight + radii.BottomRight) * rect.Height;
+                rightTop.Y = v;
+                rightBottom.Y = v;
+            }
+
+            //  bottom edge
+            if (bottomRight.X < bottomLeft.X)
+            {
+                var v = (radii.LeftBottom) / (radii.LeftBottom + radii.RightBottom) * rect.Width;
+                bottomRight.X = v;
+                bottomLeft.X = v;
+            }
+
+            // left edge
+            if (leftBottom.Y < leftTop.Y)
+            {
+                var v = (radii.TopLeft) / (radii.TopLeft + radii.BottomLeft) * rect.Height;
+                leftBottom.Y = v;
+                leftTop.Y = v;
+            }
+
+            // Apply offset
+            var offset = new Vector(rect.TopLeft.X, rect.TopLeft.Y);
+            topLeft += offset;
+            topRight += offset;
+            rightTop += offset;
+            rightBottom += offset;
+            bottomRight += offset;
+            bottomLeft += offset;
+            leftBottom += offset;
+            leftTop += offset;
+
+            Pen pen;
+
+            // Top line
+            if (!thickness.Top.IsZero())
+            {
+                pen = GetPen(brush, BorderStyle.Dashed, thickness.Top, dpi.DpiScaleY, false);
+                dc.DrawLine(pen, topLeft, topRight);
+            }
+
+            // Right line
+            if (!thickness.Right.IsZero())
+            {
+                pen = GetPen(brush, BorderStyle.Dashed, thickness.Right, dpi.DpiScaleX, false);
+                dc.DrawLine(pen, rightTop, rightBottom);
+
+                DrawArc(dc, pen, topRight, rightTop, new Size(4, 4));
+ 
+            }
+
+            // Bottom line
+            if (!thickness.Bottom.IsZero())
+            {
+                pen = GetPen(brush, BorderStyle.Dashed, thickness.Bottom, dpi.DpiScaleY, false);
+                dc.DrawLine(pen, bottomRight, bottomLeft);
+
+                DrawArc(dc, pen, rightBottom, bottomRight, new Size(4, 4));
+            }
+
+            // Left line
+            if (!thickness.Left.IsZero())
+            {
+                pen = GetPen(brush, BorderStyle.Dashed, thickness.Left, dpi.DpiScaleX, false);
+                dc.DrawLine(pen, leftBottom, leftTop);
+
+                DrawArc(dc, pen, bottomLeft, leftBottom, new Size(4, 4));
+                DrawArc(dc, pen, leftTop, topLeft, new Size(4, 4));
+            }
+
+            
+        }
+
+        private static void DrawArc(DrawingContext dc, Pen pen, Point startPoint, Point endPoint, Size size)
+        {
+            var streamGeometry = new StreamGeometry();
+
+            using (StreamGeometryContext sc = streamGeometry.Open())
+            {
+                sc.BeginFigure(startPoint, true, false);
+                sc.ArcTo(endPoint, size, 0, false, SweepDirection.Clockwise, true, false);
+            }
+
+            streamGeometry.Freeze();
+            dc.DrawGeometry(null, pen, streamGeometry);
+        }
 
         /// <summary>
         /// Generates a StreamGeometry.
@@ -365,7 +604,7 @@ namespace Antd.Controls
         /// <param name="radii">The core points of the border which needs to be used to create
         /// the geometry</param>
         /// <returns>Result geometry.</returns>
-        private static void GenerateGeometry(StreamGeometryContext ctx, Rect rect, Radii radii)
+        private static void GenerateGeometry(StreamGeometryContext ctx, Rect rect, Radii radii, Thickness borderThickness, bool isClosed = true)
         {
             //  compute the coordinates of the key points
             var topLeft = new Point(radii.LeftTop, 0);
@@ -424,7 +663,7 @@ namespace Antd.Controls
             leftTop += offset;
 
             //  create the border geometry
-            ctx.BeginFigure(topLeft, true /* is filled */, true /* is closed */);
+            ctx.BeginFigure(topLeft, true /* is filled */, isClosed /* is closed */);
 
             // Top line
             ctx.LineTo(topRight, true /* is stroked */, false /* is smooth join */);
@@ -434,6 +673,7 @@ namespace Antd.Controls
             var radiusY = rightTop.Y - rect.TopRight.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
+                Console.WriteLine("RightTop:" + topRight + "|" + rightTop);
                 ctx.ArcTo(rightTop, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -445,6 +685,7 @@ namespace Antd.Controls
             radiusY = rect.BottomRight.Y - rightBottom.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
+                Console.WriteLine("BottomRight:" + rightBottom + "|" + bottomRight);
                 ctx.ArcTo(bottomRight, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -456,6 +697,7 @@ namespace Antd.Controls
             radiusY = rect.BottomLeft.Y - leftBottom.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
+                Console.WriteLine("BottomLeft:" + bottomLeft + "|" + leftBottom);
                 ctx.ArcTo(leftBottom, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
 
@@ -467,30 +709,64 @@ namespace Antd.Controls
             radiusY = leftTop.Y - rect.TopLeft.Y;
             if (!radiusX.IsZero() || !radiusY.IsZero())
             {
+                Console.WriteLine("LeftTop:" + leftTop + ":" + topLeft + ":" + new Size(radiusX, radiusY));
                 ctx.ArcTo(topLeft, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
             }
+
         }
 
-        private Pen GetPen()
-        {
-            DoubleCollection dashes;
 
-            switch (BorderStyle)
+        private static Pen GetPen(Brush brush, BorderStyle borderStyle, double thickness, double dpi, bool useLayoutRounding)
+        {
+            var pen = new Pen
+            {
+                Brush = brush,
+                DashCap = PenLineCap.Flat,
+                Thickness = useLayoutRounding ? RoundLayoutValue(thickness, dpi) : thickness,
+            };
+
+            switch (borderStyle)
             {
                 case BorderStyle.Dotted:
-                    dashes = new DoubleCollection { 1d };
+                    pen.DashStyle = new DashStyle(new double[] { 1 }, 0d);
                     break;
                 case BorderStyle.Dashed:
-                    dashes = new DoubleCollection { 4d, 2d };
+                    pen.DashStyle = new DashStyle(new double[] { 4, 2 }, 0d);
                     break;
                 default:
-                    return null;
+                    break;
             }
 
-            return new Pen
+            if (brush.IsFrozen)
             {
-                DashStyle = new DashStyle(dashes, 0d)
-            };
+                pen.Freeze();
+            }
+
+            return pen;
+        }
+
+        private static double RoundLayoutValue(double value, double dpiScale)
+        {
+            double newValue;
+
+            // If DPI == 1, don't use DPI-aware rounding.
+            if (!dpiScale.IsCloseTo(1.0))
+            {
+                newValue = Math.Round(value * dpiScale) / dpiScale;
+                // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
+                if (double.IsNaN(newValue) ||
+                    double.IsInfinity(newValue) ||
+                    newValue.IsCloseTo(double.MaxValue))
+                {
+                    newValue = value;
+                }
+            }
+            else
+            {
+                newValue = Math.Round(value);
+            }
+
+            return newValue;
         }
 
         #endregion
@@ -512,12 +788,12 @@ namespace Antd.Controls
 
             #endregion
 
-            internal Radii(CornerRadius radii, Thickness borders, Thickness padding, bool outer)
+            internal Radii(CornerRadius radii, Thickness borders, bool outer)
             {
-                var left = 0.5 * borders.Left + padding.Left;
-                var top = 0.5 * borders.Top + padding.Top;
-                var right = 0.5 * borders.Right + padding.Right;
-                var bottom = 0.5 * borders.Bottom + padding.Bottom;
+                var left = 0.5 * borders.Left;
+                var top = 0.5 * borders.Top;
+                var right = 0.5 * borders.Right;
+                var bottom = 0.5 * borders.Bottom;
 
                 if (outer)
                 {
