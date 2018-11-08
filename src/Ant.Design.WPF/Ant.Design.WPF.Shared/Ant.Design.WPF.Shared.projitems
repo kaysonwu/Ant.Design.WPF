@@ -19,7 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BorderStyle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CheckableTag.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ClipBorder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helpers\Input.cs" />

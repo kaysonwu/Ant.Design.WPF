@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace Antd.Controls
 {
     public  static class DpiUtil
     {
-        public static DpiScale GetDpi(this Visual visual)
+        public static DpiScale GetDpi(Visual visual)
         {
 #if NET40 || NET45
             var source = PresentationSource.FromVisual(visual);

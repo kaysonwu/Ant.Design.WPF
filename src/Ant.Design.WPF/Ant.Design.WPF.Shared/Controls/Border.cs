@@ -14,7 +14,13 @@ namespace Antd.Controls
 
         private StreamGeometry backgroundGeometryCache;
 
-        private StreamGeometry borderGeometryCache;
+        private StreamGeometry upperLeftCache;
+
+        private StreamGeometry upperRightCache;
+
+        private StreamGeometry lowerRightCache;
+
+        private StreamGeometry lowerLeftCache;
 
         private bool useComplexRender;
 
@@ -183,7 +189,7 @@ namespace Antd.Controls
 
             if (UseLayoutRounding)
             {
-                var dpi = this.GetDpi();
+                var dpi = DpiUtil.GetDpi(this);
                 borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
                    RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
             }
@@ -230,7 +236,7 @@ namespace Antd.Controls
 
             if (UseLayoutRounding)
             {
-                var dpi = this.GetDpi();
+                var dpi = DpiUtil.GetDpi(this);
                 borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
                    RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
             }
@@ -246,55 +252,109 @@ namespace Antd.Controls
                 child.Arrange(childRect);
             }
 
-            var radii = CornerRadius;
-            useComplexRender = !radii.IsUniform() || !borders.IsUniform();
+            var radius = CornerRadius;
+
+            useComplexRender = !radius.IsUniform() || !borders.IsUniform();
+            backgroundGeometryCache = upperLeftCache = upperRightCache = lowerRightCache = lowerLeftCache = null;
 
             if (useComplexRender)
             {
-                // 取一个边框最大值，然后计算
+                //  calculate border / background rendering geometry
                 if (!boundRect.Width.IsZero() && !boundRect.Height.IsZero())
                 {
-                    var outerRadii = new Radii(radii, borders, true);
-                    var borderGeometry = new StreamGeometry();
-                    
-                    using (StreamGeometryContext ctx = borderGeometry.Open())
+                    var outerRadii = new Radii(boundRect, radius, borders, true);
+
+                    // Upper-right corner
+                    var radiusX = boundRect.TopRight.X - outerRadii.TopRight.X;
+                    var radiusY = outerRadii.RightTop.Y - boundRect.TopRight.Y;
+                    if (!radiusX.IsZero() || !radiusY.IsZero())
                     {
-                        GenerateGeometry(ctx, boundRect, outerRadii, borders, false);
+                        upperRightCache = GenerateRoundedGeometry(outerRadii.TopRight, outerRadii.RightTop, new Size(radiusX, radiusY));
                     }
 
-                    borderGeometry.Freeze();
-                    borderGeometryCache = borderGeometry;
+                    // Lower-right corner
+                    radiusX = boundRect.BottomRight.X - outerRadii.BottomRight.X;
+                    radiusY = boundRect.BottomRight.Y - outerRadii.RightBottom.Y;
+                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    {
+                        lowerRightCache = GenerateRoundedGeometry(outerRadii.RightBottom, outerRadii.BottomRight, new Size(radiusX, radiusY));
+                    }
+
+                    // Lower-left corner
+                    radiusX = outerRadii.BottomLeft.X - boundRect.BottomLeft.X;
+                    radiusY = boundRect.BottomLeft.Y - outerRadii.LeftBottom.Y;
+                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    {
+                        lowerLeftCache = GenerateRoundedGeometry(outerRadii.BottomLeft, outerRadii.LeftBottom, new Size(radiusX, radiusY));
+                    }
+
+                    // Upper-left corner
+                    radiusX = outerRadii.TopLeft.X - boundRect.TopLeft.X;
+                    radiusY = outerRadii.LeftTop.Y - boundRect.TopLeft.Y;
+                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    {
+                        upperLeftCache = GenerateRoundedGeometry(outerRadii.LeftTop, outerRadii.TopLeft, new Size(radiusX, radiusY));
+                    }
                 }
-                else
+
+                if (!innerRect.Width.IsZero() && !innerRect.Height.IsZero())
                 {
-                    borderGeometryCache = null;
+                    var innerRadii = new Radii(innerRect, radius, borders, false);
+                    var backgroundGeometry = new StreamGeometry();
+
+                    using (StreamGeometryContext sc = backgroundGeometry.Open())
+                    {
+                        //  create the border geometry
+                        sc.BeginFigure(innerRadii.TopLeft, true /* is filled */, true /* is closed */);
+
+                        // Top line
+                        sc.LineTo(innerRadii.TopRight, true /* is stroked */, false /* is smooth join */);
+
+                        // Upper-right corners
+                        var radiusX = innerRect.TopRight.X - innerRadii.TopRight.X;
+                        var radiusY = innerRadii.RightTop.Y - innerRect.TopRight.Y;
+                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        {
+                            sc.ArcTo(innerRadii.RightTop, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
+                        }
+
+                        // Right line
+                        sc.LineTo(innerRadii.RightBottom, true /* is stroked */, false /* is smooth join */);
+
+                        // Lower-right corners
+                        radiusX = innerRect.BottomRight.X - innerRadii.BottomRight.X;
+                        radiusY = innerRect.BottomRight.Y - innerRadii.RightBottom.Y;
+                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        {
+                            sc.ArcTo(innerRadii.BottomRight, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
+                        }
+
+                        // Bottom line
+                        sc.LineTo(innerRadii.BottomLeft, true /* is stroked */, false /* is smooth join */);
+
+                        // Lower-left corners
+                        radiusX = innerRadii.BottomLeft.X - innerRect.BottomLeft.X;
+                        radiusY = innerRect.BottomLeft.Y - innerRadii.LeftBottom.Y;
+                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        {
+                            sc.ArcTo(innerRadii.LeftBottom, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
+                        }
+
+                        // Left line
+                        sc.LineTo(innerRadii.LeftTop, true /* is stroked */, false /* is smooth join */);
+
+                        // Upper-left corners
+                        radiusX = innerRadii.TopLeft.X - innerRect.TopLeft.X;
+                        radiusY = innerRadii.LeftTop.Y - innerRect.TopLeft.Y;
+                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        {
+                            sc.ArcTo(innerRadii.TopLeft, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
+                        }
+                    }
+
+                    backgroundGeometry.Freeze();
+                    backgroundGeometryCache = backgroundGeometry;
                 }
-
-                //    var innerRadii = new Radii(radii, borders, false);
-                //    StreamGeometry backgroundGeometry = null;
-
-                //    //  calculate border / background rendering geometry
-                //    if (!innerRect.Width.IsZero() && !innerRect.Height.IsZero())
-                //    {
-                //        backgroundGeometry = new StreamGeometry();
-
-                //        using (StreamGeometryContext ctx = backgroundGeometry.Open())
-                //        {
-                //            GenerateGeometry(ctx, innerRect, innerRadii);
-                //        }
-
-                //        backgroundGeometry.Freeze();
-                //        backgroundGeometryCache = backgroundGeometry;
-                //    }
-                //    else
-                //    {
-                //        backgroundGeometryCache = null;
-                //    }
-
-            }
-            else
-            {
-                backgroundGeometryCache = borderGeometryCache = null;
             }
 
             return finalSize;
@@ -318,7 +378,7 @@ namespace Antd.Controls
         private void SimpleRender(DrawingContext dc)
         {
             var useLayoutRounding = UseLayoutRounding;
-            var dpi = this.GetDpi();
+            var dpi = DpiUtil.GetDpi(this);
 
             Brush brush; 
             var borderStyle = BorderStyle;
@@ -389,10 +449,111 @@ namespace Antd.Controls
 
         private void ComplexRender(DrawingContext dc)
         {
+            Brush brush;
+            var width = RenderSize.Width;
+            var height = RenderSize.Height;
 
+            //Draw border
+            if (!width.IsZero() && !height.IsZero() && (brush = BorderBrush) != null)
+            {
+                var useLayoutRounding = UseLayoutRounding;
+                var dpi = DpiUtil.GetDpi(this);
+
+                var borders = BorderThickness;
+                var borderStyle = BorderStyle;
+                var radius = CornerRadius;
+                double x, y;
+
+                // Left Line
+                if (!borders.Left.IsZero())
+                {
+                    if (leftPenCache == null)
+                    {
+                        leftPenCache = GetPen(brush, borderStyle, borders.Left, dpi.DpiScaleX, useLayoutRounding);
+                    }
+
+                    x = leftPenCache.Thickness * 0.5;
+                    dc.DrawLine(leftPenCache, new Point(x, radius.TopLeft), new Point(x, height - radius.BottomLeft));
+                }
+
+                // Top Line
+                if (!borders.Top.IsZero())
+                {
+                    if (topPenCache == null)
+                    {
+                        topPenCache = GetPen(brush, borderStyle, borders.Top, dpi.DpiScaleY, useLayoutRounding);
+                    }
+
+                    y = topPenCache.Thickness * 0.5;
+                    dc.DrawLine(topPenCache, new Point(radius.TopLeft, y), new Point(width - radius.TopRight, y));
+                }
+
+                // Right Line
+                if (!borders.Right.IsZero())
+                {
+                    if (rightPenCache == null)
+                    {
+                        rightPenCache = GetPen(brush, borderStyle, borders.Right, dpi.DpiScaleX, useLayoutRounding);
+                    }
+
+                    x =  width - rightPenCache.Thickness * 0.5;
+                    dc.DrawLine(rightPenCache, new Point(x, radius.TopRight), new Point(x, height - radius.BottomRight));
+                }
+
+                // Bottom Line
+                if (!borders.Bottom.IsZero())
+                {
+                    if (bottomPenCache == null)
+                    {
+                        bottomPenCache = GetPen(brush, borderStyle, borders.Bottom, dpi.DpiScaleY, useLayoutRounding);
+                    }
+
+                    y = height - bottomPenCache.Thickness * 0.5;
+                    dc.DrawLine(bottomPenCache, new Point(radius.BottomLeft, y), new Point(width - radius.BottomRight, y));
+                }
+
+                // Draw Rounded
+                Pen pen;
+
+                if (upperLeftCache != null && (pen = GetMaxPen(leftPenCache, topPenCache)) != null)
+                {
+                    dc.DrawGeometry(null, pen, upperLeftCache);
+                }
+
+                if (upperRightCache != null && (pen = GetMaxPen(topPenCache, rightPenCache)) != null)
+                {
+                    dc.DrawGeometry(null, pen, upperRightCache);
+                }
+
+                if (lowerRightCache != null && (pen = GetMaxPen(rightPenCache, bottomPenCache)) != null)
+                {
+                    dc.DrawGeometry(null, pen, lowerRightCache);
+                }
+
+                if (lowerLeftCache != null && (pen = GetMaxPen(bottomPenCache, leftPenCache)) != null)
+                {
+                    dc.DrawGeometry(null, pen, lowerLeftCache);
+                }
+            }
+
+            // Draw background in rectangle inside border.
+            if (backgroundGeometryCache != null && (brush = Background) != null)
+            {
+                dc.DrawGeometry(brush, null, backgroundGeometryCache);
+            }
         }
-       
-        private static void DrawArc(DrawingContext dc, Pen pen, Point startPoint, Point endPoint, Size size)
+
+        private Pen GetMaxPen(Pen pen1, Pen pen2)
+        {
+            if (pen2 == null || (pen1 != null && pen2.Thickness < pen1.Thickness))
+            {
+                return pen1;
+            }
+
+            return pen2;
+        }
+
+        private static StreamGeometry GenerateRoundedGeometry(Point startPoint, Point endPoint, Size size)
         {
             var streamGeometry = new StreamGeometry();
 
@@ -403,125 +564,8 @@ namespace Antd.Controls
             }
 
             streamGeometry.Freeze();
-            dc.DrawGeometry(null, pen, streamGeometry);
+            return streamGeometry;
         }
-
-        /// <summary>
-        /// Generates a StreamGeometry.
-        /// </summary>
-        /// <param name="ctx">An already opened StreamGeometryContext.</param>
-        /// <param name="rect">Rectangle for geomentry conversion.</param>
-        /// <param name="radii">The core points of the border which needs to be used to create
-        /// the geometry</param>
-        /// <returns>Result geometry.</returns>
-        private static void GenerateGeometry(StreamGeometryContext ctx, Rect rect, Radii radii, Thickness borderThickness, bool isClosed = true)
-        {
-            //  compute the coordinates of the key points
-            var topLeft = new Point(radii.LeftTop, 0);
-            var topRight = new Point(rect.Width - radii.RightTop, 0);
-            var rightTop = new Point(rect.Width, radii.TopRight);
-            var rightBottom = new Point(rect.Width, rect.Height - radii.BottomRight);
-            var bottomRight = new Point(rect.Width - radii.RightBottom, rect.Height);
-            var bottomLeft = new Point(radii.LeftBottom, rect.Height);
-            var leftBottom = new Point(0, rect.Height - radii.BottomLeft);
-            var leftTop = new Point(0, radii.TopLeft);
-
-            //  check keypoints for overlap and resolve by partitioning corners according to
-            //  the percentage of each one.  
-
-            //  top edge
-            if (topLeft.X > topRight.X)
-            {
-                var v = (radii.LeftTop) / (radii.LeftTop + radii.RightTop) * rect.Width;
-                topLeft.X = v;
-                topRight.X = v;
-            }
-
-            //  right edge
-            if (rightTop.Y > rightBottom.Y)
-            {
-                var v = (radii.TopRight) / (radii.TopRight + radii.BottomRight) * rect.Height;
-                rightTop.Y = v;
-                rightBottom.Y = v;
-            }
-
-            //  bottom edge
-            if (bottomRight.X < bottomLeft.X)
-            {
-                var v = (radii.LeftBottom) / (radii.LeftBottom + radii.RightBottom) * rect.Width;
-                bottomRight.X = v;
-                bottomLeft.X = v;
-            }
-
-            // left edge
-            if (leftBottom.Y < leftTop.Y)
-            {
-                var v = (radii.TopLeft) / (radii.TopLeft + radii.BottomLeft) * rect.Height;
-                leftBottom.Y = v;
-                leftTop.Y = v;
-            }
-
-            // Apply offset
-            var offset = new Vector(rect.TopLeft.X, rect.TopLeft.Y);
-            topLeft += offset;
-            topRight += offset;
-            rightTop += offset;
-            rightBottom += offset;
-            bottomRight += offset;
-            bottomLeft += offset;
-            leftBottom += offset;
-            leftTop += offset;
-
-            //  create the border geometry
-            ctx.BeginFigure(topLeft, true /* is filled */, isClosed /* is closed */);
-
-            // Top line
-            ctx.LineTo(topRight, true /* is stroked */, false /* is smooth join */);
-
-            // Upper-right corners
-            var radiusX = rect.TopRight.X - topRight.X;
-            var radiusY = rightTop.Y - rect.TopRight.Y;
-            if (!radiusX.IsZero() || !radiusY.IsZero())
-            {
-                Console.WriteLine("RightTop:" + topRight + "|" + rightTop);
-                ctx.ArcTo(rightTop, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
-            }
-
-            // Right line
-            ctx.LineTo(rightBottom, true /* is stroked */, false /* is smooth join */);
-
-            // Lower-right corners
-            radiusX = rect.BottomRight.X - bottomRight.X;
-            radiusY = rect.BottomRight.Y - rightBottom.Y;
-            if (!radiusX.IsZero() || !radiusY.IsZero())
-            {
-                ctx.ArcTo(bottomRight, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
-            }
-
-            // Bottom line
-            ctx.LineTo(bottomLeft, true /* is stroked */, false /* is smooth join */);
-
-            // Lower-left corners
-            radiusX = bottomLeft.X - rect.BottomLeft.X;
-            radiusY = rect.BottomLeft.Y - leftBottom.Y;
-            if (!radiusX.IsZero() || !radiusY.IsZero())
-            {
-                ctx.ArcTo(leftBottom, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
-            }
-
-            // Left line
-            ctx.LineTo(leftTop, true /* is stroked */, false /* is smooth join */);
-
-            // Upper-left corners
-            radiusX = topLeft.X - rect.TopLeft.X;
-            radiusY = leftTop.Y - rect.TopLeft.Y;
-            if (!radiusX.IsZero() || !radiusY.IsZero())
-            {
-                ctx.ArcTo(topLeft, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
-            }
-
-        }
-
 
         private static Pen GetPen(Brush brush, BorderStyle borderStyle, double thickness, double dpi, bool useLayoutRounding)
         {
@@ -585,74 +629,144 @@ namespace Antd.Controls
         {
             #region Fields
 
-            internal readonly double LeftTop;
-            internal readonly double TopLeft;
-            internal readonly double TopRight;
-            internal readonly double RightTop;
-            internal readonly double RightBottom;
-            internal readonly double BottomRight;
-            internal readonly double BottomLeft;
-            internal readonly double LeftBottom;
+            internal readonly Point LeftTop;
+
+            internal readonly Point LeftBottom;
+
+            internal readonly Point TopLeft;
+
+            internal readonly Point TopRight;
+
+            internal readonly Point RightTop;
+
+            internal readonly Point RightBottom;
+
+            internal readonly Point BottomRight;
+
+            internal readonly Point BottomLeft;
 
             #endregion
 
-            internal Radii(CornerRadius radii, Thickness borders, bool outer)
+            internal Radii(Rect rect, CornerRadius radius, Thickness borders, bool outer)
             {
-                var left = 0.5 * borders.Left;
-                var top = 0.5 * borders.Top;
-                var right = 0.5 * borders.Right;
-                var bottom = 0.5 * borders.Bottom;
+                var left = borders.Left * 0.5;
+                var top = borders.Top * 0.5;
+                var right = borders.Right * 0.5;
+                var bottom = borders.Bottom * 0.5;
+
+                LeftTop = new Point(0d, 0d);
+                LeftBottom = new Point(0d, rect.Height);
+
+                TopLeft = new Point(0d, 0d);
+                TopRight = new Point(rect.Width, 0d);
+
+                RightTop = new Point(rect.Width, 0d);
+                RightBottom = new Point(rect.Width, rect.Height);
+
+                BottomRight = new Point(rect.Width, rect.Height);
+                BottomLeft = new Point(0d, rect.Height);
 
                 if (outer)
                 {
-                    if (radii.TopLeft.IsZero())
+                    LeftTop.X = left;
+                    LeftBottom.X = left;
+
+                    TopLeft.Y = top;
+                    TopRight.Y = top;
+
+                    RightTop.X -= right;
+                    RightBottom.X -= right;
+
+                    BottomLeft.Y -= bottom;
+                    BottomRight.Y -= bottom;
+
+                    if (!radius.TopLeft.IsZero())
                     {
-                        LeftTop = TopLeft = 0.0;
+                        TopLeft.X = radius.TopLeft; // + left;
+                        LeftTop.Y = radius.TopLeft;// + top;
                     }
-                    else
+
+                    if (!radius.TopRight.IsZero())
                     {
-                        LeftTop = radii.TopLeft + left;
-                        TopLeft = radii.TopLeft + top;
+                        RightTop.Y = radius.TopRight;// + top;
+                        TopRight.X -= radius.TopRight;// + right;
                     }
-                    if (radii.TopRight.IsZero())
+
+                    if (!radius.BottomRight.IsZero())
                     {
-                        TopRight = RightTop = 0.0;
+                        BottomRight.X -= radius.BottomRight;// + right;
+                        RightBottom.Y -= radius.BottomRight;// + bottom; ;
                     }
-                    else
+
+                    if (!radius.BottomLeft.IsZero())
                     {
-                        TopRight = radii.TopRight + top;
-                        RightTop = radii.TopRight + right;
+                        LeftBottom.Y -= radius.BottomLeft; // + bottom;
+                        BottomLeft.X = radius.BottomLeft;// + left;
                     }
-                    if (radii.BottomRight.IsZero())
-                    {
-                        RightBottom = BottomRight = 0.0;
-                    }
-                    else
-                    {
-                        RightBottom = radii.BottomRight + right;
-                        BottomRight = radii.BottomRight + bottom;
-                    }
-                    if (radii.BottomLeft.IsZero())
-                    {
-                        BottomLeft = LeftBottom = 0.0;
-                    }
-                    else
-                    {
-                        BottomLeft = radii.BottomLeft + bottom;
-                        LeftBottom = radii.BottomLeft + left;
-                    }
-                }
-                else
+                } else
                 {
-                    LeftTop = Math.Max(0.0, radii.TopLeft - left);
-                    TopLeft = Math.Max(0.0, radii.TopLeft - top);
-                    TopRight = Math.Max(0.0, radii.TopRight - top);
-                    RightTop = Math.Max(0.0, radii.TopRight - right);
-                    RightBottom = Math.Max(0.0, radii.BottomRight - right);
-                    BottomRight = Math.Max(0.0, radii.BottomRight - bottom);
-                    BottomLeft = Math.Max(0.0, radii.BottomLeft - bottom);
-                    LeftBottom = Math.Max(0.0, radii.BottomLeft - left);
+                    TopLeft.X = Math.Max(0.0, radius.TopLeft - left);
+                    LeftTop.Y = Math.Max(0.0, radius.TopLeft - top);
+
+                    RightTop.Y = Math.Max(0.0, radius.TopRight - top);
+                    TopRight.X -= Math.Max(0.0, radius.TopRight - right);
+
+                    BottomRight.X -= Math.Max(0.0, radius.BottomRight - right);
+                    RightBottom.Y -= Math.Max(0.0, radius.BottomRight - bottom);
+
+                    LeftBottom.Y -= Math.Max(0.0, radius.BottomLeft - bottom);
+                    BottomLeft.X = Math.Max(0.0, radius.BottomLeft - left);
                 }
+
+                //  check keypoints for overlap and resolve by partitioning corners according to
+                //  the percentage of each one.  
+
+                //  top edge
+                if (TopLeft.X > TopRight.X)
+                {
+                    var v = TopLeft.X / (TopLeft.X + rect.Width - TopRight.X) * rect.Width;
+                    TopLeft.X = v;
+                    TopRight.X = v;
+                }
+
+                //  right edge
+                if (RightTop.Y > RightBottom.Y)
+                {
+                    var v = RightTop.Y / (RightTop.Y + rect.Height - RightBottom.Y) * rect.Height;
+                    RightTop.Y = v;
+                    RightBottom.Y = v;
+                }
+
+                //  bottom edge
+                if (BottomRight.X < BottomLeft.X)
+                {
+                    var v = BottomLeft.X / (BottomLeft.X + rect.Width - BottomRight.X) * rect.Width;
+                    BottomRight.X = v;
+                    BottomLeft.X = v;
+                }
+
+                // left edge
+                if (LeftBottom.Y < LeftTop.Y)
+                {
+                    var v = LeftTop.Y / (LeftTop.Y + rect.Height - LeftBottom.Y) * rect.Height;
+                    LeftBottom.Y = v;
+                    LeftTop.Y = v;
+                }
+
+                // Apply offset
+                var offset = new Vector(rect.TopLeft.X, rect.TopLeft.Y);
+
+                LeftTop += offset;
+                LeftBottom += offset;
+
+                TopRight += offset;
+                TopLeft += offset;
+
+                RightTop += offset;
+                RightBottom += offset;
+
+                BottomRight += offset;
+                BottomLeft += offset;
             }
         }
 
