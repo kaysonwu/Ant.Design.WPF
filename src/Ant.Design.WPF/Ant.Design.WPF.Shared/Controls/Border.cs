@@ -188,8 +188,8 @@ namespace Antd.Controls
             if (UseLayoutRounding)
             {
                 var dpi = DpiUtil.GetDpi(this);
-                borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
-                   RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
+                borders = new Thickness(UIElementUtil.RoundLayoutValue(borders.Left, dpi.DpiScaleX), UIElementUtil.RoundLayoutValue(borders.Top, dpi.DpiScaleY),
+                   UIElementUtil.RoundLayoutValue(borders.Right, dpi.DpiScaleX), UIElementUtil.RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
             }
 
             // Compute the total size required
@@ -235,8 +235,8 @@ namespace Antd.Controls
             if (UseLayoutRounding)
             {
                 var dpi = DpiUtil.GetDpi(this);
-                borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
-                   RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
+                borders = new Thickness(UIElementUtil.RoundLayoutValue(borders.Left, dpi.DpiScaleX), UIElementUtil.RoundLayoutValue(borders.Top, dpi.DpiScaleY),
+                   UIElementUtil.RoundLayoutValue(borders.Right, dpi.DpiScaleX), UIElementUtil.RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
             }
 
             var boundRect = new Rect(finalSize);
@@ -417,10 +417,10 @@ namespace Antd.Controls
 
                 if (useLayoutRounding)
                 {
-                    ptTL = new Point(RoundLayoutValue(borders.Left, dpi.DpiScaleX),
-                                     RoundLayoutValue(borders.Top, dpi.DpiScaleY));
-                    ptBR = new Point(width - RoundLayoutValue(borders.Right, dpi.DpiScaleX),
-                                     height - RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
+                    ptTL = new Point(UIElementUtil.RoundLayoutValue(borders.Left, dpi.DpiScaleX),
+                                     UIElementUtil.RoundLayoutValue(borders.Top, dpi.DpiScaleY));
+                    ptBR = new Point(width - UIElementUtil.RoundLayoutValue(borders.Right, dpi.DpiScaleX),
+                                     height - UIElementUtil.RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
                 }
                 else
                 {
@@ -571,7 +571,7 @@ namespace Antd.Controls
             {
                 Brush = brush,
                 DashCap = PenLineCap.Flat,
-                Thickness = useLayoutRounding ? RoundLayoutValue(thickness, dpi) : thickness,
+                Thickness = useLayoutRounding ? UIElementUtil.RoundLayoutValue(thickness, dpi) : thickness,
             };
 
             switch (borderStyle)
@@ -592,31 +592,6 @@ namespace Antd.Controls
             }
 
             return pen;
-        }
-
-        // TODO 迁移到独立的帮助类里
-        private static double RoundLayoutValue(double value, double dpiScale)
-        {
-            double newValue;
-
-            // If DPI == 1, don't use DPI-aware rounding.
-            if (!DoubleUtil.AreClose(dpiScale, 1.0))
-            {
-                newValue = Math.Round(value * dpiScale) / dpiScale;
-                // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
-                if (double.IsNaN(newValue) ||
-                    double.IsInfinity(newValue) ||
-                    DoubleUtil.AreClose(newValue, double.MaxValue))
-                {
-                    newValue = value;
-                }
-            }
-            else
-            {
-                newValue = Math.Round(value);
-            }
-
-            return newValue;
         }
 
         #endregion
