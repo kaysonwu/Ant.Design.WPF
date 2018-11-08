@@ -81,10 +81,18 @@ namespace Standard
 
         public static DpiScale GetDpi(Visual visual)
         {
-#if NET462
-            return VisualTreeHelper.GetDpi(visual);
+#if NET40 || NET45
+            var source = PresentationSource.FromVisual(visual);
+
+            if (source?.CompositionTarget == null)
+            {
+                return new DpiScale(1.0, 1.0);
+            }
+
+            var device = source.CompositionTarget.TransformToDevice;
+            return new DpiScale(device.M11, device.M22);
 #else
-            return new DpiScale(1, 1);
+            return VisualTreeHelper.GetDpi(visual);
 #endif
         }
 
