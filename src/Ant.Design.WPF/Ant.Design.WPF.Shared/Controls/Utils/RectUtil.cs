@@ -11,7 +11,7 @@ namespace Antd.Controls
         /// <param name="rect">Rectangle</param>
         /// <param name="thick">Thickness</param>
         /// <returns>Deflated Rectangle</returns>
-        internal static Rect Deflate(Rect rect, Thickness thick)
+        public static Rect Deflate(Rect rect, Thickness thick)
         {
             return new Rect(rect.Left + thick.Left, rect.Top + thick.Top,
                             Math.Max(0.0, rect.Width - thick.Left - thick.Right),
@@ -24,7 +24,7 @@ namespace Antd.Controls
         /// <param name="rect">Rectangle</param>
         /// <param name="thick">Thickness</param>
         /// <returns>Inflated Rectangle</returns>
-        internal static Rect Inflate(Rect rect, Thickness thick)
+        public static Rect Inflate(Rect rect, Thickness thick)
         {
             return new Rect(rect.Left - thick.Left, rect.Top - thick.Top,
                             Math.Max(0.0, rect.Width + thick.Left + thick.Right),

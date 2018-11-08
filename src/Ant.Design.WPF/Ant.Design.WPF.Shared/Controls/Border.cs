@@ -101,8 +101,7 @@ namespace Antd.Controls
 
         private static bool IsThicknessValid(object value)
         {
-            Thickness t = (Thickness)value;
-            return t.IsValid(false, false, false, false);
+            return ThicknessUtil.IsValid((Thickness)value, false, false, false, false);
         }
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
@@ -193,10 +192,10 @@ namespace Antd.Controls
                 borders = new Thickness(RoundLayoutValue(borders.Left, dpi.DpiScaleX), RoundLayoutValue(borders.Top, dpi.DpiScaleY),
                    RoundLayoutValue(borders.Right, dpi.DpiScaleX), RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
             }
-    
+
             // Compute the total size required
-            var borderSize = borders.CollapseThickness();
-            var paddingSize = Padding.CollapseThickness();
+            var borderSize = ThicknessUtil.CollapseThickness(borders);
+            var paddingSize = ThicknessUtil.CollapseThickness(Padding);
 
             // If we have a child
             if (child != null)
@@ -254,7 +253,7 @@ namespace Antd.Controls
 
             var radius = CornerRadius;
 
-            useComplexRender = !radius.IsUniform() || !borders.IsUniform();
+            useComplexRender = !radius.IsUniform() || !ThicknessUtil.IsUniform(borders);
             backgroundGeometryCache = upperLeftCache = upperRightCache = lowerRightCache = lowerLeftCache = null;
 
             if (useComplexRender)
@@ -383,7 +382,7 @@ namespace Antd.Controls
             Brush brush; 
             var borderStyle = BorderStyle;
  
-            var border = BorderThickness;
+            var borders = BorderThickness;
             var cornerRadius = CornerRadius;
 
             var outerCornerRadius = cornerRadius.TopLeft; // Already validated that all corners have the same radius
@@ -393,9 +392,9 @@ namespace Antd.Controls
             var height = RenderSize.Height;
 
             // Draw border
-            if (!border.IsZero() && (brush = BorderBrush) != null)
+            if (!ThicknessUtil.IsZero(borders) && (brush = BorderBrush) != null)
             {
-                var pen = GetPen(brush, borderStyle, border.Left, dpi.DpiScaleX, useLayoutRounding);
+                var pen = GetPen(brush, borderStyle, borders.Left, dpi.DpiScaleX, useLayoutRounding);
                 var penThickness = pen.Thickness;
 
                 double x = penThickness * 0.5;
@@ -419,15 +418,15 @@ namespace Antd.Controls
 
                 if (useLayoutRounding)
                 {
-                    ptTL = new Point(RoundLayoutValue(border.Left, dpi.DpiScaleX),
-                                     RoundLayoutValue(border.Top, dpi.DpiScaleY));
-                    ptBR = new Point(width - RoundLayoutValue(border.Right, dpi.DpiScaleX),
-                                     height - RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
+                    ptTL = new Point(RoundLayoutValue(borders.Left, dpi.DpiScaleX),
+                                     RoundLayoutValue(borders.Top, dpi.DpiScaleY));
+                    ptBR = new Point(width - RoundLayoutValue(borders.Right, dpi.DpiScaleX),
+                                     height - RoundLayoutValue(borders.Bottom, dpi.DpiScaleY));
                 }
                 else
                 {
-                    ptTL = new Point(border.Left, border.Top);
-                    ptBR = new Point(width - border.Right, height - border.Bottom);
+                    ptTL = new Point(borders.Left, borders.Top);
+                    ptBR = new Point(width - borders.Right, height - borders.Bottom);
                 }
 
                 // Do not draw background if the borders are so large that they overlap.
@@ -436,7 +435,7 @@ namespace Antd.Controls
                     if (roundedCorners)
                     {
                         // Determine the inner edge radius
-                        var innerCornerRadius = Math.Max(0.0, outerCornerRadius - border.Top * 0.5);
+                        var innerCornerRadius = Math.Max(0.0, outerCornerRadius - borders.Top * 0.5);
                         dc.DrawRoundedRectangle(brush, null, new Rect(ptTL, ptBR), innerCornerRadius, innerCornerRadius);
                     }
                     else
