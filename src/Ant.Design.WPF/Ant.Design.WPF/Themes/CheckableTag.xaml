@@ -20,25 +20,23 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:CheckableTag}">
-                    <Grid UseLayoutRounding="True">
-                        <!-- Border -->
-                        <Rectangle x:Name="PART_Border"
-                                   Fill="{TemplateBinding Background}"
-                                   Stroke="{TemplateBinding BorderBrush}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                    <Controls:Border x:Name="Border"
+                                     UseLayoutRounding="True"
+                                     Padding="{TemplateBinding Padding}"
+                                     Background="{TemplateBinding Background}"
+                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"   
+                                     BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
+                                     CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
                         <!-- Content -->
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
@@ -54,22 +52,15 @@
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                    </Grid>
+                    </Controls:Border>
                     <ControlTemplate.Triggers>
-                        <!-- BorderStyle -->
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
-                        </Trigger>
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
-                        </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsChecked" Value="True" />
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_Border" 
-                                    Property="Fill" 
+                            <Setter TargetName="Border" 
+                                    Property="Background" 
                                     Value="{Binding Background, 
                                                     Mode=OneWay, 
                                                     ConverterParameter=7,

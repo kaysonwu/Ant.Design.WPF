@@ -33,41 +33,41 @@
                                 BorderThickness="0"
                                 BorderBrush="{TemplateBinding EffectBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                CornerRadius="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}" />
                         <!-- Border -->
-                        <Rectangle x:Name="PART_Border"
-                                   Fill="{TemplateBinding Background}"
-                                   Stroke="{TemplateBinding BorderBrush}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
-                        <!-- Content -->
-                        <Grid Margin="{TemplateBinding Padding}">
-                            <Grid.ColumnDefinitions>
-                                <!-- Icon -->
-                                <ColumnDefinition Width="Auto" />
-                                <!-- Content -->
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Controls:Icon x:Name="Icon" 
-                                           Margin="0 0 8 0"
-                                           Focusable="False" 
-                                           Type="{TemplateBinding Icon}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                            <ContentPresenter x:Name="Content"
-                                              Grid.Column="1"
-                                              RecognizesAccessKey="True"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                        </Grid>
+                        <Controls:Border x:Name="PART_Border"
+                                         Padding="{TemplateBinding Padding}"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
+                                         CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
+                            <!-- Content -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!-- Icon -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Content -->
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Controls:Icon x:Name="Icon" 
+                                               Margin="0 0 8 0"
+                                               Focusable="False" 
+                                               Type="{TemplateBinding Icon}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                <ContentPresenter x:Name="Content"
+                                                  Grid.Column="1"
+                                                  RecognizesAccessKey="True"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            </Grid>
+                        </Controls:Border>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
@@ -101,13 +101,6 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- BorderStyle -->
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
-                        </Trigger>
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
-                        </Trigger>
                         <!-- Loading State -->
                         <Trigger Property="Loading" Value="True">
                             <Setter TargetName="Icon" Property="Type" Value="loading" />

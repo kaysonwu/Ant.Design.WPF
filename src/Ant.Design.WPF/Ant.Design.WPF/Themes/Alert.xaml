@@ -53,18 +53,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Alert}">
-                    <Grid UseLayoutRounding="True">
-                        <!-- Border -->
-                        <Rectangle x:Name="PART_Border"
-                                   Fill="{TemplateBinding Background}"
-                                   Stroke="{TemplateBinding BorderBrush}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
-                        <Grid Margin="{TemplateBinding Padding}">
+                    <Controls:Border UseLayoutRounding="True"
+                                     Padding="{TemplateBinding Padding}"
+                                     Background="{TemplateBinding Background}"
+                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                     BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
+                                     CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
+                        <Grid>
                             <Grid.Resources>
                                 <!-- TODO Does it have other uses? -->
                                 <Style x:Key="Ant.AlertCloseButton" TargetType="{x:Type Button}">
@@ -148,15 +145,8 @@
                                     Style="{StaticResource Ant.AlertCloseButton}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Grid>
-                    </Grid>
+                    </Controls:Border>
                     <ControlTemplate.Triggers>
-                        <!-- BorderStyle -->
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
-                        </Trigger>
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
-                        </Trigger>
                         <!-- With Description -->
                         <DataTrigger Binding="{Binding Description, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                 Converter={StaticResource IsNullConverter}}" Value="False">
