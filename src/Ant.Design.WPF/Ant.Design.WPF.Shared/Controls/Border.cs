@@ -260,14 +260,14 @@ namespace Antd.Controls
             if (useComplexRender)
             {
                 //  calculate border / background rendering geometry
-                if (!boundRect.Width.IsZero() && !boundRect.Height.IsZero())
+                if (!DoubleUtil.IsZero(boundRect.Width) && !DoubleUtil.IsZero(boundRect.Height))
                 {
                     var outerRadii = new Radii(boundRect, radius, borders, true);
 
                     // Upper-right corner
                     var radiusX = boundRect.TopRight.X - outerRadii.TopRight.X;
                     var radiusY = outerRadii.RightTop.Y - boundRect.TopRight.Y;
-                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                     {
                         upperRightCache = GenerateRoundedGeometry(outerRadii.TopRight, outerRadii.RightTop, new Size(radiusX, radiusY));
                     }
@@ -275,7 +275,7 @@ namespace Antd.Controls
                     // Lower-right corner
                     radiusX = boundRect.BottomRight.X - outerRadii.BottomRight.X;
                     radiusY = boundRect.BottomRight.Y - outerRadii.RightBottom.Y;
-                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                     {
                         lowerRightCache = GenerateRoundedGeometry(outerRadii.RightBottom, outerRadii.BottomRight, new Size(radiusX, radiusY));
                     }
@@ -283,7 +283,7 @@ namespace Antd.Controls
                     // Lower-left corner
                     radiusX = outerRadii.BottomLeft.X - boundRect.BottomLeft.X;
                     radiusY = boundRect.BottomLeft.Y - outerRadii.LeftBottom.Y;
-                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                     {
                         lowerLeftCache = GenerateRoundedGeometry(outerRadii.BottomLeft, outerRadii.LeftBottom, new Size(radiusX, radiusY));
                     }
@@ -291,13 +291,13 @@ namespace Antd.Controls
                     // Upper-left corner
                     radiusX = outerRadii.TopLeft.X - boundRect.TopLeft.X;
                     radiusY = outerRadii.LeftTop.Y - boundRect.TopLeft.Y;
-                    if (!radiusX.IsZero() || !radiusY.IsZero())
+                    if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                     {
                         upperLeftCache = GenerateRoundedGeometry(outerRadii.LeftTop, outerRadii.TopLeft, new Size(radiusX, radiusY));
                     }
                 }
-
-                if (!innerRect.Width.IsZero() && !innerRect.Height.IsZero())
+  
+                if (!DoubleUtil.IsZero(innerRect.Width) && !DoubleUtil.IsZero(innerRect.Height))
                 {
                     var innerRadii = new Radii(innerRect, radius, borders, false);
                     var backgroundGeometry = new StreamGeometry();
@@ -313,7 +313,7 @@ namespace Antd.Controls
                         // Upper-right corners
                         var radiusX = innerRect.TopRight.X - innerRadii.TopRight.X;
                         var radiusY = innerRadii.RightTop.Y - innerRect.TopRight.Y;
-                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                         {
                             sc.ArcTo(innerRadii.RightTop, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
                         }
@@ -324,7 +324,7 @@ namespace Antd.Controls
                         // Lower-right corners
                         radiusX = innerRect.BottomRight.X - innerRadii.BottomRight.X;
                         radiusY = innerRect.BottomRight.Y - innerRadii.RightBottom.Y;
-                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                         {
                             sc.ArcTo(innerRadii.BottomRight, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
                         }
@@ -335,7 +335,7 @@ namespace Antd.Controls
                         // Lower-left corners
                         radiusX = innerRadii.BottomLeft.X - innerRect.BottomLeft.X;
                         radiusY = innerRect.BottomLeft.Y - innerRadii.LeftBottom.Y;
-                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                         {
                             sc.ArcTo(innerRadii.LeftBottom, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
                         }
@@ -346,7 +346,7 @@ namespace Antd.Controls
                         // Upper-left corners
                         radiusX = innerRadii.TopLeft.X - innerRect.TopLeft.X;
                         radiusY = innerRadii.LeftTop.Y - innerRect.TopLeft.Y;
-                        if (!radiusX.IsZero() || !radiusY.IsZero())
+                        if (!DoubleUtil.IsZero(radiusX) || !DoubleUtil.IsZero(radiusY))
                         {
                             sc.ArcTo(innerRadii.TopLeft, new Size(radiusX, radiusY), 0, false, SweepDirection.Clockwise, true, false);
                         }
@@ -387,7 +387,7 @@ namespace Antd.Controls
             var cornerRadius = CornerRadius;
 
             var outerCornerRadius = cornerRadius.TopLeft; // Already validated that all corners have the same radius
-            var roundedCorners = !outerCornerRadius.IsZero();
+            var roundedCorners = !DoubleUtil.IsZero(outerCornerRadius);
 
             var width = RenderSize.Width;
             var height = RenderSize.Height;
@@ -452,9 +452,9 @@ namespace Antd.Controls
             Brush brush;
             var width = RenderSize.Width;
             var height = RenderSize.Height;
-
+       
             //Draw border
-            if (!width.IsZero() && !height.IsZero() && (brush = BorderBrush) != null)
+            if (!DoubleUtil.IsZero(width) && !DoubleUtil.IsZero(height) && (brush = BorderBrush) != null)
             {
                 var useLayoutRounding = UseLayoutRounding;
                 var dpi = DpiUtil.GetDpi(this);
@@ -465,7 +465,7 @@ namespace Antd.Controls
                 double x, y;
 
                 // Left Line
-                if (!borders.Left.IsZero())
+                if (!DoubleUtil.IsZero(borders.Left))
                 {
                     if (leftPenCache == null)
                     {
@@ -477,7 +477,7 @@ namespace Antd.Controls
                 }
 
                 // Top Line
-                if (!borders.Top.IsZero())
+                if (!DoubleUtil.IsZero(borders.Top))
                 {
                     if (topPenCache == null)
                     {
@@ -489,7 +489,7 @@ namespace Antd.Controls
                 }
 
                 // Right Line
-                if (!borders.Right.IsZero())
+                if (!DoubleUtil.IsZero(borders.Right))
                 {
                     if (rightPenCache == null)
                     {
@@ -501,7 +501,7 @@ namespace Antd.Controls
                 }
 
                 // Bottom Line
-                if (!borders.Bottom.IsZero())
+                if (!DoubleUtil.IsZero(borders.Bottom))
                 {
                     if (bottomPenCache == null)
                     {
@@ -602,13 +602,13 @@ namespace Antd.Controls
             double newValue;
 
             // If DPI == 1, don't use DPI-aware rounding.
-            if (!dpiScale.IsCloseTo(1.0))
+            if (!DoubleUtil.AreClose(dpiScale, 1.0))
             {
                 newValue = Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
                 if (double.IsNaN(newValue) ||
                     double.IsInfinity(newValue) ||
-                    newValue.IsCloseTo(double.MaxValue))
+                    DoubleUtil.AreClose(newValue, double.MaxValue))
                 {
                     newValue = value;
                 }
@@ -680,25 +680,25 @@ namespace Antd.Controls
                     BottomLeft.Y -= bottom;
                     BottomRight.Y -= bottom;
 
-                    if (!radius.TopLeft.IsZero())
+                    if (!DoubleUtil.IsZero(radius.TopLeft))
                     {
                         TopLeft.X = radius.TopLeft; // + left;
                         LeftTop.Y = radius.TopLeft;// + top;
                     }
 
-                    if (!radius.TopRight.IsZero())
+                    if (!DoubleUtil.IsZero(radius.TopRight))
                     {
                         RightTop.Y = radius.TopRight;// + top;
                         TopRight.X -= radius.TopRight;// + right;
                     }
-
-                    if (!radius.BottomRight.IsZero())
+                    
+                    if (!DoubleUtil.IsZero(radius.BottomRight))
                     {
                         BottomRight.X -= radius.BottomRight;// + right;
                         RightBottom.Y -= radius.BottomRight;// + bottom; ;
                     }
 
-                    if (!radius.BottomLeft.IsZero())
+                    if (!DoubleUtil.IsZero(radius.BottomLeft))
                     {
                         LeftBottom.Y -= radius.BottomLeft; // + bottom;
                         BottomLeft.X = radius.BottomLeft;// + left;
