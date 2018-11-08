@@ -1,44 +1,9 @@
-﻿// Copyright (c) 2017 Ratish Philip 
-//
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal 
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is 
-// furnished to do so, subject to the following conditions: 
-// 
-// 
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software. 
-// 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE. 
-//
-// This file is part of the WPFSpark project: https://github.com/ratishphilip/wpfspark
-//
-// WPFSpark v1.3.1
-// 
-using System.Windows;
+﻿using System.Windows;
 
 namespace Antd.Controls
 {
-    public static class BorderUtil
+    public static class CornerRadiusUtil
     {
-        #region Thickness
-
-
-
-        #endregion
-
-        #region CornerRadius
-
         /// <summary>
         /// Verifies if this CornerRadius contains only valid values
         /// The set of validity checks is passed as parameters.
@@ -49,7 +14,7 @@ namespace Antd.Controls
         /// <param name='allowPositiveInfinity'>allows Double.PositiveInfinity</param>
         /// <param name='allowNegativeInfinity'>allows Double.NegativeInfinity</param>
         /// <returns>Whether or not the CornerRadius complies to the range specified</returns>
-        public static bool IsValid(this CornerRadius corner, bool allowNegative, bool allowNaN, bool allowPositiveInfinity, bool allowNegativeInfinity)
+        public static bool IsValid(CornerRadius corner, bool allowNegative, bool allowNaN, bool allowPositiveInfinity, bool allowNegativeInfinity)
         {
             if (!allowNegative)
             {
@@ -94,7 +59,7 @@ namespace Antd.Controls
         /// </summary>
         /// <param name="corner">CornerRadius</param>
         /// <returns>Size</returns>
-        public static bool IsZero(this CornerRadius corner)
+        public static bool IsZero(CornerRadius corner)
         {
             return DoubleUtil.IsZero(corner.TopLeft) && DoubleUtil.IsZero(corner.TopRight)
                     && DoubleUtil.IsZero(corner.BottomRight) && DoubleUtil.IsZero(corner.BottomLeft);
@@ -105,14 +70,12 @@ namespace Antd.Controls
         /// </summary>
         /// <param name="corner">CornerRadius</param>
         /// <returns>true if yes, otherwise false</returns>
-        public static bool IsUniform(this CornerRadius corner)
+        public static bool IsUniform(CornerRadius corner)
         {
             var topLeft = corner.TopLeft;
             return DoubleUtil.AreClose(topLeft, corner.TopRight)
                     && DoubleUtil.AreClose(topLeft, corner.BottomRight)
                     && DoubleUtil.AreClose(topLeft, corner.BottomLeft);
         }
-
-        #endregion
     }
 }

@@ -125,8 +125,7 @@ namespace Antd.Controls
 
         private static bool IsCornerRadiusValid(object value)
         {
-            CornerRadius cr = (CornerRadius)value;
-            return (cr.IsValid(false, false, false, false));
+            return CornerRadiusUtil.IsValid((CornerRadius)value, false, false, false, false);
         }
 
         public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register(
@@ -253,7 +252,7 @@ namespace Antd.Controls
 
             var radius = CornerRadius;
 
-            useComplexRender = !radius.IsUniform() || !ThicknessUtil.IsUniform(borders);
+            useComplexRender = !CornerRadiusUtil.IsUniform(radius) || !ThicknessUtil.IsUniform(borders);
             backgroundGeometryCache = upperLeftCache = upperRightCache = lowerRightCache = lowerLeftCache = null;
 
             if (useComplexRender)
