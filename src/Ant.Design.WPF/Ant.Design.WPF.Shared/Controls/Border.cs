@@ -242,13 +242,13 @@ namespace Antd.Controls
             }
 
             var boundRect = new Rect(finalSize);
-            var innerRect = boundRect.Deflate(borders);
+            var innerRect = RectUtil.Deflate(boundRect, borders);
 
             //  arrange child
             var child = Child;
             if (child != null)
             {
-                Rect childRect = innerRect.Deflate(Padding);
+                Rect childRect = RectUtil.Deflate(innerRect, Padding);
                 child.Arrange(childRect);
             }
 

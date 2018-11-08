@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\VisibilityBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\BorderUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\DpiUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\RectUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Utils\Spinner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Window.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtons.cs" />
