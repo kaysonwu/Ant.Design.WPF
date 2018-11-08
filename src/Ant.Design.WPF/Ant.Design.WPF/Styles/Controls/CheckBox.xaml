@@ -46,7 +46,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                CornerRadius="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}" />
                         <Path x:Name="CheckedMark"
                                 Fill="White"
                                 Width="7"

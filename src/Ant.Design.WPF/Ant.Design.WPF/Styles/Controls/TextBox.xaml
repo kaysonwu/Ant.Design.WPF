@@ -23,7 +23,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <Grid UseLayoutRounding="True">
                         <Grid.ColumnDefinitions>
                              <!-- Addon Before -->
                             <ColumnDefinition Width="Auto" />
@@ -38,67 +38,64 @@
                                           Content="{TemplateBinding Controls:Input.AddonBefore}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <!-- Input Effect -->
-                        <Rectangle x:Name="Input_Effect"
-                                   Opacity="0"
-                                   Grid.Column="1"
-                                   Margin="-2"
-                                   Stroke="{TemplateBinding BorderBrush}" 
-                                   StrokeThickness="{DynamicResource OutlineWidth}"
-                                   RadiusX="{Binding RadiusX, Mode=OneWay, ElementName=PART_Border}"
-                                   RadiusY="{Binding RadiusY, Mode=OneWay, ElementName=PART_Border}"  />
-                        <!-- Input Border -->
-                        <Rectangle x:Name="PART_Border"
-                                   Grid.Column="1"
-                                   Fill="{TemplateBinding Background}"
-                                   Stroke="{TemplateBinding BorderBrush}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                   StrokeThickness="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                        Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=true}"
-                                   RadiusX="{Binding Path=(Controls:Control.CornerRadius), Mode=OneWay, RelativeSource={RelativeSource TemplatedParent},
-                                                Converter={StaticResource CornerRadiusToDoubleConverter}}"
-                                   RadiusY="{Binding RadiusX, Mode=OneWay, RelativeSource={RelativeSource Self}}" />
+                        <Border x:Name="Input_Effect"
+                                Grid.Column="1"
+                                Opacity="0"
+                                Margin="-2"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{DynamicResource OutlineThickness}"
+                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}" />
                         <!-- Input -->
-                        <Grid Grid.Column="1"
-                              Margin="{TemplateBinding Padding}">
-                            <Grid.ColumnDefinitions>
+                        <Controls:Border x:Name="Input_Border"
+                                         Grid.Column="1"
+                                         Padding="{TemplateBinding Padding}"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
+                                         CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!-- Prefix -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Input -->
+                                    <ColumnDefinition Width="*" />
+                                    <!-- Suffix -->
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <!-- Prefix -->
-                                <ColumnDefinition Width="Auto" />
+                                <ContentPresenter x:Name="Prefix"
+                                                  Grid.Column="0"
+                                                  Margin="1 0 5 0"
+                                                  Content="{TemplateBinding Controls:Input.Prefix}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <!-- Placeholder -->
+                                <TextBlock x:Name="Placeholder"
+                                           Grid.Column="1"
+                                           Visibility="Collapsed"
+                                           TextWrapping="{TemplateBinding TextWrapping}"
+                                           TextAlignment="{TemplateBinding TextAlignment}"
+                                           Text="{TemplateBinding Controls:Input.Placeholder}"
+                                           Foreground="{TemplateBinding Controls:Input.PlaceholderBrush}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                                 <!-- Input -->
-                                <ColumnDefinition Width="*" />
+                                <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Grid.Column="1"
+                                              Margin="-12 -5"
+                                              IsTabStop="False"
+                                              BorderThickness="0"
+                                              Background="{x:Null}" />
                                 <!-- Suffix -->
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <!-- Prefix -->
-                            <ContentPresenter x:Name="Prefix"
-                                              Grid.Column="0"
-                                              Margin="1 0 5 0"
-                                              Content="{TemplateBinding Controls:Input.Prefix}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            <!-- Placeholder -->
-                            <TextBlock x:Name="Placeholder"
-                                       Grid.Column="1"
-                                       Visibility="Collapsed"
-                                       TextWrapping="{TemplateBinding TextWrapping}"
-                                       TextAlignment="{TemplateBinding TextAlignment}"
-                                       Text="{TemplateBinding Controls:Input.Placeholder}"
-                                       Foreground="{TemplateBinding Controls:Input.PlaceholderBrush}"
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                            <!-- Input -->
-                            <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Grid.Column="1"
-                                          Margin="-12 -5"
-                                          IsTabStop="False"
-                                          BorderThickness="0"
-                                          Background="{x:Null}" />
-                            <!-- Suffix -->
-                            <ContentPresenter x:Name="Suffix"
-                                              Grid.Column="2"
-                                              Margin="5 0 1 0"
-                                              Content="{TemplateBinding Controls:Input.Suffix}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Grid>
+                                <ContentPresenter x:Name="Suffix"
+                                                  Grid.Column="2"
+                                                  Margin="5 0 1 0"
+                                                  Content="{TemplateBinding Controls:Input.Suffix}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Controls:Border>
                         <!-- Addon After -->
                         <ContentPresenter x:Name="AddonAfter"
                                           Grid.Column="2"
@@ -121,13 +118,6 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- BorderStyle -->
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dotted">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="1" />
-                        </Trigger>
-                        <Trigger Property="Controls:Control.BorderStyle" Value="Dashed">
-                            <Setter TargetName="PART_Border" Property="StrokeDashArray" Value="4 2" />
-                        </Trigger>
                         <DataTrigger Binding="{Binding Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="">
                             <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
                         </DataTrigger>
