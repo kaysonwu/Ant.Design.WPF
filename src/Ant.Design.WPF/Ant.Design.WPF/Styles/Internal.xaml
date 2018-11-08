@@ -14,8 +14,10 @@
     <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
     <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
     <Converters:StringToTextBlockConverter x:Key="StringToTextBlockConverter" />
+    <!-- Discard -->
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <Converters:DoubleToCornerRadiusConverter x:Key="DoubleToCornerRadiusConverter" />
+    <!-- Discard -->
     <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
     <Converters:ResizeModeToVisibilityConverter x:Key="ResizeModeToVisibilityConverter" />
     <Converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
