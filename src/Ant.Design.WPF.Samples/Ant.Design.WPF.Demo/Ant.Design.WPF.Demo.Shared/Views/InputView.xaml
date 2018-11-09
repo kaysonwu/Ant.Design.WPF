@@ -104,7 +104,7 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <TextBox Antd:Input.Placeholder="input search text">
+                                <TextBox Antd:Input.Placeholder="input search text" Antd:Input.Clearable="True">
                                     <Antd:Input.Suffix>
                                         <Antd:Icon Type="search" />
                                     </Antd:Input.Suffix>

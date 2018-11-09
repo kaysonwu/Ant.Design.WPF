@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -98,46 +99,28 @@ namespace Antd.Controls
             obj.SetValue(SuffixProperty, value);
         }
 
-        public static readonly DependencyProperty AddonBeforeProperty = 
-            DependencyProperty.RegisterAttached("AddonBefore", typeof(object), typeof(Input), new PropertyMetadata(null));
+        public static readonly DependencyProperty ClearableProperty = 
+            DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new PropertyMetadata(false, OnClearableChanged));
+
+        private static void OnClearableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+         //   (d as Button).GetAncestors();
+         //   VisualTreeHelper.
+        }
 
         /// <summary>
-        /// Get the prepositive object of the input control.
+        /// 
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static object GetAddonBefore(DependencyObject obj)
+        public static bool GetClearable(DependencyObject obj)
         {
-            return obj.GetValue(AddonBeforeProperty);
+            return (bool)obj.GetValue(ClearableProperty);
         }
 
-        /// <summary>
-        /// Set the prepositive object of the input control.
-        /// </summary>
-        public static void SetAddonBefore(DependencyObject obj, object value)
+        public static void SetClearable(DependencyObject obj, bool value)
         {
-            obj.SetValue(AddonBeforeProperty, value);
-        }
-
-        public static readonly DependencyProperty AddonAfterProperty = 
-            DependencyProperty.RegisterAttached("AddonAfter", typeof(object), typeof(Input), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Get the postposition object of the input control.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static object GetAddonAfter(DependencyObject obj)
-        {
-            return obj.GetValue(AddonAfterProperty);
-        }
-
-        /// <summary>
-        /// Set the postposition object of the input control.
-        /// </summary>
-        public static void SetAddonAfter(DependencyObject obj, object value)
-        {
-            obj.SetValue(AddonAfterProperty, value);
+            obj.SetValue(ClearableProperty, value);
         }
     }
 }

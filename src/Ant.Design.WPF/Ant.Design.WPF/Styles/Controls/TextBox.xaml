@@ -11,6 +11,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <!--<Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />-->
         <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
@@ -24,19 +25,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid UseLayoutRounding="True">
-                        <Grid.ColumnDefinitions>
-                             <!-- Addon Before -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- Input -->
-                            <ColumnDefinition Width="*" />
-                            <!-- Addon After --> 
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <!-- Addon Before -->
-                        <ContentPresenter x:Name="AddonBefore"
-                                          Grid.Column="0"
-                                          Content="{TemplateBinding Controls:Input.AddonBefore}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <!-- Input Effect -->
                         <Border x:Name="Input_Effect"
                                 Grid.Column="1"
@@ -84,7 +72,8 @@
                                 <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
                                 <ScrollViewer x:Name="PART_ContentHost"
                                               Grid.Column="1"
-                                              Margin="-12 -5"
+                                              Padding="0"
+                                              Margin="0"
                                               IsTabStop="False"
                                               BorderThickness="0"
                                               Background="{x:Null}" />
@@ -96,11 +85,6 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Controls:Border>
-                        <!-- Addon After -->
-                        <ContentPresenter x:Name="AddonAfter"
-                                          Grid.Column="2"
-                                          Content="{TemplateBinding Controls:Input.AddonAfter}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualStateGroup.Transitions>
@@ -128,6 +112,17 @@
                         <Trigger SourceName="Suffix" Property="Content" Value="{x:Null}">
                             <Setter TargetName="Suffix" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:Input.Clearable" Value="True" />
+                                <Condition SourceName="Placeholder" Property="Visibility" Value="Collapsed" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Suffix" Property="Content">
+                                <Setter.Value>
+                                    <Controls:Icon Type="close" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

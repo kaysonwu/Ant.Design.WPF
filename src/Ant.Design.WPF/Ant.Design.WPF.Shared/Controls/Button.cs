@@ -169,7 +169,7 @@ namespace Antd.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
+            
             border         = GetTemplateChild(PART_Border) as FrameworkElement;
             mouseOverState = GetTemplateChild("MouseOver") as VisualState;
 
