@@ -27,6 +27,11 @@
                 <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource Ant.TextBox}" TargetType="TextBox">
+                        <Setter Property="Margin" Value="0 16 16 0" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -37,21 +42,7 @@
                             Basic usage example.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <TextBox Antd:Input.Placeholder="Basic usage">
-                                <TextBox.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="剪切" InputGestureText="Ctrl+T" />
-                                        <MenuItem Header="复制" InputGestureText="Ctrl+C" />
-                                        <MenuItem Header="粘帖" />
-                                        <MenuItem Header="全部选择" />
-                                        <Separator />
-                                        <MenuItem Header="字体" />
-                                        <Separator />
-                                        <MenuItem Header="允许使用QQ秀聊天随动标签" IsCheckable="True" />
-                                        <MenuItem Header="使用快捷输入表情" IsCheckable="True" />
-                                    </ContextMenu>
-                                </TextBox.ContextMenu>
-                            </TextBox>
+                            <TextBox Antd:Input.Placeholder="Basic usage" />
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
@@ -65,18 +56,68 @@
                                 &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
-                    <Controls:CodeBox Title="Basic usage">
+                    <Controls:CodeBox Title="Pre / Post tab">
                         <Controls:CodeBox.Description>
-                            Basic usage example.
+                            Using pre &amp; post tabs example.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <TextBox Antd:Input.AddonBefore="http://" Antd:Input.AddonAfter=".com">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Antd:Border Grid.Column="0" 
+                                            UseLayoutRounding="True"
+                                            CornerRadius="4 0 0 4" 
+                                            BorderThickness="1 1 0 1" 
+                                            BorderBrush="{DynamicResource InputBorderBrush}" Padding="11 0">
+                                        <TextBlock Text="http://" VerticalAlignment="Center" />
+                                    </Antd:Border>
+                                    <TextBox Grid.Column="1" Text="mysite" Margin="0" Antd:Control.CornerRadius="0" />
+                                    <Antd:Border Grid.Column="2" 
+                                                UseLayoutRounding="True"
+                                                CornerRadius="0 4 4 0" 
+                                                BorderThickness="0 1 1 1" 
+                                                BorderBrush="{DynamicResource InputBorderBrush}" Padding="11 0">
+                                        <TextBlock Text=".com" VerticalAlignment="Center" />
+                                    </Antd:Border>
+                                </Grid>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                                &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                                xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                                &lt;WrapPanel&gt;\n
+                                    \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                                &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
+                    <Controls:CodeBox Title="Search box">
+                        <Controls:CodeBox.Description>
+                            Example of creating a search box by grouping a standard input with a search button.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <TextBox Antd:Input.Placeholder="input search text">
+                                    <Antd:Input.Suffix>
+                                        <Antd:Icon Type="search" />
+                                    </Antd:Input.Suffix>
                                 </TextBox>
-                                <TextBox Antd:Input.Placeholder="Enter keywords" Margin="0 16 0 0">
-                                    <Antd:Input.AddonAfter>
-                                        <Antd:Button Type="Primary" Content="Search" Antd:Control.CornerRadius="0" />
-                                    </Antd:Input.AddonAfter>
+                                <TextBox Antd:Input.Placeholder="input search text" Padding="12 0 0 0">
+                                    <Antd:Input.Suffix>
+                                        <Antd:Button Margin="8 -1 -2 -1" Type="Primary" Content="Search" Antd:Control.CornerRadius="0 4 4 0" />
+                                    </Antd:Input.Suffix>
+                                </TextBox>
+                                <TextBox Antd:Input.Placeholder="input search text" Padding="12 0 0 0">
+                                    <Antd:Input.Suffix>
+                                        <Antd:Button Type="Primary" Size="Large" Margin="8 -1 -2 -1" Content="Search" Antd:Control.CornerRadius="0 4 4 0" />
+                                    </Antd:Input.Suffix>
                                 </TextBox>
                             </StackPanel>
                         </Controls:CodeBox.Content>
@@ -92,24 +133,45 @@
                                 &lt;/WrapPanel&gt;
                         </Controls:CodeBox.Code>
                     </Controls:CodeBox>
+                    <Controls:CodeBox Title="Prefix and Suffix">
+                        <Controls:CodeBox.Description>
+                            Add prefix or suffix icons inside input.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <TextBox Antd:Input.Placeholder="Enter your username">
+                                <Antd:Input.Prefix>
+                                    <Antd:Icon Type="user" Foreground="#3F000000" />
+                                </Antd:Input.Prefix>
+                                <Antd:Input.Suffix>
+                                    <Antd:Icon Type="close" Foreground="#3F000000" />
+                                </Antd:Input.Suffix>
+                            </TextBox>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                                &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                                xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                               &lt;TextBox Antd:Input.Placeholder="Enter your username"&gt;\n
+                                    \t&lt;Antd:Input.Prefix&gt;\n
+                                        \t\t&lt;Antd:Icon Type="user" Foreground="#3F000000" /&gt;\n
+                                    \t&lt;/Antd:Input.Prefix&gt;\n
+                                    \t&lt;Antd:Input.Suffix&gt;\n
+                                        \t\t&lt;Antd:Icon Type="close" Foreground="#3F000000" /&gt;\n
+                                   \t&lt;/Antd:Input.Suffix&gt;\n
+                               &lt;/TextBox&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
-                    <Controls:CodeBox Title="Basic usage">
+                    <Controls:CodeBox Title="Three sizes of Input">
                         <Controls:CodeBox.Description>
-                            Basic usage example.
+                            There are three sizes of an Input box: `Large` (40px)、`Default` (32px) and `Small` (24px).
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <TextBox Antd:Input.Placeholder="Enter your username">
-                                    <Antd:Input.Prefix>
-                                        <Antd:Icon Type="user" FontSize="16" Foreground="#3F000000" />
-                                    </Antd:Input.Prefix>
-                                </TextBox>
-                                <TextBox Antd:Input.Placeholder="Enter keywords" Margin="0 16 0 0">
-                                    <Antd:Input.Suffix>
-                                        <Antd:Icon Type="search" FontSize="16" Foreground="#3F000000" />
-                                    </Antd:Input.Suffix>
-                                </TextBox>
+                                <TextBox Antd:Input.Placeholder="large size" />
+                                <TextBox Antd:Input.Placeholder="default size" />
+                                <TextBox Antd:Input.Placeholder="small size" />
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>

@@ -159,7 +159,7 @@ namespace Antd.Controls
         static Button()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata(typeof(Button)));
-            BackgroundProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata() { CoerceValueCallback = OnBackgroundCoerceValue });
+            BackgroundProperty.OverrideMetadata(typeof(Button), new FrameworkPropertyMetadata { CoerceValueCallback = OnBackgroundCoerceValue });
         }
 
         #endregion
@@ -190,39 +190,41 @@ namespace Antd.Controls
             if (border == null || mouseOverState == null && focusedState == null && pressedState == null) return;
 
             // Unable to extract color.
-            var brush = EffectBrush as SolidColorBrush;
-            if (brush == null) return;
-
-            var isShape = border is Shape;
-            Func<Color, int, bool, bool, bool, Duration?, Storyboard> func;
-   
-            if (!Type.HasValue || Type.Value == ButtonType.Dashed)
+            if (EffectBrush is SolidColorBrush brush)
             {
-                func = CreateDefaultStoryboard;
+                var isShape = border is Shape;
+                Func<Color, int, bool, bool, bool, Duration?, Storyboard> func;
 
-            } else if (Type.Value == ButtonType.Primary)
-            {
-                func = CreatePrimaryStoryboard;
+                if (!Type.HasValue || Type.Value == ButtonType.Dashed)
+                {
+                    func = CreateDefaultStoryboard;
 
-            } else
-            {
-                // Danger
-                func = CreateDangerStoryboard;
-            }
+                }
+                else if (Type.Value == ButtonType.Primary)
+                {
+                    func = CreatePrimaryStoryboard;
 
-            if (mouseOverState != null)
-            {
-                mouseOverState.Storyboard = func(brush.Color, 5, isShape, false, Ghost, null);
-            }
+                }
+                else
+                {
+                    // Danger
+                    func = CreateDangerStoryboard;
+                }
 
-            if (focusedState != null)
-            {
-                focusedState.Storyboard = func(brush.Color, 5, isShape, true, Ghost, null);
-            }
+                if (mouseOverState != null)
+                {
+                    mouseOverState.Storyboard = func(brush.Color, 5, isShape, false, Ghost, null);
+                }
 
-            if (pressedState != null)
-            {
-                pressedState.Storyboard = func(brush.Color, 7, isShape, false, Ghost, TimeSpan.FromSeconds(0));
+                if (focusedState != null)
+                {
+                    focusedState.Storyboard = func(brush.Color, 5, isShape, true, Ghost, null);
+                }
+
+                if (pressedState != null)
+                {
+                    pressedState.Storyboard = func(brush.Color, 7, isShape, false, Ghost, TimeSpan.FromSeconds(0));
+                }
             }
         }
 
