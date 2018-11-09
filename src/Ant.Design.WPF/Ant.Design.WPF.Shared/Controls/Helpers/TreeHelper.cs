@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Antd.Controls.Helpers
+namespace Antd.Controls
 {
     /// <summary>
     /// Helper methods for UI-related tasks.
