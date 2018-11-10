@@ -1,15 +1,18 @@
-﻿using System;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Antd.Controls
 {
     public static class Input
     {
+        #region Attached Properties
+
         public static readonly DependencyProperty PlaceholderProperty = 
-            DependencyProperty.RegisterAttached("Placeholder", typeof(string), typeof(Input), new UIPropertyMetadata(string.Empty));
+            DependencyProperty.RegisterAttached("Placeholder", typeof(string), typeof(Input), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Get the placeholder for the input control.
@@ -99,17 +102,51 @@ namespace Antd.Controls
             obj.SetValue(SuffixProperty, value);
         }
 
-        public static readonly DependencyProperty ClearableProperty = 
-            DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new PropertyMetadata(false, OnClearableChanged));
+        public static readonly DependencyProperty InputBehaviorProperty = 
+            DependencyProperty.RegisterAttached("InputBehavior", typeof(InputBehavior?), typeof(Input), new PropertyMetadata(null, OnInputBehaviorChanged));
 
-        private static void OnClearableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnInputBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-         //   (d as Button).GetAncestors();
-         //   VisualTreeHelper.
+            if (d is UIElement)
+            {
+                var oldBehavior = GetBehavior((InputBehavior?)e.OldValue);
+                var newBehavior = GetBehavior((InputBehavior?)e.NewValue);
+
+                if (oldBehavior != null)
+                {
+                    ((UIElement)d).MouseLeftButtonUp -= newBehavior;
+                }
+
+                if (newBehavior != null)
+                {
+                    ((UIElement)d).MouseLeftButtonUp += newBehavior;
+                }
+            }
         }
 
         /// <summary>
-        /// 
+        /// Get enhanced behavior of input control.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        internal static InputBehavior? GetInputBehavior(DependencyObject obj)
+        {
+            return (InputBehavior?)obj.GetValue(InputBehaviorProperty);
+        }
+
+        /// <summary>
+        /// Set enhanced behavior of input control.
+        /// </summary>
+        internal static void SetInputBehavior(DependencyObject obj, InputBehavior? value)
+        {
+            obj.SetValue(InputBehaviorProperty, value);
+        }
+
+        public static readonly DependencyProperty ClearableProperty =
+            DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Get whether the input control has a clear behavior.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -118,9 +155,72 @@ namespace Antd.Controls
             return (bool)obj.GetValue(ClearableProperty);
         }
 
+        /// <summary>
+        /// Set whether the input control has a clear behavior.
+        /// </summary>
         public static void SetClearable(DependencyObject obj, bool value)
         {
             obj.SetValue(ClearableProperty, value);
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private static MouseButtonEventHandler GetBehavior(InputBehavior? behavior)
+        {
+            if (behavior.HasValue)
+            {
+                switch (behavior.Value)
+                {
+                    case InputBehavior.Clear:
+                        return new MouseButtonEventHandler(OnClear);
+                    case InputBehavior.Password:
+                        break;
+                }
+            }
+
+            return null;
+        }
+
+        private static void OnClear(object sender, RoutedEventArgs e)
+        {
+            if (sender is DependencyObject d)
+            {
+                var parent = d.GetAncestors().FirstOrDefault(a => a is TextBox || a is PasswordBox || a is ComboBox);
+
+                if (GetClearable(parent))
+                {
+                    if (parent is TextBox)
+                    {
+                        ((TextBox)parent).Clear();
+                        ((TextBox)parent).GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    }
+                    else if (parent is PasswordBox)
+                    {
+                        ((PasswordBox)parent).Clear();
+                        //  ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                    }
+                    else if (parent is ComboBox)
+                    {
+                        if (((ComboBox)parent).IsEditable)
+                        {
+                            ((ComboBox)parent).Text = string.Empty;
+                            ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                        }
+
+                        ((ComboBox)parent).SelectedItem = null;
+                        ((ComboBox)parent).GetBindingExpression(Selector.SelectedItemProperty)?.UpdateSource();
+                    }
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    internal enum InputBehavior : byte
+    {
+        Clear, Password
     }
 }

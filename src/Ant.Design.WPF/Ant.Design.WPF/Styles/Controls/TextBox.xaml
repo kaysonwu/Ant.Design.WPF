@@ -12,8 +12,6 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <!--<Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />-->
         <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
         <Setter Property="Background" Value="{DynamicResource InputBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
@@ -73,7 +71,7 @@
                                 <ScrollViewer x:Name="PART_ContentHost"
                                               Grid.Column="1"
                                               Padding="0"
-                                              Margin="0"
+                                              Margin="-12 -5"
                                               IsTabStop="False"
                                               BorderThickness="0"
                                               Background="{x:Null}" />
@@ -119,7 +117,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Suffix" Property="Content">
                                 <Setter.Value>
-                                    <Controls:Icon Type="close" />
+                                    <Controls:Icon Style="{StaticResource Ant.InputBehavior}" Type="close" Controls:Input.InputBehavior="Clear" />
                                 </Setter.Value>
                             </Setter>
                         </MultiTrigger>

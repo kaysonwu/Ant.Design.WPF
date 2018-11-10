@@ -66,5 +66,15 @@
                             Duration="0:0:0.4"
                             To="-5.6" />
     </Storyboard>
+
+    <!-- TextBox/PasswordBox -->
+    <Style x:Key="Ant.InputBehavior" TargetType="{x:Type FrameworkElement}">
+        <Setter Property="Opacity" Value="0.65" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     
 </ResourceDictionary>

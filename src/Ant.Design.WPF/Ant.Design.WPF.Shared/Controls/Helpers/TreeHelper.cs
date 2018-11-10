@@ -83,10 +83,11 @@ namespace Antd.Controls
         /// <returns>All ancestors in visual tree of <paramref name="child"/> element</returns>
         public static IEnumerable<DependencyObject> GetAncestors(this DependencyObject child)
         {
-            DependencyObject parent;
-            while ((parent = child.GetParentObject()) != null)
+            DependencyObject parent = VisualTreeHelper.GetParent(child);
+            while ((parent) != null)
             {
                 yield return parent;
+                parent = VisualTreeHelper.GetParent(parent);
             }
         }
 
