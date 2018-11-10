@@ -132,6 +132,10 @@
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource DisabledBrush}" />
+                <Setter Property="Background" Value="{DynamicResource InputDisabledBackground}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
     
