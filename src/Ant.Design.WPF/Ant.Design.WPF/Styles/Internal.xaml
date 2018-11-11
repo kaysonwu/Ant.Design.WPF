@@ -13,6 +13,7 @@
     <Converters:SubtractionConverter x:Key="SubtractionConverter" />
     <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
     <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
+    <Converters:ThicknessReverseConverter x:Key="ThicknessReverseConverter" />
     <Converters:StringToTextBlockConverter x:Key="StringToTextBlockConverter" />
     <!-- Discard -->
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
@@ -69,6 +70,7 @@
 
     <!-- TextBox/PasswordBox -->
     <Style x:Key="Ant.Input" TargetType="{x:Type Control}">
+        <Setter Property="Padding" Value="12 6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />

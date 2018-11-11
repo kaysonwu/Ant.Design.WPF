@@ -52,6 +52,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ArithmeticConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ColorPaletteConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessReverseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\DoubleToCornerRadiusConverter.cs" />

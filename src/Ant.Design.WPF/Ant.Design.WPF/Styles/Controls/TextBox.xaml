@@ -7,22 +7,20 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="Ant.TextBox" BasedOn="{StaticResource Ant.Input}" TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="12 5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid UseLayoutRounding="True">
+                    <Grid>
                         <!-- Input Effect -->
-                        <Border x:Name="Input_Effect"
-                                Grid.Column="1"
+                        <Border x:Name="Effect"
                                 Opacity="0"
-                                Margin="-2"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{DynamicResource OutlineThickness}"
-                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}" />
+                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}"
+                                Margin="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                            Converter={StaticResource ThicknessReverseConverter}}" />
                         <!-- Input -->
-                        <Controls:Border x:Name="Input_Border"
-                                         Grid.Column="1"
+                        <Controls:Border UseLayoutRounding="True"
                                          Padding="{TemplateBinding Padding}"
                                          Background="{TemplateBinding Background}"
                                          BorderBrush="{TemplateBinding BorderBrush}"
@@ -59,11 +57,11 @@
                                 <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
                                 <ScrollViewer x:Name="PART_ContentHost"
                                               Grid.Column="1"
-                                              Padding="0"
-                                              Margin="-12 -5"
                                               IsTabStop="False"
                                               BorderThickness="0"
-                                              Background="{x:Null}" />
+                                              Background="{x:Null}"
+                                              Margin="{Binding Padding, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, 
+                                                        Converter={StaticResource ThicknessReverseConverter}}" />
                                 <!-- Suffix -->
                                 <ContentPresenter x:Name="Suffix"
                                                   Grid.Column="2"
@@ -79,7 +77,7 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Input_Effect"
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0.2" />
                                     </Storyboard>
