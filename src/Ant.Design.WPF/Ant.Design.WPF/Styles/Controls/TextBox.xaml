@@ -6,19 +6,8 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Ant.TextBox" BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type TextBox}">
+    <Style x:Key="Ant.TextBox" BasedOn="{StaticResource Ant.Input}" TargetType="{x:Type TextBox}">
         <Setter Property="Padding" Value="12 5" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
-        <Setter Property="Background" Value="{DynamicResource InputBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
-        <Setter Property="BorderThickness" Value="{DynamicResource BorderThicknessBase}" />
-        <Setter Property="Controls:Control.BorderStyle" Value="{DynamicResource BorderStyleBase}" />
-        <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
-        <Setter Property="Controls:Input.PlaceholderBrush" Value="{DynamicResource InputPlaceholderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -125,18 +114,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource InputMouseOverBorderBrush}" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource DisabledBrush}" />
-                <Setter Property="Background" Value="{DynamicResource InputDisabledBackground}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
     
 </ResourceDictionary>
