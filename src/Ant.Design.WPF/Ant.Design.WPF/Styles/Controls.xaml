@@ -7,6 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/ToolTip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/PasswordBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Default style for ant design -->
@@ -15,5 +16,6 @@
     <Style BasedOn="{StaticResource Ant.ContextMenu}" TargetType="ContextMenu" />
     <Style BasedOn="{StaticResource Ant.MenuItem}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource Ant.TextBox}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource Ant.PasswordBox}" TargetType="PasswordBox" />
    
 </ResourceDictionary>
