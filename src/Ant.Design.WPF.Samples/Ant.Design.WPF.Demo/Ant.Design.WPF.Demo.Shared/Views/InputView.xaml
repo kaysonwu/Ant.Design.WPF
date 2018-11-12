@@ -42,7 +42,10 @@
                             Basic usage example.
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
-                            <TextBox Antd:Input.Placeholder="Basic usage" />
+                            <StackPanel>
+                                <TextBox Antd:Input.Placeholder="Basic usage" />
+                                <PasswordBox Antd:Input.Placeholder="Basic usage" Antd:Input.Eyeable="True" Password="666" />
+                            </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
                             &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
@@ -190,5 +193,4 @@
             </Grid>
         </Grid>
     </ScrollViewer>
-    
 </UserControl>

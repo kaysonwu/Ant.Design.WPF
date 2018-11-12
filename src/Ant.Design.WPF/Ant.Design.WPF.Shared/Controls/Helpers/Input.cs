@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -102,7 +103,42 @@ namespace Antd.Controls
             obj.SetValue(SuffixProperty, value);
         }
 
-        public static readonly DependencyProperty InputBehaviorProperty = 
+        public static readonly DependencyProperty PasswordProperty =
+            DependencyProperty.RegisterAttached("Password", typeof(string), typeof(Input),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPasswordChanged)));
+
+        private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is PasswordBox passwordBox)
+            {
+                var newVal = (string)e.NewValue;
+
+                // Sync password
+                if (newVal != passwordBox.Password)
+                {
+                    passwordBox.Password = newVal;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the password currently held by the PasswordBox.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static string GetPassword(DependencyObject obj)
+        {
+            return (string)obj.GetValue(PasswordProperty);
+        }
+
+        /// <summary>
+        /// Set the password currently held by the PasswordBox.
+        /// </summary>
+        public static void SetPassword(DependencyObject obj, string value)
+        {
+            obj.SetValue(PasswordProperty, value);
+        }
+
+        internal static readonly DependencyProperty InputBehaviorProperty = 
             DependencyProperty.RegisterAttached("InputBehavior", typeof(InputBehavior?), typeof(Input), new PropertyMetadata(null, OnInputBehaviorChanged));
 
         private static void OnInputBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -143,7 +179,7 @@ namespace Antd.Controls
         }
 
         public static readonly DependencyProperty ClearableProperty =
-            DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new FrameworkPropertyMetadata(false));
+            DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new PropertyMetadata(false));
 
         /// <summary>
         /// Get whether the input control has a clear behavior.
@@ -163,6 +199,26 @@ namespace Antd.Controls
             obj.SetValue(ClearableProperty, value);
         }
 
+        public static readonly DependencyProperty EyeableProperty = 
+            DependencyProperty.RegisterAttached("Eyeable", typeof(bool), typeof(Input), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Get whether the password currently held by PasswordBox is displayed in text.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static bool GetEyeable(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(EyeableProperty);
+        }
+
+        /// <summary>
+        /// Set whether the password currently held by PasswordBox is displayed in text.
+        /// </summary>
+        public static void SetEyeable(DependencyObject obj, bool value)
+        {
+            obj.SetValue(EyeableProperty, value);
+        }
+
         #endregion
 
         #region Private Methods
@@ -175,8 +231,6 @@ namespace Antd.Controls
                 {
                     case InputBehavior.Clear:
                         return new MouseButtonEventHandler(OnClear);
-                    case InputBehavior.Password:
-                        break;
                 }
             }
 
