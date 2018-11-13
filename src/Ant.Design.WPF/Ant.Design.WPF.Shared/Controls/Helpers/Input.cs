@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -137,46 +138,6 @@ namespace Antd.Controls
             obj.SetValue(PasswordProperty, value);
         }
 
-        internal static readonly DependencyProperty InputBehaviorProperty = 
-            DependencyProperty.RegisterAttached("InputBehavior", typeof(InputBehavior?), typeof(Input), new PropertyMetadata(null, OnInputBehaviorChanged));
-
-        private static void OnInputBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is UIElement)
-            {
-                var oldBehavior = GetBehavior((InputBehavior?)e.OldValue);
-                var newBehavior = GetBehavior((InputBehavior?)e.NewValue);
-
-                if (oldBehavior != null)
-                {
-                    ((UIElement)d).MouseLeftButtonUp -= newBehavior;
-                }
-
-                if (newBehavior != null)
-                {
-                    ((UIElement)d).MouseLeftButtonUp += newBehavior;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Get enhanced behavior of input control.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        internal static InputBehavior? GetInputBehavior(DependencyObject obj)
-        {
-            return (InputBehavior?)obj.GetValue(InputBehaviorProperty);
-        }
-
-        /// <summary>
-        /// Set enhanced behavior of input control.
-        /// </summary>
-        internal static void SetInputBehavior(DependencyObject obj, InputBehavior? value)
-        {
-            obj.SetValue(InputBehaviorProperty, value);
-        }
-
         public static readonly DependencyProperty ClearableProperty =
             DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new PropertyMetadata(false));
 
@@ -218,23 +179,37 @@ namespace Antd.Controls
             obj.SetValue(EyeableProperty, value);
         }
 
+        internal static readonly DependencyProperty ClearEnabledProperty = 
+            DependencyProperty.RegisterAttached("ClearEnabled", typeof(bool), typeof(Input), new PropertyMetadata(false, OnClearEnabled));
+
+        internal static bool GetClearEnabled(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ClearEnabledProperty);
+        }
+
+        internal static void SetClearEnabled(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ClearEnabledProperty, value);
+        }
+
+        private static void OnClearEnabled(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement)
+            {
+                if ((bool)e.NewValue)
+                {
+                    ((UIElement)d).MouseLeftButtonUp += OnClear;
+                }
+                else
+                {
+                    ((UIElement)d).MouseLeftButtonUp -= OnClear;
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
-
-        private static MouseButtonEventHandler GetBehavior(InputBehavior? behavior)
-        {
-            if (behavior.HasValue)
-            {
-                switch (behavior.Value)
-                {
-                    case InputBehavior.Clear:
-                        return new MouseButtonEventHandler(OnClear);
-                }
-            }
-
-            return null;
-        }
 
         private static void OnClear(object sender, RoutedEventArgs e)
         {
@@ -270,10 +245,5 @@ namespace Antd.Controls
         }
 
         #endregion
-    }
-
-    internal enum InputBehavior : byte
-    {
-        Clear, Password
     }
 }

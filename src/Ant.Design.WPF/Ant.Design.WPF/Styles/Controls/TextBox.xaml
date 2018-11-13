@@ -14,6 +14,7 @@
                         <!-- Input Effect -->
                         <Border x:Name="Effect"
                                 Opacity="0"
+                                Focusable="False"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{DynamicResource OutlineThickness}"
                                 CornerRadius="{TemplateBinding Controls:Control.CornerRadius}"
@@ -41,6 +42,7 @@
                                 <ContentPresenter x:Name="Prefix"
                                                   Grid.Column="0"
                                                   Margin="1 0 5 0"
+                                                  Focusable="False"
                                                   Content="{TemplateBinding Controls:Input.Prefix}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 <!-- Placeholder -->
@@ -66,6 +68,7 @@
                                 <ContentPresenter x:Name="Suffix"
                                                   Grid.Column="2"
                                                   Margin="5 0 1 0"
+                                                  Focusable="False"
                                                   Content="{TemplateBinding Controls:Input.Suffix}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
@@ -103,8 +106,12 @@
                                 <Condition SourceName="Placeholder" Property="Visibility" Value="Collapsed" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Suffix" Property="Content">
+                                <!--
+                                    How to customize Icon?
+                                    By setting up the locally-defined resource dictionary.
+                                -->
                                 <Setter.Value>
-                                    <Controls:Icon Style="{StaticResource Ant.InputBehavior}" Type="close" Controls:Input.InputBehavior="Clear" />
+                                    <Controls:Icon Style="{StaticResource Ant.Clearable}" Type="close" Controls:Input.ClearEnabled="True" />
                                 </Setter.Value>
                             </Setter>
                         </MultiTrigger>
