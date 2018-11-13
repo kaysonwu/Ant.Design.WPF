@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using Antd.Controls;
@@ -14,7 +15,7 @@ namespace Antd.Behaviors
         {
             base.OnAttached();
 
-            Input.SetPassword(AssociatedObject, AssociatedObject.Password);
+            AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.PasswordChanged += OnPasswordChanged;
         }
 
@@ -22,6 +23,7 @@ namespace Antd.Behaviors
         {
             base.OnDetaching();
 
+            AssociatedObject.Loaded -= OnLoaded;
             AssociatedObject.PasswordChanged -= OnPasswordChanged;
         }
 
@@ -29,15 +31,26 @@ namespace Antd.Behaviors
 
         #region Private Methods
 
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
+        private static void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var box = (PasswordBox)sender;
-            var password = box.Password;
+            var passwordBox = (PasswordBox)sender;
+
+            passwordBox.FindChild<TextBox>()
+
+
+
+            Input.SetPassword(passwordBox, passwordBox.Password);
+        }
+
+        private static void OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var passwordBox = (PasswordBox)sender;
+            var password = passwordBox.Password;
 
             // Sync password
-            if (password != Input.GetPassword(box))
+            if (password != Input.GetPassword(passwordBox))
             {
-                Input.SetPassword(box, password);
+                Input.SetPassword(passwordBox, password);
             }
         }
 
