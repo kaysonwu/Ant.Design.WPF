@@ -44,7 +44,7 @@
                         <Controls:CodeBox.Content>
                             <StackPanel>
                                 <TextBox Antd:Input.Placeholder="Basic usage" />
-                                <PasswordBox Antd:Input.Placeholder="Basic usage" Antd:Input.Eyeable="True" Password="666" />
+                                <PasswordBox Antd:Input.Placeholder="Basic usage" Visibility="Visible" Antd:Input.Eyeable="True" Password="666" />
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
