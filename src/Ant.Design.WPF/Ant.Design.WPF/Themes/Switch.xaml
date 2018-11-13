@@ -40,6 +40,7 @@
                         <Border x:Name="Effect"
                                 Margin="-1"
                                 Opacity="0.4"
+                                Focusable="False"
                                 BorderThickness="0"
                                 BorderBrush="{DynamicResource SwitchBrush}"
                                 CornerRadius="{Binding CornerRadius, Mode=OneWay, ElementName=Border}" />
@@ -61,6 +62,7 @@
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                         <!-- Dot -->
                         <Border x:Name="PART_Dot"
+                                Focusable="False"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 RenderTransformOrigin="0,0"

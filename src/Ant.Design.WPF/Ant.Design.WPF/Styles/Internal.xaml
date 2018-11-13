@@ -60,12 +60,12 @@
                             Storyboard.TargetProperty="BorderThickness"
                             EasingFunction="{StaticResource EaseOutCirc}"
                             Duration="0:0:0.2"
-                            To="6" />
+                            To="5.5" />
         <ThicknessAnimation Storyboard.TargetName="Effect" 
                             Storyboard.TargetProperty="Margin"
                             EasingFunction="{StaticResource EaseOutCirc}"
                             Duration="0:0:0.4"
-                            To="-5.6" />
+                            To="-5.5" />
     </Storyboard>
 
     <!-- TextBox/PasswordBox -->

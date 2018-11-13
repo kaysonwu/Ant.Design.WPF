@@ -25,17 +25,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Button}">
-                    <Grid UseLayoutRounding="True">
+                    <Grid>
                         <!-- Effect -->
                         <Border x:Name="Effect"
                                 Margin="-1"
                                 Opacity="0.4"
+                                Focusable="False"
                                 BorderThickness="0"
                                 BorderBrush="{TemplateBinding EffectBrush}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 CornerRadius="{TemplateBinding Controls:Control.CornerRadius}" />
                         <!-- Border -->
                         <Controls:Border x:Name="PART_Border"
+                                         UseLayoutRounding="True"
                                          Padding="{TemplateBinding Padding}"
                                          Background="{TemplateBinding Background}"
                                          BorderBrush="{TemplateBinding BorderBrush}"
