@@ -46,7 +46,8 @@
                                          BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
                                          CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
                             <!-- Content -->
-                            <Grid>
+                            <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
                                 <Grid.ColumnDefinitions>
                                     <!-- Icon -->
                                     <ColumnDefinition Width="Auto" />
@@ -56,18 +57,14 @@
                                 <Controls:Icon x:Name="Icon" 
                                                Margin="0 0 8 0"
                                                Focusable="False" 
-                                               Type="{TemplateBinding Icon}"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                               Type="{TemplateBinding Icon}" />
                                 <ContentPresenter x:Name="Content"
                                                   Grid.Column="1"
                                                   RecognizesAccessKey="True"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                             </Grid>
                         </Controls:Border>
                         <VisualStateManager.VisualStateGroups>
