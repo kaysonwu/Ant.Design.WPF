@@ -193,17 +193,15 @@ namespace Antd.Controls
             if (EffectBrush is SolidColorBrush brush)
             {
                 var isShape = border is Shape;
-                Func<Color, int, bool, bool, bool, Duration?, Storyboard> func;
+                Func<Button, Color, int, bool, bool, Duration?, Storyboard> func;
 
                 if (!Type.HasValue || Type.Value == ButtonType.Dashed)
                 {
                     func = CreateDefaultStoryboard;
-
                 }
                 else if (Type.Value == ButtonType.Primary)
                 {
                     func = CreatePrimaryStoryboard;
-
                 }
                 else
                 {
@@ -213,54 +211,54 @@ namespace Antd.Controls
 
                 if (mouseOverState != null)
                 {
-                    mouseOverState.Storyboard = func(brush.Color, 5, isShape, false, Ghost, null);
+                    mouseOverState.Storyboard = func(this, brush.Color, 5, isShape, false, null);
                 }
 
                 if (focusedState != null)
                 {
-                    focusedState.Storyboard = func(brush.Color, 5, isShape, true, Ghost, null);
+                    focusedState.Storyboard = func(this, brush.Color, 5, isShape, true, null);
                 }
 
                 if (pressedState != null)
                 {
-                    pressedState.Storyboard = func(brush.Color, 7, isShape, false, Ghost, TimeSpan.FromSeconds(0));
+                    pressedState.Storyboard = func(this, brush.Color, 7, isShape, false, TimeSpan.FromSeconds(0));
                 }
             }
         }
 
-        private static Storyboard CreateDefaultStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
+        private static Storyboard CreateDefaultStoryboard(Button button, Color color, int index, bool IsShape, bool focused, Duration? duration = null)
         {
             var storyboard = new Storyboard();
             var children = storyboard.Children;
 
             color = ColorPalette.Toning(color, index);
-            children.Add(CreateForegroundAnimation(color, duration));
-            children.Add(CreateBorderAnimation(color, IsShape, duration));
+            children.Add(CreateForegroundAnimation(button, color, duration));
+            children.Add(CreateBorderAnimation(PART_Border, color, IsShape, duration));
 
             return storyboard;
         }
 
-        private static Storyboard CreatePrimaryStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
+        private static Storyboard CreatePrimaryStoryboard(Button button, Color color, int index, bool IsShape, bool focused, Duration? duration = null)
         {
             var storyboard = new Storyboard();
             var children   = storyboard.Children;
 
             color = ColorPalette.Toning(color, index);
 
-            if (ghost)
+            if (button.Ghost)
             {
-                children.Add(CreateForegroundAnimation(color, duration));
+                children.Add(CreateForegroundAnimation(button, color, duration));
             } else
             {
-                children.Add(CreateBackgroundAnimation(color, IsShape, duration));
+                children.Add(CreateBackgroundAnimation(PART_Border, color, IsShape, duration));
             }
 
-            children.Add(CreateBorderAnimation(color, IsShape, duration));
+            children.Add(CreateBorderAnimation(PART_Border, color, IsShape, duration));
 
             return storyboard;
         }
 
-        private static Storyboard CreateDangerStoryboard(Color color, int index, bool IsShape, bool focused, bool ghost, Duration? duration = null)
+        private static Storyboard CreateDangerStoryboard(Button button, Color color, int index, bool IsShape, bool focused, Duration? duration = null)
         {
             var storyboard = new Storyboard();
             var children   = storyboard.Children;
@@ -268,7 +266,7 @@ namespace Antd.Controls
             Color foreground;
             color = ColorPalette.Toning(color, index);
 
-            if (ghost)
+            if (button.Ghost)
             {
                 foreground = color;
             } else
@@ -286,31 +284,31 @@ namespace Antd.Controls
                     background = color;
                 }
 
-                children.Add(CreateBackgroundAnimation(background, IsShape, duration));
+                children.Add(CreateBackgroundAnimation(PART_Border, background, IsShape, duration));
             }
 
-            children.Add(CreateForegroundAnimation(foreground, duration));
-            children.Add(CreateBorderAnimation(color, IsShape, duration));
+            children.Add(CreateForegroundAnimation(button, foreground, duration));
+            children.Add(CreateBorderAnimation(PART_Border, color, IsShape, duration));
 
             return storyboard;
         }
 
-        private static Timeline CreateForegroundAnimation(Color color, Duration? duration = null)
+        private static Timeline CreateForegroundAnimation(DependencyObject target, Color color, Duration? duration = null)
         {
-            return CreateColorAnimation("(Control.Foreground).(SolidColorBrush.Color)", color, duration, null);
+            return CreateColorAnimation(target, "(Control.Foreground).(SolidColorBrush.Color)", color, duration);
         }
 
-        private static Timeline CreateBackgroundAnimation(Color color, bool IsShape, Duration? duration = null, string name = PART_Border)
+        private static Timeline CreateBackgroundAnimation(string target, Color color, bool IsShape, Duration? duration = null)
         {
-            return CreateColorAnimation((IsShape ? "Fill" : "Background") + ".Color", color, duration, name);
+            return CreateColorAnimation(target, (IsShape ? "Fill" : "Background") + ".Color", color, duration);
         }
 
-        private static Timeline CreateBorderAnimation(Color color, bool IsShape, Duration? duration = null, string name = PART_Border)
+        private static Timeline CreateBorderAnimation(string target, Color color, bool IsShape, Duration? duration = null)
         {
-            return CreateColorAnimation((IsShape ? "Stroke" : "BorderBrush") + ".Color", color, duration, name);
+            return CreateColorAnimation(target, (IsShape ? "Stroke" : "BorderBrush") + ".Color", color, duration);
         }
 
-        private static Timeline CreateColorAnimation(string path, Color color, Duration? duration, string name)
+        private static Timeline CreateColorAnimation(object target, string path, Color color, Duration? duration)
         {
             var animation = new ColorAnimation() { To = color };
 
@@ -319,11 +317,14 @@ namespace Antd.Controls
                 animation.Duration = duration.Value;
             }
 
-            if (!string.IsNullOrEmpty(name))
+            if (target is DependencyObject)
             {
-                Storyboard.SetTargetName(animation, name);
+                Storyboard.SetTarget(animation, (DependencyObject)target);
+            } else
+            {
+                Storyboard.SetTargetName(animation, (string)target);
             }
-            
+  
             Storyboard.SetTargetProperty(animation, new PropertyPath(path));
 
             return animation;
