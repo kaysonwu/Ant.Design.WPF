@@ -72,7 +72,7 @@
     <Controls:BorderStyle x:Key="BorderStyleBase">Solid</Controls:BorderStyle>
     
     <!-- Outline -->
-    <Thickness x:Key="OutlineThickness">2</Thickness>
+    <Thickness x:Key="OutlineThickness">1.6</Thickness>
     <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     
     <!-- Disabled states -->

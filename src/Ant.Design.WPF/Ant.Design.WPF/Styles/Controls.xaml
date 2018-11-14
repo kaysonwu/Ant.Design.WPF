@@ -8,6 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/PasswordBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Default style for ant design -->
@@ -17,5 +18,6 @@
     <Style BasedOn="{StaticResource Ant.MenuItem}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource Ant.TextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource Ant.PasswordBox}" TargetType="PasswordBox" />
+    <Style BasedOn="{StaticResource Ant.ComboBox}" TargetType="ComboBox" />
    
 </ResourceDictionary>
