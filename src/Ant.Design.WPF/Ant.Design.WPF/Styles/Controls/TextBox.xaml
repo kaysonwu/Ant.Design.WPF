@@ -48,6 +48,7 @@
                                 <!-- Placeholder -->
                                 <TextBlock x:Name="Placeholder"
                                            Grid.Column="1"
+                                           Focusable="False"
                                            Visibility="Collapsed"
                                            TextWrapping="{TemplateBinding TextWrapping}"
                                            TextAlignment="{TemplateBinding TextAlignment}"

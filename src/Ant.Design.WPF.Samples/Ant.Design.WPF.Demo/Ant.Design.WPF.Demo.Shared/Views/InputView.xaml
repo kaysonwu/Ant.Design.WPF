@@ -48,13 +48,6 @@
                             <StackPanel>
                                 <TextBox Antd:Input.Placeholder="Basic usage" />
                                 <PasswordBox Antd:Input.Placeholder="Basic usage" Antd:Input.Eyeable="True" Password="666" />
-
-                                <ComboBox Antd:Input.Placeholder="Basic usage" IsReadOnly="False" IsEditable="True"  Margin="0 16 0 0">
-                                    <ComboBoxItem>Jack</ComboBoxItem>
-                                    <ComboBoxItem>Luck</ComboBoxItem>
-                                    <ComboBoxItem IsEnabled="False">Disabled</ComboBoxItem>
-                                    <ComboBoxItem>yiminghe</ComboBoxItem>
-                                </ComboBox>
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>
@@ -127,7 +120,7 @@
                                         <Antd:Button Margin="8 -1 -2 -1" Type="Primary" Content="Search" Antd:Control.CornerRadius="0 4 4 0" />
                                     </Antd:Input.Suffix>
                                 </TextBox>
-                                <TextBox Antd:Input.Placeholder="input search text" Padding="12 0 0 0">
+                                <TextBox Antd:Input.Placeholder="input search text" Antd:Control.Size="Large" Padding="12 0 0 0">
                                     <Antd:Input.Suffix>
                                         <Antd:Button Type="Primary" Size="Large" Margin="8 -1 -2 -1" Content="Search" Antd:Control.CornerRadius="0 4 4 0" />
                                     </Antd:Input.Suffix>
