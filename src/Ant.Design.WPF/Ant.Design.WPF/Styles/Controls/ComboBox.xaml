@@ -234,14 +234,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Ant.ComboBoxItem" TargetType="{x:Type ComboBoxItem}">
-
+    <Style x:Key="Ant.ComboBoxItem" BasedOn="{StaticResource Ant.TextElement}" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="TextBlock.LineHeight" Value="21" />
-        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
         <Setter Property="Padding" Value="{DynamicResource ItemPadding}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Template">

@@ -59,13 +59,16 @@
                             To="-5.5" />
     </Storyboard>
 
-    <Style x:Key="Ant.Control" TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    <Style x:Key="Ant.TextElement" TargetType="{x:Type FrameworkElement}">
         <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
         <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
                                                             Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
+    </Style>
+
+    <Style x:Key="Ant.Control" BasedOn="{StaticResource Ant.TextElement}" TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
     </Style>
     
     <!-- TextBox/PasswordBox/ComboBox -->
@@ -73,6 +76,8 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
         <Setter Property="Height" Value="{DynamicResource InputHeightBase}" />
         <Setter Property="Padding" Value="{DynamicResource InputPaddingBase}" />
         <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
