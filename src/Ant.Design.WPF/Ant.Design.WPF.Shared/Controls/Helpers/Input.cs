@@ -91,7 +91,6 @@ namespace Antd.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static object GetSuffix(DependencyObject obj)
         {
             return obj.GetValue(SuffixProperty);
@@ -148,6 +147,7 @@ namespace Antd.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static bool GetClearable(DependencyObject obj)
         {
             return (bool)obj.GetValue(ClearableProperty);

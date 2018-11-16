@@ -94,7 +94,8 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-           
+    
+    <!-- TextBox/PasswordBox/ComboBox -->
     <Style x:Key="Ant.Clearable" TargetType="{x:Type FrameworkElement}">
         <Setter Property="Opacity" Value="0.65" />
         <Style.Triggers>

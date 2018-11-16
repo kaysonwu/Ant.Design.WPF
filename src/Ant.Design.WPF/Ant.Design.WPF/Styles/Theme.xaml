@@ -61,6 +61,14 @@
     <!-- small items -->
     <System:Double x:Key="PaddingExtraSmall">8</System:Double>
 
+    <!-- Vertical padding for all form controls -->
+    <!-- @PaddingSmall -->
+    <System:Double x:Key="ControlPaddingHorizontal">12</System:Double>
+    
+    <!-- Item -->
+    <!-- @Primary1 -->
+    <SolidColorBrush x:Key="ItemMouseOverBackground" Color="#e6f7ff" Options:Freeze="True" />
+
     <!-- LINK -->
     <SolidColorBrush x:Key="LinkBrush" Color="#1890FF" Options:Freeze="True" />
     <SolidColorBrush x:Key="LinkHoverBrush" Color="#40A9FF" Options:Freeze="True" />
@@ -74,7 +82,10 @@
     <!-- Outline -->
     <Thickness x:Key="OutlineThickness">1.6</Thickness>
     <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
-    
+
+    <!-- background of header and selected item -->
+    <SolidColorBrush x:Key="BackgroundBrushLight" Color="{StaticResource BackgroundColorLight}" Options:Freeze="True" />
+
     <!-- Disabled states -->
     <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
 

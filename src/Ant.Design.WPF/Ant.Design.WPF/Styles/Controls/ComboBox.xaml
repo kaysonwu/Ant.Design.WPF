@@ -6,16 +6,42 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="Ant.EditableTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                  IsTabStop="False"
+                                  BorderThickness="0"
+                                  Background="{x:Null}"
+                                  Margin="{Binding Padding, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, 
+                                                Converter={StaticResource ThicknessReverseConverter}}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="Ant.ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <ContentPresenter x:Name="Root"
-                                      Opacity="0.45"
-                                      RenderTransformOrigin="0.5,0.5">
-                        <ContentPresenter.RenderTransform>
-                            <RotateTransform />
-                        </ContentPresenter.RenderTransform>
+                    <Grid x:Name="Root"
+                          Opacity="0.45"
+                          Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="Content"
+                                          Margin="{TemplateBinding Padding}"
+                                          RenderTransformOrigin="0.5,0.5"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                            <ContentPresenter.RenderTransform>
+                                <RotateTransform />
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
@@ -44,7 +70,7 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Root"
+                                        <DoubleAnimation Storyboard.TargetName="Content"
                                                          Storyboard.TargetProperty="RenderTransform.Angle"
                                                          To="180" />
                                     </Storyboard>
@@ -52,54 +78,190 @@
                                 <VisualState x:Name="Unchecked" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                    </ContentPresenter>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="Ant.ComboBox" BasedOn="{StaticResource Ant.Input}" TargetType="{x:Type ComboBox}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid>
-                        <TextBox x:Name="PART_EditableTextBox"
-                                 Padding="{TemplateBinding Padding}"
-                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                 Controls:Input.Prefix="{TemplateBinding Controls:Input.Prefix}"
-                                 Controls:Input.Placeholder="{TemplateBinding Controls:Input.Placeholder}"
-                                 Controls:Control.BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
-                                 Controls:Control.CornerRadius="{TemplateBinding Controls:Control.CornerRadius}"
-                                 Controls:Input.PlaceholderBrush="{TemplateBinding Controls:Input.PlaceholderBrush}">
-                            <Controls:Input.Suffix>
-                                <ToggleButton Focusable="False"
-                                              IsTabStop="False"
-                                              Style="{StaticResource Ant.ComboBoxToggleButton}"
-                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Controls:Icon Type="down" />
-                                </ToggleButton>
-                            </Controls:Input.Suffix>
-                        </TextBox>
-                        <Popup x:Name="PART_Popup"
-                               Focusable="False"
-                               Placement="Bottom"
-                               PopupAnimation="Slide"
-                               IsOpen="{TemplateBinding IsDropDownOpen}">
-                            <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
-                                <Border BorderBrush="Red" BorderThickness="1">
-                                    <ScrollViewer />
-                                </Border>
-                            </Grid>
-                        </Popup>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <Style x:Key="Ant.ComboBox" BasedOn="{StaticResource Ant.Input}" TargetType="{x:Type ComboBox}">
+        <Setter Property="MaxDropDownHeight" Value="250" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <!-- Input Effect -->
+                        <Border x:Name="Effect"
+                                Opacity="0"
+                                Focusable="False"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{DynamicResource OutlineThickness}"
+                                CornerRadius="{TemplateBinding Controls:Control.CornerRadius}"
+                                Margin="{Binding BorderThickness, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                            Converter={StaticResource ThicknessReverseConverter}}" />
+                        <!-- Input -->
+                        <Controls:Border x:Name="Border"
+                                         UseLayoutRounding="True"
+                                         Padding="{TemplateBinding Padding}"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         BorderStyle="{TemplateBinding Controls:Control.BorderStyle}"
+                                         CornerRadius="{TemplateBinding Controls:Control.CornerRadius}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <!-- Prefix -->
+                                    <ColumnDefinition Width="Auto" />
+                                    <!-- Input -->
+                                    <ColumnDefinition Width="*" />
+                                    <!-- Suffix -->
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Prefix -->
+                                <ContentPresenter x:Name="Prefix"
+                                                  Grid.Column="0"
+                                                  Margin="1 0 5 0"
+                                                  Focusable="False"
+                                                  Content="{TemplateBinding Controls:Input.Prefix}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <!-- Placeholder -->
+                                <TextBlock x:Name="Placeholder"
+                                           Grid.Column="1"
+                                           Focusable="False"
+                                           Visibility="Collapsed"
+                                           Text="{TemplateBinding Controls:Input.Placeholder}"
+                                           Foreground="{TemplateBinding Controls:Input.PlaceholderBrush}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                <!-- Editable TextBox -->
+                                <TextBox x:Name="PART_EditableTextBox"
+                                         Grid.Column="1"
+                                         Visibility="Collapsed"
+                                         Style="{StaticResource Ant.EditableTextBox}" />
+                                <!-- ContentSite -->
+                                <ContentPresenter x:Name="ContentSite"
+                                                  Grid.Column="1"
+                                                  IsHitTestVisible="False"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
+                                <!-- DropDownToggle -->
+                                <ToggleButton x:Name="DropDownToggle"
+                                              Grid.Column="1"
+                                              Grid.ColumnSpan="2"
+                                              Padding="5 0 1 0"
+                                              IsTabStop="False"
+                                              Focusable="False"
+                                              Background="Transparent"
+                                              HorizontalContentAlignment="Right"
+                                              Style="{StaticResource Ant.ComboBoxToggleButton}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Controls:Icon Type="down" />
+                                </ToggleButton>
+                                <!-- Clear -->
+                                <Controls:Icon x:Name="Clear"
+                                               Grid.Column="2"
+                                               Margin="5 0 1 0"
+                                               Type="close"
+                                               Focusable="False"
+                                               Visibility="Collapsed"
+                                               Controls:Input.ClearEnabled="True"
+                                               Style="{StaticResource Ant.Clearable}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Controls:Border>
+                        <!-- Popup -->
+                        <Popup x:Name="PART_Popup"
+                               Focusable="False"
+                               VerticalOffset="4"
+                               Placement="Bottom"
+                               PopupAnimation="Slide"
+                               AllowsTransparency="True"
+                               IsOpen="{TemplateBinding IsDropDownOpen}">
+                            <Border Margin="8"
+                                    Background="{TemplateBinding Background}"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                    CornerRadius="{TemplateBinding Controls:Control.CornerRadius}"
+                                    Width="{Binding ActualWidth, Mode=OneWay, ElementName=Border}">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" Opacity="0.15" BlurRadius="8"/>
+                                </Border.Effect>
+                                <ScrollViewer>
+                                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.3" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.2" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="Prefix" Property="Content" Value="{x:Null}">
+                            <Setter TargetName="Prefix" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="True">
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!-- Fix Focused -->
+                        <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Text, Mode=OneWay, ElementName=PART_EditableTextBox}" Value="" />
+                                <Condition Binding="{Binding SelectedItem, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEditable" Value="True" />
+                                <Condition SourceName="Placeholder" Property="Visibility" Value="Collapsed" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="DropDownToggle" Property="Background" Value="{x:Null}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:Input.Clearable" Value="True" />
+                                <Condition SourceName="Placeholder" Property="Visibility" Value="Collapsed" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Clear" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="DropDownToggle" Property="Content" Value="" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="Ant.ComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Padding" Value="12 5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextBlock.LineHeight" Value="21" />
+        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
@@ -114,6 +276,18 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ItemMouseOverBackground}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Background" Value="{DynamicResource BackgroundBrushLight}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource DisabledBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>    
     
 </ResourceDictionary>
