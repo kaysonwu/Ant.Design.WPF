@@ -48,6 +48,12 @@
                             <StackPanel>
                                 <TextBox Antd:Input.Placeholder="Basic usage" />
                                 <PasswordBox Antd:Input.Placeholder="Basic usage" Antd:Input.Eyeable="True" Password="666" />
+
+                                <ComboBox Antd:Input.Placeholder="Basic usage" IsReadOnly="True" IsEditable="False"  Margin="0 16 0 0">
+                                    <ComboBoxItem>Spain</ComboBoxItem>
+                                    <ComboBoxItem>France</ComboBoxItem>
+                                    <ComboBoxItem>Peru</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>

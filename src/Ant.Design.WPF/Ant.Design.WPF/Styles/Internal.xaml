@@ -68,7 +68,7 @@
                             To="-5.5" />
     </Storyboard>
 
-    <!-- TextBox/PasswordBox -->
+    <!-- TextBox/PasswordBox/ComboBox -->
     <Style x:Key="Ant.Input" TargetType="{x:Type Control}">
         <Setter Property="Padding" Value="12 6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

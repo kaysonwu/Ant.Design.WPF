@@ -69,6 +69,7 @@ namespace Antd.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static object GetPrefix(DependencyObject obj)
         {
             return obj.GetValue(PrefixProperty);
@@ -90,6 +91,7 @@ namespace Antd.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static object GetSuffix(DependencyObject obj)
         {
             return obj.GetValue(SuffixProperty);
