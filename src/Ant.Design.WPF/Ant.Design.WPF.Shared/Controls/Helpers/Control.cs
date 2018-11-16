@@ -57,31 +57,24 @@ namespace Antd.Controls
             obj.SetValue(BorderStyleProperty, value);
         }
 
-        public static readonly DependencyProperty ContentCharacterCasingProperty = DependencyProperty.RegisterAttached(
-            "ContentCharacterCasing", 
-            typeof(CharacterCasing), 
-            typeof(Control), 
-            new FrameworkPropertyMetadata(
-                CharacterCasing.Normal, 
-                FrameworkPropertyMetadataOptions.AffectsMeasure
-            ),
-            new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
+        public static readonly DependencyProperty SizeProperty = 
+            DependencyProperty.RegisterAttached("Size", typeof(Sizes?), typeof(Control), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets the character casing of the control
+        /// Get the size of the control.
         /// </summary>
-        [Category(DesignerConstants.LibraryName)]
-        public static CharacterCasing GetContentCharacterCasing(DependencyObject obj)
+        public static Sizes? GetSize(DependencyObject obj)
         {
-            return (CharacterCasing)obj.GetValue(ContentCharacterCasingProperty);
+            return (Sizes?)obj.GetValue(SizeProperty);
         }
 
         /// <summary>
-        /// Sets the character casing of the control
+        /// Set the size of the control.
         /// </summary>
-        public static void SetContentCharacterCasing(DependencyObject obj, CharacterCasing value)
+        public static void SetSize(DependencyObject obj, Sizes? value)
         {
-            obj.SetValue(ContentCharacterCasingProperty, value);
+            obj.SetValue(SizeProperty, value);
         }
+
     }
 }
