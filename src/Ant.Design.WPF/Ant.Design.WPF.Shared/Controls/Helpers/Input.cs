@@ -229,7 +229,7 @@ namespace Antd.Controls
                     else if (parent is PasswordBox)
                     {
                         ((PasswordBox)parent).Clear();
-                        //  ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                        ((PasswordBox)parent).GetBindingExpression(PasswordProperty)?.UpdateSource();
                     }
                     else if (parent is ComboBox)
                     {
