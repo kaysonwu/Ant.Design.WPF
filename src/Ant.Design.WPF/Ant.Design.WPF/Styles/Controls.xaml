@@ -19,5 +19,6 @@
     <Style BasedOn="{StaticResource Ant.TextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource Ant.PasswordBox}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource Ant.ComboBox}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource Ant.ComboBoxItem}" TargetType="ComboBoxItem" />
    
 </ResourceDictionary>
