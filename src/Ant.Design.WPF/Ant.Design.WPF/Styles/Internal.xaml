@@ -40,15 +40,6 @@
     <QuinticEase x:Key="EaseOutQuint" EasingMode="EaseOut" />
     <QuinticEase x:Key="EaseInOutQuint" EasingMode="EaseInOut" />
 
-    <Style x:Key="Ant.Control" TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
-        <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
-                                                            Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
-    </Style>
-    
     <!-- Button/Swtich/Tag -->
     <Storyboard x:Key="Ant.ClickAnimating" FillBehavior="Stop">
         <DoubleAnimation Storyboard.TargetName="Effect" 
@@ -68,12 +59,22 @@
                             To="-5.5" />
     </Storyboard>
 
+    <Style x:Key="Ant.Control" TargetType="{x:Type Control}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
+        <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
+                                                            Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
+    </Style>
+    
     <!-- TextBox/PasswordBox/ComboBox -->
     <Style x:Key="Ant.Input" TargetType="{x:Type Control}">
-        <Setter Property="Padding" Value="12 6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Height" Value="{DynamicResource InputHeightBase}" />
+        <Setter Property="Padding" Value="{DynamicResource InputPaddingBase}" />
         <Setter Property="Foreground" Value="{DynamicResource InputForeground}" />
         <Setter Property="Background" Value="{DynamicResource InputBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
@@ -82,6 +83,16 @@
         <Setter Property="Controls:Control.CornerRadius" Value="{DynamicResource BorderRadiusBase}" />
         <Setter Property="Controls:Input.PlaceholderBrush" Value="{DynamicResource InputPlaceholderBrush}" />
         <Style.Triggers>
+            <!-- Sizes -->
+            <Trigger Property="Controls:Control.Size" Value="Large">
+                <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}" />
+                <Setter Property="Height" Value="{DynamicResource InputHeightLarge}" />
+                <Setter Property="Padding" Value="{DynamicResource InputPaddingLarge}" />
+            </Trigger>
+            <Trigger Property="Controls:Control.Size" Value="Small">
+                <Setter Property="Height" Value="{DynamicResource InputHeightSmall}" />
+                <Setter Property="Padding" Value="{DynamicResource InputPaddingSmall}" />
+            </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource InputMouseOverBorderBrush}" />
             </Trigger>
@@ -93,6 +104,25 @@
                 <Setter Property="Background" Value="{DynamicResource InputDisabledBackground}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+    
+    <!-- PasswordBox/ComboBox -->
+    <Style x:Key="Ant.EditableTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <!-- TextBox will automatically handle padding, so you need to change the margin to a negative value. -->
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                  IsTabStop="False"
+                                  BorderThickness="0"
+                                  Background="{x:Null}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
     <!-- TextBox/PasswordBox/ComboBox -->

@@ -182,9 +182,9 @@
                         </Controls:CodeBox.Description>
                         <Controls:CodeBox.Content>
                             <StackPanel>
-                                <TextBox Antd:Input.Placeholder="large size" />
+                                <TextBox Antd:Input.Placeholder="large size" Antd:Control.Size="Large" />
                                 <TextBox Antd:Input.Placeholder="default size" />
-                                <TextBox Antd:Input.Placeholder="small size" />
+                                <TextBox Antd:Input.Placeholder="small size" Antd:Control.Size="Small" />
                             </StackPanel>
                         </Controls:CodeBox.Content>
                         <Controls:CodeBox.Code>

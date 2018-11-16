@@ -66,6 +66,7 @@
     <System:Double x:Key="ControlPaddingHorizontal">12</System:Double>
     
     <!-- Item -->
+    <Thickness x:Key="ItemPadding">11 5</Thickness>
     <!-- @Primary1 -->
     <SolidColorBrush x:Key="ItemMouseOverBackground" Color="#e6f7ff" Options:Freeze="True" />
 
@@ -142,6 +143,12 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="White"  Options:Freeze="True" />
     
     <!-- Input -->
+    <System:Double x:Key="InputHeightBase">32</System:Double>
+    <System:Double x:Key="InputHeightLarge">40</System:Double>
+    <System:Double x:Key="InputHeightSmall">24</System:Double>
+    <Thickness x:Key="InputPaddingBase">11 4</Thickness>
+    <Thickness x:Key="InputPaddingLarge">11 6</Thickness>
+    <Thickness x:Key="InputPaddingSmall">7 1</Thickness>
     <SolidColorBrush x:Key="InputPlaceholderBrush" Color="#BFBFBF" Options:Freeze="True" />
     <SolidColorBrush x:Key="InputForeground" Color="{StaticResource TextColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
