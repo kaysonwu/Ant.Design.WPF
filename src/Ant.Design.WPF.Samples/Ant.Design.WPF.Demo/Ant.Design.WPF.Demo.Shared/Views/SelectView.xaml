@@ -17,20 +17,57 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel>
-                <Label Style="{StaticResource Ant.H1}" Content="Input" />
-                <TextBlock Style="{StaticResource Ant.P}" Text="A basic widget for getting the user input is a text field. Keyboard and mouse can be used for providing or changing data." />
+                <Label Style="{StaticResource Ant.H1}" Content="Select" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="Select component to select value from options." />
 
                 <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
-                <TextBlock Style="{StaticResource Ant.P}" Text="A user input in a form field is needed.&#x0a;A search input is required." />
+                <TextBlock Style="{StaticResource Ant.P}" Text="A dropdown menu for displaying choices - an elegant alternative to the native select element.&#x0a;Utilizing Radio is recommended when there are fewer total options (less than 5)." />
 
                 <Label Style="{StaticResource Ant.H2}" Content="Examples" />
             </StackPanel>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource Ant.ComboBox}" TargetType="ComboBox">
+                        <Setter Property="Margin" Value="0 0 8 10" />
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="8 0">
+                    <Controls:CodeBox Title="Basic usage">
+                        <Controls:CodeBox.Description>
+                            Basic usage example.
+                        </Controls:CodeBox.Description>
+                        <Controls:CodeBox.Content>
+                            <StackPanel>
+                                <ComboBox Antd:Input.Placeholder="Basic usage">
+                                    <ComboBoxItem>Jack</ComboBoxItem>
+                                    <ComboBoxItem>Luck</ComboBoxItem>
+                                    <ComboBoxItem IsEnabled="False">Disabled</ComboBoxItem>
+                                    <ComboBoxItem>yiminghe</ComboBoxItem>
+                                </ComboBox>
+                                <ComboBox Antd:Input.Placeholder="Basic usage" IsEnabled="False">
+                                    <ComboBoxItem>Jack</ComboBoxItem>
+                                    <ComboBoxItem IsSelected="True">Luck</ComboBoxItem>
+                                    <ComboBoxItem IsEnabled="False">Disabled</ComboBoxItem>
+                                    <ComboBoxItem>yiminghe</ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+                        </Controls:CodeBox.Content>
+                        <Controls:CodeBox.Code>
+                            &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" /&gt;\n
+                                &lt;ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/AntIcons.xaml" /&gt;\n\n
+                                xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"\n\n
+                                &lt;WrapPanel&gt;\n
+                                    \t&lt;Antd:Tag&gt;Tag 1&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag&gt;Link&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True"&gt;Tag 2&lt;/Antd:Tag&gt;\n
+                                    \t&lt;Antd:Tag Closable="True" cal:Message.Attach="[Event Closing] = [Action Closing($source, $eventArgs)]"&gt;Prevent Default&lt;/Antd:Tag&gt;\n
+                                &lt;/WrapPanel&gt;
+                        </Controls:CodeBox.Code>
+                    </Controls:CodeBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="8 0">
                 </StackPanel>
