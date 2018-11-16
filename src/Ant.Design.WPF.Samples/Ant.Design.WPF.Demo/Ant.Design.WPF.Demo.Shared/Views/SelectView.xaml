@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="AntdDemo.Views.SelectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Antd="clr-namespace:Antd.Controls;assembly=antd"
+             xmlns:Controls="clr-namespace:AntdDemo.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="930">
+
+    <ScrollViewer>
+        <Grid Margin="16 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Label Style="{StaticResource Ant.H1}" Content="Input" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="A basic widget for getting the user input is a text field. Keyboard and mouse can be used for providing or changing data." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="When To Use" />
+                <TextBlock Style="{StaticResource Ant.P}" Text="A user input in a form field is needed.&#x0a;A search input is required." />
+
+                <Label Style="{StaticResource Ant.H2}" Content="Examples" />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="8 0">
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="8 0">
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
