@@ -10,9 +10,9 @@ using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
 
 namespace Antd.Controls
 {
-    [TemplatePart(Name = "PART_Min", Type = typeof(ButtonBase))]
-    [TemplatePart(Name = "PART_Max", Type = typeof(ButtonBase))]
-    [TemplatePart(Name = "PART_Close", Type = typeof(ButtonBase))]
+    [TemplatePart(Name = PART_Min, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = PART_Max, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = PART_Close, Type = typeof(ButtonBase))]
     public class WindowButtons : ContentControlBase, INotifyPropertyChanged
     {
         #region Events
@@ -31,6 +31,12 @@ namespace Antd.Controls
         #endregion
 
         #region Fields
+
+        private const string PART_Min = "PART_Min";
+
+        private const string PART_Max = "PART_Max";
+
+        private const string PART_Close = "PART_Close";
 
         private ButtonBase min;
 
@@ -147,8 +153,9 @@ namespace Antd.Controls
                 {
                     return;
                 }
+
                 _parentWindow = value;
-                this.RaisePropertyChanged("ParentWindow");
+                RaisePropertyChanged("ParentWindow");
             }
         }
 
@@ -206,21 +213,21 @@ namespace Antd.Controls
         {
             base.OnApplyTemplate();
   
-            close = Template.FindName("PART_Close", this) as ButtonBase;
+            close = Template.FindName(PART_Close, this) as ButtonBase;
 
             if (close != null)
             {
                 close.Click += OnClose;
             }
 
-            max = Template.FindName("PART_Max", this) as ButtonBase;
+            max = Template.FindName(PART_Max, this) as ButtonBase;
 
             if (max != null)
             {
                 max.Click += OnMaximize;
             }
 
-            min = Template.FindName("PART_Min", this) as ButtonBase;
+            min = Template.FindName(PART_Min, this) as ButtonBase;
 
             if (min != null)
             {
@@ -256,8 +263,10 @@ namespace Antd.Controls
 
         private void OnMinimize(object sender, RoutedEventArgs e)
         {
-            if (null == ParentWindow) return;
-            SystemCommands.MinimizeWindow(ParentWindow);
+            if (ParentWindow != null)
+            {
+                SystemCommands.MinimizeWindow(ParentWindow);
+            }
         }
 
         private void OnMaximize(object sender, RoutedEventArgs e)

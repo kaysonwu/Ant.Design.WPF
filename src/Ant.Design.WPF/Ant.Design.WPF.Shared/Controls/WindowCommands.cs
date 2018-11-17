@@ -33,8 +33,9 @@ namespace Antd.Controls
                 {
                     return;
                 }
+
                 _parentWindow = value;
-                this.RaisePropertyChanged("ParentWindow");
+                RaisePropertyChanged("ParentWindow");
             }
         }
 

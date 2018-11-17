@@ -124,22 +124,20 @@ namespace Antd.Controls
         {
             get
             {
-                var value = typeof(WindowBase)
-                    .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(this, new object[0]);
+                var value = typeof(WindowBase).GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this, new object[0]);
                 return (IntPtr)value;
             }
         }
 
         public static readonly DependencyProperty TitleBarHeightProperty =
-            DependencyProperty.Register("TitleBarHeight", typeof(int), typeof(Window), new PropertyMetadata(30, OnTitleBarHeightChanged));
-
+            DependencyProperty.Register("TitleBarHeight", typeof(double), typeof(Window), new PropertyMetadata(30d, OnTitleBarHeightChanged));
+ 
         /// <summary>
         /// Gets/sets the TitleBar height.
         /// </summary>
-        public int TitleBarHeight
+        public double TitleBarHeight
         {
-            get { return (int)GetValue(TitleBarHeightProperty); }
+            get { return (double)GetValue(TitleBarHeightProperty); }
             set { SetValue(TitleBarHeightProperty, value); }
         }
 
@@ -233,8 +231,7 @@ namespace Antd.Controls
 
         private static void OnTitleAlignmentChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var window = dependencyObject as Window;
-            if (window != null)
+            if (dependencyObject is Window window)
             {
                 window.SizeChanged -= window.OnSizeChanged;
 
@@ -295,21 +292,17 @@ namespace Antd.Controls
 
         private static void UpdateLogicalChilds(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var window = dependencyObject as Window;
-
-            if (window == null)
+            if (!(dependencyObject is Window window))
             {
                 return;
             }
 
-            var oldChild = e.OldValue as FrameworkElement;
-            if (oldChild != null)
+            if (e.OldValue is FrameworkElement oldChild)
             {
                 window.RemoveLogicalChild(oldChild);
             }
 
-            var newChild = e.NewValue as FrameworkElement;
-            if (newChild != null)
+            if (e.NewValue is FrameworkElement newChild)
             {
                 window.AddLogicalChild(newChild);
                 // Yes, that's crazy. But we must do this to enable all possible scenarios for setting DataContext
@@ -417,7 +410,7 @@ namespace Antd.Controls
 
         #endregion
    
-        #region Methods
+        #region Private Methods
    
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
