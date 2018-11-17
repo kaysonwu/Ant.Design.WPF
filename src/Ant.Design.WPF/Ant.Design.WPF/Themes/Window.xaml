@@ -48,7 +48,7 @@
         </Setter>
         <Setter Property="Shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <Shell:WindowChrome CornerRadius="5" 
+                <Shell:WindowChrome CornerRadius="0" 
                                     CaptionHeight="0" 
                                     UseAeroCaptionButtons="False" 
                                     GlassFrameThickness="0 0 0 0.1" />
