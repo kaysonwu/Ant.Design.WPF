@@ -42,10 +42,10 @@ namespace AntdDemo.ViewModels
         public void Click1()
         {
             Loading1 = true;
-            //var app = Application.Current;
+            var app = Application.Current;
 
             //app.Resources["ButtonPrimaryBrush"] = new SolidColorBrush(Color.FromRgb(114, 46, 209));
-            //app.Resources["PrimaryBrush"] = new SolidColorBrush(Color.FromRgb(114, 46, 209));
+            app.Resources["PrimaryBrush"] = new SolidColorBrush(Color.FromRgb(114, 46, 209));
         }
 
         public void Click2()

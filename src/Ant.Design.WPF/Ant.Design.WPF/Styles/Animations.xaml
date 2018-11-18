@@ -34,5 +34,12 @@
                             Duration="0:0:0.4"
                             To="-5.5" />
     </Storyboard>
+    
+    <!-- TextBox/PasswordBox/ComboBox -->
+    <Storyboard x:Key="Ant.InputAnimating">
+        <DoubleAnimation Storyboard.TargetName="Effect"
+                         Storyboard.TargetProperty="Opacity"
+                         To="0.2" />
+    </Storyboard>
 
 </ResourceDictionary>

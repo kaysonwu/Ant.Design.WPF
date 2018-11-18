@@ -147,15 +147,16 @@ namespace Antd.Behaviors
 
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            var passwordBox = (PasswordBox)sender;
-            TextBox textBox;
-
-            if (Input.GetEyeable(passwordBox) && 
-                (textBox = GetTextBox(passwordBox)) != null &&
-                textBox.Visibility == Visibility.Visible &&
-                !textBox.IsFocused)
+            if (e.OriginalSource is PasswordBox passwordBox)
             {
-                textBox.Focus();
+                TextBox textBox;
+
+                if (Input.GetEyeable(passwordBox) && 
+                    (textBox = GetTextBox(passwordBox)) != null &&
+                    textBox.Visibility == Visibility.Visible)
+                {
+                    textBox.Focus();
+                }
             }
         }
 

@@ -4,6 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Animations.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Control.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Input.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -185,13 +186,7 @@
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition GeneratedDuration="0:0:0.3" />
                                 </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         To="0.2" />
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Focused" Storyboard="{StaticResource Ant.InputAnimating}" />
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -202,6 +197,7 @@
                         </Trigger>
                         <Trigger Property="IsEditable" Value="True">
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="DropDownToggle" Property="Background" Value="{x:Null}" />
                             <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <!-- Fix Focused -->
@@ -215,13 +211,6 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
                         </MultiDataTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEditable" Value="True" />
-                                <Condition SourceName="Placeholder" Property="Visibility" Value="Collapsed" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="DropDownToggle" Property="Background" Value="{x:Null}" />
-                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="Controls:Input.Clearable" Value="True" />

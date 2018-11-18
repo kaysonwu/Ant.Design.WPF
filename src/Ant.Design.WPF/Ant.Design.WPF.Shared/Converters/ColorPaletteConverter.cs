@@ -10,12 +10,11 @@ namespace Antd.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int index;
-            if(!int.TryParse(parameter as string, out index))
+            if (!int.TryParse(parameter as string, out int index))
             {
                 return value;
             }
-            
+
             if (value is SolidColorBrush)
             {
                return new SolidColorBrush(ColorPalette.Toning((value as SolidColorBrush).Color, index));
