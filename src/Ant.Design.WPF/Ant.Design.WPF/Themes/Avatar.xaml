@@ -7,8 +7,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:Avatar}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="TextBlock.LineHeight" Value="NaN" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="{DynamicResource AvatarSizeBase}" />
