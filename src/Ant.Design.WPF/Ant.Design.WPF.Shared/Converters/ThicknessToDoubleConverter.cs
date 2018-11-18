@@ -22,10 +22,10 @@ namespace Antd.Converters
             // If it is a shape, it may be necessary to discard approximately 0.2px to remove the sawtooth.
             // Recorded in: Window10 x64, xiaomi laptop pro15.6
             // The cause of this problem is DPI.
-            if (bool.Parse(parameter as string))
-            {
-                d -= d * 0.176;
-            }
+            //if (bool.Parse(parameter as string))
+            //{
+            //    d -= d * 0.176;
+            //}
 
             return d;
         }
