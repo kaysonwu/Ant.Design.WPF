@@ -52,6 +52,9 @@
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
             </Trigger>
+            <Trigger Property="IsImage" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+            </Trigger>
         </Style.Triggers>
     </Style>
     

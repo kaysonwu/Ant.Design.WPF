@@ -76,8 +76,9 @@
     <SolidColorBrush x:Key="LinkActiveBrush" Color="#096DD9" Options:Freeze="True" />
 
     <!-- Border -->
-    <Thickness x:Key="BorderThicknessBase">1</Thickness>
     <SolidColorBrush x:Key="BorderBrushBase" Color="{StaticResource BorderColorBase}" Options:Freeze="True" />
+    <SolidColorBrush x:Key="BorderBrushSplit" Color="#E8E8E8" Options:Freeze="True" />
+    <Thickness x:Key="BorderThicknessBase">1</Thickness>
     <Controls:BorderStyle x:Key="BorderStyleBase">Solid</Controls:BorderStyle>
     
     <!-- Outline -->

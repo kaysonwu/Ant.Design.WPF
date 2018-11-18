@@ -121,6 +121,18 @@ namespace Antd.Controls
             set { SetValue(AlternativeProperty, value); }
         }
 
+        public static readonly DependencyProperty IsImageProperty =
+            DependencyProperty.Register("IsImage", typeof(bool), typeof(Avatar), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Get the current avatar type as an image.
+        /// </summary>
+        public bool IsImage
+        {
+            get { return (bool)GetValue(IsImageProperty); }
+            private set { SetValue(IsImageProperty, value); }
+        }
+
         #endregion
 
         #region Constructors
@@ -151,11 +163,11 @@ namespace Antd.Controls
             if (contentPresenter == null) return;
 
             var content = contentPresenter.Content;
-     
+          
             // Clear Event
             if (content is Image)
             {
-                ClearValue(BackgroundProperty);
+                ClearValue(IsImageProperty);
                 ((Image)content).ImageFailed -= OnImageFailed;
             }
             else if (content is TextBlock)
@@ -171,7 +183,7 @@ namespace Antd.Controls
                     content = new Image();
                 }
 
-                SetValue(BackgroundProperty, Brushes.Transparent);
+                SetCurrentValue(IsImageProperty, true);
 
                 var image = (Image)content;
                 image.Source = Source;

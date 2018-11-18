@@ -181,15 +181,22 @@ namespace Antd.Controls
             obj.SetValue(EyeableProperty, value);
         }
 
-        internal static readonly DependencyProperty ClearEnabledProperty = 
+        public static readonly DependencyProperty ClearEnabledProperty = 
             DependencyProperty.RegisterAttached("ClearEnabled", typeof(bool), typeof(Input), new PropertyMetadata(false, OnClearEnabled));
 
-        internal static bool GetClearEnabled(DependencyObject obj)
+        /// <summary>
+        /// Get the clear enable state of the control.
+        /// </summary>
+        public static bool GetClearEnabled(DependencyObject obj)
         {
             return (bool)obj.GetValue(ClearEnabledProperty);
         }
 
-        internal static void SetClearEnabled(DependencyObject obj, bool value)
+
+        /// <summary>
+        /// Set the clear enable state of the control.
+        /// </summary>
+        public static void SetClearEnabled(DependencyObject obj, bool value)
         {
             obj.SetValue(ClearEnabledProperty, value);
         }
