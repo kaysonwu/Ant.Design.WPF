@@ -23,8 +23,7 @@ namespace Antd.Converters
             } else
             {
                 // May require 50% rounded corners
-                double val;
-                double.TryParse(parameter as string, out val);
+                double.TryParse(parameter as string, out double val);
 
                 if (val > 0)
                 {

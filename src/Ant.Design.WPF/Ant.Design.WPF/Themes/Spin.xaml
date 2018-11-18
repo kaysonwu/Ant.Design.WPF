@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Control.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource Ant.Control}" TargetType="{x:Type Controls:Spin}">

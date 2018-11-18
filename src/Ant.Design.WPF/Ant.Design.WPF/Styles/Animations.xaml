@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Easing Function -->
+    <CubicEase x:Key="EaseIn" EasingMode="EaseIn" />
+    <CubicEase x:Key="EaseOut" EasingMode="EaseOut" />
+    <CubicEase x:Key="EaseInOut" EasingMode="EaseInOut" />
+    <BackEase x:Key="EaseInBack" EasingMode="EaseIn" />
+    <BackEase x:Key="EaseOutBack" EasingMode="EaseOut" />
+    <BackEase x:Key="EaseInOutBack" EasingMode="EaseInOut" />
+    <CircleEase x:Key="EaseInCirc" EasingMode="EaseIn" />
+    <CircleEase x:Key="EaseOutCirc" EasingMode="EaseOut" />
+    <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
+    <QuinticEase x:Key="EaseInQuint" EasingMode="EaseIn" />
+    <QuinticEase x:Key="EaseOutQuint" EasingMode="EaseOut" />
+    <QuinticEase x:Key="EaseInOutQuint" EasingMode="EaseInOut" />
+
+    <!-- Storyboards -->
+    <!-- Button/Swtich/Tag -->
+    <Storyboard x:Key="Ant.ClickAnimating" FillBehavior="Stop">
+        <DoubleAnimation Storyboard.TargetName="Effect" 
+                         Storyboard.TargetProperty="Opacity"
+                         EasingFunction="{StaticResource EaseOutCirc}"
+                         Duration="0:0:0.6"
+                         To="0" />
+        <ThicknessAnimation Storyboard.TargetName="Effect" 
+                            Storyboard.TargetProperty="BorderThickness"
+                            EasingFunction="{StaticResource EaseOutCirc}"
+                            Duration="0:0:0.2"
+                            To="5.5" />
+        <ThicknessAnimation Storyboard.TargetName="Effect" 
+                            Storyboard.TargetProperty="Margin"
+                            EasingFunction="{StaticResource EaseOutCirc}"
+                            Duration="0:0:0.4"
+                            To="-5.5" />
+    </Storyboard>
+
+</ResourceDictionary>

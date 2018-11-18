@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace Antd.Converters
 {
+    [ValueConversion(typeof(object), typeof(bool))]
     public class IsNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

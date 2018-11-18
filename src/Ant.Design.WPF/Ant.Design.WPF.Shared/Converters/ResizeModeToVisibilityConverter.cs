@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace Antd.Converters
 {
+    [ValueConversion(typeof(ResizeMode), typeof(Visibility))]
     class ResizeModeToVisibilityConverter : IValueConverter
     {
         public object Convert(object values, Type targetType, object parameter, CultureInfo culture)

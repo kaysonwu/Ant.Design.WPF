@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace Antd.Converters
 {
+    [ValueConversion(typeof(string), typeof(string))]
     public class ToUpperConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -18,6 +19,7 @@ namespace Antd.Converters
         }
     }
 
+    [ValueConversion(typeof(string), typeof(string))]
     public class ToLowerConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -4,7 +4,7 @@
                     xmlns:Shell="clr-namespace:Microsoft.Windows.Shell">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="Ant.TitleBarThumb" TargetType="{x:Type Thumb}">

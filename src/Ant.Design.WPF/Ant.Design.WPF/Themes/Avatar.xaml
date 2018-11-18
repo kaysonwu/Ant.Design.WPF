@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:Avatar}">

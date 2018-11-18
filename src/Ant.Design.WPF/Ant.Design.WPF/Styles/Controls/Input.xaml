@@ -1,76 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:Antd.Converters"
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
-    <!-- Converters -->
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
-    <Converters:ToLowerConverter x:Key="ToLowerConverter" />
-    <Converters:IsNullConverter x:Key="IsNullConverter" />
-    <Converters:IsEmptyConverter x:Key="IsEmptyConverter" />
-    <Converters:AdditionConverter x:Key="AdditionConverter" />
-    <Converters:DivisionConverter x:Key="DivisionConverter" />
-    <Converters:SubtractionConverter x:Key="SubtractionConverter" />
-    <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
-    <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
-    <Converters:ThicknessReverseConverter x:Key="ThicknessReverseConverter" />
-    <Converters:StringToTextBlockConverter x:Key="StringToTextBlockConverter" />
-    <!-- Discard -->
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
-    <Converters:DoubleToCornerRadiusConverter x:Key="DoubleToCornerRadiusConverter" />
-    <!-- Discard -->
-    <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
-    <Converters:ResizeModeToVisibilityConverter x:Key="ResizeModeToVisibilityConverter" />
-    <Converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
-    <!-- For translate animation -->
-    <Converters:DoubleToThicknessMultiConverter x:Key="DoubleToThicknessMultiConverter" />
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-    <!-- Animation -->
-    <CubicEase x:Key="EaseIn" EasingMode="EaseIn" />
-    <CubicEase x:Key="EaseOut" EasingMode="EaseOut" />
-    <CubicEase x:Key="EaseInOut" EasingMode="EaseInOut" />
-    <BackEase x:Key="EaseInBack" EasingMode="EaseIn" />
-    <BackEase x:Key="EaseOutBack" EasingMode="EaseOut" />
-    <BackEase x:Key="EaseInOutBack" EasingMode="EaseInOut" />
-    <CircleEase x:Key="EaseInCirc" EasingMode="EaseIn" />
-    <CircleEase x:Key="EaseOutCirc" EasingMode="EaseOut" />
-    <CircleEase x:Key="EaseInOutCirc" EasingMode="EaseInOut" />
-    <QuinticEase x:Key="EaseInQuint" EasingMode="EaseIn" />
-    <QuinticEase x:Key="EaseOutQuint" EasingMode="EaseOut" />
-    <QuinticEase x:Key="EaseInOutQuint" EasingMode="EaseInOut" />
-
-    <!-- Button/Swtich/Tag -->
-    <Storyboard x:Key="Ant.ClickAnimating" FillBehavior="Stop">
-        <DoubleAnimation Storyboard.TargetName="Effect" 
-                         Storyboard.TargetProperty="Opacity"
-                         EasingFunction="{StaticResource EaseOutCirc}"
-                         Duration="0:0:0.6"
-                         To="0" />
-        <ThicknessAnimation Storyboard.TargetName="Effect" 
-                            Storyboard.TargetProperty="BorderThickness"
-                            EasingFunction="{StaticResource EaseOutCirc}"
-                            Duration="0:0:0.2"
-                            To="5.5" />
-        <ThicknessAnimation Storyboard.TargetName="Effect" 
-                            Storyboard.TargetProperty="Margin"
-                            EasingFunction="{StaticResource EaseOutCirc}"
-                            Duration="0:0:0.4"
-                            To="-5.5" />
-    </Storyboard>
-
-    <Style x:Key="Ant.TextElement" TargetType="{x:Type FrameworkElement}">
-        <Setter Property="TextBlock.LineStackingStrategy" Value="BlockLineHeight" />
-        <Setter Property="TextBlock.LineHeight" Value="{Binding FontSize, Mode=OneWay, RelativeSource={RelativeSource Self}, 
-                                                            Converter={StaticResource DultiplicationConverter}, ConverterParameter=1.5}" />
-    </Style>
-
-    <Style x:Key="Ant.Control" BasedOn="{StaticResource Ant.TextElement}" TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-    </Style>
-    
     <!-- TextBox/PasswordBox/ComboBox -->
     <Style x:Key="Ant.Input" TargetType="{x:Type Control}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -110,7 +41,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <!-- PasswordBox/ComboBox -->
     <Style x:Key="Ant.EditableTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{x:Null}" />
@@ -129,7 +60,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- TextBox/PasswordBox/ComboBox -->
     <Style x:Key="Ant.Clearable" TargetType="{x:Type FrameworkElement}">
         <Setter Property="Opacity" Value="0.65" />
@@ -139,5 +70,5 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-   
+    
 </ResourceDictionary>

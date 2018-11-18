@@ -4,7 +4,8 @@
                     xmlns:Behaviors="clr-namespace:Antd.Behaviors">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Animations.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:Tag}">

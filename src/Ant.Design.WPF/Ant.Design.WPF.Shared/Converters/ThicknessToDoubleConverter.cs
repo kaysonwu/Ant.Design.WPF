@@ -48,9 +48,7 @@ namespace Antd.Converters
                 return default(Thickness);
             }
 
-            double param;
-            double.TryParse(parameter as string, out param);
-
+            double.TryParse(parameter as string, out double param);
             return new Thickness(parent.Value - self.Value - param, 0.0, 0.0, 0.0);
         }
 

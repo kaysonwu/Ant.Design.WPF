@@ -3,7 +3,9 @@
                     xmlns:Controls="clr-namespace:Antd.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Internal.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Control.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Input.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="Ant.ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">

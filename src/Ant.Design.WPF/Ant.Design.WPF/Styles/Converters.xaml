@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converters="clr-namespace:Antd.Converters">
+
+    <!-- String Converter -->
+    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+    <Converters:ToLowerConverter x:Key="ToLowerConverter" />
+    
+    <!-- Boolean Converter -->
+    <Converters:IsNullConverter x:Key="IsNullConverter" />
+    <Converters:IsEmptyConverter x:Key="IsEmptyConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <Converters:ResizeModeToVisibilityConverter x:Key="ResizeModeToVisibilityConverter" />
+    
+    <!-- Brush Converter -->
+    <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
+    <Converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
+    
+    <!-- Arithmetic Converter -->
+    <Converters:AdditionConverter x:Key="AdditionConverter" />
+    <Converters:SubtractionConverter x:Key="SubtractionConverter" />
+    <Converters:DultiplicationConverter x:Key="DultiplicationConverter" />
+    <Converters:DivisionConverter x:Key="DivisionConverter" />
+
+    <!-- Unit Converter -->
+    <Converters:ThicknessReverseConverter x:Key="ThicknessReverseConverter" />
+    <!-- Discard -->
+    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
+    <Converters:DoubleToCornerRadiusConverter x:Key="DoubleToCornerRadiusConverter" />
+    <!-- Discard -->
+    <Converters:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
+    <!-- For translate animation -->
+    <Converters:DoubleToThicknessMultiConverter x:Key="DoubleToThicknessMultiConverter" />
+
+    <!-- Other Converter -->
+    <Converters:StringToTextBlockConverter x:Key="StringToTextBlockConverter" />
+
+</ResourceDictionary>
