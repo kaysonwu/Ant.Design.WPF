@@ -17,6 +17,7 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/CheckableTag.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/RadioButtonGroup.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Heading.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Hyperlink.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  set up default styles for our custom controls  -->
