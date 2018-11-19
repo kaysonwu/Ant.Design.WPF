@@ -16,10 +16,12 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{Binding TitleBarForeground, Mode=OneWay, 
                                                 RelativeSource={RelativeSource AncestorType={x:Type Controls:Window}}}" />
+        <Setter Property="Controls:Control.MouseOverBackground" Value="{DynamicResource WindowButtonFocusedBrush}" />
+        <Setter Property="Controls:Control.PressedBackground" Value="{DynamicResource WindowButtonPressedBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{TemplateBinding Background}">
+                    <Grid x:Name="Root" Background="{TemplateBinding Background}">
                         <ContentPresenter RecognizesAccessKey="True"
                                           Margin="{TemplateBinding Padding}"
                                           Content="{TemplateBinding Content}"
@@ -30,16 +32,24 @@
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Root" 
+                                    Property="Background" 
+                                    Value="{Binding Path=(Controls:Control.MouseOverBackground),Mode=OneWay, 
+                                                RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Root"
+                                    Property="Background"
+                                    Value="{Binding Path=(Controls:Control.PressedBackground),Mode=OneWay, 
+                                                RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource WindowButtonFocusedBrush}" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource WindowButtonPressedBrush}" />
-            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource ButtonDisableForeground}" />
             </Trigger>
@@ -47,14 +57,10 @@
     </Style>
 
     <Style x:Key="Ant.WindowCloseButton" BasedOn="{StaticResource Ant.WindowButton}" TargetType="{x:Type Button}">
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource ButtonDangerFocusedBrush}" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource ButtonDangerPressedBrush}" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Controls:Control.MouseOverBackground" Value="{DynamicResource ErrorBrush}" />
+        <Setter Property="Controls:Control.PressedBackground" 
+                Value="{Binding Path=(Controls:Control.MouseOverBackground), Mode=OneWay, ConverterParameter=7,
+                            RelativeSource={RelativeSource Self}, Converter={StaticResource ColorPaletteConverter}}" />
     </Style>
     
     <Style TargetType="{x:Type Controls:WindowButtons}">
