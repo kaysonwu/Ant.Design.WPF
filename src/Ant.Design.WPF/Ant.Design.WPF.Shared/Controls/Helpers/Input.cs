@@ -16,7 +16,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Placeholder", typeof(string), typeof(Input), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// Get the placeholder for the input control.
+        /// Gets the placeholder for the input control.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -27,7 +27,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the placeholder for the input control.
+        /// Sets the placeholder for the input control.
         /// </summary>
         public static void SetPlaceholder(DependencyObject obj, string value)
         {
@@ -43,7 +43,7 @@ namespace Antd.Controls
                     FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Get the placeholder foreground brush for the input control.
+        /// Gets the placeholder foreground brush for the input control.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -54,7 +54,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the placeholder foreground brush for the input control.
+        /// Sets the placeholder foreground brush for the input control.
         /// </summary>
         public static void SetPlaceholderBrush(DependencyObject obj, Brush value)
         {
@@ -65,7 +65,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Prefix", typeof(object), typeof(Input), new PropertyMetadata(null));
 
         /// <summary>
-        /// Get the prefix object of the input control.
+        /// Gets the prefix object of the input control.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -76,7 +76,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the prefix object of the input control.
+        /// Sets the prefix object of the input control.
         /// </summary>
         public static void SetPrefix(DependencyObject obj, object value)
         {
@@ -87,7 +87,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Suffix", typeof(object), typeof(Input), new PropertyMetadata(null));
 
         /// <summary>
-        /// Get the suffix object of the input control.
+        /// Gets the suffix object of the input control.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -97,7 +97,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the suffix object of the input control.
+        /// Sets the suffix object of the input control.
         /// </summary>
         public static void SetSuffix(DependencyObject obj, object value)
         {
@@ -123,7 +123,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Get the password currently held by the PasswordBox.
+        /// Gets the password currently held by the PasswordBox.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static string GetPassword(DependencyObject obj)
@@ -132,7 +132,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the password currently held by the PasswordBox.
+        /// Sets the password currently held by the PasswordBox.
         /// </summary>
         public static void SetPassword(DependencyObject obj, string value)
         {
@@ -143,7 +143,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Clearable", typeof(bool), typeof(Input), new PropertyMetadata(false));
 
         /// <summary>
-        /// Get whether the input control has a clear behavior.
+        /// Gets whether the input control has a clear behavior.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -154,7 +154,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set whether the input control has a clear behavior.
+        /// Sets whether the input control has a clear behavior.
         /// </summary>
         public static void SetClearable(DependencyObject obj, bool value)
         {
@@ -165,7 +165,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Eyeable", typeof(bool), typeof(Input), new PropertyMetadata(false));
 
         /// <summary>
-        /// Get whether the password currently held by PasswordBox is displayed in text.
+        /// Gets whether the password currently held by PasswordBox is displayed in text.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static bool GetEyeable(DependencyObject obj)
@@ -174,7 +174,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set whether the password currently held by PasswordBox is displayed in text.
+        /// Sets whether the password currently held by PasswordBox is displayed in text.
         /// </summary>
         public static void SetEyeable(DependencyObject obj, bool value)
         {
@@ -185,7 +185,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("ClearEnabled", typeof(bool), typeof(Input), new PropertyMetadata(false, OnClearEnabled));
 
         /// <summary>
-        /// Get the clear enable state of the control.
+        /// Gets the clear enable state of the control.
         /// </summary>
         public static bool GetClearEnabled(DependencyObject obj)
         {
@@ -194,7 +194,7 @@ namespace Antd.Controls
 
 
         /// <summary>
-        /// Set the clear enable state of the control.
+        /// Sets the clear enable state of the control.
         /// </summary>
         public static void SetClearEnabled(DependencyObject obj, bool value)
         {
