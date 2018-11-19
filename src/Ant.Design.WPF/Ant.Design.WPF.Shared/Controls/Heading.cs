@@ -36,6 +36,6 @@ namespace Antd.Controls
 
     public enum HeadingSizes : byte
     {
-       ExtraLarge, Large, Normal, Medium, Small, Tiny
+       ExtraLarge, Large, Medium, Normal, Small, Tiny
     }
 }
