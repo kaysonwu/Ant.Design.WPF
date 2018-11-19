@@ -14,7 +14,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Size", typeof(HeadingSizes), typeof(Heading), new PropertyMetadata(HeadingSizes.Normal));
 
         /// <summary>
-        /// Get or set the size of the heading.
+        /// Gets/sets the size of the heading.
         /// </summary>
         public HeadingSizes Size
         {

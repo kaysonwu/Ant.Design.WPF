@@ -230,7 +230,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Get the rectangular area of the geometric stretch.
+        /// Gets the rectangular area of the geometric stretch.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Geometry))]
         public static Rect GetViewBox(DependencyObject obj)
@@ -239,7 +239,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set a rectangular area for geometric stretch.
+        /// Sets the rectangular area of the geometric stretch.
         /// </summary>
         public static void SetViewBox(DependencyObject obj, Rect value)
         {
@@ -253,7 +253,7 @@ namespace Antd.Controls
             DependencyProperty.RegisterAttached("Fill", typeof(Brush), typeof(Icon), new PropertyMetadata(null));
 
         /// <summary>
-        /// Get the brush that fill the geometry.
+        /// Gets the brush that fill the geometry.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -264,7 +264,7 @@ namespace Antd.Controls
         }
 
         /// <summary>
-        /// Set the brush to fill the geometry. Valid when Theme is colorful.
+        /// Sets the brush to fill the geometry. Valid when Theme is colorful.
         /// </summary>
         public static void SetFill(DependencyObject obj, Brush value)
         {

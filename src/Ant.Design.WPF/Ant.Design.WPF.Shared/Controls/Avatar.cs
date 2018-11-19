@@ -113,7 +113,7 @@ namespace Antd.Controls
             DependencyProperty.Register("Alternative", typeof(string), typeof(Avatar), new PropertyMetadata(string.Empty));
 
         /// <summary>
-        /// This attribute defines the alternative text describing the image.
+        /// Gets/sets the alternative text describing the image.
         /// </summary>
         public string Alternative
         {
@@ -125,7 +125,7 @@ namespace Antd.Controls
             DependencyProperty.Register("IsImage", typeof(bool), typeof(Avatar), new PropertyMetadata(false));
 
         /// <summary>
-        /// Get the current avatar type as an image.
+        /// Gets the current avatar type as an image.
         /// </summary>
         public bool IsImage
         {
