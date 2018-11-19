@@ -56,17 +56,15 @@ namespace Antd.Behaviors
 
         protected override void OnAttached()
         {
-            base.OnAttached();
-
             AssociatedObject.Loaded += OnLoaded;
             AssociatedObject.GotFocus += OnGotFocus;
             AssociatedObject.PasswordChanged += OnPasswordChanged;
+
+            base.OnAttached();
         }
 
         protected override void OnDetaching()
         {
-            base.OnDetaching();
-
             AssociatedObject.Loaded -= OnLoaded;
             AssociatedObject.GotFocus -= OnGotFocus;
             AssociatedObject.PasswordChanged -= OnPasswordChanged;
@@ -75,6 +73,8 @@ namespace Antd.Behaviors
             {
                 AssociatedObject.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnEyeClick));
             }
+
+            base.OnDetaching();
         }
 
         #endregion
