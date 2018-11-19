@@ -25,7 +25,8 @@
         <Setter Property="Background" Value="{DynamicResource BodyBackground}" />
         <Setter Property="TextElement.FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="TextElement.FontSize" Value="{DynamicResource FontSizeBase}" />
-        <Setter Property="TitleBarBrush" Value="{DynamicResource WindowTilteBarBrush}" />
+        <Setter Property="TitleBarForeground" Value="{DynamicResource WindowTilteBarForeground}" />
+        <Setter Property="TitleBarBackground" Value="{DynamicResource WindowTilteBarBackground}" />
         <Setter Property="IconTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -90,8 +91,8 @@
                                            Grid.ColumnSpan="5"
                                            Focusable="False"
                                            StrokeThickness="0"
-                                           Fill="{TemplateBinding TitleBarBrush}"
-                                           Height="{TemplateBinding TitleBarHeight}" />
+                                           Height="{TemplateBinding TitleBarHeight}"
+                                           Fill="{TemplateBinding TitleBarBackground}" />
                                 <!-- Note: 
                                     The thumb element must be placed after the title bar background,
                                     otherwise it will affect the double click on the title bar window to maximize 
@@ -114,25 +115,15 @@
                                                   Height="{TemplateBinding TitleBarHeight}"
                                                   Content="{TemplateBinding LeftWindowCommands}" />
                                 <!-- title -->
-                            <Controls:ThumbContentControl x:Name="PART_Title"
+                                <Controls:ThumbContentControl x:Name="PART_Title"
                                                           Grid.Column="2"
                                                           Focusable="False"
                                                           Content="{TemplateBinding Title}"
                                                           Height="{TemplateBinding TitleBarHeight}"
+                                                          Foreground="{TemplateBinding TitleBarForeground}"
                                                           ContentTemplate="{TemplateBinding TitleTemplate}"
                                                           HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                                          ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}">
-                                <ContentControl.Foreground>
-                                        <MultiBinding Converter="{StaticResource BackgroundToForegroundConverter}">
-                                            <Binding ElementName="PART_TitleBar"
-                                                     Mode="OneWay"
-                                                     Path="Fill" />
-                                            <Binding Mode="OneWay"
-                                                     Path="TitleForeground"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
-                                        </MultiBinding>
-                                    </ContentControl.Foreground>
-                                </Controls:ThumbContentControl>
+                                                          ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}" />
                                 <!-- the right window commands -->
                                 <ContentPresenter x:Name="PART_RightWindowCommands"
                                                   Grid.Column="3"

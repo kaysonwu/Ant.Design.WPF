@@ -6,13 +6,14 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using Antd.Win32;
+using System.Windows.Data;
 using Standard;
 using WindowBase = System.Windows.Window;
 using ThumbBase = System.Windows.Controls.Primitives.Thumb;
 using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
 using Microsoft.Windows.Shell;
-using System.Windows.Data;
+using Antd.Win32;
+using System.Windows.Documents;
 
 namespace Antd.Controls
 {
@@ -150,23 +151,35 @@ namespace Antd.Controls
             }
         }
 
-        public static readonly DependencyProperty TitleBarBrushProperty =
-            DependencyProperty.Register("TitleBarBrush", typeof(Brush), typeof(Window), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty TitleBarForegroundProperty = 
+            DependencyProperty.Register("TitleBarForeground", typeof(Brush), typeof(Window));
 
         /// <summary>
-        /// Gets/sets the brush used for the title bar.
+        /// Gets/sets the foreground brush of the title bar.
         /// </summary>
-        public Brush TitleBarBrush
+        public Brush TitleBarForeground
         {
-            get { return (Brush)GetValue(TitleBarBrushProperty); }
-            set { SetValue(TitleBarBrushProperty, value); }
+            get { return (Brush)GetValue(TitleBarForegroundProperty); }
+            set { SetValue(TitleBarForegroundProperty, value); }
+        }
+
+        public static readonly DependencyProperty TitleBarBackgroundProperty =
+            DependencyProperty.Register("TitleBarBackground", typeof(Brush), typeof(Window), new PropertyMetadata(Brushes.Transparent));
+
+        /// <summary>
+        /// Gets/sets the background brush of the title bar.
+        /// </summary>
+        public Brush TitleBarBackground
+        {
+            get { return (Brush)GetValue(TitleBarBackgroundProperty); }
+            set { SetValue(TitleBarBackgroundProperty, value); }
         }
 
         public static readonly DependencyProperty ShowIconProperty =
             DependencyProperty.Register("ShowIcon", typeof(bool), typeof(Window), new PropertyMetadata(true, OnShowIconChanged));
 
         /// <summary>
-        /// Get/sets whether the titlebar icon is visible or not.
+        /// Gets/sets whether the titlebar icon is visible or not.
         /// </summary>
         public bool ShowIcon
         {
@@ -206,18 +219,6 @@ namespace Antd.Controls
         {
             get { return (CharacterCasing)GetValue(TitleCharacterCasingProperty); }
             set { SetValue(TitleCharacterCasingProperty, value); }
-        }
-
-        public static readonly DependencyProperty TitleForegroundProperty =
-            DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(Window));
-
-        /// <summary>
-        /// Gets/sets the brush used for the titlebar's foreground.
-        /// </summary>
-        public Brush TitleForeground
-        {
-            get { return (Brush)GetValue(TitleForegroundProperty); }
-            set { SetValue(TitleForegroundProperty, value); }
         }
 
         public static readonly DependencyProperty TitleAlignmentProperty =

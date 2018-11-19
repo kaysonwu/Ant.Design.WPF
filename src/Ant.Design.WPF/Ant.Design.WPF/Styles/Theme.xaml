@@ -92,8 +92,8 @@
     <SolidColorBrush x:Key="DisabledBrush" Color="{StaticResource DisabledColor}" Options:Freeze="True" />
 
     <!-- Window -->
-    <SolidColorBrush x:Key="WindowTilteBarBrush" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
-    <SolidColorBrush x:Key="WindowButtonForeground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowTilteBarForeground" Color="White" Options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowTilteBarBackground" Color="{StaticResource PrimaryColor}" Options:Freeze="True" />
     <SolidColorBrush x:Key="WindowButtonFocusedBrush" Color="#26000000" Options:Freeze="True" />
     <SolidColorBrush x:Key="WindowButtonPressedBrush" Color="#4C000000" Options:Freeze="True" />
     

@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Threading;
-using Antd.Win32;
-using ButtonBase = System.Windows.Controls.Button;
+using System.Windows.Controls.Primitives;
 using ContentControlBase = System.Windows.Controls.ContentControl;
 using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
+using Antd.Win32;
 
 namespace Antd.Controls
 {
