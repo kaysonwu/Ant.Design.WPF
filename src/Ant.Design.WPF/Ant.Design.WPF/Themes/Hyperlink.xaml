@@ -4,9 +4,10 @@
     
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/Control.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
-    <Style TargetType="{x:Type Controls:Hyperlink}">
+
+    <Style BasedOn="{StaticResource Ant.TextElement}" TargetType="{x:Type Controls:Hyperlink}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{DynamicResource LinkBrush}" />
