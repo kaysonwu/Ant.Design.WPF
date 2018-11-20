@@ -4,7 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Converters.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Controls/WindowButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/WindowButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="Ant.WindowCloseButton" BasedOn="{StaticResource Ant.WindowButton}" TargetType="{x:Type Button}">
