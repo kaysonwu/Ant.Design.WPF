@@ -6,6 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Styles/Theme.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Window.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/WindowButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/ContentControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Antd;component/Themes/Badge.xaml" />
