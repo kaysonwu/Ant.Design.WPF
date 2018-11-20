@@ -36,31 +36,18 @@ namespace Antd.Controls
             }
         }
 
-        public static readonly DependencyProperty ShowSeparatorsProperty = 
-            DependencyProperty.Register("ShowSeparators", typeof(bool), typeof(WindowCommands),
-                new FrameworkPropertyMetadata(
-                    true, 
-                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, 
-                    OnShowSeparatorsChanged
-                ));
+        public static readonly DependencyProperty SeparatorHeightProperty =
+            DependencyProperty.Register("SeparatorHeight", typeof(double), typeof(WindowCommands), new PropertyMetadata(double.NaN));
 
         /// <summary>
-        /// Gets or sets the value indicating whether to show the separators.
+        /// Gets/sets the height of the separator.
         /// </summary>
-        public bool ShowSeparators
+        public double SeparatorHeight
         {
-            get { return (bool)GetValue(ShowSeparatorsProperty); }
-            set { SetValue(ShowSeparatorsProperty, value); }
+            get { return (double)GetValue(SeparatorHeightProperty); }
+            set { SetValue(SeparatorHeightProperty, value); }
         }
 
-        private static void OnShowSeparatorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue == e.OldValue)
-            {
-                return;
-            }
-            // ((WindowCommands)d).ResetSeparators();
-        }
         #endregion
 
         #region Constructors
@@ -71,7 +58,6 @@ namespace Antd.Controls
         }
 
         #endregion
-
     }
 
     public class WindowCommandsItem : ContentControl
