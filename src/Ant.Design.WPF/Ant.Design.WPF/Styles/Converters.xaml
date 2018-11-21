@@ -14,6 +14,7 @@
     
     <!-- Brush Converter -->
     <Converters:ColorPaletteConverter x:Key="ColorPaletteConverter" />
+    <!-- Discard -->
     <Converters:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
     
     <!-- Arithmetic Converter -->
