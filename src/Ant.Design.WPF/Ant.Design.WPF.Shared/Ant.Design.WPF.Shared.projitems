@@ -9,7 +9,6 @@
     <Import_RootNamespace>Antd</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Animations\ColorAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\PasswordBoxBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviorCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\StylizedBehaviors.cs" />
