@@ -21,10 +21,11 @@
     <Style TargetType="{x:Type Controls:Window}">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBase}" />
         <Setter Property="Template" Value="{StaticResource Ant.WindowTemplate}" />
         <Setter Property="Background" Value="{DynamicResource BodyBackground}" />
-        <Setter Property="TextElement.FontFamily" Value="{DynamicResource FontFamily}" />
-        <Setter Property="TextElement.FontSize" Value="{DynamicResource FontSizeBase}" />
         <Setter Property="TitleBarForeground" Value="{DynamicResource WindowTilteBarForeground}" />
         <Setter Property="TitleBarBackground" Value="{DynamicResource WindowTilteBarBackground}" />
         <Setter Property="IconTemplate">
