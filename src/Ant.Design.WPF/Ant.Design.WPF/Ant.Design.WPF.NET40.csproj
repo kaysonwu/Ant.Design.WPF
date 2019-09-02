@@ -7,7 +7,7 @@
     <ProjectGuid>{F5090472-1728-4771-BFD0-C5953EBF4CE1}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>Antd</RootNamespace>
-    <AssemblyName>antd</AssemblyName>
+    <AssemblyName>Antd</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -74,9 +74,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\Animations.xaml">
