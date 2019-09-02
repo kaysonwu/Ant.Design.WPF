@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Data;
-using Standard;
-using WindowBase = System.Windows.Window;
-using ThumbBase = System.Windows.Controls.Primitives.Thumb;
-using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
-using Microsoft.Windows.Shell;
-using Antd.Win32;
-using System.Windows.Documents;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using Antd.Win32;
+    using Microsoft.Windows.Shell;
+    using System;
+    using System.Collections;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using Standard;
+    using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
+    using ThumbBase = System.Windows.Controls.Primitives.Thumb;
+    using WindowBase = System.Windows.Window;
+
     [TemplatePart(Name = PART_TitleBarThumb, Type = typeof(ThumbBase))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_Icon, Type = typeof(FrameworkElement))]
