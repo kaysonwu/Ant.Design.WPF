@@ -1,12 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using WindowSize = System.Windows.Size;
-using ContentControlBase = System.Windows.Controls.ContentControl;
-using System;
-using System.Windows.Controls;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using WindowSize = System.Windows.Size;
+    using ContentControlBase = System.Windows.Controls.ContentControl;
+
     [TemplatePart(Name = PART_BadgeContainer, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = PART_Count, Type = typeof(ContentPresenter))]
     public class Badge : ContentControlBase

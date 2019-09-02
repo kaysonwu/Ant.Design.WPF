@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Data;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Data;
+
     /// <summary>
     /// AddValueChanged of dependency property descriptor results in memory leak as you already know.
     /// So, as described here, you can create custom class PropertyChangeNotifier to listen

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Automation.Peers;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Automation.Peers;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+
     public class ThumbContentControl : ContentControl, IThumb
     {
         #region Events

@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Media;
+
     /// <summary>
     /// A helper class that provides various controls.
     /// </summary>

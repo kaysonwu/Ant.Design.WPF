@@ -1,11 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace Antd.Converters
+﻿namespace Antd.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class ColorPaletteConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

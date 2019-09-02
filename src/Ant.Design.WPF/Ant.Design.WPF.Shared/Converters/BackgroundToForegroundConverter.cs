@@ -1,12 +1,12 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Media;
-
-namespace Antd.Converters
+﻿namespace Antd.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     public class BackgroundToForegroundConverter : IValueConverter, IMultiValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

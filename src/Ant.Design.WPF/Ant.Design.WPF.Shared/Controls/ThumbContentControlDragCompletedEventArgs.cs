@@ -1,7 +1,7 @@
-﻿using System.Windows.Controls.Primitives;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows.Controls.Primitives;
+
     public class ThumbContentControlDragCompletedEventArgs : DragCompletedEventArgs
     {
         public ThumbContentControlDragCompletedEventArgs(double horizontalOffset, double verticalOffset, bool canceled)

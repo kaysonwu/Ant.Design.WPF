@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Animation;
+
     /// <summary>
     /// Provides the ability to spin for controls.
     /// Known defects:

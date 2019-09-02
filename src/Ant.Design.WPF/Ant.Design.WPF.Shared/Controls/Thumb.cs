@@ -1,8 +1,8 @@
-﻿using System.Windows.Input;
-using ThumbBase = System.Windows.Controls.Primitives.Thumb;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows.Input;
+    using ThumbBase = System.Windows.Controls.Primitives.Thumb;
+
     public class Thumb : ThumbBase, IThumb
     {
         private TouchDevice currentDevice = null;

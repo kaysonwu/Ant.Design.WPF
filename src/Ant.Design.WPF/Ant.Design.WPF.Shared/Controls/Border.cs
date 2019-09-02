@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+
     /// <summary>
     /// Draws a border, background, or both around another element.
     /// </summary>

@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+
     public static class CornerRadiusUtil
     {
         /// <summary>

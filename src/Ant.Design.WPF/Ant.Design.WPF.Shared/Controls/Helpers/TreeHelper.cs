@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     /// <summary>
     /// Helper methods for UI-related tasks.
     /// This class was obtained from Philip Sumi (a fellow WPF Disciples blog)

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
-namespace Antd.Converters
+﻿namespace Antd.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+
     public abstract class ArithmeticConverter : IValueConverter
     {
         public abstract double Convert(double value, Type targetType, double parameter, CultureInfo culture);

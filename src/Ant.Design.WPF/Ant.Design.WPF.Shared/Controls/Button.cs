@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using ButtonBase = System.Windows.Controls.Button;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Animation;
+    using System.Windows.Shapes;
+    using ButtonBase = System.Windows.Controls.Button;
+
     /// <summary>
     /// To trigger an operation.
     /// </summary>

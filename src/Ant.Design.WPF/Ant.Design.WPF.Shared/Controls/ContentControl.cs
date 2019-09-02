@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using ContentControlBase = System.Windows.Controls.ContentControl;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using ContentControlBase = System.Windows.Controls.ContentControl;
+
     public class ContentControl : ContentControlBase
     {
         public static readonly DependencyProperty ContentCharacterCasingProperty =

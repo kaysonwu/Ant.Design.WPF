@@ -1,11 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-namespace Antd.Converters
+﻿namespace Antd.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+
     public class StringToTextBlockConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Windows;
+
     internal static class RectUtil
     {
         /// <summary>

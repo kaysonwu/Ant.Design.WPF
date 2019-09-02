@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Media;
-
-namespace Antd
+﻿namespace Antd
 {
+    using System;
+    using System.Windows.Media;
+
     public static class ColorPalette
     {
         #region Fields

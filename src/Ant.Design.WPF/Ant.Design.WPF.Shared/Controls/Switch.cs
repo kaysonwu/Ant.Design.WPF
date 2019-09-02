@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media.Animation;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Media.Animation;
+
     /// <summary>
     /// Switching Selector.
     /// </summary>

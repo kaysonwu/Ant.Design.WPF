@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Text;
+    using System.Windows;
+    using System.Windows.Controls;
+
     public class RadioButtonGroup : ItemsControl
     {
         #region Properties

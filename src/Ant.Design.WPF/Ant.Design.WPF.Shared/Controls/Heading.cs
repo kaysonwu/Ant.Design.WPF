@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
     /// A heading of the a page.
     /// </summary>

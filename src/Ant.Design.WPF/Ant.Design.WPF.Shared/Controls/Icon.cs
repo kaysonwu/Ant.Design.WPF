@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Documents;
+    using System.Windows.Media;
 
     /// <summary>
     /// Semantic vector graphics.

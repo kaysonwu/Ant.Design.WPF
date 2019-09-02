@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Interactivity;
-using System.Windows.Media.Animation;
-
-namespace Antd.Behaviors
+﻿namespace Antd.Behaviors
 {
+    using System.Windows;
+    using System.Windows.Interactivity;
+    using System.Windows.Media.Animation;
+
     /// <summary>
     /// Provides the ability to animate when changing the Visibility property for an element.
     /// </summary>

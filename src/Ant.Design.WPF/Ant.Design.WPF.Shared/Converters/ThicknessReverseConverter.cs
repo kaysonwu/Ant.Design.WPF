@@ -1,10 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Data;
-
-namespace Antd.Converters
+﻿namespace Antd.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Data;
+
     [ValueConversion(typeof(Thickness), typeof(Thickness))]
     public class ThicknessReverseConverter : IValueConverter
     {

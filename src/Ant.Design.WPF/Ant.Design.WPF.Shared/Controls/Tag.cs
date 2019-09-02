@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using ContentControlBase = System.Windows.Controls.ContentControl;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using ContentControlBase = System.Windows.Controls.ContentControl;
+
     /// <summary>
     /// Tag for categorizing or markup.
     /// </summary>

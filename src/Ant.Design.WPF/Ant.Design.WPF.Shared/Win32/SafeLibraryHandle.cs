@@ -1,8 +1,8 @@
-﻿using System.Security.Permissions;
-using Microsoft.Win32.SafeHandles;
-
-namespace Antd.Win32
+﻿namespace Antd.Win32
 {
+    using System.Security.Permissions;
+    using Microsoft.Win32.SafeHandles;
+
     [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
     public sealed class SafeLibraryHandle : SafeHandleZeroOrMinusOneIsInvalid
     {

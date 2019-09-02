@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls.Primitives;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+
     /// <summary>
     /// CheckableTag works like Checkbox, click it to toggle checked.
     /// </summary>

@@ -1,9 +1,9 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Windows;
-
 namespace Antd.Win32
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Windows;
+
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public struct RECT

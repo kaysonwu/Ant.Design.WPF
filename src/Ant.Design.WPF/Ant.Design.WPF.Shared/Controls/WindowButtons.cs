@@ -1,15 +1,15 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Controls.Primitives;
-using ContentControlBase = System.Windows.Controls.ContentControl;
-using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
-using Antd.Win32;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using Antd.Win32;
+    using System;
+    using System.ComponentModel;
+    using System.Text;
+    using System.Windows;
+    using System.Windows.Threading;
+    using System.Windows.Controls.Primitives;
+    using ContentControlBase = System.Windows.Controls.ContentControl;
+    using SystemCommands = Microsoft.Windows.Shell.SystemCommands;
+
     [TemplatePart(Name = PART_Min, Type = typeof(ButtonBase))]
     [TemplatePart(Name = PART_Max, Type = typeof(ButtonBase))]
     [TemplatePart(Name = PART_Close, Type = typeof(ButtonBase))]

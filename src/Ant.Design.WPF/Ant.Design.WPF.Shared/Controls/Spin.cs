@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using ContentControlBase = System.Windows.Controls.ContentControl;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using ContentControlBase = System.Windows.Controls.ContentControl;
+
     /// <summary>
     /// A spinner for displaying loading state of a page or a section.
     /// </summary>

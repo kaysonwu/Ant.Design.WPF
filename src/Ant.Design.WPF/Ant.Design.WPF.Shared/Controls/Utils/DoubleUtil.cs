@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     internal static class DoubleUtil
     {
         // Const values 

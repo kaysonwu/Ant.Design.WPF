@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Automation.Peers;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Automation.Peers;
+
     public class ThumbContentControlAutomationPeer : FrameworkElementAutomationPeer
     {
         public ThumbContentControlAutomationPeer(FrameworkElement owner)

@@ -1,11 +1,11 @@
-﻿using Standard;
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-
-namespace Antd.Win32
+﻿namespace Antd.Win32
 {
+    using Standard;
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Text;
+
     [SuppressUnmanagedCodeSecurity]
     public static class UnsafeNativeMethods
     {

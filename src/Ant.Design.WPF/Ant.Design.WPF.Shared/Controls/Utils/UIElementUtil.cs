@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System;
+
     public static class UIElementUtil
     {
         public static double RoundLayoutValue(double value, double dpiScale)

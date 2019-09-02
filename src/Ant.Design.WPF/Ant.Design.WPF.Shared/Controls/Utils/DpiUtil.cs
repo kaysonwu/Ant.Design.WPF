@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Media;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Media;
+
     public  static class DpiUtil
     {
         public static DpiScale GetDpi(Visual visual)

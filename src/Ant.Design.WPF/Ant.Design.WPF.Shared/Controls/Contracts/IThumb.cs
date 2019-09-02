@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+
     public interface IThumb : IInputElement
     {
         event DragStartedEventHandler DragStarted;

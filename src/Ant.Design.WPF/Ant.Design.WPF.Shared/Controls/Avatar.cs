@@ -1,11 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Windows.Media;
-using ControlBase = System.Windows.Controls.Control;
-
-namespace Antd.Controls
+﻿namespace Antd.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Markup;
+    using System.Windows.Media;
+    using ControlBase = System.Windows.Controls.Control;
+
     /// <summary>
     /// Avatars can be used to represent people or objects. It supports images, Icons, or letters.
     /// </summary>

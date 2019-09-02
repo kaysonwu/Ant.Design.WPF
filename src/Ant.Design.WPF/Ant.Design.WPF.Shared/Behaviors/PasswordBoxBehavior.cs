@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
-using System.Windows.Interactivity;
-using Antd.Controls;
-
-namespace Antd.Behaviors
+﻿namespace Antd.Behaviors
 {
+    using Antd.Controls;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Documents;
+    using System.Windows.Interactivity;
+
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
     [TemplatePart(Name = PART_Eye, Type = typeof(ToggleButton))]
     public class PasswordBoxBehavior : Behavior<PasswordBox>
