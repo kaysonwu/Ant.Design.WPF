@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Sizes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Spin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Switch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Tag.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Thumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ThumbContentControl.cs" />
