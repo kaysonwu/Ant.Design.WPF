@@ -79,9 +79,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemParameters2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChrome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChromeWorker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Themes\Button.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Themes\ColorPalette.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Themes\ThemeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\RECT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\UnsafeNativeMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Win32\SafeLibraryHandle.cs" />
