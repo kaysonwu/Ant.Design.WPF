@@ -73,7 +73,7 @@ namespace Microsoft.Windows.Shell
             // Update the ChromeWorker with this new object.
 
             // If there isn't currently a worker associated with the Window then assign a new one.
-            // There can be a many:1 relationship of Window to WindowChrome objects, but a 1:1 for a Window and a WindowChromeWorker.
+            // There can be a many:1 relationship of to Window to WindowChrome objects, but a 1:1 for a Window and a WindowChromeWorker.
             WindowChromeWorker chromeWorker = WindowChromeWorker.GetWindowChromeWorker(window);
             if (chromeWorker == null)
             {
@@ -236,23 +236,6 @@ namespace Microsoft.Windows.Shell
             set { SetValue(UseAeroCaptionButtonsProperty, value); }
         }
 
-        /// <summary>Dependency property for IgnoreTaskbar</summary>
-        public static readonly DependencyProperty IgnoreTaskbarProperty = DependencyProperty.Register(
-            "IgnoreTaskbar",
-            typeof(bool),
-            typeof(WindowChrome),
-            new FrameworkPropertyMetadata(false, (d, e) => ((WindowChrome)d)._OnPropertyChangedThatRequiresRepaint()));
-
-        /// <summary>
-        /// If this property is true and the attached window's WindowStyle=None then when the window is maximized it will cover the entire
-        /// monitor, including the taskbar.
-        /// </summary>
-        public bool IgnoreTaskbar
-        {
-            get { return (bool)GetValue(IgnoreTaskbarProperty); }
-            set { SetValue(IgnoreTaskbarProperty, value); }
-        }
-
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
             "CornerRadius",
             typeof(CornerRadius),
@@ -315,6 +298,27 @@ namespace Microsoft.Windows.Shell
         {
             get { return (NonClientFrameEdges)GetValue(NonClientFrameEdgesProperty); }
             set { SetValue(NonClientFrameEdgesProperty, value); }
+        }
+
+        #endregion
+
+        #region New Dependency Properties
+
+        /// <summary>Dependency property for IgnoreTaskbar</summary>
+        public static readonly DependencyProperty IgnoreTaskbarProperty = DependencyProperty.Register(
+            "IgnoreTaskbar",
+            typeof(bool),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(false, (d, e) => ((WindowChrome)d)._OnPropertyChangedThatRequiresRepaint()));
+
+        /// <summary>
+        /// If this property is true and the attached window's WindowStyle=None then when the window is maximized it will cover the entire
+        /// monitor, including the taskbar.
+        /// </summary>
+        public bool IgnoreTaskbar
+        {
+            get { return (bool)GetValue(IgnoreTaskbarProperty); }
+            set { SetValue(IgnoreTaskbarProperty, value); }
         }
 
         #endregion

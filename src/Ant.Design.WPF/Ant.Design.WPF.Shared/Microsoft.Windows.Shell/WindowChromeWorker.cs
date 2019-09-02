@@ -77,22 +77,21 @@ namespace Microsoft.Windows.Shell
         { 
             _messageTable = new List<HANDLE_MESSAGE>
             {
-                new HANDLE_MESSAGE(WM.NCUAHDRAWCAPTION,      _HandleNCUAHDrawCaption),
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SETICON,               _HandleSetTextOrIcon),
-                new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
                 new HANDLE_MESSAGE(WM.NCACTIVATE,            _HandleNCActivate),
                 new HANDLE_MESSAGE(WM.NCCALCSIZE,            _HandleNCCalcSize),
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
-                new HANDLE_MESSAGE(WM.WINDOWPOSCHANGING,     _HandleWindowPosChanging),   
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
-                new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
-                new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMoveForAnimation),
+                // New Message
+                new HANDLE_MESSAGE(WM.NCUAHDRAWCAPTION,      _HandleNCUAHDrawCaption),
+                new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
+                new HANDLE_MESSAGE(WM.WINDOWPOSCHANGING,     _HandleWindowPosChanging),
+                new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.MOVE,                  _HandleMoveForRealSize),
-                new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMoveForAnimation),
             };
 
             if (Utility.IsPresentationFrameworkVersionLessThan4)
@@ -684,7 +683,7 @@ namespace Microsoft.Windows.Shell
         {
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
             var sc = (SC)(Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32());
-            if (SC.RESTORE == sc && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
+            if (sc == SC.RESTORE && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
             {
                 var modified = _ModifyStyle(WS.SYSMENU, 0);
 
@@ -697,6 +696,20 @@ namespace Microsoft.Windows.Shell
                 }
                 handled = true;
                 return lRet;
+            } else if (sc == SC.MAXIMIZE && _MinimizeAnimation)
+            {
+                /* 
+                 * Fix: Black border appears when maximizing.
+                 * 
+                 * we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
+                 * to prevent nasty drawing
+                 * removing border will cause a 1 off error on the client rect size
+                 * when maximizing via aero snapping, because max by aero snapping
+                 * will call this method, resulting in a 2px black border on the side
+                 * when maximized.
+                 * 
+                 */
+                _ModifyStyle(WS.CAPTION, 0);
             }
 
             handled = false;
@@ -908,6 +921,14 @@ namespace Microsoft.Windows.Shell
             if ((Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32()) == SIZE_MAXIMIZED)
             {
                 state = WindowState.Maximized;
+
+                // Fix: Black border appears when maximizing.
+                // restore DLGFRAME
+                if (_ModifyStyle(0, WS.CAPTION))
+                {
+                    //_UpdateFrameState(true);
+                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                }
             }
             _UpdateSystemMenu(state);
 
@@ -1078,27 +1099,6 @@ namespace Microsoft.Windows.Shell
         ///   Critical : Calls critical methods
         /// </SecurityNote>
         [SecurityCritical]
-        private IntPtr _HandleEnterSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
-        {
-            if (_MinimizeAnimation)// && _GetHwndState() != WindowState.Minimized)
-            {
-                /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
-                 * to prevent nasty drawing
-                 * removing border will cause a 1 off error on the client rect size
-                 * when maximizing via aero snapping, because max by aero snapping
-                 * will call this method, resulting in a 2px black border on the side
-                 * when maximized.
-                 */
-                _ModifyStyle(WS.CAPTION, 0);
-            }
-            handled = false;
-            return IntPtr.Zero;
-        }
-
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
         private IntPtr _HandleMoveForRealSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             /*
@@ -1132,26 +1132,6 @@ namespace Microsoft.Windows.Shell
                      * 
                      */
                     NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED | SWP.NOCOPYBITS);
-                }
-            }
-
-            handled = false;
-            return IntPtr.Zero;
-        }
-
-        /// <SecurityNote>
-        ///   Critical : Calls critical methods
-        /// </SecurityNote>
-        [SecurityCritical]
-        private IntPtr _HandleExitSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
-        {
-            if (_MinimizeAnimation)
-            {
-                // restore DLGFRAME
-                if (_ModifyStyle(0, WS.CAPTION))
-                {
-                    //_UpdateFrameState(true);
-                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
                 }
             }
 
