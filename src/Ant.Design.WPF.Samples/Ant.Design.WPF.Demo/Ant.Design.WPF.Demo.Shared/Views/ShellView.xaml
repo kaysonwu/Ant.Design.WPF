@@ -6,7 +6,7 @@
              xmlns:Antd="clr-namespace:Antd.Controls;assembly=Antd"
              xmlns:local="using:AntdDemo.Views"
              mc:Ignorable="d"
-
+             ResizeMode="NoResize"
              Width="930"
              Height="600">
     <TabControl x:Name="Items" TabStripPlacement="Left" />
